@@ -26,19 +26,19 @@ protected:
 	static vector<LPANIMATION> animations;
 
 public:
-	void SetPosition(float x, float y) { this->x = x, this->y = y; }
-	void SetSpeed(float vx, float vy) { this->vx = vx, this->vy = vy; }
+	void Set_position(float x, float y) { this->x = x, this->y = y; }
+	void Set_speed(float vx, float vy) { this->vx = vx, this->vy = vy; }
 
-	void SetState(int state) { this->state = state; }
-	int GetState() { return this->state; }
+	void Set_state(int state) { this->state = state; }
+	int Get_state() { return this->state; }
 
 
-	static void AddAnimation(int aniId);
+	static void Add_animation(int aniId);
 
 	CGameObject();
 
 	void Update(DWORD dt);
-	void Render();
+	virtual void Render() = 0;
 	~CGameObject();
 };
 

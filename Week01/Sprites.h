@@ -37,7 +37,7 @@ public:
 	void Add(int id, int left, int top, int right, int bottom, LPDIRECT3DTEXTURE9 tex);
 	LPSPRITE Get(int id);
 
-	static CSprites* GetInstance();
+	static CSprites* Get_instance();
 };
 
 class CAnimationFrame
@@ -47,8 +47,8 @@ class CAnimationFrame
 
 public:
 	CAnimationFrame(LPSPRITE sprite, int time) { this->sprite = sprite; this->time = time; }
-	DWORD GetTime() { return time; }
-	LPSPRITE GetSprite() { return sprite; }
+	DWORD Get_time() { return time; }
+	LPSPRITE Get_sprite() { return sprite; }
 };
 typedef CAnimationFrame* LPANIMATION_FRAME;
 
@@ -75,7 +75,7 @@ public:
 	void Add(int id, LPANIMATION ani);
 	LPANIMATION Get(int id);
 
-	static CAnimations* GetInstance();
+	static CAnimations* Get_instance();
 };
 
 #endif // !_SPRITES_H

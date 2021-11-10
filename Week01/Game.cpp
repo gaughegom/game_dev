@@ -9,7 +9,7 @@ CGame* CGame::__instance = NULL;
 	- hInst: Application instance handle
 	- hWnd: Application window handle
 */
-void CGame::Init(HWND hWnd)
+void CGame::Init_game(HWND hWnd)
 {
 	LPDIRECT3D9 d3d = Direct3DCreate9(D3D_SDK_VERSION);
 
@@ -29,6 +29,9 @@ void CGame::Init(HWND hWnd)
 
 	d3dpp.BackBufferHeight = r.bottom + 1;
 	d3dpp.BackBufferWidth = r.right + 1;
+
+	backBufferWidth = d3dpp.BackBufferWidth;
+	backBufferHeight = d3dpp.BackBufferHeight;
 
 	d3d->CreateDevice(
 		D3DADAPTER_DEFAULT,
@@ -66,12 +69,12 @@ void CGame::Draw(float x, float y, LPDIRECT3DTEXTURE9 texture, int left, int top
 	spriteHandler->Draw(texture, &r, NULL, &p, D3DCOLOR_XRGB(255, 255, 255));
 }
 
-int CGame::IsKeyDown(int KeyCode)
+int CGame::Is_key_down(int KeyCode)
 {
 	return (keyStates[KeyCode] & 0x80) > 0;
 }
 
-void CGame::InitKeyboard(LPKEYEVENTHANDLER handler)
+void CGame::Init_keyboard(LPKEYEVENTHANDLER handler)
 {
 	HRESULT
 		hr = DirectInput8Create
@@ -140,16 +143,16 @@ void CGame::InitKeyboard(LPKEYEVENTHANDLER handler)
 	DebugOut(L"[INFO] Keyboard has been initialized successfully\n");
 }
 
-void CGame::ProcessKeyboard()
+void CGame::Process_keyboard()
 {
-	HRESULT hr;
+	HRESULT hResult;
 
 	// Collect all key states first
-	hr = didv->GetDeviceState(sizeof(keyStates), keyStates);
-	if (FAILED(hr))
+	hResult = didv->GetDeviceState(sizeof(keyStates), keyStates);
+	if (FAILED(hResult))
 	{
 		// If the keyboard lost focus or was not acquired then try to get control back.
-		if ((hr == DIERR_INPUTLOST) || (hr == DIERR_NOTACQUIRED))
+		if ((hResult == DIERR_INPUTLOST) || (hResult == DIERR_NOTACQUIRED))
 		{
 			HRESULT h = didv->Acquire();
 			if (h == DI_OK)
@@ -160,21 +163,20 @@ void CGame::ProcessKeyboard()
 		}
 		else
 		{
-			//DebugOut(L"[ERROR] DINPUT::GetDeviceState failed. Error: %d\n", hr);
+			DebugOut(L"[ERROR] DINPUT::GetDeviceState failed. Error: %d\n", hResult);
 			return;
 		}
 	}
 
-	keyHandler->KeyState((BYTE*)&keyStates);
-
+	keyHandler->Key_state((BYTE*)&keyStates);
 
 
 	// Collect all buffered events
 	DWORD dwElements = KEYBOARD_BUFFER_SIZE;
-	hr = didv->GetDeviceData(sizeof(DIDEVICEOBJECTDATA), keyEvents, &dwElements, 0);
-	if (FAILED(hr))
+	hResult = didv->GetDeviceData(sizeof(DIDEVICEOBJECTDATA), keyEvents, &dwElements, 0);
+	if (FAILED(hResult))
 	{
-		//DebugOut(L"[ERROR] DINPUT::GetDeviceData failed. Error: %d\n", hr);
+		DebugOut(L"[ERROR] DINPUT::GetDeviceData failed. Error: %d\n", hResult);
 		return;
 	}
 
@@ -184,9 +186,9 @@ void CGame::ProcessKeyboard()
 		int KeyCode = keyEvents[i].dwOfs;
 		int KeyState = keyEvents[i].dwData;
 		if ((KeyState & 0x80) > 0)
-			keyHandler->OnKeyDown(KeyCode);
+			keyHandler->On_key_down(KeyCode);
 		else
-			keyHandler->OnKeyUp(KeyCode);
+			keyHandler->On_key_up(KeyCode);
 	}
 }
 
@@ -199,7 +201,7 @@ CGame::~CGame()
 }
 
 
-CGame* CGame::GetInstance()
+CGame* CGame::Get_instance()
 {
 	if (__instance == NULL) __instance = new CGame();
 	return __instance;

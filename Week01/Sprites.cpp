@@ -14,7 +14,7 @@ CSprite::CSprite(int id, int left, int top, int right, int bottom, LPDIRECT3DTEX
 
 CSprites* CSprites::__instance = NULL;
 
-CSprites* CSprites::GetInstance()
+CSprites* CSprites::Get_instance()
 {
 	if (__instance == NULL) __instance = new CSprites();
 	return __instance;
@@ -22,7 +22,7 @@ CSprites* CSprites::GetInstance()
 
 void CSprite::Draw(float x, float y)
 {
-	CGame* game = CGame::GetInstance();
+	CGame* game = CGame::Get_instance();
 	game->Draw(x, y, texture, left, top, right, bottom);
 }
 
@@ -44,7 +44,7 @@ void CAnimation::Add(int spriteId, DWORD time)
 	int t = time;
 	if (time == 0) t = this->defaultTime;
 
-	LPSPRITE sprite = CSprites::GetInstance()->Get(spriteId);
+	LPSPRITE sprite = CSprites::Get_instance()->Get(spriteId);
 	LPANIMATION_FRAME frame = new CAnimationFrame(sprite, t);
 	frames.push_back(frame);
 }
@@ -59,7 +59,7 @@ void CAnimation::Render(float x, float y)
 	}
 	else
 	{
-		DWORD t = frames[currentFrame]->GetTime();
+		DWORD t = frames[currentFrame]->Get_time();
 		if (now - lastFrameTime > t)
 		{
 			currentFrame++;
@@ -70,12 +70,12 @@ void CAnimation::Render(float x, float y)
 
 	}
 
-	frames[currentFrame]->GetSprite()->Draw(x, y);
+	frames[currentFrame]->Get_sprite()->Draw(x, y);
 }
 
 CAnimations* CAnimations::__instance = NULL;
 
-CAnimations* CAnimations::GetInstance()
+CAnimations* CAnimations::Get_instance()
 {
 	if (__instance == NULL) __instance = new CAnimations();
 	return __instance;

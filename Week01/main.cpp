@@ -7,55 +7,49 @@
 #include "GameObject.h"
 #include "Textures.h"
 #include "GamePlayer.h"
+#include "resources.h"
 
-#define WINDOW_CLASS_NAME L"SampleWindow"
-#define WINDOW_TITLE L"02 - Sprite animation"
-
-#define BACKGROUND_COLOR D3DCOLOR_XRGB(200, 200, 255)
-#define SCREEN_WIDTH 320
-#define SCREEN_HEIGHT 240
-
-#define MAX_FRAME_RATE 90
-
-#define ID_TEX_MARIO 0
-#define ID_TEX_ENEMY 10
-#define ID_TEX_MISC 20
 
 CGame* game;
 CGamePlayer* player;
+CTextures* textures = CTextures::Get_instance();
+CSprites* sprites = CSprites::Get_instance();
+CAnimations* animations = CAnimations::Get_instance();
 
-class CSampleKeyHander : public CKeyEventHandler
+class CKeyHander : public CKeyEventHandler
 {
-	virtual void KeyState(BYTE* states);
-	virtual void OnKeyDown(int KeyCode);
-	virtual void OnKeyUp(int KeyCode);
+	virtual void Key_state(BYTE* states);
+	virtual void On_key_down(int KeyCode);
+	virtual void On_key_up(int KeyCode);
 };
 
-CSampleKeyHander* keyHandler;
+CKeyHander* keyHandler;
 
-void CSampleKeyHander::OnKeyDown(int KeyCode)
+void CKeyHander::On_key_down(int KeyCode)
 {
 	DebugOut(L"[INFO] KeyDown: %d\n", KeyCode);
-	switch (KeyCode)
-	{
-	case DIK_SPACE:
-		player->SetState(MARIO_STATE_JUMP);
-		break;
-	}
 }
 
-void CSampleKeyHander::OnKeyUp(int KeyCode)
+void CKeyHander::On_key_up(int KeyCode)
 {
 	DebugOut(L"[INFO] KeyUp: %d\n", KeyCode);
 }
 
-void CSampleKeyHander::KeyState(BYTE* states)
+void CKeyHander::Key_state(BYTE* states)
 {
-	if (game->IsKeyDown(DIK_RIGHT))
-		player->SetState(MARIO_STATE_WALKING_RIGHT);
-	else if (game->IsKeyDown(DIK_LEFT))
-		player->SetState(MARIO_STATE_WALKING_LEFT);
-	else player->SetState(MARIO_STATE_IDLE);
+	if (game->Is_key_down(DIK_RIGHT)) {
+		player->Set_state(PLAYER_STATE_MOVING_RIGHT);
+	}
+	else if (game->Is_key_down(DIK_LEFT)) {
+		player->Set_state(PLAYER_STATE_MOVING_LEFT);
+	}
+	else if (game->Is_key_down(DIK_UP)) {
+		player->Set_state(PLAYER_STATE_MOVING_UP);
+	}
+	else if (game->Is_key_down(DIK_DOWN)) {
+		player->Set_state(PLAYER_STATE_MOVING_DOWN);
+	}
+	else player->Set_state(PLAYER_STATE_IDLE);
 }
 
 LRESULT CALLBACK WinProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
@@ -71,33 +65,28 @@ LRESULT CALLBACK WinProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	return 0;
 }
 
-/*
-	Load all game resources
-	In this example: load textures, sprites, animations and mario object
-*/
-void LoadResources()
-{
-	CTextures* textures = CTextures::GetInstance();
+void Add_mario_sprites(LPDIRECT3DTEXTURE9 texture) {
+	// mario move left
+	sprites->Add(10001, 246, 154, 260, 181, texture);
+	sprites->Add(10002, 275, 154, 290, 181, texture);
+	sprites->Add(10003, 304, 154, 321, 181, texture);
 
-	textures->Add(ID_TEX_MARIO, L"textures\\mario.png", D3DCOLOR_XRGB(176, 224, 248));
+	// mario move right
+	sprites->Add(10011, 186, 154, 200, 181, texture);
+	sprites->Add(10012, 155, 154, 170, 181, texture);
+	sprites->Add(10013, 125, 154, 140, 181, texture);
 
-	CSprites* sprites = CSprites::GetInstance();
-	CAnimations* animations = CAnimations::GetInstance();
+	// mario move up
+	sprites->Add(10021, 215, 194, 232, 222, texture);
+	sprites->Add(10022, 92, 275, 111, 300, texture);
+	sprites->Add(10023, 335, 275, 351, 300, texture);
 
-	LPDIRECT3DTEXTURE9 texMario = textures->Get(ID_TEX_MARIO);
+	// mario move down
+	sprites->Add(10031, 215, 154, 231, 181, texture);
+	sprites->Add(10032, 215, 234, 231, 251, texture);
+}
 
-
-	sprites->Add(10001, 246, 154, 260, 181, texMario);
-
-	sprites->Add(10002, 275, 154, 290, 181, texMario);
-	sprites->Add(10003, 304, 154, 321, 181, texMario);
-
-	sprites->Add(10011, 186, 154, 200, 181, texMario);
-
-	sprites->Add(10012, 155, 154, 170, 181, texMario);
-	sprites->Add(10013, 125, 154, 140, 181, texMario);
-
-
+void Add_mario_animations() {
 	LPANIMATION ani;
 
 	ani = new CAnimation(100);
@@ -108,6 +97,13 @@ void LoadResources()
 	ani->Add(10011);
 	animations->Add(401, ani);
 
+	ani = new CAnimation(100);
+	ani->Add(10021);
+	animations->Add(402, ani);
+
+	ani = new CAnimation(100);
+	ani->Add(10031);
+	animations->Add(403, ani);
 
 	ani = new CAnimation(100);
 	ani->Add(10001);
@@ -121,13 +117,41 @@ void LoadResources()
 	ani->Add(10013);
 	animations->Add(501, ani);
 
-	player = new CGamePlayer();
-	CGamePlayer::AddAnimation(400);		// idle right
-	CGamePlayer::AddAnimation(401);		// idle left
-	CGamePlayer::AddAnimation(500);		// walk right
-	CGamePlayer::AddAnimation(501);		// walk left
+	ani = new CAnimation(100);
+	ani->Add(10021);
+	ani->Add(10022);
+	ani->Add(10023);
+	animations->Add(502, ani);
 
-	player->SetPosition(0.0f, 100.0f);
+	ani = new CAnimation(100);
+	ani->Add(10031);
+	ani->Add(10032);
+	animations->Add(503, ani);
+}
+
+/*
+	Load all game resources
+	In this example: load textures, sprites, animations and mario object
+*/
+void Load_resources()
+{
+	textures->Add(ID_TEXTURES_PLAYER, MARIO_TEXTURE_PATH, D3DCOLOR_XRGB(176, 224, 248));
+	LPDIRECT3DTEXTURE9 texPlayer = textures->Get(ID_TEXTURES_PLAYER);
+
+	Add_mario_sprites(texPlayer);
+	Add_mario_animations();
+
+	player = new CGamePlayer();
+	CGamePlayer::Add_animation(400);		// idle right
+	CGamePlayer::Add_animation(401);		// idle left
+	CGamePlayer::Add_animation(402);
+	CGamePlayer::Add_animation(403);
+	CGamePlayer::Add_animation(500);		// walk right
+	CGamePlayer::Add_animation(501);		// walk left
+	CGamePlayer::Add_animation(502);		// walk up
+	CGamePlayer::Add_animation(503);
+
+	player->Set_position(PLAYER_START_X, PLAYER_START_Y);
 }
 
 /*
@@ -144,9 +168,9 @@ void Update(DWORD dt)
 */
 void Render()
 {
-	LPDIRECT3DDEVICE9 d3ddv = game->GetDirect3DDevice();
-	LPDIRECT3DSURFACE9 bb = game->GetBackBuffer();
-	LPD3DXSPRITE spriteHandler = game->GetSpriteHandler();
+	LPDIRECT3DDEVICE9 d3ddv = game->Get_direct3D_device();
+	LPDIRECT3DSURFACE9 bb = game->Get_backbuffer();
+	LPD3DXSPRITE spriteHandler = game->Get_sprite_handler();
 
 	if (d3ddv->BeginScene())
 	{
@@ -165,7 +189,7 @@ void Render()
 	d3ddv->Present(NULL, NULL, NULL, NULL);
 }
 
-HWND CreateGameWindow(HINSTANCE hInstance, int nCmdShow, int ScreenWidth, int ScreenHeight)
+HWND Create_game_window(HINSTANCE hInstance, int nCmdShow, int ScreenWidth, int ScreenHeight)
 {
 	WNDCLASSEX wc;
 	wc.cbSize = sizeof(WNDCLASSEX);
@@ -239,7 +263,7 @@ int Run()
 		{
 			frameStart = now;
 
-			game->ProcessKeyboard();
+			game->Process_keyboard();
 
 			Update(dt);
 			Render();
@@ -253,16 +277,16 @@ int Run()
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
-	HWND hWnd = CreateGameWindow(hInstance, nCmdShow, SCREEN_WIDTH, SCREEN_HEIGHT);
+	HWND hWnd = Create_game_window(hInstance, nCmdShow, SCREEN_WIDTH, SCREEN_HEIGHT);
 
-	game = CGame::GetInstance();
-	game->Init(hWnd);
+	game = CGame::Get_instance();
+	game->Init_game(hWnd);
 
-	keyHandler = new CSampleKeyHander();
-	game->InitKeyboard(keyHandler);
+	keyHandler = new CKeyHander();
+	game->Init_keyboard(keyHandler);
 
 
-	LoadResources();
+	Load_resources();
 	Run();
 
 	return 0;

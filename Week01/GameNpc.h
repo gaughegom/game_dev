@@ -1,10 +1,11 @@
 #pragma once
-#ifndef _GAMEPLAYER_H
+#ifndef _GAMENPC_H
 
 #include "GameObject.h"
+#include "Game.h"
 #include "resources.h"
 
-class CGamePlayer : public CGameObject
+class CGameNpc : public CGameObject
 {
 public:
 	void Update(DWORD dt);
@@ -13,5 +14,4 @@ public:
 	void Set_state(int state);
 };
 
-#endif // !_GAMEPLAYER_H
-
+#endif // !_GAMENPC_H
