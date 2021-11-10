@@ -19,21 +19,21 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\gamedev-intro-tutorials\03-Keyboard-States\Game.cpp" />
-    <ClCompile Include="..\..\gamedev-intro-tutorials\03-Keyboard-States\GameObject.cpp" />
-    <ClCompile Include="..\..\gamedev-intro-tutorials\03-Keyboard-States\main.cpp" />
-    <ClCompile Include="..\..\gamedev-intro-tutorials\03-Keyboard-States\Mario.cpp" />
-    <ClCompile Include="..\..\gamedev-intro-tutorials\03-Keyboard-States\Sprites.cpp" />
-    <ClCompile Include="..\..\gamedev-intro-tutorials\03-Keyboard-States\Textures.cpp" />
+    <ClCompile Include="GamePlayer.cpp" />
     <ClCompile Include="debug.cpp" />
+    <ClCompile Include="Game.cpp" />
+    <ClCompile Include="GameObject.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="Sprites.cpp" />
+    <ClCompile Include="Textures.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\gamedev-intro-tutorials\03-Keyboard-States\Game.h" />
-    <ClInclude Include="..\..\gamedev-intro-tutorials\03-Keyboard-States\GameObject.h" />
-    <ClInclude Include="..\..\gamedev-intro-tutorials\03-Keyboard-States\Mario.h" />
-    <ClInclude Include="..\..\gamedev-intro-tutorials\03-Keyboard-States\Sprites.h" />
-    <ClInclude Include="..\..\gamedev-intro-tutorials\03-Keyboard-States\Textures.h" />
     <ClInclude Include="debug.h" />
+    <ClInclude Include="Game.h" />
+    <ClInclude Include="GameObject.h" />
+    <ClInclude Include="GamePlayer.h" />
+    <ClInclude Include="Sprites.h" />
+    <ClInclude Include="Textures.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

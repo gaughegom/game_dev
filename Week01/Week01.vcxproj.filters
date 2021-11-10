@@ -18,22 +18,22 @@
     <ClCompile Include="debug.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\gamedev-intro-tutorials\03-Keyboard-States\Game.cpp">
+    <ClCompile Include="Textures.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\gamedev-intro-tutorials\03-Keyboard-States\GameObject.cpp">
+    <ClCompile Include="Game.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\gamedev-intro-tutorials\03-Keyboard-States\Mario.cpp">
+    <ClCompile Include="Sprites.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\gamedev-intro-tutorials\03-Keyboard-States\Sprites.cpp">
+    <ClCompile Include="GameObject.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\gamedev-intro-tutorials\03-Keyboard-States\Textures.cpp">
+    <ClCompile Include="GamePlayer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\gamedev-intro-tutorials\03-Keyboard-States\main.cpp">
+    <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -41,19 +41,19 @@
     <ClInclude Include="debug.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\gamedev-intro-tutorials\03-Keyboard-States\Textures.h">
+    <ClInclude Include="Textures.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\gamedev-intro-tutorials\03-Keyboard-States\Sprites.h">
+    <ClInclude Include="Game.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\gamedev-intro-tutorials\03-Keyboard-States\Mario.h">
+    <ClInclude Include="Sprites.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\gamedev-intro-tutorials\03-Keyboard-States\Game.h">
+    <ClInclude Include="GameObject.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\gamedev-intro-tutorials\03-Keyboard-States\GameObject.h">
+    <ClInclude Include="GamePlayer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
