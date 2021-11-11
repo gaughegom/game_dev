@@ -185,6 +185,7 @@ void Load_resources()
 	player->Set_position(PLAYER_START_X, PLAYER_START_Y);
 	npc->Set_position(NPC_START_X, NPC_START_Y);
 	npc->Set_speed(NPC_MOVING_SPEED, 0);
+	//npc->Set_state(NPC_STATE_MOVING_DOWN);
 }
 
 /*
