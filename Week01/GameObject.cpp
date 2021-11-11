@@ -4,15 +4,15 @@ vector<LPANIMATION> CGameObject::animations;
 
 CGameObject::CGameObject()
 {
-	x = y = 0;
-	vx = vy = 0;
-	nx = 1;
+	this->x = this->y = 0;
+	this->vx = this->vy = 0;
+	this->nx = 1;
 }
 
 void CGameObject::Update(DWORD dt)
 {
-	x += vx * dt;
-	y += vy * dt;
+	this->x += this->vx * dt;
+	this->y += this->vy * dt;
 }
 
 void CGameObject::Render()
@@ -24,8 +24,6 @@ void CGameObject::Add_animation(int aniId)
 	LPANIMATION ani = CAnimations::Get_instance()->Get(aniId);
 	animations.push_back(ani);
 }
-
-
 
 CGameObject::~CGameObject()
 {
