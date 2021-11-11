@@ -67,22 +67,22 @@ void CGamePlayer::Set_state(int state)
 	switch (state)
 	{
 	case PLAYER_STATE_MOVING_RIGHT:
-		this->vx = PLAYER_WALKING_SPEED;
+		this->vx = PLAYER_MOVING_SPEED;
 		this->vy = 0;
 		this->nx = 1;
 		break;
 	case PLAYER_STATE_MOVING_LEFT:
-		this->vx = -PLAYER_WALKING_SPEED;
+		this->vx = -PLAYER_MOVING_SPEED;
 		this->vy = 0;
 		this->nx = -1;
 		break;
 	case PLAYER_STATE_MOVING_UP:
-		this->vy = -PLAYER_WALKING_SPEED;
+		this->vy = -PLAYER_MOVING_SPEED;
 		this->vx = 0;
 		this->nx = -2;
 		break;
 	case PLAYER_STATE_MOVING_DOWN:
-		this->vy = PLAYER_WALKING_SPEED;
+		this->vy = PLAYER_MOVING_SPEED;
 		this->vx = 0;
 		this->nx = 2;
 		break;

@@ -7,11 +7,13 @@
 #include "GameObject.h"
 #include "Textures.h"
 #include "GamePlayer.h"
+#include "GameNpc.h"
 #include "resources.h"
 
 
 CGame* game;
 CGamePlayer* player;
+CGameNpc* npc;
 CTextures* textures = CTextures::Get_instance();
 CSprites* sprites = CSprites::Get_instance();
 CAnimations* animations = CAnimations::Get_instance();
@@ -87,46 +89,72 @@ void Add_mario_sprites(LPDIRECT3DTEXTURE9 texture) {
 }
 
 void Add_mario_animations() {
-	LPANIMATION ani;
+	LPANIMATION lpani;
 
-	ani = new CAnimation(100);
-	ani->Add(10001);
-	animations->Add(400, ani);
+	lpani = new CAnimation(100);
+	lpani->Add(10001);
+	animations->Add(400, lpani);
 
-	ani = new CAnimation(100);
-	ani->Add(10011);
-	animations->Add(401, ani);
+	lpani = new CAnimation(100);
+	lpani->Add(10011);
+	animations->Add(401, lpani);
 
-	ani = new CAnimation(100);
-	ani->Add(10021);
-	animations->Add(402, ani);
+	lpani = new CAnimation(100);
+	lpani->Add(10021);
+	animations->Add(402, lpani);
 
-	ani = new CAnimation(100);
-	ani->Add(10031);
-	animations->Add(403, ani);
+	lpani = new CAnimation(100);
+	lpani->Add(10031);
+	animations->Add(403, lpani);
+	//
+	lpani = new CAnimation(100);
+	lpani->Add(10001);
+	lpani->Add(10002);
+	lpani->Add(10003);
+	animations->Add(500, lpani);
 
-	ani = new CAnimation(100);
-	ani->Add(10001);
-	ani->Add(10002);
-	ani->Add(10003);
-	animations->Add(500, ani);
+	lpani = new CAnimation(100);
+	lpani->Add(10011);
+	lpani->Add(10012);
+	lpani->Add(10013);
+	animations->Add(501, lpani);
 
-	ani = new CAnimation(100);
-	ani->Add(10011);
-	ani->Add(10012);
-	ani->Add(10013);
-	animations->Add(501, ani);
+	lpani = new CAnimation(100);
+	lpani->Add(10021);
+	lpani->Add(10022);
+	lpani->Add(10023);
+	animations->Add(502, lpani);
 
-	ani = new CAnimation(100);
-	ani->Add(10021);
-	ani->Add(10022);
-	ani->Add(10023);
-	animations->Add(502, ani);
+	lpani = new CAnimation(100);
+	lpani->Add(10031);
+	lpani->Add(10032);
+	animations->Add(503, lpani);
+}
 
-	ani = new CAnimation(100);
-	ani->Add(10031);
-	ani->Add(10032);
-	animations->Add(503, ani);
+void Add_npc_animations() {
+	LPANIMATION lpani;
+	lpani = new CAnimation(100);
+	lpani->Add(10001);
+	lpani->Add(10002);
+	lpani->Add(10003);
+	animations->Add(600, lpani);
+
+	lpani = new CAnimation(100);
+	lpani->Add(10011);
+	lpani->Add(10012);
+	lpani->Add(10013);
+	animations->Add(601, lpani);
+
+	lpani = new CAnimation(100);
+	lpani->Add(10021);
+	lpani->Add(10022);
+	lpani->Add(10023);
+	animations->Add(602, lpani);
+
+	lpani = new CAnimation(100);
+	lpani->Add(10031);
+	lpani->Add(10032);
+	animations->Add(603, lpani);
 }
 
 /*
@@ -135,23 +163,35 @@ void Add_mario_animations() {
 */
 void Load_resources()
 {
-	textures->Add(ID_TEXTURES_PLAYER, MARIO_TEXTURE_PATH, D3DCOLOR_XRGB(176, 224, 248));
+	textures->Add(ID_TEXTURES_PLAYER, MARIO_TEXTURE_PATH, D3DCOLOR_XRGB(255, 255, 255));
+	textures->Add(ID_TEXTURES_NPC, MARIO_TEXTURE_PATH, D3DCOLOR_XRGB(255, 255, 255));
 	LPDIRECT3DTEXTURE9 texPlayer = textures->Get(ID_TEXTURES_PLAYER);
+	LPDIRECT3DTEXTURE9 texNpc = textures->Get(ID_TEXTURES_NPC);
 
 	Add_mario_sprites(texPlayer);
+	Add_mario_sprites(texNpc);
 	Add_mario_animations();
+	Add_npc_animations();
 
 	player = new CGamePlayer();
 	CGamePlayer::Add_animation(400);		// idle right
-	CGamePlayer::Add_animation(401);		// idle left
-	CGamePlayer::Add_animation(402);
-	CGamePlayer::Add_animation(403);
+	CGamePlayer::Add_animation(401);		//		left
+	CGamePlayer::Add_animation(402);		//		up
+	CGamePlayer::Add_animation(403);		//		down
 	CGamePlayer::Add_animation(500);		// walk right
-	CGamePlayer::Add_animation(501);		// walk left
-	CGamePlayer::Add_animation(502);		// walk up
-	CGamePlayer::Add_animation(503);
+	CGamePlayer::Add_animation(501);		//		left
+	CGamePlayer::Add_animation(502);		//		up
+	CGamePlayer::Add_animation(503);		//		down
+
+	npc = new CGameNpc();
+	CGameNpc::Add_animation(600);
+	CGameNpc::Add_animation(601);
+	CGameNpc::Add_animation(602);
+	CGameNpc::Add_animation(603);
 
 	player->Set_position(PLAYER_START_X, PLAYER_START_Y);
+	npc->Set_position(NPC_START_X, NPC_START_Y);
+	npc->Set_speed(NPC_MOVING_SPEED, 0);
 }
 
 /*
@@ -161,6 +201,7 @@ void Load_resources()
 void Update(DWORD dt)
 {
 	player->Update(dt);
+	npc->Update(dt);
 }
 
 /*
@@ -180,6 +221,7 @@ void Render()
 		spriteHandler->Begin(D3DXSPRITE_ALPHABLEND);
 
 		player->Render();
+		npc->Render();
 
 		spriteHandler->End();
 		d3ddv->EndScene();
