@@ -1,15 +1,9 @@
-#include "resources.h"
-#include "GameObject.h"
-#include "Textures.h"
-#include "GamePlayer.h"
-#include "GameNpc.h"
+#include "prepare.h"
 
 CGame* game;
 CGamePlayer* player;
 CGameNpc* npc;
 CTextures* textures = CTextures::Get_instance();
-CSprites* sprites = CSprites::Get_instance();
-CAnimations* animations = CAnimations::Get_instance();
 
 class CKeyHander : public CKeyEventHandler
 {
@@ -60,96 +54,6 @@ LRESULT CALLBACK WinProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	return 0;
 }
 
-void Add_mario_sprites(LPDIRECT3DTEXTURE9 texture) {
-	// mario move left
-	sprites->Add(10001, 246, 154, 260, 181, texture);
-	sprites->Add(10002, 275, 154, 290, 181, texture);
-	sprites->Add(10003, 304, 154, 321, 181, texture);
-
-	// mario move right
-	sprites->Add(10011, 186, 154, 200, 181, texture);
-	sprites->Add(10012, 155, 154, 170, 181, texture);
-	sprites->Add(10013, 125, 154, 140, 181, texture);
-
-	// mario move up
-	sprites->Add(10021, 215, 194, 232, 222, texture);
-	sprites->Add(10022, 92, 275, 111, 300, texture);
-	sprites->Add(10023, 335, 275, 351, 300, texture);
-
-	// mario move down
-	sprites->Add(10031, 215, 154, 231, 181, texture);
-	sprites->Add(10032, 215, 234, 231, 251, texture);
-}
-
-void Add_mario_animations() {
-	LPANIMATION lpani;
-
-	lpani = new CAnimation(100);
-	lpani->Add(10001);
-	animations->Add(400, lpani);
-
-	lpani = new CAnimation(100);
-	lpani->Add(10011);
-	animations->Add(401, lpani);
-
-	lpani = new CAnimation(100);
-	lpani->Add(10021);
-	animations->Add(402, lpani);
-
-	lpani = new CAnimation(100);
-	lpani->Add(10031);
-	animations->Add(403, lpani);
-	//
-	lpani = new CAnimation(100);
-	lpani->Add(10001);
-	lpani->Add(10002);
-	lpani->Add(10003);
-	animations->Add(500, lpani);
-
-	lpani = new CAnimation(100);
-	lpani->Add(10011);
-	lpani->Add(10012);
-	lpani->Add(10013);
-	animations->Add(501, lpani);
-
-	lpani = new CAnimation(100);
-	lpani->Add(10021);
-	lpani->Add(10022);
-	lpani->Add(10023);
-	animations->Add(502, lpani);
-
-	lpani = new CAnimation(100);
-	lpani->Add(10031);
-	lpani->Add(10032);
-	animations->Add(503, lpani);
-}
-
-void Add_npc_animations() {
-	LPANIMATION lpani;
-	lpani = new CAnimation(100);
-	lpani->Add(10001);
-	lpani->Add(10002);
-	lpani->Add(10003);
-	animations->Add(600, lpani);
-
-	lpani = new CAnimation(100);
-	lpani->Add(10011);
-	lpani->Add(10012);
-	lpani->Add(10013);
-	animations->Add(601, lpani);
-
-	lpani = new CAnimation(100);
-	lpani->Add(10021);
-	lpani->Add(10022);
-	lpani->Add(10023);
-	animations->Add(602, lpani);
-
-	lpani = new CAnimation(100);
-	lpani->Add(10031);
-	lpani->Add(10032);
-	animations->Add(603, lpani);
-}
-
 /*
 	Load all game resources
 	In this example: load textures, sprites, animations and mario object
@@ -184,8 +88,7 @@ void Load_resources()
 
 	player->Set_position(PLAYER_START_X, PLAYER_START_Y);
 	npc->Set_position(NPC_START_X, NPC_START_Y);
-	npc->Set_speed(NPC_MOVING_SPEED, 0);
-	//npc->Set_state(NPC_STATE_MOVING_DOWN);
+	npc->Set_state(NPC_STATE_MOVING_DOWN);
 }
 
 /*

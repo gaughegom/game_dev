@@ -8,17 +8,26 @@ void CGamePlayer::Update(DWORD dt)
 	int backbufferHeight = CGame::Get_instance()->Get_backbuffer_height();
 
 	// simple screen edge collision!!!
-	if (this->vx > 0 && this->x >  backbufferWidth - PLAYER_WIDTH) {
-		this->x = backbufferWidth - PLAYER_WIDTH;
-	}
-	if (this->vx < 0 && this->x < 0) {
-		this->x = 0;
-	}
-	if (this->vy > 0 && this->y > backbufferHeight - PLAYER_HEIGHT) {
-		this->y = backbufferHeight - PLAYER_HEIGHT;
-	}
-	if (this->vy < 0 && this->y < 0) {
-		this->y = 0;
+	switch (this->state)
+	{
+	case PLAYER_STATE_MOVING_RIGHT:
+		if (this->x > backbufferWidth - PLAYER_WIDTH) {
+			this->x = backbufferWidth - PLAYER_WIDTH;
+		}
+	case PLAYER_STATE_MOVING_LEFT:
+		if (this->x < 0) {
+			this->x = 0;
+		}
+	case PLAYER_STATE_MOVING_DOWN:
+		if (this->y > backbufferHeight - PLAYER_HEIGHT) {
+			this->y = backbufferHeight - PLAYER_HEIGHT;
+		}
+	case PLAYER_STATE_MOVING_UP:
+		if (this->y < 0) {
+			this->y = 0;
+		}
+	default:
+		break;
 	}
 }
 
@@ -30,7 +39,7 @@ void CGamePlayer::Render()
 
 int CGamePlayer::Get_state()
 {
-	if (this->vx == 0) {
+	/*if (this->vx == 0) {
 		if (this->vy == 0) {
 			switch (this->nx)
 			{
@@ -57,6 +66,29 @@ int CGamePlayer::Get_state()
 	}
 	else {
 		return PLAYER_ANIMATION_MOVING_LEFT;
+	}*/
+	switch (this->state)
+	{
+	case PLAYER_STATE_MOVING_RIGHT:
+		return PLAYER_ANIMATION_MOVING_RIGHT;
+	case PLAYER_STATE_MOVING_LEFT:
+		return PLAYER_ANIMATION_MOVING_LEFT;
+	case PLAYER_STATE_MOVING_DOWN:
+		return PLAYER_ANIMATION_MOVING_DOWN;
+	case PLAYER_STATE_MOVING_UP:
+		return PLAYER_ANIMATION_MOVING_UP;
+	default:
+		switch (this->nx)
+		{
+		case 1:
+			return PLAYER_ANIMATION_IDLE_RIGHT;
+		case -1:
+			return PLAYER_ANIMATION_IDLE_LEFT;
+		case 2:
+			return PLAYER_ANIMAION_IDLE_DOWN;
+		case -2:
+			return PLAYER_ANIMATION_IDLE_UP;
+		}
 	}
 }
 
