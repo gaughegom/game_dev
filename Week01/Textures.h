@@ -1,8 +1,7 @@
 #pragma once
 #ifndef _TEXTURES_H
 
-#include <unordered_map>
-#include <d3dx9.h>
+#include "resources.h"
 
 using namespace std;
 

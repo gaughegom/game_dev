@@ -1,10 +1,19 @@
 #pragma once
 #ifndef _RESOURCES_H
 
+#include <Windows.h>
+#include <d3d9.h>
+#include <d3dx9.h>
+#include <time.h>
+#include <unordered_map>
+#include <vector>
+#include <dinput.h>
+#include "debug.h"
+
 #define WINDOW_CLASS_NAME			L"Homework 01"
 #define WINDOW_TITLE				L"Homework 01"
 
-#define BACKGROUND_COLOR			D3DCOLOR_XRGB(200, 200, 255)
+#define BACKGROUND_COLOR			D3DCOLOR_XRGB(172, 201, 223)
 #define SCREEN_WIDTH				640
 #define SCREEN_HEIGHT				480
 
@@ -15,13 +24,14 @@
 #define ID_TEXTURES_NPC				1
 
 #define MARIO_TEXTURE_PATH			L"resources//mario.png"
+#define TEXTURE_TRANS_COLOR			D3DCOLOR_XRGB(255, 255, 255)
 
 // PLAYER SETTINGS
 #define PLAYER_START_X				SCREEN_WIDTH / 2 - 50
 #define PLAYER_START_Y				SCREEN_HEIGHT / 2 - 50
 #define PLAYER_WIDTH				30
 #define PLAYER_HEIGHT				32
-#define PLAYER_MOVING_SPEED		0.1f
+#define PLAYER_MOVING_SPEED			0.2f
 
 // NPC SETTINGS
 #define NPC_START_X					10.0f

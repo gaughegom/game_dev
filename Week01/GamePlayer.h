@@ -1,8 +1,9 @@
 #pragma once
 #ifndef _GAMEPLAYER_H
 
-#include "GameObject.h"
 #include "resources.h"
+#include "GameObject.h"
+#include "Game.h"
 
 class CGamePlayer : public CGameObject
 {

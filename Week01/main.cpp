@@ -1,15 +1,8 @@
-#include <Windows.h>
-#include <d3d9.h>
-#include <d3dx9.h>
-
-#include "debug.h"
-#include "Game.h"
+#include "resources.h"
 #include "GameObject.h"
 #include "Textures.h"
 #include "GamePlayer.h"
 #include "GameNpc.h"
-#include "resources.h"
-
 
 CGame* game;
 CGamePlayer* player;
@@ -163,8 +156,8 @@ void Add_npc_animations() {
 */
 void Load_resources()
 {
-	textures->Add(ID_TEXTURES_PLAYER, MARIO_TEXTURE_PATH, D3DCOLOR_XRGB(255, 255, 255));
-	textures->Add(ID_TEXTURES_NPC, MARIO_TEXTURE_PATH, D3DCOLOR_XRGB(255, 255, 255));
+	textures->Add(ID_TEXTURES_PLAYER, MARIO_TEXTURE_PATH, TEXTURE_TRANS_COLOR);
+	textures->Add(ID_TEXTURES_NPC, MARIO_TEXTURE_PATH, TEXTURE_TRANS_COLOR);
 	LPDIRECT3DTEXTURE9 texPlayer = textures->Get(ID_TEXTURES_PLAYER);
 	LPDIRECT3DTEXTURE9 texNpc = textures->Get(ID_TEXTURES_NPC);
 

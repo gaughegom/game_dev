@@ -1,9 +1,8 @@
 #pragma once
 #ifndef _SPRITES_H
 
-#include <Windows.h>
-#include <d3dx9.h>
-#include <unordered_map>
+#include "resources.h"
+#include "Game.h"
 
 using namespace std;
 

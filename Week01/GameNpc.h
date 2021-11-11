@@ -1,9 +1,9 @@
 #pragma once
 #ifndef _GAMENPC_H
 
+#include "resources.h"
 #include "GameObject.h"
 #include "Game.h"
-#include "resources.h"
 
 class CGameNpc : public CGameObject
 {

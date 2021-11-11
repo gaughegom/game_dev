@@ -1,9 +1,4 @@
-#include <d3dx9.h>
-
-#include "debug.h"
-#include "Game.h"
 #include "GameObject.h"
-#include "Sprites.h"
 
 vector<LPANIMATION> CGameObject::animations;
 

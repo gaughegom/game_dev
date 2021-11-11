@@ -1,11 +1,9 @@
 #pragma once
 #ifndef _GAMEOBJECT_H
 
-#include <Windows.h>
-#include <d3dx9.h>
-#include <vector>
-
+#include "resources.h"
 #include "Sprites.h"
+#include "Game.h"
 
 using namespace std;
 

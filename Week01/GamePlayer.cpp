@@ -1,5 +1,4 @@
 #include "GamePlayer.h"
-#include "Game.h"
 
 void CGamePlayer::Update(DWORD dt)
 {
