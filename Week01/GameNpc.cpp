@@ -7,6 +7,15 @@ void CGameNpc::Update(DWORD dt)
 	int backbufferWidth = CGame::Get_instance()->Get_backbuffer_width();
 	int backbufferHeight = CGame::Get_instance()->Get_backbuffer_height();
 
+	// clock
+	NpcMoveFollowClock(backbufferWidth, backbufferHeight);
+
+	// reverse clock
+	//NpcMoveReverseClock(backbufferHeight, backbufferWidth);
+}
+
+void CGameNpc::NpcMoveFollowClock(int backbufferWidth, int backbufferHeight)
+{
 	if (this->vy < 0 && this->y < 0) {
 		this->y = NPC_START_Y;
 		CGameNpc::Set_state(NPC_STATE_MOVING_RIGHT);
@@ -22,6 +31,27 @@ void CGameNpc::Update(DWORD dt)
 	else if (this->vy > 0 && this->y > backbufferHeight - PLAYER_HEIGHT) {
 		this->y = backbufferHeight - PLAYER_HEIGHT;
 		CGameNpc::Set_state(NPC_STATE_MOVING_LEFT);
+	}
+}
+
+void CGameNpc::NpcMoveReverseClock(int backbufferHeight, int backbufferWidth)
+{
+	if (this->vy < 0 && this->y <= 0) {
+		this->y = NPC_START_Y;
+		CGameNpc::Set_state(NPC_STATE_MOVING_LEFT);
+	}
+	else if (this->vy > 0 && this->y >= backbufferHeight - PLAYER_HEIGHT) {
+		this->y = backbufferHeight - PLAYER_HEIGHT;
+		CGameNpc::Set_state(NPC_STATE_MOVING_RIGHT);
+	}
+	else if (this->vx < 0 && this->x <= 0) {
+		this->x = NPC_START_X;
+		CGameNpc::Set_state(NPC_STATE_MOVING_DOWN);
+	}
+	else if (this->vx > 0 && this->x >= backbufferWidth - PLAYER_WIDTH) {
+		OutputDebugStringA("MOVE UP");
+		this->x = backbufferWidth - PLAYER_WIDTH;
+		CGameNpc::Set_state(NPC_STATE_MOVING_UP);
 	}
 }
 

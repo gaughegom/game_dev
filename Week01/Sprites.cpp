@@ -21,21 +21,19 @@ CSprites* CSprites::Get_instance()
 void CSprite::Draw(float x, float y)
 {
 	CGame* game = CGame::Get_instance();
-	game->Draw(x, y, texture, left, top, right, bottom);
+	game->Draw(x, y, this->texture, this->left, this->top, this->right, this->bottom);
 }
 
 void CSprites::Add(int id, int left, int top, int right, int bottom, LPDIRECT3DTEXTURE9 tex)
 {
 	LPSPRITE s = new CSprite(id, left, top, right, bottom, tex);
-	sprites[id] = s;
+	this->sprites[id] = s;
 }
 
 LPSPRITE CSprites::Get(int id)
 {
-	return sprites[id];
+	return this->sprites[id];
 }
-
-
 
 void CAnimation::Add(int spriteId, DWORD time)
 {
@@ -44,31 +42,30 @@ void CAnimation::Add(int spriteId, DWORD time)
 
 	LPSPRITE sprite = CSprites::Get_instance()->Get(spriteId);
 	LPANIMATION_FRAME frame = new CAnimationFrame(sprite, t);
-	frames.push_back(frame);
+	this->frames.push_back(frame);
 }
 
 void CAnimation::Render(float x, float y)
 {
 	DWORD now = GetTickCount();
-	if (currentFrame == -1)
+	if (this->currentFrame == -1)
 	{
-		currentFrame = 0;
-		lastFrameTime = now;
+		this->currentFrame = 0;
+		this->lastFrameTime = now;
 	}
 	else
 	{
-		DWORD t = frames[currentFrame]->Get_time();
-		if (now - lastFrameTime > t)
+		DWORD t = this->frames[currentFrame]->Get_time();
+		if (now - this->lastFrameTime > t)
 		{
-			currentFrame++;
-			lastFrameTime = now;
-			if (currentFrame == frames.size()) currentFrame = 0;
-			//DebugOut(L"now: %d, lastFrameTime: %d, t: %d\n", now, lastFrameTime, t);
+			this->currentFrame++;
+			this->lastFrameTime = now;
+			if (currentFrame == frames.size()) this->currentFrame = 0;
 		}
 
 	}
 
-	frames[currentFrame]->Get_sprite()->Draw(x, y);
+	this->frames[currentFrame]->Get_sprite()->Draw(x, y);
 }
 
 CAnimations* CAnimations::__instance = NULL;
@@ -81,10 +78,10 @@ CAnimations* CAnimations::Get_instance()
 
 void CAnimations::Add(int id, LPANIMATION ani)
 {
-	animations[id] = ani;
+	this->animations[id] = ani;
 }
 
 LPANIMATION CAnimations::Get(int id)
 {
-	return animations[id];
+	return this->animations[id];
 }

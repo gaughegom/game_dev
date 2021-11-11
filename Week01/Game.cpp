@@ -193,12 +193,19 @@ void CGame::Process_keyboard()
 
 CGame::~CGame()
 {
-	if (spriteHandler != NULL) spriteHandler->Release();
-	if (backBuffer != NULL) backBuffer->Release();
-	if (d3ddv != NULL) d3ddv->Release();
-	if (d3d != NULL) d3d->Release();
+	if (spriteHandler != NULL) {
+		this->spriteHandler->Release();
+	}
+	if (backBuffer != NULL) {
+		this->backBuffer->Release();
+	}
+	if (d3ddv != NULL) {
+		this->d3ddv->Release();
+	}
+	if (d3d != NULL) {
+		this->d3d->Release();
+	}
 }
-
 
 CGame* CGame::Get_instance()
 {
