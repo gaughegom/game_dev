@@ -1,5 +1,6 @@
 #pragma once
 #ifndef _RESOURCES_H
+#define _RESOURCES_H
 
 #include <Windows.h>
 #include <d3d9.h>

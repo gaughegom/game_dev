@@ -1,5 +1,6 @@
 #pragma once
 #ifndef _GAMENPC_H
+#define _GAMENPC_H
 
 #include "resources.h"
 #include "GameObject.h"

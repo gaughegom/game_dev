@@ -1,5 +1,6 @@
 #pragma once
 #ifndef _SPRITES_H
+#define _SPRITES_H
 
 #include "resources.h"
 #include "Game.h"
