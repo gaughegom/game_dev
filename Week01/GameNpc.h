@@ -14,8 +14,8 @@ public:
 	int Get_state();
 	void Set_state(int state);
 	
-	void NpcMoveFollowClock(int backbufferWidth, int backbufferHeight);
-	void NpcMoveReverseClock(int backbufferHeight, int backbufferWidth);
+	void Npc_move_follow_clock(int backbufferWidth, int backbufferHeight);
+	void Npc_move_reverse_clock(int backbufferHeight, int backbufferWidth);
 };
 
 #endif // !_GAMENPC_H
