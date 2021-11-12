@@ -30,12 +30,14 @@ public:
 	void Set_state(int state) { this->state = state; }
 	int Get_state() { return this->state; }
 
+	void Set_x(float newX);
+	void Set_y(float newY);
 
 	static void Add_animation(int aniId);
 
 	CGameObject();
 
-	void Update(DWORD dt);
+	virtual void Update(DWORD dt);
 	virtual void Render() = 0;
 	~CGameObject();
 };
