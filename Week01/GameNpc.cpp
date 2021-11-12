@@ -8,37 +8,37 @@ void CGameNpc::Update(DWORD dt)
 	int backbufferHeight = CGame::Get_instance()->Get_backbuffer_height();
 
 	// clock
-	//NpcMoveFollowClock(backbufferWidth, backbufferHeight);
+	//Npc_move_follow_clock(backbufferHeight, backbufferWidth);
 
 	// reverse clock
-	NpcMoveReverseClock(backbufferHeight, backbufferWidth);
+	Npc_move_reverse_clock(backbufferHeight, backbufferWidth);
 }
 
-void CGameNpc::NpcMoveFollowClock(int backbufferWidth, int backbufferHeight)
+void CGameNpc::Npc_move_follow_clock(int backbufferWidth, int backbufferHeight)
 {
 	switch (this->state)
 	{
 	case NPC_STATE_MOVING_UP:
 		if (this->y < 0) {
-			this->y = NPC_START_Y;
+			CGameObject::Set_y(NPC_START_Y);
 			CGameNpc::Set_state(NPC_STATE_MOVING_RIGHT);
 		}
 		break;
 	case NPC_STATE_MOVING_DOWN:
 		if (this->y > backbufferHeight - PLAYER_HEIGHT) {
-			this->y = backbufferHeight - PLAYER_HEIGHT;
+			CGameObject::Set_y(backbufferHeight - PLAYER_HEIGHT);
 			CGameNpc::Set_state(NPC_STATE_MOVING_LEFT);
 		}
 		break;
 	case NPC_STATE_MOVING_RIGHT:
 		if (this->x > backbufferWidth - PLAYER_WIDTH) {
-			this->x = backbufferWidth - PLAYER_WIDTH;
+			CGameObject::Set_x(backbufferWidth - PLAYER_WIDTH);
 			CGameNpc::Set_state(NPC_STATE_MOVING_DOWN);
 		}
 		break;
 	case NPC_STATE_MOVING_LEFT:
 		if (this->x < 0) {
-			this->x = NPC_START_X;
+			CGameObject::Set_x(NPC_START_X);
 			CGameNpc::Set_state(NPC_STATE_MOVING_UP);
 		}
 		break;
@@ -47,31 +47,31 @@ void CGameNpc::NpcMoveFollowClock(int backbufferWidth, int backbufferHeight)
 	}
 }
 
-void CGameNpc::NpcMoveReverseClock(int backbufferHeight, int backbufferWidth)
+void CGameNpc::Npc_move_reverse_clock(int backbufferHeight, int backbufferWidth)
 {
 	switch (this->state)
 	{
 	case NPC_STATE_MOVING_UP:
 		if (this->y < 0) {
-			this->y = NPC_START_Y;
+			CGameObject::Set_y(NPC_START_Y);
 			CGameNpc::Set_state(NPC_STATE_MOVING_LEFT);
 		}
 		break;
 	case NPC_STATE_MOVING_DOWN:
 		if (this->y > backbufferHeight - PLAYER_HEIGHT) {
-			this->y = backbufferHeight - PLAYER_HEIGHT;
+			CGameObject::Set_y(backbufferHeight - PLAYER_HEIGHT);
 			CGameNpc::Set_state(NPC_STATE_MOVING_RIGHT);
 		}
 		break;
 	case NPC_STATE_MOVING_RIGHT:
 		if (this->x > backbufferWidth - PLAYER_WIDTH) {
-			this->x = backbufferWidth - PLAYER_WIDTH;
+			CGameObject::Set_x(backbufferWidth - PLAYER_WIDTH);
 			CGameNpc::Set_state(NPC_STATE_MOVING_UP);
 		}
 		break;
 	case NPC_STATE_MOVING_LEFT:
 		if (this->x < 0) {
-			this->x = NPC_START_X;
+			CGameObject::Set_x(NPC_START_X);
 			CGameNpc::Set_state(NPC_STATE_MOVING_DOWN);
 		}
 		break;
@@ -97,7 +97,7 @@ int CGameNpc::Get_state()
 	case NPC_STATE_MOVING_UP:
 		return NPC_ANIMATION_MOVING_UP;
 	default:
-		return  NPC_ANIMATION_MOVING_RIGHT;
+		return NPC_ANIMATION_MOVING_RIGHT;
 	}
 }
 

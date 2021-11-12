@@ -19,6 +19,16 @@ void CGameObject::Render()
 {
 }
 
+void CGameObject::Set_x(float newX)
+{
+	this->x = newX;
+}
+
+void CGameObject::Set_y(float newY)
+{
+	this->y = newY;
+}
+
 void CGameObject::Add_animation(int aniId)
 {
 	LPANIMATION ani = CAnimations::Get_instance()->Get(aniId);
