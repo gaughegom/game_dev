@@ -4,34 +4,33 @@ vector<LPANIMATION> CGameObject::animations;
 
 CGameObject::CGameObject()
 {
-	this->x = this->y = 0;
-	this->vx = this->vy = 0;
+	this->position.x = this->position.y = 0;
+	this->velocity.x = this->velocity.y = 0;
 	this->nx = 1;
 }
 
 void CGameObject::Update(DWORD dt)
 {
-	this->x += this->vx * dt;
-	this->y += this->vy * dt;
+	this->position += this->velocity * dt;
 }
 
 void CGameObject::Render()
 {
 }
 
-void CGameObject::Set_x(float newX)
+void CGameObject::Set_x(float _x)
 {
-	this->x = newX;
+	this->position.x = _x;
 }
 
-void CGameObject::Set_y(float newY)
+void CGameObject::Set_y(float _y)
 {
-	this->y = newY;
+	this->position.y = _y;
 }
 
-void CGameObject::Add_animation(int aniId)
+void CGameObject::Add_animation(int _aniId)
 {
-	LPANIMATION ani = CAnimations::Get_instance()->Get(aniId);
+	LPANIMATION ani = CAnimations::Get_instance()->Get(_aniId);
 	animations.push_back(ani);
 }
 

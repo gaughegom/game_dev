@@ -5,36 +5,38 @@
 #include "resources.h"
 #include "Sprites.h"
 #include "Game.h"
-
-using namespace std;
+#include "Vector2D.h"
 
 class CGameObject
 {
 protected:
 
-	float x;
+	CVector2D position;
+	CVector2D velocity;
+
+	/*float x;
 	float y;
 
 	float vx;
-	float vy;
+	float vy;*/
 
 	int nx;
 
 	int state;
 
-	static vector<LPANIMATION> animations;
+	static std::vector<LPANIMATION> animations;
 
 public:
-	void Set_position(float x, float y) { this->x = x, this->y = y; }
-	void Set_speed(float vx, float vy) { this->vx = vx, this->vy = vy; }
+	void Set_position(float _x, float _y) { this->position.x = _x, this->position.y = _y; }
+	void Set_speed(float _vx, float _vy) { this->velocity.x = _vx, this->velocity.y = _vy; }
 
-	void Set_state(int state) { this->state = state; }
+	void Set_state(int _state) { this->state = _state; }
 	int Get_state() { return this->state; }
 
-	void Set_x(float newX);
-	void Set_y(float newY);
+	void Set_x(float _x);
+	void Set_y(float _y);
 
-	static void Add_animation(int aniId);
+	static void Add_animation(int _aniId);
 
 	CGameObject();
 

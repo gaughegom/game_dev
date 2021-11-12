@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Vector2D.cpp" />
     <ClCompile Include="GameNpc.cpp" />
     <ClCompile Include="GamePlayer.cpp" />
     <ClCompile Include="debug.cpp" />
@@ -39,6 +40,7 @@
     <ClInclude Include="resources.h" />
     <ClInclude Include="Sprites.h" />
     <ClInclude Include="Textures.h" />
+    <ClInclude Include="Vector2D.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

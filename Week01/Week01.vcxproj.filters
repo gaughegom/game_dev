@@ -9,67 +9,103 @@
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
     </Filter>
+    <Filter Include="Game">
+      <UniqueIdentifier>{5356ab05-a82d-45a5-8be7-98f028a20964}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game Objects">
+      <UniqueIdentifier>{145fc807-d6bc-4651-af49-4db3e2e59685}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Animations">
+      <UniqueIdentifier>{3da1dc82-a49a-46a6-96bb-1de090c0169e}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Resource Files">
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Animations\Textures">
+      <UniqueIdentifier>{95bfbd3e-ade5-42cc-816f-4e9b068d869a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Animations\Sprites">
+      <UniqueIdentifier>{f26774bb-9624-4b51-9e13-8a3b21f15229}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game Objects\Base">
+      <UniqueIdentifier>{635c6bf1-dd07-4f83-9edc-483c171038e6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game Objects\Player">
+      <UniqueIdentifier>{970a2267-9c06-411d-add0-550f9651acbc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game Objects\Npc">
+      <UniqueIdentifier>{1000ea67-8118-4f8a-8421-6b43b6bf7d56}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Common">
+      <UniqueIdentifier>{7781f070-6cc1-410f-8537-cec7f38d5bb3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Vector2D">
+      <UniqueIdentifier>{d4477b23-bb61-435f-9123-ad3f05f76fa3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="debug.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Textures.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Game.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Sprites.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GameObject.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GamePlayer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="GameNpc.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="Game.cpp">
+      <Filter>Game</Filter>
     </ClCompile>
     <ClCompile Include="prepare.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Textures.cpp">
+      <Filter>Animations\Textures</Filter>
+    </ClCompile>
+    <ClCompile Include="Sprites.cpp">
+      <Filter>Animations\Sprites</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject.cpp">
+      <Filter>Game Objects\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="GamePlayer.cpp">
+      <Filter>Game Objects\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="GameNpc.cpp">
+      <Filter>Game Objects\Npc</Filter>
+    </ClCompile>
+    <ClCompile Include="debug.cpp">
+      <Filter>Game\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="Vector2D.cpp">
+      <Filter>Game\Vector2D</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="debug.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Textures.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Game.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Sprites.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="GameObject.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="GamePlayer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="resources.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="GameNpc.h">
-      <Filter>Header Files</Filter>
+      <Filter>Game</Filter>
     </ClInclude>
     <ClInclude Include="prepare.h">
-      <Filter>Header Files</Filter>
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Textures.h">
+      <Filter>Animations\Textures</Filter>
+    </ClInclude>
+    <ClInclude Include="Sprites.h">
+      <Filter>Animations\Sprites</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject.h">
+      <Filter>Game Objects\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="GamePlayer.h">
+      <Filter>Game Objects\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="GameNpc.h">
+      <Filter>Game Objects\Npc</Filter>
+    </ClInclude>
+    <ClInclude Include="debug.h">
+      <Filter>Game\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="resources.h">
+      <Filter>Game\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Vector2D.h">
+      <Filter>Game\Vector2D</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
