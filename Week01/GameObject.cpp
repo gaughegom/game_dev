@@ -11,7 +11,7 @@ CGameObject::CGameObject()
 
 void CGameObject::Update(DWORD dt)
 {
-	this->position += this->velocity * dt;
+	Move_rectilinear(this->position, this->velocity, dt);
 }
 
 void CGameObject::Render()

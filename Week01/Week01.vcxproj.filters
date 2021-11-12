@@ -43,6 +43,9 @@
     <Filter Include="Game\Vector2D">
       <UniqueIdentifier>{d4477b23-bb61-435f-9123-ad3f05f76fa3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Game\Game movement">
+      <UniqueIdentifier>{c1deae0b-8f64-4139-b3ce-5bab24f4db97}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -75,6 +78,9 @@
     <ClCompile Include="Vector2D.cpp">
       <Filter>Game\Vector2D</Filter>
     </ClCompile>
+    <ClCompile Include="GameMovement.cpp">
+      <Filter>Game\Game movement</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -106,6 +112,9 @@
     </ClInclude>
     <ClInclude Include="Vector2D.h">
       <Filter>Game\Vector2D</Filter>
+    </ClInclude>
+    <ClInclude Include="GameMovement.h">
+      <Filter>Game\Game movement</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

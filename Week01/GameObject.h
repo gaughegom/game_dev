@@ -6,6 +6,7 @@
 #include "Sprites.h"
 #include "Game.h"
 #include "Vector2D.h"
+#include "GameMovement.h"
 
 class CGameObject
 {
@@ -13,12 +14,6 @@ protected:
 
 	CVector2D position;
 	CVector2D velocity;
-
-	/*float x;
-	float y;
-
-	float vx;
-	float vy;*/
 
 	int nx;
 

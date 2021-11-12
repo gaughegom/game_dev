@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="GameMovement.cpp" />
     <ClCompile Include="Vector2D.cpp" />
     <ClCompile Include="GameNpc.cpp" />
     <ClCompile Include="GamePlayer.cpp" />
@@ -33,6 +34,7 @@
   <ItemGroup>
     <ClInclude Include="debug.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="GameMovement.h" />
     <ClInclude Include="GameNpc.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GamePlayer.h" />

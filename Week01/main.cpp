@@ -2,7 +2,7 @@
 
 CGame* game;
 CGamePlayer* player;
-CGameNpc* npc;
+//CGameNpc* npc;
 CTextures* textures = CTextures::Get_instance();
 
 class CKeyHander : public CKeyEventHandler
@@ -63,12 +63,12 @@ void Load_resources()
 	textures->Add(ID_TEXTURES_PLAYER, MARIO_TEXTURE_PATH, TEXTURE_TRANS_COLOR);
 	textures->Add(ID_TEXTURES_NPC, MARIO_TEXTURE_PATH, TEXTURE_TRANS_COLOR);
 	LPDIRECT3DTEXTURE9 texPlayer = textures->Get(ID_TEXTURES_PLAYER);
-	LPDIRECT3DTEXTURE9 texNpc = textures->Get(ID_TEXTURES_NPC);
+	//LPDIRECT3DTEXTURE9 texNpc = textures->Get(ID_TEXTURES_NPC);
 
 	Add_mario_sprites(texPlayer);
-	Add_mario_sprites(texNpc);
 	Add_mario_animations();
-	Add_npc_animations();
+	//Add_mario_sprites(texNpc);
+	//Add_npc_animations();
 
 	player = new CGamePlayer();
 	CGamePlayer::Add_animation(400);		// idle right
@@ -80,16 +80,17 @@ void Load_resources()
 	CGamePlayer::Add_animation(502);		//		up
 	CGamePlayer::Add_animation(503);		//		down
 
-	npc = new CGameNpc();
+	player->Set_position(PLAYER_START_X, PLAYER_START_Y);
+
+	/*npc = new CGameNpc();
 	CGameNpc::Add_animation(600);
 	CGameNpc::Add_animation(601);
 	CGameNpc::Add_animation(602);
 	CGameNpc::Add_animation(603);
 
-	player->Set_position(PLAYER_START_X, PLAYER_START_Y);
 	npc->Set_position(NPC_START_X, NPC_START_Y);
 	npc->Set_state(NPC_STATE_MOVING_RIGHT);
-	//npc->Set_state(NPC_STATE_MOVING_DOWN);
+	npc->Set_state(NPC_STATE_MOVING_DOWN);*/
 }
 
 /*
@@ -99,7 +100,7 @@ void Load_resources()
 void Update(DWORD dt)
 {
 	player->Update(dt);
-	npc->Update(dt);
+	//npc->Update(dt);
 }
 
 /*
@@ -119,7 +120,7 @@ void Render()
 		spriteHandler->Begin(D3DXSPRITE_ALPHABLEND);
 
 		player->Render();
-		npc->Render();
+		//npc->Render();
 
 		spriteHandler->End();
 		d3ddv->EndScene();
