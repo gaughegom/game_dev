@@ -11,26 +11,26 @@ CGameObject::CGameObject()
 
 void CGameObject::Update(DWORD dt)
 {
-	Move_rectilinear(this->position, this->velocity, dt);
+	//Move_rectilinear(this->position, this->velocity, dt);
 }
 
 void CGameObject::Render()
 {
 }
 
-void CGameObject::Set_x(float _x)
+void CGameObject::Set_x(float x)
 {
-	this->position.x = _x;
+	this->position.x = x;
 }
 
-void CGameObject::Set_y(float _y)
+void CGameObject::Set_y(float y)
 {
-	this->position.y = _y;
+	this->position.y = y;
 }
 
-void CGameObject::Add_animation(int _aniId)
+void CGameObject::Add_animation(int animationId)
 {
-	LPANIMATION ani = CAnimations::Get_instance()->Get(_aniId);
+	LPANIMATION ani = CAnimations::Get_instance()->Get(animationId);
 	animations.push_back(ani);
 }
 
