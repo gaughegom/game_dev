@@ -10,7 +10,7 @@ public :
 	float x, y;
 
 	CVector2D() = default;
-	CVector2D(float _x, float _y);
+	CVector2D(float newX, float newY);
 	CVector2D operator+(const CVector2D& vec);
 	CVector2D& operator+=(const CVector2D& vec);
 	CVector2D operator-(const CVector2D& vec);
@@ -18,8 +18,11 @@ public :
 	CVector2D operator*(const CVector2D& vec);
 	CVector2D& operator*=(const CVector2D& vec);
 	
-	CVector2D operator*(const int& _val);
-	CVector2D operator*(const DWORD& _val);
+	CVector2D operator*(const int& val);
+	CVector2D operator*(const DWORD& val);
+
+	void Empty();
+	void Set(float newX, float newY);
 };
 
 #endif // !_VECTOR2D_H

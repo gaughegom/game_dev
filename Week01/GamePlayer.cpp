@@ -2,29 +2,34 @@
 
 void CGamePlayer::Update(DWORD dt)
 {
-	CGameObject::Update(dt);
+	Move_rectilinear(this->position, this->velocity, dt);
 
 	int backbufferWidth = CGame::Get_instance()->Get_backbuffer_width();
 	int backbufferHeight = CGame::Get_instance()->Get_backbuffer_height();
 
 	// simple screen edge collision!!!
+	EdgeCollisionHandler(backbufferWidth, backbufferHeight);
+}
+
+void CGamePlayer::EdgeCollisionHandler(int backbufferWidth, int backbufferHeight)
+{
 	switch (this->state)
 	{
 	case PLAYER_STATE_MOVING_RIGHT:
 		if (this->position.x > backbufferWidth - PLAYER_WIDTH) {
-			CGameObject::Set_x(backbufferWidth - PLAYER_WIDTH);
+			this->Set_x(backbufferWidth - PLAYER_WIDTH);
 		}
 	case PLAYER_STATE_MOVING_LEFT:
 		if (this->position.x < 0) {
-			CGameObject::Set_x(0);
+			this->Set_x(0);
 		}
 	case PLAYER_STATE_MOVING_DOWN:
 		if (this->position.y > backbufferHeight - PLAYER_HEIGHT) {
-			CGameObject::Set_y(backbufferHeight - PLAYER_HEIGHT);
+			this->Set_y(backbufferHeight - PLAYER_HEIGHT);
 		}
 	case PLAYER_STATE_MOVING_UP:
 		if (this->position.y < 0) {
-			CGameObject::Set_y(0);
+			this->Set_y(0);
 		}
 	default:
 		break;
@@ -33,7 +38,7 @@ void CGamePlayer::Update(DWORD dt)
 
 void CGamePlayer::Render()
 {
-	int animation = CGamePlayer::Get_state();
+	int animation = this->Get_state();
 	animations[animation]->Render(this->position.x, this->position.y);
 }
 
@@ -70,29 +75,27 @@ void CGamePlayer::Set_state(int state)
 	switch (state)
 	{
 	case PLAYER_STATE_MOVING_RIGHT:
-		this->velocity.x = PLAYER_MOVING_SPEED;
-		this->velocity.y = 0;
+		this->velocity.Set(PLAYER_MOVING_SPEED, 0);
 		this->nx = 1;
 		break;
 	case PLAYER_STATE_MOVING_LEFT:
-		this->velocity.x = -PLAYER_MOVING_SPEED;
-		this->velocity.y = 0;
+		this->velocity.Set(-PLAYER_MOVING_SPEED, 0);
 		this->nx = -1;
 		break;
 	case PLAYER_STATE_MOVING_UP:
-		this->velocity.x = 0;
-		this->velocity.y = -PLAYER_MOVING_SPEED;
+		this->velocity.Set(0, -PLAYER_MOVING_SPEED);
 		this->nx = -2;
 		break;
 	case PLAYER_STATE_MOVING_DOWN:
-		this->velocity.x = 0;
-		this->velocity.y = PLAYER_MOVING_SPEED;
+		this->velocity.Set(0, PLAYER_MOVING_SPEED);
 		this->nx = 2;
 		break;
 
 	case PLAYER_STATE_IDLE:
-		this->velocity.x = 0;
-		this->velocity.y = 0;
+		this->velocity.Empty();
+		break;
+	default:
+		this->velocity.Empty();
 		break;
 	}
 }

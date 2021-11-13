@@ -22,16 +22,16 @@ protected:
 	static std::vector<LPANIMATION> animations;
 
 public:
-	void Set_position(float _x, float _y) { this->position.x = _x, this->position.y = _y; }
-	void Set_speed(float _vx, float _vy) { this->velocity.x = _vx, this->velocity.y = _vy; }
+	void Set_position(float newX, float newY) { this->position.x = newX, this->position.y = newY; }
+	void Set_speed(float newVx, float newVy) { this->velocity.x = newVx, this->velocity.y = newVy; }
 
-	void Set_state(int _state) { this->state = _state; }
+	void Set_state(int newState) { this->state = newState; }
 	int Get_state() { return this->state; }
 
-	void Set_x(float _x);
-	void Set_y(float _y);
+	void Set_x(float newX);
+	void Set_y(float newY);
 
-	static void Add_animation(int _aniId);
+	static void Add_animation(int animationId);
 
 	CGameObject();
 

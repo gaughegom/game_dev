@@ -4,7 +4,6 @@
 
 #include "Vector2D.h"
 
-void Move_rectilinear(CVector2D& vCurPosition, CVector2D& vCurVelocity, DWORD dt);
-void Move_parabol(CVector2D& vCurPosition, CVector2D& vCurVelocity, DWORD dt);
+void Move_rectilinear(CVector2D& vPosition, CVector2D& vVelocity, DWORD dt);
 
 #endif // !_GAMEMOVEMENT_H

@@ -18,7 +18,7 @@
 #define SCREEN_WIDTH				640
 #define SCREEN_HEIGHT				480
 
-#define MAX_FRAME_RATE				100
+#define MAX_FRAME_RATE				90
 
 // ID TEXTURES
 #define ID_TEXTURES_PLAYER			0
@@ -32,7 +32,7 @@
 #define PLAYER_START_Y				SCREEN_HEIGHT / 2 - 50
 #define PLAYER_WIDTH				30
 #define PLAYER_HEIGHT				32
-#define PLAYER_MOVING_SPEED			0.2f
+#define PLAYER_MOVING_SPEED			0.1f
 
 // NPC SETTINGS
 #define NPC_START_X					10.0f

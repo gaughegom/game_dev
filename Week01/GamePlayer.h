@@ -10,6 +10,7 @@ class CGamePlayer : public CGameObject
 {
 public:
 	void Update(DWORD dt);
+	void EdgeCollisionHandler(int backbufferWidth, int backbufferHeight);
 	void Render();
 	int Get_state();
 	void Set_state(int state);
