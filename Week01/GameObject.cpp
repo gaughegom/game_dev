@@ -13,32 +13,32 @@ void CGameObject::Render()
 {
 }
 
-Vector2D CGameObject::Get_position()
+Vector2D CGameObject::GetPosition()
 {
 	return this->position;
 }
 
-void CGameObject::Set_x(float x)
+void CGameObject::SetNewX(float x)
 {
 	this->position.x = x;
 }
 
-void CGameObject::Set_y(float y)
+void CGameObject::SetNewY(float y)
 {
 	this->position.y = y;
 }
 
-float CGameObject::Get_x()
+float CGameObject::GetX()
 {
 	return this->position.x;
 }
 
-float CGameObject::Get_y()
+float CGameObject::GetY()
 {
 	return this->position.y;
 }
 
-void CGameObject::Add_animation(int animationId)
+void CGameObject::AddAnimation(int animationId)
 {
 	LPANIMATION ani = CAnimations::Get_instance()->Get(animationId);
 	animations.push_back(ani);

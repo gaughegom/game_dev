@@ -22,22 +22,22 @@ protected:
 
 public:
 	// position
-	void Set_position(float newX, float newY) { this->position.x = newX, this->position.y = newY; }
-	Vector2D Get_position();
-	void Set_x(float newX);
-	void Set_y(float newY);
-	float Get_x();
-	float Get_y();
+	void SetPosition(float newX, float newY) { this->position.x = newX, this->position.y = newY; }
+	Vector2D GetPosition();
+	void SetNewX(float newX);
+	void SetNewY(float newY);
+	float GetX();
+	float GetY();
 
 	// velocity
-	void Set_velocity(float newVx, float newVy) { this->velocity.x = newVx, this->velocity.y = newVy; }
+	void SetVelocity(float newVx, float newVy) { this->velocity.x = newVx, this->velocity.y = newVy; }
 
 	// state
-	void Set_state(int newState) { this->state = newState; }
+	void SetState(int newState) { this->state = newState; }
 	int Get_state() { return this->state; }
 
 
-	static void Add_animation(int animationId);
+	static void AddAnimation(int animationId);
 
 	CGameObject();
 

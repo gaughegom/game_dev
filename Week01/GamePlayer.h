@@ -12,8 +12,8 @@ public:
 	void Update(DWORD dt);
 	void EdgeCollisionHandler(int backbufferWidth, int backbufferHeight);
 	void Render();
-	void Set_state(int state);
-	int Get_state();
+	void SetState(int state);
+	int GetState();
 };
 
 #endif // !_GAMEPLAYER_H

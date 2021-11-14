@@ -9,79 +9,79 @@ CCamera* camera;
 
 class CKeyHander : public CKeyEventHandler
 {
-	virtual void Key_state(BYTE* states);
-	virtual void On_key_down(int KeyCode);
-	virtual void On_key_up(int KeyCode);
+	virtual void KeyState(BYTE* states);
+	virtual void OnKeyDown(int KeyCode);
+	virtual void OnKeyUp(int KeyCode);
 };
 
 CKeyHander* keyHandler;
 
-void CKeyHander::On_key_down(int KeyCode)
+void CKeyHander::OnKeyDown(int KeyCode)
 {
 	DebugOut(L"[INFO] KeyDown: %d\n", KeyCode);
 }
 
-void CKeyHander::On_key_up(int KeyCode)
+void CKeyHander::OnKeyUp(int KeyCode)
 {
 	DebugOut(L"[INFO] KeyUp: %d\n", KeyCode);
 }
 
-void CKeyHander::Key_state(BYTE* states)
+void CKeyHander::KeyState(BYTE* states)
 {
-	if (game->Is_key_down(DIK_RIGHT)) {
-		player->Set_state(PLAYER_STATE_MOVING_RIGHT);
+	if (game->IsKeyDown(DIK_RIGHT)) {
+		player->SetState(PLAYER_STATE_MOVING_RIGHT);
 	}
-	else if (game->Is_key_down(DIK_LEFT)) {
-		player->Set_state(PLAYER_STATE_MOVING_LEFT);
+	else if (game->IsKeyDown(DIK_LEFT)) {
+		player->SetState(PLAYER_STATE_MOVING_LEFT);
 	}
-	else if (game->Is_key_down(DIK_UP)) {
-		player->Set_state(PLAYER_STATE_MOVING_UP);
+	else if (game->IsKeyDown(DIK_UP)) {
+		player->SetState(PLAYER_STATE_MOVING_UP);
 	}
-	else if (game->Is_key_down(DIK_DOWN)) {
-		player->Set_state(PLAYER_STATE_MOVING_DOWN);
+	else if (game->IsKeyDown(DIK_DOWN)) {
+		player->SetState(PLAYER_STATE_MOVING_DOWN);
 	}
-	else player->Set_state(PLAYER_STATE_IDLE);
+	else player->SetState(PLAYER_STATE_IDLE);
 }
 
 /*
 	Load all game resources
 	In this example: load textures, sprites, animations and mario object
 */
-void Load_resources()
+void LoadResources()
 {
 	textures->Add(ID_TEXTURES_PLAYER, MARIO_TEXTURE_PATH, TEXTURE_TRANS_COLOR);
 	textures->Add(ID_TEXTURES_NPC, MARIO_TEXTURE_PATH, TEXTURE_TRANS_COLOR);
 	LPDIRECT3DTEXTURE9 texPlayer = textures->Get(ID_TEXTURES_PLAYER);
 	LPDIRECT3DTEXTURE9 texNpc = textures->Get(ID_TEXTURES_NPC);
 
-	Add_mario_sprites(texPlayer);
-	Add_mario_animations();
-	Add_mario_sprites(texNpc);
-	Add_npc_animations();
+	AddMarioSprites(texPlayer);
+	AddMarioAnimations();
+	AddMarioSprites(texNpc);
+	AddNpcAnimations();
 
 	player = new CGamePlayer();
-	CGamePlayer::Add_animation(400);		// idle right
-	CGamePlayer::Add_animation(401);		//		left
-	CGamePlayer::Add_animation(402);		//		up
-	CGamePlayer::Add_animation(403);		//		down
-	CGamePlayer::Add_animation(500);		// walk right
-	CGamePlayer::Add_animation(501);		//		left
-	CGamePlayer::Add_animation(502);		//		up
-	CGamePlayer::Add_animation(503);		//		down
+	CGamePlayer::AddAnimation(400);		// idle right
+	CGamePlayer::AddAnimation(401);		//		left
+	CGamePlayer::AddAnimation(402);		//		up
+	CGamePlayer::AddAnimation(403);		//		down
+	CGamePlayer::AddAnimation(500);		// walk right
+	CGamePlayer::AddAnimation(501);		//		left
+	CGamePlayer::AddAnimation(502);		//		up
+	CGamePlayer::AddAnimation(503);		//		down
 
-	player->Set_position(PLAYER_START_X, PLAYER_START_Y);
-	player->Set_velocity(0, 0);
+	player->SetPosition(PLAYER_START_X, PLAYER_START_Y);
+	player->SetVelocity(0, 0);
 
 	npc = new CGameNpc();
-	CGameNpc::Add_animation(600);
-	CGameNpc::Add_animation(601);
-	CGameNpc::Add_animation(602);
-	CGameNpc::Add_animation(603);
+	CGameNpc::AddAnimation(600);
+	CGameNpc::AddAnimation(601);
+	CGameNpc::AddAnimation(602);
+	CGameNpc::AddAnimation(603);
 
-	npc->Set_position(NPC_START_X, NPC_START_Y);
+	npc->SetPosition(NPC_START_X, NPC_START_Y);
 	npc->Set_state(NPC_STATE_MOVING_RIGHT);
 	npc->Set_state(NPC_STATE_MOVING_DOWN);
-	npc->Set_velocity(0, 0);
+	npc->SetVelocity(0, 0);
 
 	gameObjects.push_back(player);
 	gameObjects.push_back(npc);
@@ -108,9 +108,9 @@ void Update(DWORD dt)
 */
 void Render()
 {
-	LPDIRECT3DDEVICE9 d3ddv = game->Get_direct3D_device();
-	LPDIRECT3DSURFACE9 bb = game->Get_backbuffer();
-	LPD3DXSPRITE spriteHandler = game->Get_sprite_handler();
+	LPDIRECT3DDEVICE9 d3ddv = game->GetDirect3dDevice();
+	LPDIRECT3DSURFACE9 bb = game->GetBackbuffer();
+	LPD3DXSPRITE spriteHandler = game->GetSpriteHandler();
 
 	if (d3ddv->BeginScene())
 	{
@@ -158,7 +158,7 @@ int Run()
 		{
 			frameStart = now;
 
-			game->Process_keyboard();
+			game->ProcessKeyboard();
 
 			Update(dt);
 			Render();
@@ -234,15 +234,15 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 {
 	HWND hWnd = Create_game_window(hInstance, nCmdShow, SCREEN_WIDTH, SCREEN_HEIGHT);
 
-	game = CGame::Get_instance();
-	game->Init_directX(hWnd);
+	game = CGame::GetInstance();
+	game->InitDirectX(hWnd);
 
 	keyHandler = new CKeyHander();
-	game->Init_keyboard(keyHandler);
+	game->InitKeyboard(keyHandler);
 	SetWindowPos(hWnd, 0, 0, 0, SCREEN_WIDTH * 2, SCREEN_HEIGHT * 2, SWP_NOMOVE | SWP_NOOWNERZORDER | SWP_NOZORDER);
 
 
-	Load_resources();
+	LoadResources();
 	Run();
 
 	return 0;

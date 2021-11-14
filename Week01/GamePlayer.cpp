@@ -17,19 +17,19 @@ void CGamePlayer::EdgeCollisionHandler(int backbufferWidth, int backbufferHeight
 	{
 	case PLAYER_STATE_MOVING_RIGHT:
 		if (this->position.x > backbufferWidth - PLAYER_WIDTH) {
-			this->Set_x(backbufferWidth - PLAYER_WIDTH);
+			this->SetNewX(backbufferWidth - PLAYER_WIDTH);
 		}
 	case PLAYER_STATE_MOVING_LEFT:
 		if (this->position.x < 0) {
-			this->Set_x(0);
+			this->SetNewX(0);
 		}
 	case PLAYER_STATE_MOVING_DOWN:
 		if (this->position.y > backbufferHeight - PLAYER_HEIGHT) {
-			this->Set_y(backbufferHeight - PLAYER_HEIGHT);
+			this->SetNewY(backbufferHeight - PLAYER_HEIGHT);
 		}
 	case PLAYER_STATE_MOVING_UP:
 		if (this->position.y < 0) {
-			this->Set_y(0);
+			this->SetNewY(0);
 		}
 	default:
 		break;
@@ -38,11 +38,11 @@ void CGamePlayer::EdgeCollisionHandler(int backbufferWidth, int backbufferHeight
 
 void CGamePlayer::Render()
 {
-	int animation = this->Get_state();
+	int animation = this->GetState();
 	animations[animation]->Render(this->position.x, this->position.y);
 }
 
-int CGamePlayer::Get_state()
+int CGamePlayer::GetState()
 {
 	switch (this->state)
 	{
@@ -69,34 +69,34 @@ int CGamePlayer::Get_state()
 	}
 }
 
-void CGamePlayer::Set_state(int state)
+void CGamePlayer::SetState(int state)
 {
-	CGameObject::Set_state(state);
+	CGameObject::SetState(state);
 	switch (state)
 	{
 	case PLAYER_STATE_MOVING_RIGHT:
 		//this->velocity.Set(PLAYER_MOVING_SPEED, 0);
-		this->Set_velocity(PLAYER_MOVING_SPEED, 0);
+		this->SetVelocity(PLAYER_MOVING_SPEED, 0);
 		this->nx = 1;
 		break;
 	case PLAYER_STATE_MOVING_LEFT:
-		this->Set_velocity(-PLAYER_MOVING_SPEED, 0);
+		this->SetVelocity(-PLAYER_MOVING_SPEED, 0);
 		this->nx = -1;
 		break;
 	case PLAYER_STATE_MOVING_UP:
-		this->Set_velocity(0, -PLAYER_MOVING_SPEED);
+		this->SetVelocity(0, -PLAYER_MOVING_SPEED);
 		this->nx = -2;
 		break;
 	case PLAYER_STATE_MOVING_DOWN:
-		this->Set_velocity(0, PLAYER_MOVING_SPEED);
+		this->SetVelocity(0, PLAYER_MOVING_SPEED);
 		this->nx = 2;
 		break;
 
 	case PLAYER_STATE_IDLE:
-		this->Set_velocity(0, 0);
+		this->SetVelocity(0, 0);
 		break;
 	default:
-		this->Set_velocity(0, 0);
+		this->SetVelocity(0, 0);
 		this->position.x;
 		break;
 	}

@@ -21,7 +21,7 @@ void CCamera::Set_size(int newWidth, int newHeight)
 
 void CCamera::Update()
 {
-	Vector2D targetPosition = target->Get_position();
+	Vector2D targetPosition = target->GetPosition();
 	this->position.x = targetPosition.x - this->width / static_cast<float>(2);
 	this->position.y = targetPosition.y - this->height / static_cast<float>(2);
 }

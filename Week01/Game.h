@@ -7,9 +7,9 @@
 class CKeyEventHandler
 {
 public:
-	virtual void Key_state(BYTE* state) = 0;
-	virtual void On_key_down(int KeyCode) = 0;
-	virtual void On_key_up(int KeyCode) = 0;
+	virtual void KeyState(BYTE* state) = 0;
+	virtual void OnKeyDown(int KeyCode) = 0;
+	virtual void OnKeyUp(int KeyCode) = 0;
 };
 
 typedef CKeyEventHandler* LPKEYEVENTHANDLER;
@@ -37,21 +37,21 @@ class CGame
 	int backBufferHeight = 0;
 
 public:
-	void Init_keyboard(LPKEYEVENTHANDLER handler);
-	void Init_directX(HWND hWnd);
+	void InitKeyboard(LPKEYEVENTHANDLER handler);
+	void InitDirectX(HWND hWnd);
 	void Draw(float x, float y, LPDIRECT3DTEXTURE9 texture, int left, int top, int right, int bottom);
 
-	int Is_key_down(int KeyCode);
-	void Process_keyboard();
+	int IsKeyDown(int KeyCode);
+	void ProcessKeyboard();
 
-	LPDIRECT3DDEVICE9 Get_direct3D_device() { return this->d3ddv; }
-	LPDIRECT3DSURFACE9 Get_backbuffer() { return backBuffer; }
-	LPD3DXSPRITE Get_sprite_handler() { return this->spriteHandler; }
+	LPDIRECT3DDEVICE9 GetDirect3dDevice() { return this->d3ddv; }
+	LPDIRECT3DSURFACE9 GetBackbuffer() { return backBuffer; }
+	LPD3DXSPRITE GetSpriteHandler() { return this->spriteHandler; }
 
-	static CGame* Get_instance();
+	static CGame* GetInstance();
 
-	int Get_backbuffer_width() { return this->backBufferWidth; }
-	int Get_backbuffer_height() { return this->backBufferHeight; }
+	int GetBackbufferWidth() { return this->backBufferWidth; }
+	int GetBackbufferHeight() { return this->backBufferHeight; }
 
 	~CGame();
 };

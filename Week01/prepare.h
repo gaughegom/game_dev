@@ -8,8 +8,8 @@
 #include "GameNpc.h"
 #include "Camera.h"
 
-void Add_mario_sprites(LPDIRECT3DTEXTURE9 texture);
-void Add_mario_animations();
-void Add_npc_animations();
+void AddMarioSprites(LPDIRECT3DTEXTURE9 texture);
+void AddMarioAnimations();
+void AddNpcAnimations();
 
 #endif // !_PREPARE_H

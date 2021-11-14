@@ -3,7 +3,7 @@
 CSprites* sprites = CSprites::Get_instance();
 CAnimations* animations = CAnimations::Get_instance();
 
-void Add_mario_sprites(LPDIRECT3DTEXTURE9 texture) {
+void AddMarioSprites(LPDIRECT3DTEXTURE9 texture) {
 	// mario move left
 	sprites->Add(10001, 246, 154, 260, 181, texture);
 	sprites->Add(10002, 275, 154, 290, 181, texture);
@@ -24,7 +24,7 @@ void Add_mario_sprites(LPDIRECT3DTEXTURE9 texture) {
 	sprites->Add(10032, 215, 234, 231, 251, texture);
 }
 
-void Add_mario_animations() {
+void AddMarioAnimations() {
 	LPANIMATION lpani;
 
 	// 0 - 9
@@ -75,7 +75,7 @@ void Add_mario_animations() {
 	animations->Add(503, lpani);
 }
 
-void Add_npc_animations() {
+void AddNpcAnimations() {
 	LPANIMATION lpani;
 	// 80 - 89
 	lpani = new CAnimation(10);

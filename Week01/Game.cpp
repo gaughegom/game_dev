@@ -8,7 +8,7 @@ CGame* CGame::__instance = NULL;
 	- hInst: Application instance handle
 	- hWnd: Application window handle
 */
-void CGame::Init_game(HWND hWnd)
+void CGame::InitDirectX(HWND hWnd)
 {
 	LPDIRECT3D9 d3d = Direct3DCreate9(D3D_SDK_VERSION);
 
@@ -69,12 +69,12 @@ void CGame::Draw(float x, float y, LPDIRECT3DTEXTURE9 texture, int left, int top
 	spriteHandler->Draw(texture, &r, NULL, &p, D3DCOLOR_XRGB(255, 255, 255));
 }
 
-int CGame::Is_key_down(int KeyCode)
+int CGame::IsKeyDown(int KeyCode)
 {
 	return (keyStates[KeyCode] & 0x80) > 0;
 }
 
-void CGame::Init_keyboard(LPKEYEVENTHANDLER handler)
+void CGame::InitKeyboard(LPKEYEVENTHANDLER handler)
 {
 	HRESULT
 		hr = DirectInput8Create
@@ -143,7 +143,7 @@ void CGame::Init_keyboard(LPKEYEVENTHANDLER handler)
 	DebugOut(L"[INFO] Keyboard has been initialized successfully\n");
 }
 
-void CGame::Process_keyboard()
+void CGame::ProcessKeyboard()
 {
 	HRESULT hResult;
 
@@ -168,7 +168,7 @@ void CGame::Process_keyboard()
 		}
 	}
 
-	keyHandler->Key_state((BYTE*)&keyStates);
+	keyHandler->KeyState((BYTE*)&keyStates);
 
 
 	// Collect all buffered events
@@ -186,9 +186,9 @@ void CGame::Process_keyboard()
 		int KeyCode = keyEvents[i].dwOfs;
 		int KeyState = keyEvents[i].dwData;
 		if ((KeyState & 0x80) > 0)
-			keyHandler->On_key_down(KeyCode);
+			keyHandler->OnKeyDown(KeyCode);
 		else
-			keyHandler->On_key_up(KeyCode);
+			keyHandler->OnKeyUp(KeyCode);
 	}
 }
 
@@ -208,7 +208,7 @@ CGame::~CGame()
 	}
 }
 
-CGame* CGame::Get_instance()
+CGame* CGame::GetInstance()
 {
 	if (__instance == NULL) __instance = new CGame();
 	return __instance;
