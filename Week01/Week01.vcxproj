@@ -19,8 +19,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Camera.cpp" />
     <ClCompile Include="GameMovement.cpp" />
-    <ClCompile Include="Vector2D.cpp" />
     <ClCompile Include="GameNpc.cpp" />
     <ClCompile Include="GamePlayer.cpp" />
     <ClCompile Include="debug.cpp" />
@@ -32,6 +32,7 @@
     <ClCompile Include="Textures.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Camera.h" />
     <ClInclude Include="debug.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameMovement.h" />
@@ -42,7 +43,6 @@
     <ClInclude Include="resources.h" />
     <ClInclude Include="Sprites.h" />
     <ClInclude Include="Textures.h" />
-    <ClInclude Include="Vector2D.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

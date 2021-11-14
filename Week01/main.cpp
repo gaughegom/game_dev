@@ -2,8 +2,10 @@
 
 CGame* game;
 CGamePlayer* player;
-//CGameNpc* npc;
+std::vector<CGameObject*> gameObjects;
+CGameNpc* npc;
 CTextures* textures = CTextures::Get_instance();
+CCamera* camera;
 
 class CKeyHander : public CKeyEventHandler
 {
@@ -41,19 +43,6 @@ void CKeyHander::Key_state(BYTE* states)
 	else player->Set_state(PLAYER_STATE_IDLE);
 }
 
-LRESULT CALLBACK WinProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
-{
-	switch (message) {
-	case WM_DESTROY:
-		PostQuitMessage(0);
-		break;
-	default:
-		return DefWindowProc(hWnd, message, wParam, lParam);
-	}
-
-	return 0;
-}
-
 /*
 	Load all game resources
 	In this example: load textures, sprites, animations and mario object
@@ -63,12 +52,12 @@ void Load_resources()
 	textures->Add(ID_TEXTURES_PLAYER, MARIO_TEXTURE_PATH, TEXTURE_TRANS_COLOR);
 	textures->Add(ID_TEXTURES_NPC, MARIO_TEXTURE_PATH, TEXTURE_TRANS_COLOR);
 	LPDIRECT3DTEXTURE9 texPlayer = textures->Get(ID_TEXTURES_PLAYER);
-	//LPDIRECT3DTEXTURE9 texNpc = textures->Get(ID_TEXTURES_NPC);
+	LPDIRECT3DTEXTURE9 texNpc = textures->Get(ID_TEXTURES_NPC);
 
 	Add_mario_sprites(texPlayer);
 	Add_mario_animations();
-	//Add_mario_sprites(texNpc);
-	//Add_npc_animations();
+	Add_mario_sprites(texNpc);
+	Add_npc_animations();
 
 	player = new CGamePlayer();
 	CGamePlayer::Add_animation(400);		// idle right
@@ -81,8 +70,9 @@ void Load_resources()
 	CGamePlayer::Add_animation(503);		//		down
 
 	player->Set_position(PLAYER_START_X, PLAYER_START_Y);
+	player->Set_velocity(0, 0);
 
-	/*npc = new CGameNpc();
+	npc = new CGameNpc();
 	CGameNpc::Add_animation(600);
 	CGameNpc::Add_animation(601);
 	CGameNpc::Add_animation(602);
@@ -90,7 +80,15 @@ void Load_resources()
 
 	npc->Set_position(NPC_START_X, NPC_START_Y);
 	npc->Set_state(NPC_STATE_MOVING_RIGHT);
-	npc->Set_state(NPC_STATE_MOVING_DOWN);*/
+	npc->Set_state(NPC_STATE_MOVING_DOWN);
+	npc->Set_velocity(0, 0);
+
+	gameObjects.push_back(player);
+	gameObjects.push_back(npc);
+
+	camera = new CCamera();
+	camera->Set_target(player);
+	camera->Set_size(SCREEN_WIDTH, SCREEN_HEIGHT);
 }
 
 /*
@@ -99,8 +97,10 @@ void Load_resources()
 */
 void Update(DWORD dt)
 {
-	player->Update(dt);
-	//npc->Update(dt);
+	camera->Update();
+	for (auto object : gameObjects) {
+		object->Update(dt);
+	}
 }
 
 /*
@@ -119,8 +119,9 @@ void Render()
 
 		spriteHandler->Begin(D3DXSPRITE_ALPHABLEND);
 
-		player->Render();
-		//npc->Render();
+		for (auto object : gameObjects) {
+			object->Render();
+		}
 
 		spriteHandler->End();
 		d3ddv->EndScene();
@@ -128,6 +129,58 @@ void Render()
 
 	// Display back buffer content to the screen
 	d3ddv->Present(NULL, NULL, NULL, NULL);
+}
+
+int Run()
+{
+	MSG msg;
+	int done = 0;
+	DWORD frameStart = GetTickCount();
+	DWORD tickPerFrame = 1000 / MAX_FRAME_RATE;
+
+	while (!done)
+	{
+		if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
+		{
+			if (msg.message == WM_QUIT) done = 1;
+
+			TranslateMessage(&msg);
+			DispatchMessage(&msg);
+		}
+
+		DWORD now = GetTickCount();
+
+		// dt: the time between (beginning of last frame) and now
+		// this frame: the frame we are about to render
+		DWORD dt = now - frameStart;
+
+		if (dt >= tickPerFrame)
+		{
+			frameStart = now;
+
+			game->Process_keyboard();
+
+			Update(dt);
+			Render();
+		}
+		else
+			Sleep(tickPerFrame - dt);
+	}
+
+	return 1;
+}
+
+LRESULT CALLBACK WinProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
+{
+	switch (message) {
+	case WM_DESTROY:
+		PostQuitMessage(0);
+		break;
+	default:
+		return DefWindowProc(hWnd, message, wParam, lParam);
+	}
+
+	return 0;
 }
 
 HWND Create_game_window(HINSTANCE hInstance, int nCmdShow, int ScreenWidth, int ScreenHeight)
@@ -177,54 +230,16 @@ HWND Create_game_window(HINSTANCE hInstance, int nCmdShow, int ScreenWidth, int 
 	return hWnd;
 }
 
-int Run()
-{
-	MSG msg;
-	int done = 0;
-	DWORD frameStart = GetTickCount();
-	DWORD tickPerFrame = 1000 / MAX_FRAME_RATE;
-
-	while (!done)
-	{
-		if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
-		{
-			if (msg.message == WM_QUIT) done = 1;
-
-			TranslateMessage(&msg);
-			DispatchMessage(&msg);
-		}
-
-		DWORD now = GetTickCount();
-
-		// dt: the time between (beginning of last frame) and now
-		// this frame: the frame we are about to render
-		DWORD dt = now - frameStart;
-
-		if (dt >= tickPerFrame)
-		{
-			frameStart = now;
-
-			game->Process_keyboard();
-
-			Update(dt);
-			Render();
-		}
-		else
-			Sleep(tickPerFrame - dt);
-	}
-
-	return 1;
-}
-
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
 	HWND hWnd = Create_game_window(hInstance, nCmdShow, SCREEN_WIDTH, SCREEN_HEIGHT);
 
 	game = CGame::Get_instance();
-	game->Init_game(hWnd);
+	game->Init_directX(hWnd);
 
 	keyHandler = new CKeyHander();
 	game->Init_keyboard(keyHandler);
+	SetWindowPos(hWnd, 0, 0, 0, SCREEN_WIDTH * 2, SCREEN_HEIGHT * 2, SWP_NOMOVE | SWP_NOOWNERZORDER | SWP_NOZORDER);
 
 
 	Load_resources();
