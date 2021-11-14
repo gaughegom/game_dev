@@ -4,11 +4,11 @@ void CGamePlayer::Update(DWORD dt)
 {
 	Move_rectilinear(this->position, this->velocity, dt);
 
-	int backbufferWidth = CGame::Get_instance()->Get_backbuffer_width();
-	int backbufferHeight = CGame::Get_instance()->Get_backbuffer_height();
+	/*int backbufferWidth = CGame::Get_instance()->Get_backbuffer_width();
+	int backbufferHeight = CGame::Get_instance()->Get_backbuffer_height();*/
 
 	// simple screen edge collision!!!
-	EdgeCollisionHandler(backbufferWidth, backbufferHeight);
+	//EdgeCollisionHandler(backbufferWidth, backbufferHeight);
 }
 
 void CGamePlayer::EdgeCollisionHandler(int backbufferWidth, int backbufferHeight)
@@ -75,27 +75,29 @@ void CGamePlayer::Set_state(int state)
 	switch (state)
 	{
 	case PLAYER_STATE_MOVING_RIGHT:
-		this->velocity.Set(PLAYER_MOVING_SPEED, 0);
+		//this->velocity.Set(PLAYER_MOVING_SPEED, 0);
+		this->Set_velocity(PLAYER_MOVING_SPEED, 0);
 		this->nx = 1;
 		break;
 	case PLAYER_STATE_MOVING_LEFT:
-		this->velocity.Set(-PLAYER_MOVING_SPEED, 0);
+		this->Set_velocity(-PLAYER_MOVING_SPEED, 0);
 		this->nx = -1;
 		break;
 	case PLAYER_STATE_MOVING_UP:
-		this->velocity.Set(0, -PLAYER_MOVING_SPEED);
+		this->Set_velocity(0, -PLAYER_MOVING_SPEED);
 		this->nx = -2;
 		break;
 	case PLAYER_STATE_MOVING_DOWN:
-		this->velocity.Set(0, PLAYER_MOVING_SPEED);
+		this->Set_velocity(0, PLAYER_MOVING_SPEED);
 		this->nx = 2;
 		break;
 
 	case PLAYER_STATE_IDLE:
-		this->velocity.Empty();
+		this->Set_velocity(0, 0);
 		break;
 	default:
-		this->velocity.Empty();
+		this->Set_velocity(0, 0);
+		this->position.x;
 		break;
 	}
 }

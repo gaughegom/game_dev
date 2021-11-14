@@ -9,13 +9,13 @@ CGameObject::CGameObject()
 	this->nx = 1;
 }
 
-void CGameObject::Update(DWORD dt)
-{
-	//Move_rectilinear(this->position, this->velocity, dt);
-}
-
 void CGameObject::Render()
 {
+}
+
+Vector2D CGameObject::Get_position()
+{
+	return this->position;
 }
 
 void CGameObject::Set_x(float x)
@@ -26,6 +26,16 @@ void CGameObject::Set_x(float x)
 void CGameObject::Set_y(float y)
 {
 	this->position.y = y;
+}
+
+float CGameObject::Get_x()
+{
+	return this->position.x;
+}
+
+float CGameObject::Get_y()
+{
+	return this->position.y;
 }
 
 void CGameObject::Add_animation(int animationId)

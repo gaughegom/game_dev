@@ -2,13 +2,15 @@
 
 void CGameNpc::Update(DWORD dt)
 {
-	CGameObject::Update(dt);
+	this->position.x += this->velocity.x * dt;
+	this->position.y += this->velocity.y * dt;
+	//CGameObject::Update(dt);
 
-	int backbufferWidth = CGame::Get_instance()->Get_backbuffer_width();
-	int backbufferHeight = CGame::Get_instance()->Get_backbuffer_height();
+	//int backbufferWidth = CGame::Get_instance()->Get_backbuffer_width();
+	//int backbufferHeight = CGame::Get_instance()->Get_backbuffer_height();
 
-	// clock
-	Npc_move_follow_clock(backbufferHeight, backbufferWidth);
+	//// clock
+	//Npc_move_follow_clock(backbufferHeight, backbufferWidth);
 
 	// reverse clock
 	//Npc_move_reverse_clock(backbufferHeight, backbufferWidth);

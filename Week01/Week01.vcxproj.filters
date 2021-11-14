@@ -5,28 +5,8 @@
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
-    <Filter Include="Header Files">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
-    </Filter>
-    <Filter Include="Game">
-      <UniqueIdentifier>{5356ab05-a82d-45a5-8be7-98f028a20964}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Game Objects">
       <UniqueIdentifier>{145fc807-d6bc-4651-af49-4db3e2e59685}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Animations">
-      <UniqueIdentifier>{3da1dc82-a49a-46a6-96bb-1de090c0169e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Resource Files">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
-    <Filter Include="Animations\Textures">
-      <UniqueIdentifier>{95bfbd3e-ade5-42cc-816f-4e9b068d869a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Animations\Sprites">
-      <UniqueIdentifier>{f26774bb-9624-4b51-9e13-8a3b21f15229}</UniqueIdentifier>
     </Filter>
     <Filter Include="Game Objects\Base">
       <UniqueIdentifier>{635c6bf1-dd07-4f83-9edc-483c171038e6}</UniqueIdentifier>
@@ -37,31 +17,40 @@
     <Filter Include="Game Objects\Npc">
       <UniqueIdentifier>{1000ea67-8118-4f8a-8421-6b43b6bf7d56}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Game\Common">
+    <Filter Include="Framework">
+      <UniqueIdentifier>{6ec4c09e-d309-4619-a690-3c6cf7f6b90a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Framework\Game">
+      <UniqueIdentifier>{e00d61de-d3c7-41eb-a8ee-2ba85b8bbb33}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Framework\Prepare">
+      <UniqueIdentifier>{41f0b68e-631a-4f7a-b726-7367a44e7a4c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Framework\Common">
       <UniqueIdentifier>{7781f070-6cc1-410f-8537-cec7f38d5bb3}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Game\Vector2D">
-      <UniqueIdentifier>{d4477b23-bb61-435f-9123-ad3f05f76fa3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Game\Game movement">
+    <Filter Include="Framework\Game movement">
       <UniqueIdentifier>{c1deae0b-8f64-4139-b3ce-5bab24f4db97}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Framework\Sprites">
+      <UniqueIdentifier>{f26774bb-9624-4b51-9e13-8a3b21f15229}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Framework\Textures">
+      <UniqueIdentifier>{95bfbd3e-ade5-42cc-816f-4e9b068d869a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Framework\Camera">
+      <UniqueIdentifier>{58c4f323-3716-43a1-8975-6314f66d2031}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Game.cpp">
-      <Filter>Game</Filter>
-    </ClCompile>
-    <ClCompile Include="prepare.cpp">
-      <Filter>Game</Filter>
-    </ClCompile>
     <ClCompile Include="Textures.cpp">
-      <Filter>Animations\Textures</Filter>
+      <Filter>Framework\Textures</Filter>
     </ClCompile>
     <ClCompile Include="Sprites.cpp">
-      <Filter>Animations\Sprites</Filter>
+      <Filter>Framework\Sprites</Filter>
     </ClCompile>
     <ClCompile Include="GameObject.cpp">
       <Filter>Game Objects\Base</Filter>
@@ -73,27 +62,27 @@
       <Filter>Game Objects\Npc</Filter>
     </ClCompile>
     <ClCompile Include="debug.cpp">
-      <Filter>Game\Common</Filter>
-    </ClCompile>
-    <ClCompile Include="Vector2D.cpp">
-      <Filter>Game\Vector2D</Filter>
+      <Filter>Framework\Common</Filter>
     </ClCompile>
     <ClCompile Include="GameMovement.cpp">
-      <Filter>Game\Game movement</Filter>
+      <Filter>Framework\Game movement</Filter>
+    </ClCompile>
+    <ClCompile Include="Game.cpp">
+      <Filter>Framework\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="prepare.cpp">
+      <Filter>Framework\Prepare</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>Framework\Camera</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Game.h">
-      <Filter>Game</Filter>
-    </ClInclude>
-    <ClInclude Include="prepare.h">
-      <Filter>Game</Filter>
-    </ClInclude>
     <ClInclude Include="Textures.h">
-      <Filter>Animations\Textures</Filter>
+      <Filter>Framework\Textures</Filter>
     </ClInclude>
     <ClInclude Include="Sprites.h">
-      <Filter>Animations\Sprites</Filter>
+      <Filter>Framework\Sprites</Filter>
     </ClInclude>
     <ClInclude Include="GameObject.h">
       <Filter>Game Objects\Base</Filter>
@@ -105,16 +94,22 @@
       <Filter>Game Objects\Npc</Filter>
     </ClInclude>
     <ClInclude Include="debug.h">
-      <Filter>Game\Common</Filter>
+      <Filter>Framework\Common</Filter>
     </ClInclude>
     <ClInclude Include="resources.h">
-      <Filter>Game\Common</Filter>
-    </ClInclude>
-    <ClInclude Include="Vector2D.h">
-      <Filter>Game\Vector2D</Filter>
+      <Filter>Framework\Common</Filter>
     </ClInclude>
     <ClInclude Include="GameMovement.h">
-      <Filter>Game\Game movement</Filter>
+      <Filter>Framework\Game movement</Filter>
+    </ClInclude>
+    <ClInclude Include="Game.h">
+      <Filter>Framework\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="prepare.h">
+      <Filter>Framework\Prepare</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>Framework\Camera</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

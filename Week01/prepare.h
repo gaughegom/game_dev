@@ -6,6 +6,7 @@
 #include "Textures.h"
 #include "GamePlayer.h"
 #include "GameNpc.h"
+#include "Camera.h"
 
 void Add_mario_sprites(LPDIRECT3DTEXTURE9 texture);
 void Add_mario_animations();

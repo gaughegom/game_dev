@@ -1,7 +1,7 @@
 #include "GameMovement.h"
-#include <math.h>
 
-void Move_rectilinear(CVector2D& vPosition, CVector2D& vVelocity, DWORD dt)
+
+void Move_rectilinear(Vector2D& vPosition, Vector2D& vVelocity, DWORD dt)
 {
 	vPosition += vVelocity * dt;
 }
