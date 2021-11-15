@@ -26,9 +26,6 @@
     <Filter Include="Framework\Prepare">
       <UniqueIdentifier>{41f0b68e-631a-4f7a-b726-7367a44e7a4c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Framework\Common">
-      <UniqueIdentifier>{7781f070-6cc1-410f-8537-cec7f38d5bb3}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Framework\Game movement">
       <UniqueIdentifier>{c1deae0b-8f64-4139-b3ce-5bab24f4db97}</UniqueIdentifier>
     </Filter>
@@ -40,6 +37,12 @@
     </Filter>
     <Filter Include="Framework\Camera">
       <UniqueIdentifier>{58c4f323-3716-43a1-8975-6314f66d2031}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Framework\Debug">
+      <UniqueIdentifier>{7781f070-6cc1-410f-8537-cec7f38d5bb3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Framework\Common">
+      <UniqueIdentifier>{91b32f09-ed54-4c94-8748-daa339c3be00}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -62,7 +65,7 @@
       <Filter>Game Objects\Npc</Filter>
     </ClCompile>
     <ClCompile Include="debug.cpp">
-      <Filter>Framework\Common</Filter>
+      <Filter>Framework\Debug</Filter>
     </ClCompile>
     <ClCompile Include="GameMovement.cpp">
       <Filter>Framework\Game movement</Filter>
@@ -94,10 +97,7 @@
       <Filter>Game Objects\Npc</Filter>
     </ClInclude>
     <ClInclude Include="debug.h">
-      <Filter>Framework\Common</Filter>
-    </ClInclude>
-    <ClInclude Include="resources.h">
-      <Filter>Framework\Common</Filter>
+      <Filter>Framework\Debug</Filter>
     </ClInclude>
     <ClInclude Include="GameMovement.h">
       <Filter>Framework\Game movement</Filter>
@@ -110,6 +110,9 @@
     </ClInclude>
     <ClInclude Include="Camera.h">
       <Filter>Framework\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="resources.h">
+      <Filter>Framework\Common</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

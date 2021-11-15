@@ -23,25 +23,25 @@ void CGameNpc::Npc_move_follow_clock(int backbufferHeight, int backbufferWidth)
 	case NPC_STATE_MOVING_UP:
 		if (this->position.y < 0) {
 			CGameObject::SetNewY(NPC_START_Y);
-			CGameNpc::Set_state(NPC_STATE_MOVING_RIGHT);
+			CGameNpc::SetState(NPC_STATE_MOVING_RIGHT);
 		}
 		break;
 	case NPC_STATE_MOVING_DOWN:
 		if (this->position.y > backbufferHeight - PLAYER_HEIGHT) {
 			CGameObject::SetNewY(backbufferHeight - PLAYER_HEIGHT);
-			CGameNpc::Set_state(NPC_STATE_MOVING_LEFT);
+			CGameNpc::SetState(NPC_STATE_MOVING_LEFT);
 		}
 		break;
 	case NPC_STATE_MOVING_RIGHT:
 		if (this->position.x > backbufferWidth - PLAYER_WIDTH) {
 			CGameObject::SetNewX(backbufferWidth - PLAYER_WIDTH);
-			CGameNpc::Set_state(NPC_STATE_MOVING_DOWN);
+			CGameNpc::SetState(NPC_STATE_MOVING_DOWN);
 		}
 		break;
 	case NPC_STATE_MOVING_LEFT:
 		if (this->position.x < 0) {
 			CGameObject::SetNewX(NPC_START_X);
-			CGameNpc::Set_state(NPC_STATE_MOVING_UP);
+			CGameNpc::SetState(NPC_STATE_MOVING_UP);
 		}
 		break;
 	default:
@@ -56,25 +56,25 @@ void CGameNpc::Npc_move_reverse_clock(int backbufferHeight, int backbufferWidth)
 	case NPC_STATE_MOVING_UP:
 		if (this->position.y < 0) {
 			CGameObject::SetNewY(NPC_START_Y);
-			CGameNpc::Set_state(NPC_STATE_MOVING_LEFT);
+			CGameNpc::SetState(NPC_STATE_MOVING_LEFT);
 		}
 		break;
 	case NPC_STATE_MOVING_DOWN:
 		if (this->position.y > backbufferHeight - PLAYER_HEIGHT) {
 			CGameObject::SetNewY(backbufferHeight - PLAYER_HEIGHT);
-			CGameNpc::Set_state(NPC_STATE_MOVING_RIGHT);
+			CGameNpc::SetState(NPC_STATE_MOVING_RIGHT);
 		}
 		break;
 	case NPC_STATE_MOVING_RIGHT:
 		if (this->position.x > backbufferWidth - PLAYER_WIDTH) {
 			CGameObject::SetNewX(backbufferWidth - PLAYER_WIDTH);
-			CGameNpc::Set_state(NPC_STATE_MOVING_UP);
+			CGameNpc::SetState(NPC_STATE_MOVING_UP);
 		}
 		break;
 	case NPC_STATE_MOVING_LEFT:
 		if (this->position.x < 0) {
 			CGameObject::SetNewX(NPC_START_X);
-			CGameNpc::Set_state(NPC_STATE_MOVING_DOWN);
+			CGameNpc::SetState(NPC_STATE_MOVING_DOWN);
 		}
 		break;
 	default:
@@ -84,11 +84,11 @@ void CGameNpc::Npc_move_reverse_clock(int backbufferHeight, int backbufferWidth)
 
 void CGameNpc::Render()
 {
-	int animation = CGameNpc::Get_state();
+	int animation = CGameNpc::GetState();
 	this->animations[animation]->Render(this->position.x, this->position.y);
 }
 
-int CGameNpc::Get_state()
+int CGameNpc::GetState()
 {
 	switch (this->state)
 	{
@@ -103,7 +103,7 @@ int CGameNpc::Get_state()
 	}
 }
 
-void CGameNpc::Set_state(int state)
+void CGameNpc::SetState(int state)
 {
 	CGameObject::SetState(state);
 	switch (state)

@@ -13,6 +13,8 @@ CCamera* camera;
 
 CGame* CGame::__instance = NULL;
 
+#pragma region KEYBOARD
+
 class CKeyHander : public CKeyEventHandler
 {
 	virtual void KeyState(BYTE* states);
@@ -20,98 +22,32 @@ class CKeyHander : public CKeyEventHandler
 	virtual void OnKeyUp(int KeyCode);
 };
 
-void CKeyHander::OnKeyDown(int KeyCode)
+void CKeyHander::OnKeyDown(int keyCode)
 {
-	DebugOut(L"[INFO] KeyDown: %d\n", KeyCode);
+	DebugOut(L"[INFO] KeyDown: %d\n", keyCode);
 }
 
-void CKeyHander::OnKeyUp(int KeyCode)
+void CKeyHander::OnKeyUp(int keyCode)
 {
-	DebugOut(L"[INFO] KeyUp: %d\n", KeyCode);
+	DebugOut(L"[INFO] KeyUp: %d\n", keyCode);
 }
 
 void CKeyHander::KeyState(BYTE* states)
 {
-	if (CGame::GetInstance()->IsKeyDown(DIK_RIGHT)) {
+	CGame* game = CGame::GetInstance();
+	if (game->IsKeyDown(DIK_RIGHT)) {
 		player->SetState(PLAYER_STATE_MOVING_RIGHT);
 	}
-	else if (CGame::GetInstance()->IsKeyDown(DIK_LEFT)) {
+	else if (game->IsKeyDown(DIK_LEFT)) {
 		player->SetState(PLAYER_STATE_MOVING_LEFT);
 	}
-	else if (CGame::GetInstance()->IsKeyDown(DIK_UP)) {
+	else if (game->IsKeyDown(DIK_UP)) {
 		player->SetState(PLAYER_STATE_MOVING_UP);
 	}
-	else if (CGame::GetInstance()->IsKeyDown(DIK_DOWN)) {
+	else if (game->IsKeyDown(DIK_DOWN)) {
 		player->SetState(PLAYER_STATE_MOVING_DOWN);
 	}
 	else player->SetState(PLAYER_STATE_IDLE);
-}
-
-/*
-	Initialize DirectX, create a Direct3D device for rendering within the window, initial Sprite library for
-	rendering 2D images
-	- hInst: Application instance handle
-	- hWnd: Application window handle
-*/
-void CGame::InitDirectX(HWND hWnd)
-{
-	LPDIRECT3D9 d3d = Direct3DCreate9(D3D_SDK_VERSION);
-
-	this->hWnd = hWnd;
-
-	D3DPRESENT_PARAMETERS d3dpp;
-
-	ZeroMemory(&d3dpp, sizeof(d3dpp));
-
-	d3dpp.Windowed = TRUE;
-	d3dpp.SwapEffect = D3DSWAPEFFECT_DISCARD;
-	d3dpp.BackBufferFormat = D3DFMT_X8R8G8B8;
-	d3dpp.BackBufferCount = 1;
-
-	RECT r;
-	GetClientRect(hWnd, &r);	// retrieve Window width & height 
-
-	d3dpp.BackBufferHeight = r.bottom + 1;
-	d3dpp.BackBufferWidth = r.right + 1;
-
-	backBufferWidth = d3dpp.BackBufferWidth;
-	backBufferHeight = d3dpp.BackBufferHeight;
-
-	d3d->CreateDevice(
-		D3DADAPTER_DEFAULT,
-		D3DDEVTYPE_HAL,
-		hWnd,
-		D3DCREATE_SOFTWARE_VERTEXPROCESSING,
-		&d3dpp,
-		&d3ddv);
-
-	if (d3ddv == NULL)
-	{
-		OutputDebugString(L"[ERROR] CreateDevice failed\n");
-		return;
-	}
-
-	d3ddv->GetBackBuffer(0, 0, D3DBACKBUFFER_TYPE_MONO, &backBuffer);
-
-	// Initialize sprite helper from Direct3DX helper library
-	D3DXCreateSprite(d3ddv, &spriteHandler);
-
-	DebugOut(L"[INFO] InitGame done;\n");
-	DebugOut(L"[INFO] Screen: %d, %d\n", backBufferWidth, backBufferHeight);
-}
-
-/*
-	Utility function to wrap LPD3DXSPRITE::Draw
-*/
-void CGame::Draw(float x, float y, LPDIRECT3DTEXTURE9 texture, int left, int top, int right, int bottom)
-{
-	D3DXVECTOR3 p(x, y, 0);
-	RECT r;
-	r.left = left;
-	r.top = top;
-	r.right = right;
-	r.bottom = bottom;
-	spriteHandler->Draw(texture, &r, NULL, &p, D3DCOLOR_XRGB(255, 255, 255));
 }
 
 int CGame::IsKeyDown(int KeyCode)
@@ -119,7 +55,6 @@ int CGame::IsKeyDown(int KeyCode)
 	return (this->keyStates[KeyCode] & 0x80) > 0;
 }
 
-// init keyboard
 void CGame::InitKeyboard(LPKEYEVENTHANDLER handler)
 {
 	HRESULT
@@ -189,7 +124,6 @@ void CGame::InitKeyboard(LPKEYEVENTHANDLER handler)
 	DebugOut(L"[INFO] Keyboard has been initialized successfully\n");
 }
 
-// process keyboard
 void CGame::ProcessKeyboard()
 {
 	HRESULT hResult;
@@ -239,7 +173,75 @@ void CGame::ProcessKeyboard()
 	}
 }
 
-// init game
+#pragma endregion
+
+#pragma region DIRECTX
+
+void CGame::InitDirectX(HWND hWnd)
+{
+	LPDIRECT3D9 d3d = Direct3DCreate9(D3D_SDK_VERSION);
+
+	this->hWnd = hWnd;
+
+	D3DPRESENT_PARAMETERS d3dpp;
+
+	ZeroMemory(&d3dpp, sizeof(d3dpp));
+
+	d3dpp.Windowed = TRUE;
+	d3dpp.SwapEffect = D3DSWAPEFFECT_DISCARD;
+	d3dpp.BackBufferFormat = D3DFMT_X8R8G8B8;
+	d3dpp.BackBufferCount = 1;
+
+	RECT r;
+	GetClientRect(hWnd, &r);	// retrieve Window width & height 
+
+	d3dpp.BackBufferHeight = r.bottom + 1;
+	d3dpp.BackBufferWidth = r.right + 1;
+
+	backBufferWidth = d3dpp.BackBufferWidth;
+	backBufferHeight = d3dpp.BackBufferHeight;
+
+	d3d->CreateDevice(
+		D3DADAPTER_DEFAULT,
+		D3DDEVTYPE_HAL,
+		hWnd,
+		D3DCREATE_SOFTWARE_VERTEXPROCESSING,
+		&d3dpp,
+		&d3ddv);
+
+	if (d3ddv == NULL)
+	{
+		OutputDebugString(L"[ERROR] CreateDevice failed\n");
+		return;
+	}
+
+	d3ddv->GetBackBuffer(0, 0, D3DBACKBUFFER_TYPE_MONO, &backBuffer);
+
+	// Initialize sprite helper from Direct3DX helper library
+	D3DXCreateSprite(d3ddv, &spriteHandler);
+
+	DebugOut(L"[INFO] InitGame done;\n");
+	DebugOut(L"[INFO] Screen: %d, %d\n", backBufferWidth, backBufferHeight);
+}
+
+/*
+	Utility function to wrap LPD3DXSPRITE::Draw
+*/
+void CGame::Draw(float x, float y, LPDIRECT3DTEXTURE9 texture, int left, int top, int right, int bottom)
+{
+	D3DXVECTOR3 p(x, y, 0);
+	RECT r;
+	r.left = left;
+	r.top = top;
+	r.right = right;
+	r.bottom = bottom;
+	spriteHandler->Draw(texture, &r, NULL, &p, D3DCOLOR_XRGB(255, 255, 255));
+}
+
+#pragma endregion
+
+#pragma region GAME_PROCESS
+
 void CGame::Init(HWND hWnd)
 {
 	this->InitDirectX(hWnd);
@@ -254,6 +256,7 @@ void CGame::Init(HWND hWnd)
 	AddMarioSprites(texNpc);
 	AddNpcAnimations();
 
+	#pragma region ADD_PLAYER_ANIMATION
 	player = new CGamePlayer();
 	CGamePlayer::AddAnimation(400);		// idle right
 	CGamePlayer::AddAnimation(401);		//		left
@@ -263,22 +266,27 @@ void CGame::Init(HWND hWnd)
 	CGamePlayer::AddAnimation(501);		//		left
 	CGamePlayer::AddAnimation(502);		//		up
 	CGamePlayer::AddAnimation(503);		//		down
+	#pragma endregion
+
 
 	player->SetPosition(PLAYER_START_X, PLAYER_START_Y);
 	player->SetVelocity(0, 0);
 
+	#pragma region ADD_NPC_ANIMATION
 	npc = new CGameNpc();
 	CGameNpc::AddAnimation(600);
 	CGameNpc::AddAnimation(601);
 	CGameNpc::AddAnimation(602);
 	CGameNpc::AddAnimation(603);
+	#pragma endregion
+
 
 	this->keyHandler = new CKeyHander();
 	this->InitKeyboard(keyHandler);
 
 	npc->SetPosition(NPC_START_X, NPC_START_Y);
-	npc->Set_state(NPC_STATE_MOVING_RIGHT);
-	npc->Set_state(NPC_STATE_MOVING_DOWN);
+	npc->SetState(NPC_STATE_MOVING_RIGHT);
+	npc->SetState(NPC_STATE_MOVING_DOWN);
 	npc->SetVelocity(0, 0);
 
 	gameObjects.push_back(player);
@@ -289,7 +297,6 @@ void CGame::Init(HWND hWnd)
 	camera->Set_size(SCREEN_WIDTH, SCREEN_HEIGHT);
 }
 
-// update game
 void CGame::Update(DWORD dt)
 {
 	camera->Update();
@@ -298,7 +305,6 @@ void CGame::Update(DWORD dt)
 	}
 }
 
-// render game
 void CGame::Render()
 {
 	LPDIRECT3DDEVICE9 d3ddv = CGame::GetInstance()->GetDirect3dDevice();
@@ -324,7 +330,6 @@ void CGame::Render()
 	d3ddv->Present(NULL, NULL, NULL, NULL);
 }
 
-// run game
 void CGame::Run()
 {
 	MSG msg;
@@ -362,7 +367,6 @@ void CGame::Run()
 	}
 }
 
-// end game
 CGame::~CGame()
 {
 	if (spriteHandler != NULL) {
@@ -385,3 +389,5 @@ CGame* CGame::GetInstance()
 	if (__instance == NULL) __instance = new CGame();
 	return __instance;
 }
+
+#pragma endregion

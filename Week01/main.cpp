@@ -13,7 +13,7 @@ LRESULT CALLBACK WinProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	return 0;
 }
 
-HWND Create_game_window(HINSTANCE hInstance, int nCmdShow, int ScreenWidth, int ScreenHeight)
+HWND CreateGameWindow(HINSTANCE hInstance, int nCmdShow, int ScreenWidth, int ScreenHeight)
 {
 	WNDCLASSEX wc;
 	wc.cbSize = sizeof(WNDCLASSEX);
@@ -62,7 +62,7 @@ HWND Create_game_window(HINSTANCE hInstance, int nCmdShow, int ScreenWidth, int 
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
-	HWND hWnd = Create_game_window(hInstance, nCmdShow, SCREEN_WIDTH, SCREEN_HEIGHT);
+	HWND hWnd = CreateGameWindow(hInstance, nCmdShow, SCREEN_WIDTH, SCREEN_HEIGHT);
 
 	CGame* game = new CGame();
 	game = CGame::GetInstance();

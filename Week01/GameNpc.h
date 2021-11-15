@@ -12,8 +12,8 @@ public:
 	void Update(DWORD dt);
 	void Render();
 	
-	int Get_state();
-	void Set_state(int state);
+	int GetState();
+	void SetState(int state);
 	
 	void Npc_move_follow_clock(int backbufferHeight, int backbufferWidth);
 	void Npc_move_reverse_clock(int backbufferHeight, int backbufferWidth);

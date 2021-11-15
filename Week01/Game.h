@@ -38,12 +38,13 @@ class CGame
 
 public:
 	void InitKeyboard(LPKEYEVENTHANDLER handler);
-	void InitDirectX(HWND hWnd);
-	void Draw(float x, float y, LPDIRECT3DTEXTURE9 texture, int left, int top, int right, int bottom);
 
 	int IsKeyDown(int KeyCode);
 	void ProcessKeyboard();
 	
+	void InitDirectX(HWND hWnd);
+	void Draw(float x, float y, LPDIRECT3DTEXTURE9 texture, int left, int top, int right, int bottom);
+
 	void Init(HWND hWnd);
 	void Update(DWORD dt);
 	void Render();
@@ -53,11 +54,10 @@ public:
 	LPDIRECT3DSURFACE9 GetBackbuffer() { return backBuffer; }
 	LPD3DXSPRITE GetSpriteHandler() { return this->spriteHandler; }
 
-	static CGame* GetInstance();
-
 	int GetBackbufferWidth() { return this->backBufferWidth; }
 	int GetBackbufferHeight() { return this->backBufferHeight; }
 
+	static CGame* GetInstance();
 
 	~CGame();
 };

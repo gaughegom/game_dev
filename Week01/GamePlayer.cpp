@@ -2,7 +2,7 @@
 
 void CGamePlayer::Update(DWORD dt)
 {
-	Move_rectilinear(this->position, this->velocity, dt);
+	MoveLinear(this->position, this->velocity, dt);
 
 	/*int backbufferWidth = CGame::Get_instance()->Get_backbuffer_width();
 	int backbufferHeight = CGame::Get_instance()->Get_backbuffer_height();*/
