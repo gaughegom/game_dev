@@ -84,11 +84,11 @@ void CGamePlayer::SetState(int state)
 		this->nx = -1;
 		break;
 	case PLAYER_STATE_MOVING_UP:
-		this->SetVelocity(0, -PLAYER_MOVING_SPEED);
+		this->SetVelocity(0, PLAYER_MOVING_SPEED);
 		this->nx = -2;
 		break;
 	case PLAYER_STATE_MOVING_DOWN:
-		this->SetVelocity(0, PLAYER_MOVING_SPEED);
+		this->SetVelocity(0, -PLAYER_MOVING_SPEED);
 		this->nx = 2;
 		break;
 
