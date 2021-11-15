@@ -1,6 +1,51 @@
 #include "Game.h"
+#include "GamePlayer.h"
+#include "GameNpc.h"
+#include "Camera.h"
+#include "Textures.h"
+#include "prepare.h"
+
+CGamePlayer* player;
+std::vector<CGameObject*> gameObjects;
+CGameNpc* npc;
+CTextures* textures = CTextures::Get_instance();
+CCamera* camera;
 
 CGame* CGame::__instance = NULL;
+
+class CKeyHander : public CKeyEventHandler
+{
+	virtual void KeyState(BYTE* states);
+	virtual void OnKeyDown(int KeyCode);
+	virtual void OnKeyUp(int KeyCode);
+};
+
+void CKeyHander::OnKeyDown(int KeyCode)
+{
+	DebugOut(L"[INFO] KeyDown: %d\n", KeyCode);
+}
+
+void CKeyHander::OnKeyUp(int KeyCode)
+{
+	DebugOut(L"[INFO] KeyUp: %d\n", KeyCode);
+}
+
+void CKeyHander::KeyState(BYTE* states)
+{
+	if (CGame::GetInstance()->IsKeyDown(DIK_RIGHT)) {
+		player->SetState(PLAYER_STATE_MOVING_RIGHT);
+	}
+	else if (CGame::GetInstance()->IsKeyDown(DIK_LEFT)) {
+		player->SetState(PLAYER_STATE_MOVING_LEFT);
+	}
+	else if (CGame::GetInstance()->IsKeyDown(DIK_UP)) {
+		player->SetState(PLAYER_STATE_MOVING_UP);
+	}
+	else if (CGame::GetInstance()->IsKeyDown(DIK_DOWN)) {
+		player->SetState(PLAYER_STATE_MOVING_DOWN);
+	}
+	else player->SetState(PLAYER_STATE_IDLE);
+}
 
 /*
 	Initialize DirectX, create a Direct3D device for rendering within the window, initial Sprite library for
@@ -71,9 +116,10 @@ void CGame::Draw(float x, float y, LPDIRECT3DTEXTURE9 texture, int left, int top
 
 int CGame::IsKeyDown(int KeyCode)
 {
-	return (keyStates[KeyCode] & 0x80) > 0;
+	return (this->keyStates[KeyCode] & 0x80) > 0;
 }
 
+// init keyboard
 void CGame::InitKeyboard(LPKEYEVENTHANDLER handler)
 {
 	HRESULT
@@ -143,6 +189,7 @@ void CGame::InitKeyboard(LPKEYEVENTHANDLER handler)
 	DebugOut(L"[INFO] Keyboard has been initialized successfully\n");
 }
 
+// process keyboard
 void CGame::ProcessKeyboard()
 {
 	HRESULT hResult;
@@ -192,6 +239,130 @@ void CGame::ProcessKeyboard()
 	}
 }
 
+// init game
+void CGame::Init(HWND hWnd)
+{
+	this->InitDirectX(hWnd);
+
+	textures->Add(ID_TEXTURES_PLAYER, MARIO_TEXTURE_PATH, TEXTURE_TRANS_COLOR);
+	textures->Add(ID_TEXTURES_NPC, MARIO_TEXTURE_PATH, TEXTURE_TRANS_COLOR);
+	LPDIRECT3DTEXTURE9 texPlayer = textures->Get(ID_TEXTURES_PLAYER);
+	LPDIRECT3DTEXTURE9 texNpc = textures->Get(ID_TEXTURES_NPC);
+
+	AddMarioSprites(texPlayer);
+	AddMarioAnimations();
+	AddMarioSprites(texNpc);
+	AddNpcAnimations();
+
+	player = new CGamePlayer();
+	CGamePlayer::AddAnimation(400);		// idle right
+	CGamePlayer::AddAnimation(401);		//		left
+	CGamePlayer::AddAnimation(402);		//		up
+	CGamePlayer::AddAnimation(403);		//		down
+	CGamePlayer::AddAnimation(500);		// walk right
+	CGamePlayer::AddAnimation(501);		//		left
+	CGamePlayer::AddAnimation(502);		//		up
+	CGamePlayer::AddAnimation(503);		//		down
+
+	player->SetPosition(PLAYER_START_X, PLAYER_START_Y);
+	player->SetVelocity(0, 0);
+
+	npc = new CGameNpc();
+	CGameNpc::AddAnimation(600);
+	CGameNpc::AddAnimation(601);
+	CGameNpc::AddAnimation(602);
+	CGameNpc::AddAnimation(603);
+
+	this->keyHandler = new CKeyHander();
+	this->InitKeyboard(keyHandler);
+
+	npc->SetPosition(NPC_START_X, NPC_START_Y);
+	npc->Set_state(NPC_STATE_MOVING_RIGHT);
+	npc->Set_state(NPC_STATE_MOVING_DOWN);
+	npc->SetVelocity(0, 0);
+
+	gameObjects.push_back(player);
+	gameObjects.push_back(npc);
+
+	camera = new CCamera();
+	camera->Set_target(player);
+	camera->Set_size(SCREEN_WIDTH, SCREEN_HEIGHT);
+}
+
+// update game
+void CGame::Update(DWORD dt)
+{
+	camera->Update();
+	for (auto object : gameObjects) {
+		object->Update(dt);
+	}
+}
+
+// render game
+void CGame::Render()
+{
+	LPDIRECT3DDEVICE9 d3ddv = CGame::GetInstance()->GetDirect3dDevice();
+	LPDIRECT3DSURFACE9 bb = CGame::GetInstance()->GetBackbuffer();
+	LPD3DXSPRITE spriteHandler = CGame::GetInstance()->GetSpriteHandler();
+
+	if (d3ddv->BeginScene())
+	{
+		// Clear back buffer with a color
+		d3ddv->ColorFill(bb, NULL, BACKGROUND_COLOR);
+
+		spriteHandler->Begin(D3DXSPRITE_ALPHABLEND);
+
+		for (auto object : gameObjects) {
+			object->Render();
+		}
+
+		spriteHandler->End();
+		d3ddv->EndScene();
+	}
+
+	// Display back buffer content to the screen
+	d3ddv->Present(NULL, NULL, NULL, NULL);
+}
+
+// run game
+void CGame::Run()
+{
+	MSG msg;
+	int done = 0;
+	DWORD frameStart = GetTickCount();
+	DWORD tickPerFrame = 1000 / MAX_FRAME_RATE;
+
+	while (!done)
+	{
+		if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
+		{
+			if (msg.message == WM_QUIT) done = 1;
+
+			TranslateMessage(&msg);
+			DispatchMessage(&msg);
+		}
+
+		DWORD now = GetTickCount();
+
+		// dt: the time between (beginning of last frame) and now
+		// this frame: the frame we are about to render
+		DWORD dt = now - frameStart;
+
+		if (dt >= tickPerFrame)
+		{
+			frameStart = now;
+
+			this->ProcessKeyboard();
+
+			Update(dt);
+			Render();
+		}
+		else
+			Sleep(tickPerFrame - dt);
+	}
+}
+
+// end game
 CGame::~CGame()
 {
 	if (spriteHandler != NULL) {
@@ -208,6 +379,7 @@ CGame::~CGame()
 	}
 }
 
+// get game instance 
 CGame* CGame::GetInstance()
 {
 	if (__instance == NULL) __instance = new CGame();

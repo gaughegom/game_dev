@@ -43,6 +43,11 @@ public:
 
 	int IsKeyDown(int KeyCode);
 	void ProcessKeyboard();
+	
+	void Init(HWND hWnd);
+	void Update(DWORD dt);
+	void Render();
+	void Run();
 
 	LPDIRECT3DDEVICE9 GetDirect3dDevice() { return this->d3ddv; }
 	LPDIRECT3DSURFACE9 GetBackbuffer() { return backBuffer; }
@@ -52,6 +57,7 @@ public:
 
 	int GetBackbufferWidth() { return this->backBufferWidth; }
 	int GetBackbufferHeight() { return this->backBufferHeight; }
+
 
 	~CGame();
 };
