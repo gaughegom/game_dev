@@ -249,14 +249,14 @@ void CGame::Draw(Vector2D position, int nx, LPDIRECT3DTEXTURE9 texture, int left
 	D3DXMatrixIdentity(&matrix);
 
 	// flip X
-	D3DXMATRIX dmFlipX;
-	D3DXMatrixScaling(&dmFlipX, -nx, 1.0f, 1.0f);
+	/*D3DXMATRIX dmFlipX;
+	D3DXMatrixScaling(&dmFlipX, -nx, 1.0f, 1.0f);*/
 
 	// translate 
 	D3DXMATRIX dmTranslation;
 	D3DXMatrixTranslation(&dmTranslation, (position.x - cameraPos.x), (-position.y + cameraPos.y), 0.0f);
 
-	matrix *= dmFlipX;
+	//matrix *= dmFlipX;
 	matrix *= dmTranslation;
 
 	spriteHandler->SetTransform(&matrix);
