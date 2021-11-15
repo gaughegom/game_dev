@@ -28,6 +28,11 @@ void CGameObject::SetNewY(float y)
 	this->position.y = y;
 }
 
+void CGameObject::SetNx(float newNX)
+{
+	this->nx = newNX;
+}
+
 float CGameObject::GetX()
 {
 	return this->position.x;

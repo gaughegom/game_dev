@@ -39,7 +39,7 @@ void CGamePlayer::EdgeCollisionHandler(int backbufferWidth, int backbufferHeight
 void CGamePlayer::Render()
 {
 	int animation = this->GetState();
-	animations[animation]->Render(this->position.x, this->position.y);
+	animations[animation]->Render(this->position, this->nx);
 }
 
 int CGamePlayer::GetState()

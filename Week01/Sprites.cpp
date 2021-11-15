@@ -18,10 +18,10 @@ CSprites* CSprites::Get_instance()
 	return __instance;
 }
 
-void CSprite::Draw(float x, float y)
+void CSprite::Draw(Vector2D position, int nx)
 {
 	CGame* game = CGame::GetInstance();
-	game->Draw(x, y, this->texture, this->left, this->top, this->right, this->bottom);
+	game->Draw(position, nx, this->texture, this->left, this->top, this->right, this->bottom);
 }
 
 void CSprites::Add(int id, int left, int top, int right, int bottom, LPDIRECT3DTEXTURE9 tex)
@@ -45,7 +45,7 @@ void CAnimation::Add(int spriteId, DWORD time)
 	this->frames.push_back(frame);
 }
 
-void CAnimation::Render(float x, float y)
+void CAnimation::Render(Vector2D position, int nx)
 {
 	DWORD now = GetTickCount();
 	if (this->currentFrame == -1)
@@ -65,7 +65,7 @@ void CAnimation::Render(float x, float y)
 
 	}
 
-	this->frames[currentFrame]->Get_sprite()->Draw(x, y);
+	this->frames[currentFrame]->Get_sprite()->Draw(position, nx);
 }
 
 CAnimations* CAnimations::__instance = NULL;

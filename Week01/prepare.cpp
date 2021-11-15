@@ -80,27 +80,20 @@ void AddNpcAnimations() {
 	// 80 - 89
 	lpani = new CAnimation(10);
 	lpani->Add(10001);
-	lpani->Add(10002);
-	lpani->Add(10003);
 	animations->Add(600, lpani);
 
 	// 90 - 99
 	lpani = new CAnimation(10);
-	lpani->Add(10011);
-	lpani->Add(10012);
-	lpani->Add(10013);
+	lpani->Add(10001);
 	animations->Add(601, lpani);
 
 	// 100 - 109
 	lpani = new CAnimation(10);
-	lpani->Add(10021);
-	lpani->Add(10022);
-	lpani->Add(10023);
+	lpani->Add(10001);
 	animations->Add(602, lpani);
 
 	// 110 - 119
 	lpani = new CAnimation(10);
-	lpani->Add(10031);
-	lpani->Add(10032);
+	lpani->Add(10001);
 	animations->Add(603, lpani);
 }

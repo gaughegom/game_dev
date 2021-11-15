@@ -12,6 +12,7 @@
 #include "debug.h"
 
 typedef D3DXVECTOR2 Vector2D;
+typedef D3DXVECTOR3 Vector3D;
 
 #define WINDOW_CLASS_NAME			L"Homework 01"
 #define WINDOW_TITLE				L"Homework 01"
@@ -30,15 +31,15 @@ typedef D3DXVECTOR2 Vector2D;
 #define TEXTURE_TRANS_COLOR			D3DCOLOR_XRGB(255, 255, 255)
 
 // PLAYER SETTINGS
-#define PLAYER_START_X				100.0f
-#define PLAYER_START_Y				80.0f
+#define PLAYER_START_X				50.0f
+#define PLAYER_START_Y				50.0f
 #define PLAYER_WIDTH				30
 #define PLAYER_HEIGHT				32
 #define PLAYER_MOVING_SPEED			0.15f
 
 // NPC SETTINGS
-#define NPC_START_X					10.0f
-#define NPC_START_Y					10.0f
+#define NPC_START_X					0.0f
+#define NPC_START_Y					0.0f
 #define NPC_WIDTH					30
 #define NPC_HEIGHT					32
 #define NPC_MOVING_SPEED			0.2f

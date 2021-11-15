@@ -43,7 +43,7 @@ public:
 	void ProcessKeyboard();
 	
 	void InitDirectX(HWND hWnd);
-	void Draw(float x, float y, LPDIRECT3DTEXTURE9 texture, int left, int top, int right, int bottom);
+	void Draw(Vector2D position, int nx, LPDIRECT3DTEXTURE9 texture, int left, int top, int right, int bottom);
 
 	void Init(HWND hWnd);
 	void Update(DWORD dt);

@@ -6,10 +6,11 @@
 #include "prepare.h"
 
 CGamePlayer* player;
-std::vector<CGameObject*> gameObjects;
 CGameNpc* npc;
-CTextures* textures = CTextures::Get_instance();
 CCamera* camera;
+CTextures* textures = CTextures::Get_instance();
+
+std::vector<CGameObject*> gameObjects;
 
 CGame* CGame::__instance = NULL;
 
@@ -227,15 +228,36 @@ void CGame::InitDirectX(HWND hWnd)
 /*
 	Utility function to wrap LPD3DXSPRITE::Draw
 */
-void CGame::Draw(float x, float y, LPDIRECT3DTEXTURE9 texture, int left, int top, int right, int bottom)
+void CGame::Draw(Vector2D position, int nx, LPDIRECT3DTEXTURE9 texture, int left, int top, int right, int bottom)
 {
-	D3DXVECTOR3 p(x, y, 0);
+	Vector2D cameraPos = camera->GetPosition();
+
+	Vector3D p(0, 0, 0);
 	RECT r;
 	r.left = left;
 	r.top = top;
 	r.right = right;
 	r.bottom = bottom;
-	spriteHandler->Draw(texture, &r, NULL, &p, D3DCOLOR_XRGB(255, 255, 255));
+
+	Vector3D center = Vector3D((right - left) / 2, (bottom - top) / 2, 0.0f);
+
+	D3DXMATRIX matrix;
+	D3DXMatrixIdentity(&matrix);
+
+	// flip X
+	D3DXMATRIX dmFlipX;
+	D3DXMatrixScaling(&dmFlipX, -nx, 1.0f, 1.0f);
+
+	// translate 
+	D3DXMATRIX dmTranslation;
+	D3DXMatrixTranslation(&dmTranslation, (position.x - cameraPos.x), (-position.y + cameraPos.y), 0.0f);
+
+	matrix *= dmFlipX;
+	matrix *= dmTranslation;
+
+	spriteHandler->SetTransform(&matrix);
+
+	spriteHandler->Draw(texture, &r, &center, &p, D3DCOLOR_XRGB(255, 255, 255));
 }
 
 #pragma endregion
@@ -285,20 +307,21 @@ void CGame::Init(HWND hWnd)
 	this->InitKeyboard(keyHandler);
 
 	npc->SetPosition(NPC_START_X, NPC_START_Y);
-	npc->SetState(NPC_STATE_MOVING_RIGHT);
 	npc->SetState(NPC_STATE_MOVING_DOWN);
 	npc->SetVelocity(0, 0);
 
-	gameObjects.push_back(player);
 	gameObjects.push_back(npc);
+	gameObjects.push_back(player);
 
 	camera = new CCamera();
-	camera->Set_target(player);
-	camera->Set_size(SCREEN_WIDTH, SCREEN_HEIGHT);
+	camera->SetTarget(player);
+	camera->SetSize(SCREEN_WIDTH, SCREEN_HEIGHT);
 }
 
 void CGame::Update(DWORD dt)
 {
+	DebugOut(L"[SIZE] game: %f, %f\n", this->GetBackbufferWidth(), this->GetBackbufferHeight());
+	DebugOut(L"[SIZE] cam: %f, %f,\n", camera->GetWidth(), camera->GetHeight());
 	camera->Update();
 	for (auto object : gameObjects) {
 		object->Update(dt);

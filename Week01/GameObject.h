@@ -26,8 +26,10 @@ public:
 	Vector2D GetPosition();
 	void SetNewX(float newX);
 	void SetNewY(float newY);
+	void SetNx(float newNX);
 	float GetX();
 	float GetY();
+	int GetNX() { return this->nx; }
 
 	// velocity
 	void SetVelocity(float newVx, float newVy) { this->velocity.x = newVx, this->velocity.y = newVy; }
