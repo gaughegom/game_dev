@@ -5,10 +5,10 @@
 #include "Textures.h"
 #include "prepare.h"
 
-CGamePlayer* player;
-CGameNpc* npc;
-CCamera* camera;
-CTextures* textures = CTextures::Get_instance();
+CGamePlayer* pPlayer;
+CGameNpc* pNpc;
+CCamera* pCamera;
+CTextures* pTextures = CTextures::Get_instance();
 
 std::vector<CGameObject*> gameObjects;
 
@@ -37,18 +37,18 @@ void CKeyHander::KeyState(BYTE* states)
 {
 	CGame* game = CGame::GetInstance();
 	if (game->IsKeyDown(DIK_RIGHT)) {
-		player->SetState(PLAYER_STATE_MOVING_RIGHT);
+		pPlayer->SetState(PLAYER_STATE_MOVING_RIGHT);
 	}
 	else if (game->IsKeyDown(DIK_LEFT)) {
-		player->SetState(PLAYER_STATE_MOVING_LEFT);
+		pPlayer->SetState(PLAYER_STATE_MOVING_LEFT);
 	}
 	else if (game->IsKeyDown(DIK_UP)) {
-		player->SetState(PLAYER_STATE_MOVING_UP);
+		pPlayer->SetState(PLAYER_STATE_MOVING_UP);
 	}
 	else if (game->IsKeyDown(DIK_DOWN)) {
-		player->SetState(PLAYER_STATE_MOVING_DOWN);
+		pPlayer->SetState(PLAYER_STATE_MOVING_DOWN);
 	}
-	else player->SetState(PLAYER_STATE_IDLE);
+	else pPlayer->SetState(PLAYER_STATE_IDLE);
 }
 
 int CGame::IsKeyDown(int KeyCode)
@@ -230,7 +230,11 @@ void CGame::InitDirectX(HWND hWnd)
 */
 void CGame::Draw(Vector2D position, int nx, LPDIRECT3DTEXTURE9 texture, int left, int top, int right, int bottom)
 {
-	Vector2D cameraPos = camera->GetPosition();
+	if (nx == -2 || nx == 2) {
+		nx = nx / 2;
+	}
+
+	Vector2D cameraPos = pCamera->GetPosition();
 
 	Vector3D p(0, 0, 0);
 	RECT r;
@@ -268,10 +272,10 @@ void CGame::Init(HWND hWnd)
 {
 	this->InitDirectX(hWnd);
 
-	textures->Add(ID_TEXTURES_PLAYER, MARIO_TEXTURE_PATH, TEXTURE_TRANS_COLOR);
-	textures->Add(ID_TEXTURES_NPC, MARIO_TEXTURE_PATH, TEXTURE_TRANS_COLOR);
-	LPDIRECT3DTEXTURE9 texPlayer = textures->Get(ID_TEXTURES_PLAYER);
-	LPDIRECT3DTEXTURE9 texNpc = textures->Get(ID_TEXTURES_NPC);
+	pTextures->Add(ID_TEXTURES_PLAYER, MARIO_TEXTURE_PATH, TEXTURE_TRANS_COLOR);
+	pTextures->Add(ID_TEXTURES_NPC, MARIO_TEXTURE_PATH, TEXTURE_TRANS_COLOR);
+	LPDIRECT3DTEXTURE9 texPlayer = pTextures->Get(ID_TEXTURES_PLAYER);
+	LPDIRECT3DTEXTURE9 texNpc = pTextures->Get(ID_TEXTURES_NPC);
 
 	AddMarioSprites(texPlayer);
 	AddMarioAnimations();
@@ -279,7 +283,7 @@ void CGame::Init(HWND hWnd)
 	AddNpcAnimations();
 
 	#pragma region ADD_PLAYER_ANIMATION
-	player = new CGamePlayer();
+	pPlayer = new CGamePlayer();
 	CGamePlayer::AddAnimation(400);		// idle right
 	CGamePlayer::AddAnimation(401);		//		left
 	CGamePlayer::AddAnimation(402);		//		up
@@ -291,11 +295,11 @@ void CGame::Init(HWND hWnd)
 	#pragma endregion
 
 
-	player->SetPosition(PLAYER_START_X, PLAYER_START_Y);
-	player->SetVelocity(0, 0);
+	pPlayer->SetPosition(PLAYER_START_X, PLAYER_START_Y);
+	pPlayer->SetVelocity(0, 0);
 
 	#pragma region ADD_NPC_ANIMATION
-	npc = new CGameNpc();
+	pNpc = new CGameNpc();
 	CGameNpc::AddAnimation(600);
 	CGameNpc::AddAnimation(601);
 	CGameNpc::AddAnimation(602);
@@ -306,25 +310,23 @@ void CGame::Init(HWND hWnd)
 	this->keyHandler = new CKeyHander();
 	this->InitKeyboard(keyHandler);
 
-	npc->SetPosition(NPC_START_X, NPC_START_Y);
-	npc->SetState(NPC_STATE_MOVING_DOWN);
-	npc->SetVelocity(0, 0);
+	pNpc->SetPosition(NPC_START_X, NPC_START_Y);
+	pNpc->SetState(NPC_STATE_MOVING_DOWN);
+	pNpc->SetVelocity(0, 0);
 
-	gameObjects.push_back(npc);
-	gameObjects.push_back(player);
+	gameObjects.push_back(pNpc);
+	gameObjects.push_back(pPlayer);
 
-	camera = new CCamera();
-	camera->SetTarget(player);
-	camera->SetSize(SCREEN_WIDTH, SCREEN_HEIGHT);
+	pCamera = new CCamera();
+	pCamera->SetTarget(pPlayer);
+	pCamera->SetSize(SCREEN_WIDTH, SCREEN_HEIGHT);
 }
 
 void CGame::Update(DWORD dt)
 {
-	DebugOut(L"[SIZE] game: %f, %f\n", this->GetBackbufferWidth(), this->GetBackbufferHeight());
-	DebugOut(L"[SIZE] cam: %f, %f,\n", camera->GetWidth(), camera->GetHeight());
-	camera->Update();
-	for (auto object : gameObjects) {
-		object->Update(dt);
+	pCamera->Update();
+	for (auto pObject : gameObjects) {
+		pObject->Update(dt);
 	}
 }
 
