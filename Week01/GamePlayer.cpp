@@ -75,7 +75,6 @@ void CGamePlayer::SetState(int state)
 	switch (state)
 	{
 	case PLAYER_STATE_MOVING_RIGHT:
-		//this->velocity.Set(PLAYER_MOVING_SPEED, 0);
 		this->SetVelocity(PLAYER_MOVING_SPEED, 0);
 		this->nx = 1;
 		break;

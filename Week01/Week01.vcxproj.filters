@@ -44,6 +44,12 @@
     <Filter Include="Framework\Common">
       <UniqueIdentifier>{91b32f09-ed54-4c94-8748-daa339c3be00}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Framework\Transform">
+      <UniqueIdentifier>{26c9e379-87c0-4787-9673-584c0de4d03d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Framework\QuadTree">
+      <UniqueIdentifier>{9075b275-fdc5-4b13-8912-3101b99c75b9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -79,6 +85,12 @@
     <ClCompile Include="Camera.cpp">
       <Filter>Framework\Camera</Filter>
     </ClCompile>
+    <ClCompile Include="Transform.cpp">
+      <Filter>Framework\Transform</Filter>
+    </ClCompile>
+    <ClCompile Include="QuadTree.cpp">
+      <Filter>Framework\QuadTree</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Textures.h">
@@ -113,6 +125,12 @@
     </ClInclude>
     <ClInclude Include="resources.h">
       <Filter>Framework\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Transform.h">
+      <Filter>Framework\Transform</Filter>
+    </ClInclude>
+    <ClInclude Include="QuadTree.h">
+      <Filter>Framework\QuadTree</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

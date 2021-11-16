@@ -4,13 +4,17 @@
 #include "Camera.h"
 #include "Textures.h"
 #include "prepare.h"
+#include "QuadTree.h"
 
 CGamePlayer* pPlayer;
 CGameNpc* pNpc;
+CGameNpc* pNpcTest;
 CCamera* pCamera;
 CTextures* pTextures = CTextures::Get_instance();
+CQuadTree* pQuadTree;
 
-std::vector<CGameObject*> gameObjects;
+std::vector<CGameObject*> pGameObjects;
+std::vector<CGameObject*> pRenderObjects;
 
 CGame* CGame::__instance = NULL;
 
@@ -276,6 +280,7 @@ void CGame::Init(HWND hWnd)
 	pTextures->Add(ID_TEXTURES_NPC, MARIO_TEXTURE_PATH, TEXTURE_TRANS_COLOR);
 	LPDIRECT3DTEXTURE9 texPlayer = pTextures->Get(ID_TEXTURES_PLAYER);
 	LPDIRECT3DTEXTURE9 texNpc = pTextures->Get(ID_TEXTURES_NPC);
+	LPDIRECT3DTEXTURE9 texNpcTest = pTextures->Get(ID_TEXTURES_NPC);
 
 	AddMarioSprites(texPlayer);
 	AddMarioAnimations();
@@ -299,12 +304,17 @@ void CGame::Init(HWND hWnd)
 	pPlayer->SetVelocity(0, 0);
 
 	#pragma region ADD_NPC_ANIMATION
+
 	pNpc = new CGameNpc();
+	pNpcTest = new CGameNpc();
+
 	CGameNpc::AddAnimation(600);
 	CGameNpc::AddAnimation(601);
 	CGameNpc::AddAnimation(602);
 	CGameNpc::AddAnimation(603);
+
 	#pragma endregion
+
 
 
 	this->keyHandler = new CKeyHander();
@@ -314,18 +324,31 @@ void CGame::Init(HWND hWnd)
 	pNpc->SetState(NPC_STATE_MOVING_DOWN);
 	pNpc->SetVelocity(0, 0);
 
-	gameObjects.push_back(pNpc);
-	gameObjects.push_back(pPlayer);
+	pNpcTest->SetPosition(220, NPC_START_Y);
+	pNpcTest->SetState(NPC_STATE_MOVING_DOWN);
+	pNpcTest->SetVelocity(0, 0);
+
+	pGameObjects.push_back(pNpc);
+	pGameObjects.push_back(pPlayer);
+	pGameObjects.push_back(pNpcTest);
 
 	pCamera = new CCamera();
 	pCamera->SetTarget(pPlayer);
 	pCamera->SetSize(SCREEN_WIDTH, SCREEN_HEIGHT);
+
+	pQuadTree = new CQuadTree(0, SRect(0, SCREEN_HEIGHT * 10, SCREEN_WIDTH * 10, 0));
 }
 
 void CGame::Update(DWORD dt)
 {
 	pCamera->Update();
-	for (auto pObject : gameObjects) {
+	
+	pRenderObjects.clear();
+	
+	pQuadTree->Update(pGameObjects);
+	pQuadTree->BringBack(pRenderObjects, pCamera->GetBox());
+
+	for (auto pObject : pRenderObjects) {
 		pObject->Update(dt);
 	}
 }
@@ -343,7 +366,7 @@ void CGame::Render()
 
 		spriteHandler->Begin(D3DXSPRITE_ALPHABLEND);
 
-		for (auto object : gameObjects) {
+		for (auto object : pRenderObjects) {
 			object->Render();
 		}
 

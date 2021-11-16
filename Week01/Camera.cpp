@@ -51,6 +51,17 @@ int CCamera::GetHeight()
 	return this->height;
 }
 
+SRect CCamera::GetBox()
+{
+	SRect rect;
+	rect.left = this->position.x;
+	rect.top = this->position.y;
+	rect.right = this->position.x + this->width;
+	rect.bottom = this->position.y - this->height;
+
+	return rect;
+}
+
 void CCamera::SetTarget(CGameObject* target)
 {
 	this->target = target;

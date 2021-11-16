@@ -10,9 +10,9 @@
 #include <vector>
 #include <dinput.h>
 #include "debug.h"
+#include "Transform.h"
 
-typedef D3DXVECTOR2 Vector2D;
-typedef D3DXVECTOR3 Vector3D;
+#pragma region WINDOW SETTINGS
 
 #define WINDOW_CLASS_NAME			L"Homework 01"
 #define WINDOW_TITLE				L"Homework 01"
@@ -23,28 +23,40 @@ typedef D3DXVECTOR3 Vector3D;
 
 #define MAX_FRAME_RATE				90
 
-// ID TEXTURES
+#pragma endregion
+
+#pragma region TEXTURES ID
+
 #define ID_TEXTURES_PLAYER			0
 #define ID_TEXTURES_NPC				1
+
+#pragma endregion
 
 #define MARIO_TEXTURE_PATH			L"resources//mario.png"
 #define TEXTURE_TRANS_COLOR			D3DCOLOR_XRGB(255, 255, 255)
 
-// PLAYER SETTINGS
+#pragma region PLAYER SETTINGS
+
 #define PLAYER_START_X				50.0f
 #define PLAYER_START_Y				50.0f
 #define PLAYER_WIDTH				30
 #define PLAYER_HEIGHT				32
 #define PLAYER_MOVING_SPEED			0.15f
 
-// NPC SETTINGS
+#pragma endregion
+
+#pragma region NPC SETTINGS
+
 #define NPC_START_X					0.0f
 #define NPC_START_Y					0.0f
 #define NPC_WIDTH					30
 #define NPC_HEIGHT					32
 #define NPC_MOVING_SPEED			0.2f
 
-// STATE OF OBJECTS
+#pragma endregion
+
+#pragma region GAME OBJECT STATE
+
 #define PLAYER_STATE_IDLE			0
 #define PLAYER_STATE_MOVING_RIGHT	10
 #define PLAYER_STATE_MOVING_LEFT	20
@@ -56,7 +68,10 @@ typedef D3DXVECTOR3 Vector3D;
 #define NPC_STATE_MOVING_UP			70
 #define NPC_STATE_MOVING_DOWN		80
 
-// ANIMATION OF OBJECTS
+#pragma endregion
+
+#pragma region ANIMATION
+
 #define PLAYER_ANIMATION_IDLE_RIGHT			0
 #define PLAYER_ANIMATION_IDLE_LEFT			1
 #define PLAYER_ANIMATION_IDLE_UP			2
@@ -71,6 +86,7 @@ typedef D3DXVECTOR3 Vector3D;
 #define NPC_ANIMATION_MOVING_UP			10
 #define NPC_ANIMATION_MOVING_DOWN		11
 
+#pragma endregion
 
 #define DIRECTINPUT_VERSION			0x0800
 #define KEYBOARD_BUFFER_SIZE		1024

@@ -4,6 +4,7 @@
 
 #include "resources.h"
 #include "GameObject.h"
+#include "Transform.h"
 
 class CCamera {
 protected:
@@ -25,6 +26,7 @@ public:
 	float GetY();
 	int GetWidth();
 	int GetHeight();
+	SRect GetBox();
 
 	// target
 	void SetTarget(CGameObject* target);
