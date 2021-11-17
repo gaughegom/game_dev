@@ -1,20 +1,21 @@
 #include "Game.h"
-#include "GamePlayer.h"
-#include "GameNpc.h"
+#include "Sophia.h"
+#include "EnemyLib.h"
 #include "Camera.h"
 #include "Textures.h"
-#include "prepare.h"
 #include "QuadTree.h"
 
-CGamePlayer* pPlayer;
-CGameNpc* pNpc;
-CGameNpc* pNpcTest;
+CSophia* pSophia;
+CEnemyRobot* pRobot;
 CCamera* pCamera;
-CTextures* pTextures = CTextures::Get_instance();
+CTextures* pTextures = CTextures::GetInstance();
 CQuadTree* pQuadTree;
 
 std::vector<CGameObject*> pGameObjects;
 std::vector<CGameObject*> pRenderObjects;
+
+CSprites* g_sprites = CSprites::GetInstance();
+CAnimations* g_animations = CAnimations::GetInstance();
 
 CGame* CGame::__instance = NULL;
 
@@ -41,18 +42,12 @@ void CKeyHander::KeyState(BYTE* states)
 {
 	CGame* game = CGame::GetInstance();
 	if (game->IsKeyDown(DIK_RIGHT)) {
-		pPlayer->SetState(PLAYER_STATE_MOVING_RIGHT);
+		pSophia->SetState(SOPHIA_STATE_MOVING_RIGHT);
 	}
 	else if (game->IsKeyDown(DIK_LEFT)) {
-		pPlayer->SetState(PLAYER_STATE_MOVING_LEFT);
+		pSophia->SetState(SOPHIA_STATE_MOVING_LEFT);
 	}
-	else if (game->IsKeyDown(DIK_UP)) {
-		pPlayer->SetState(PLAYER_STATE_MOVING_UP);
-	}
-	else if (game->IsKeyDown(DIK_DOWN)) {
-		pPlayer->SetState(PLAYER_STATE_MOVING_DOWN);
-	}
-	else pPlayer->SetState(PLAYER_STATE_IDLE);
+	else pSophia->SetState(SOPHIA_STATE_IDLE);
 }
 
 int CGame::IsKeyDown(int KeyCode)
@@ -270,48 +265,63 @@ void CGame::Draw(Vector2D position, int nx, LPDIRECT3DTEXTURE9 texture, int left
 
 #pragma endregion
 
-#pragma region GAME_PROCESS
+#pragma region GAME PROCESS
 
 void CGame::Init(HWND hWnd)
 {
 	this->InitDirectX(hWnd);
 
-	pTextures->Add(ID_TEXTURES_PLAYER, MARIO_TEXTURE_PATH, TEXTURE_TRANS_COLOR);
-	pTextures->Add(ID_TEXTURES_NPC, MARIO_TEXTURE_PATH, TEXTURE_TRANS_COLOR);
-	LPDIRECT3DTEXTURE9 texPlayer = pTextures->Get(ID_TEXTURES_PLAYER);
-	LPDIRECT3DTEXTURE9 texNpc = pTextures->Get(ID_TEXTURES_NPC);
-	LPDIRECT3DTEXTURE9 texNpcTest = pTextures->Get(ID_TEXTURES_NPC);
+	pTextures->Add(ID_TEXTURES_SOPHIA, SOPHIA_TEXTURE_PATH, TEXTURE_TRANS_COLOR);
+	pTextures->Add(ID_TEXTURES_ENEMY_ROBOT, ENEMY_TEXTURE_PATH, TEXTURE_TRANS_COLOR);
+	LPDIRECT3DTEXTURE9 texSophia = pTextures->Get(ID_TEXTURES_SOPHIA);
+	LPDIRECT3DTEXTURE9 texRobot = pTextures->Get(ID_TEXTURES_ENEMY_ROBOT);
 
-	AddMarioSprites(texPlayer);
-	AddMarioAnimations();
-	AddMarioSprites(texNpc);
-	AddNpcAnimations();
+	#pragma region SOPHIA SPRITES
+	
+	// Add 2 wheel
+	g_sprites->Add(10000, 3, 21, 11, 29, texSophia);
+	g_sprites->Add(10001, 21, 21, 29, 29, texSophia);
+	g_sprites->Add(10010, 12, 21, 20, 29, texSophia);
+	g_sprites->Add(10011, 30, 21, 38, 29, texSophia);
 
-	#pragma region ADD_PLAYER_ANIMATION
-	pPlayer = new CGamePlayer();
-	CGamePlayer::AddAnimation(400);		// idle right
-	CGamePlayer::AddAnimation(401);		//		left
-	CGamePlayer::AddAnimation(402);		//		up
-	CGamePlayer::AddAnimation(403);		//		down
-	CGamePlayer::AddAnimation(500);		// walk right
-	CGamePlayer::AddAnimation(501);		//		left
-	CGamePlayer::AddAnimation(502);		//		up
-	CGamePlayer::AddAnimation(503);		//		down
+	// Add sophia body
+	g_sprites->Add(10020, 3, 12, 11, 20, texSophia);
+
+	// Add cabin
+	g_sprites->Add(10030, 39, 3, 55, 11, texSophia);
+
+
+	LPANIMATION lpAni;
+	lpAni = new CAnimation(5);
+	lpAni->Add(10000);
+	//lpAni->Add(10002);
+	g_animations->Add(300, lpAni);
+
+	lpAni = new CAnimation(5);
+	lpAni->Add(10010);
+	g_animations->Add(301, lpAni);
+
+	CSophia::AddAnimation(300);
+	CSophia::AddAnimation(301);
+	
+	pSophia = new CSophia();
+	pSophia->SetPosition(PLAYER_START_X, PLAYER_START_Y);
+	pSophia->SetVelocity(0, 0);
+
 	#pragma endregion
 
+	#pragma region ENEMY SPRITES
 
-	pPlayer->SetPosition(PLAYER_START_X, PLAYER_START_Y);
-	pPlayer->SetVelocity(0, 0);
+	g_sprites->Add(20000, 132, 275, 150, 293, texRobot);
+	lpAni = new CAnimation(5);
+	lpAni->Add(20000);
+	g_animations->Add(1000, lpAni);
 
-	#pragma region ADD_NPC_ANIMATION
+	CEnemyRobot::AddAnimation(1000);
 
-	pNpc = new CGameNpc();
-	pNpcTest = new CGameNpc();
-
-	CGameNpc::AddAnimation(600);
-	CGameNpc::AddAnimation(601);
-	CGameNpc::AddAnimation(602);
-	CGameNpc::AddAnimation(603);
+	pRobot = new CEnemyRobot();
+	pRobot->SetPosition(PLAYER_START_X - 5, PLAYER_START_Y - 5);
+	pRobot->SetVelocity(0, 0);
 
 	#pragma endregion
 
@@ -320,20 +330,11 @@ void CGame::Init(HWND hWnd)
 	this->keyHandler = new CKeyHander();
 	this->InitKeyboard(keyHandler);
 
-	pNpc->SetPosition(NPC_START_X, NPC_START_Y);
-	pNpc->SetState(NPC_STATE_MOVING_DOWN);
-	pNpc->SetVelocity(0, 0);
-
-	pNpcTest->SetPosition(220, NPC_START_Y);
-	pNpcTest->SetState(NPC_STATE_MOVING_DOWN);
-	pNpcTest->SetVelocity(0, 0);
-
-	pGameObjects.push_back(pPlayer);
-	pGameObjects.push_back(pNpc);
-	pGameObjects.push_back(pNpcTest);
+	pGameObjects.push_back(pSophia);
+	pGameObjects.push_back(pRobot);
 
 	pCamera = new CCamera();
-	pCamera->SetTarget(pPlayer);
+	pCamera->SetTarget(pSophia);
 	pCamera->SetSize(this->backBufferWidth, this->backBufferHeight);
 
 	pQuadTree = new CQuadTree(0, SRect(0, this->backBufferHeight * 10, this->backBufferWidth * 10, 0));

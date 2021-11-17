@@ -6,7 +6,7 @@
 #include "GameObject.h"
 #include "Game.h"
 
-class CGameNpc : public CGameObject
+class CEnemyRobot : public CGameObject
 {
 public:
 	void Update(DWORD dt);
@@ -14,9 +14,6 @@ public:
 	
 	int GetState();
 	void SetState(int state);
-	
-	void Npc_move_follow_clock(int backbufferHeight, int backbufferWidth);
-	void Npc_move_reverse_clock(int backbufferHeight, int backbufferWidth);
 };
 
 #endif // !_GAMENPC_H

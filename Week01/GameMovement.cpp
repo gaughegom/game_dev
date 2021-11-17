@@ -1,7 +1,7 @@
 #include "GameMovement.h"
 
 
-void MoveLinear(Vector2D& vPosition, Vector2D& vVelocity, DWORD dt)
+void LinearMovement(Vector2D& vPosition, Vector2D& vVelocity, DWORD dt)
 {
 	vPosition += vVelocity * dt;
 }

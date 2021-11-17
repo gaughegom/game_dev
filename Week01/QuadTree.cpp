@@ -78,7 +78,7 @@ void CQuadTree::AddObjectToRect(CGameObject* object)
 bool CQuadTree::IsConstainObject(CGameObject* object)
 {
 	Vector2D objectPos = object->GetPosition();
-	return this->rect.IsConstainPoint(objectPos);
+	return this->rect.IsConstain(objectPos);
 }
 
 void CQuadTree::Update(std::vector<CGameObject*> objects)

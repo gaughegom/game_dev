@@ -45,7 +45,7 @@ float CGameObject::GetY()
 
 void CGameObject::AddAnimation(int animationId)
 {
-	LPANIMATION ani = CAnimations::Get_instance()->Get(animationId);
+	LPANIMATION ani = CAnimations::GetInstance()->Get(animationId);
 	animations.push_back(ani);
 }
 

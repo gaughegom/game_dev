@@ -21,13 +21,12 @@
   <ItemGroup>
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="GameMovement.cpp" />
-    <ClCompile Include="GameNpc.cpp" />
-    <ClCompile Include="GamePlayer.cpp" />
+    <ClCompile Include="EnemyRobot.cpp" />
+    <ClCompile Include="Sophia.cpp" />
     <ClCompile Include="debug.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="prepare.cpp" />
     <ClCompile Include="QuadTree.cpp" />
     <ClCompile Include="Sprites.cpp" />
     <ClCompile Include="Textures.cpp" />
@@ -36,12 +35,12 @@
   <ItemGroup>
     <ClInclude Include="Camera.h" />
     <ClInclude Include="debug.h" />
+    <ClInclude Include="EnemyLib.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameMovement.h" />
-    <ClInclude Include="GameNpc.h" />
+    <ClInclude Include="EnemyRobot.h" />
     <ClInclude Include="GameObject.h" />
-    <ClInclude Include="GamePlayer.h" />
-    <ClInclude Include="prepare.h" />
+    <ClInclude Include="Sophia.h" />
     <ClInclude Include="QuadTree.h" />
     <ClInclude Include="resources.h" />
     <ClInclude Include="Sprites.h" />

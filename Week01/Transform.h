@@ -12,10 +12,10 @@ struct SRect
 	float left, top, right, bottom;
 	SRect();
 	SRect(float _left, float _top, float _right, float _bottom);
-	bool IsConstainPoint(const Vector2D& point);
-	bool IsConstainRect(const SRect& rect);
+	bool IsConstain(const Vector2D& point);
+	bool IsConstain(const SRect& rect);
 	bool IsOverlap(const SRect& rect);
-	void SetZero();
+	void Empty();
 };
 
 #endif // !_TRANSFORM_H

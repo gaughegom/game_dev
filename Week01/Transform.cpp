@@ -13,13 +13,13 @@ SRect::SRect(float _left, float _top, float _right, float _bottom)
 	this->bottom = _bottom;
 }
 
-bool SRect::IsConstainPoint(const Vector2D& point)
+bool SRect::IsConstain(const Vector2D& point)
 {
 	return point.x >= this->left && point.x <= this->right
 		&& point.y >= this->bottom && point.y <= this->top;
 }
 
-bool SRect::IsConstainRect(const SRect& rect)
+bool SRect::IsConstain(const SRect& rect)
 {
 	return rect.left >= this->left && rect.right <= this->right
 		&& rect.bottom >= this->bottom && rect.top <= this->top;
@@ -36,7 +36,7 @@ bool SRect::IsOverlap(const SRect& rect)
 	return true;
 }
 
-void SRect::SetZero()
+void SRect::Empty()
 {
 	this->left = this->top = this->right = this->left = 0;
 }

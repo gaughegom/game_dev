@@ -12,7 +12,7 @@ CSprite::CSprite(int id, int left, int top, int right, int bottom, LPDIRECT3DTEX
 
 CSprites* CSprites::__instance = NULL;
 
-CSprites* CSprites::Get_instance()
+CSprites* CSprites::GetInstance()
 {
 	if (__instance == NULL) __instance = new CSprites();
 	return __instance;
@@ -40,7 +40,7 @@ void CAnimation::Add(int spriteId, DWORD time)
 	int t = time;
 	if (time == 0) t = this->defaultTime;
 
-	LPSPRITE sprite = CSprites::Get_instance()->Get(spriteId);
+	LPSPRITE sprite = CSprites::GetInstance()->Get(spriteId);
 	LPANIMATION_FRAME frame = new CAnimationFrame(sprite, t);
 	this->frames.push_back(frame);
 }
@@ -55,7 +55,7 @@ void CAnimation::Render(Vector2D position, int nx)
 	}
 	else
 	{
-		DWORD t = this->frames[currentFrame]->Get_time();
+		DWORD t = this->frames[currentFrame]->GetTime();
 		if (now - this->lastFrameTime > t)
 		{
 			this->currentFrame++;
@@ -65,12 +65,12 @@ void CAnimation::Render(Vector2D position, int nx)
 
 	}
 
-	this->frames[currentFrame]->Get_sprite()->Draw(position, nx);
+	this->frames[currentFrame]->GetSprite()->Draw(position, nx);
 }
 
 CAnimations* CAnimations::__instance = NULL;
 
-CAnimations* CAnimations::Get_instance()
+CAnimations* CAnimations::GetInstance()
 {
 	if (__instance == NULL) __instance = new CAnimations();
 	return __instance;

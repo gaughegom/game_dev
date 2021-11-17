@@ -11,20 +11,11 @@
     <Filter Include="Game Objects\Base">
       <UniqueIdentifier>{635c6bf1-dd07-4f83-9edc-483c171038e6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Game Objects\Player">
-      <UniqueIdentifier>{970a2267-9c06-411d-add0-550f9651acbc}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Game Objects\Npc">
-      <UniqueIdentifier>{1000ea67-8118-4f8a-8421-6b43b6bf7d56}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Framework">
       <UniqueIdentifier>{6ec4c09e-d309-4619-a690-3c6cf7f6b90a}</UniqueIdentifier>
     </Filter>
     <Filter Include="Framework\Game">
       <UniqueIdentifier>{e00d61de-d3c7-41eb-a8ee-2ba85b8bbb33}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Framework\Prepare">
-      <UniqueIdentifier>{41f0b68e-631a-4f7a-b726-7367a44e7a4c}</UniqueIdentifier>
     </Filter>
     <Filter Include="Framework\Game movement">
       <UniqueIdentifier>{c1deae0b-8f64-4139-b3ce-5bab24f4db97}</UniqueIdentifier>
@@ -50,6 +41,18 @@
     <Filter Include="Framework\QuadTree">
       <UniqueIdentifier>{9075b275-fdc5-4b13-8912-3101b99c75b9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Game Objects\Sophia">
+      <UniqueIdentifier>{970a2267-9c06-411d-add0-550f9651acbc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game Objects\Enemies">
+      <UniqueIdentifier>{1000ea67-8118-4f8a-8421-6b43b6bf7d56}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Framework\Manager">
+      <UniqueIdentifier>{9f9261b2-c695-49e8-b255-437157b4b365}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game Objects\Enemies\Robot">
+      <UniqueIdentifier>{5f7d7bcf-f04d-408e-966e-f59f1d1c4b40}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -64,11 +67,8 @@
     <ClCompile Include="GameObject.cpp">
       <Filter>Game Objects\Base</Filter>
     </ClCompile>
-    <ClCompile Include="GamePlayer.cpp">
-      <Filter>Game Objects\Player</Filter>
-    </ClCompile>
-    <ClCompile Include="GameNpc.cpp">
-      <Filter>Game Objects\Npc</Filter>
+    <ClCompile Include="Sophia.cpp">
+      <Filter>Game Objects\Sophia</Filter>
     </ClCompile>
     <ClCompile Include="debug.cpp">
       <Filter>Framework\Debug</Filter>
@@ -79,9 +79,6 @@
     <ClCompile Include="Game.cpp">
       <Filter>Framework\Game</Filter>
     </ClCompile>
-    <ClCompile Include="prepare.cpp">
-      <Filter>Framework\Prepare</Filter>
-    </ClCompile>
     <ClCompile Include="Camera.cpp">
       <Filter>Framework\Camera</Filter>
     </ClCompile>
@@ -90,6 +87,9 @@
     </ClCompile>
     <ClCompile Include="QuadTree.cpp">
       <Filter>Framework\QuadTree</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyRobot.cpp">
+      <Filter>Game Objects\Enemies\Robot</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -102,20 +102,14 @@
     <ClInclude Include="GameObject.h">
       <Filter>Game Objects\Base</Filter>
     </ClInclude>
-    <ClInclude Include="GamePlayer.h">
-      <Filter>Game Objects\Player</Filter>
-    </ClInclude>
-    <ClInclude Include="GameNpc.h">
-      <Filter>Game Objects\Npc</Filter>
+    <ClInclude Include="Sophia.h">
+      <Filter>Game Objects\Sophia</Filter>
     </ClInclude>
     <ClInclude Include="debug.h">
       <Filter>Framework\Debug</Filter>
     </ClInclude>
     <ClInclude Include="GameMovement.h">
       <Filter>Framework\Game movement</Filter>
-    </ClInclude>
-    <ClInclude Include="prepare.h">
-      <Filter>Framework\Prepare</Filter>
     </ClInclude>
     <ClInclude Include="Camera.h">
       <Filter>Framework\Camera</Filter>
@@ -131,6 +125,12 @@
     </ClInclude>
     <ClInclude Include="Game.h">
       <Filter>Framework\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyRobot.h">
+      <Filter>Game Objects\Enemies\Robot</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyLib.h">
+      <Filter>Game Objects\Enemies</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
