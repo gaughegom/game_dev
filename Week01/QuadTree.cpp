@@ -1,11 +1,12 @@
 #include "QuadTree.h"
 
 CQuadTree::CQuadTree(const int level, const SRect& rect) 
-	: level(level), rect(rect), pChild {nullptr, nullptr, nullptr, nullptr}
 {
+	this->level = level;
+	this->rect = rect;
 }
 
-void CQuadTree::DevideScreen()
+void CQuadTree::DivideScreen()
 {
 	float posX = this->rect.left;
 	float posY = this->rect.bottom;
@@ -13,10 +14,13 @@ void CQuadTree::DevideScreen()
 	float camWidth = this->rect.right - this->rect.left;
 	float camHeight = this->rect.top - this->rect.bottom;
 
-	SRect s_left_bot = SRect(posX, posY + camHeight / 2, posX + camWidth / 2, posY);
-	SRect s_left_top = SRect(posX, posY + camHeight, posX + camWidth / 2, posY);
-	SRect s_right_bot = SRect(posX + camWidth / 2, posY, posX + camWidth, posY);
-	SRect s_right_top = SRect(posX + camWidth / 2, posY + camHeight, posX + camWidth, posY + camHeight / 2);
+	float halfWidth = camWidth / 2;
+	float halfHeight = camHeight / 2;
+
+	SRect s_left_bot = SRect(posX, posY + halfHeight, posX + halfWidth, posY);
+	SRect s_left_top = SRect(posX, posY + camHeight, posX + halfWidth, posY + halfHeight);
+	SRect s_right_bot = SRect(posX + halfWidth, posY + halfHeight, posX + camWidth, posY);
+	SRect s_right_top = SRect(posX + halfWidth, posY + camHeight, posX + camWidth, posY + halfHeight);
 
 	pChild[0] = std::make_unique<CQuadTree>(this->level + 1, s_left_bot);
 	pChild[1] = std::make_unique<CQuadTree>(this->level + 1, s_right_bot);
@@ -24,57 +28,62 @@ void CQuadTree::DevideScreen()
 	pChild[3] = std::make_unique<CQuadTree>(this->level + 1, s_left_top);
 }
 
-void CQuadTree::AddObject(CGameObject* object)
+void CQuadTree::MappingObjectRect(CGameObject* object)
 {
-	if (pChild[0] != nullptr) {
-		if (pChild[0]->IsConstainObject(object)) {
-			pChild[0]->AddObject(object);
-		}
-		else if (pChild[1]->IsConstainObject(object)) {
-			pChild[1]->AddObject(object);
-		}
-		else if (pChild[2]->IsConstainObject(object)) {
-			pChild[2]->AddObject(object);
-		}
-		else if (pChild[3]->IsConstainObject(object)) {
-			pChild[3]->AddObject(object);
-		}
+	if (this->pChild[0].get() != nullptr) {
+		AddObjectToRect(object);
 
 		return;
 	}
 
-	pObject.emplace_back(object);
-	if (pObject.size() >= 1 && ((rect.right - rect.left)/2 >= SCREEN_WIDTH/2)) {
-		DevideScreen();
+	this->pObject.emplace_back(object);
+	if (this->pObject.size() >= 1 && ((rect.right - rect.left)/2 >= SCREEN_WIDTH/2)) {
+		DivideScreen();
 		for (auto obj : this->pObject) {
-			if (pChild[0]->IsConstainObject(obj)) {
-				pChild[0]->AddObject(obj);
+			/*if (this->pChild[0].get()->IsConstainObject(obj)) {
+				this->pChild[0].get()->MappingObjectRect(obj);
 			}
-			else if (pChild[1]->IsConstainObject(obj)) {
-				pChild[1]->AddObject(obj);
+			else if (this->pChild[1].get()->IsConstainObject(obj)) {
+				this->pChild[1].get()->MappingObjectRect(obj);
 			}
-			else if (pChild[2]->IsConstainObject(obj)) {
-				pChild[2]->AddObject(obj);
+			else if (this->pChild[2].get()->IsConstainObject(obj)) {
+				this->pChild[2].get()->MappingObjectRect(obj);
 			}
-			else if (pChild[3]->IsConstainObject(obj)) {
-				pChild[3]->AddObject(obj);
-			}
+			else if (this->pChild[3].get()->IsConstainObject(obj)) {
+				this->pChild[3].get()->MappingObjectRect(obj);
+			}*/
+			AddObjectToRect(object);
 		}
-		pObject.clear();
-		pObject.shrink_to_fit();
+		this->pObject.clear();
+		this->pObject.shrink_to_fit();
+	}
+}
+
+void CQuadTree::AddObjectToRect(CGameObject* object)
+{
+	if (this->pChild[0].get()->IsConstainObject(object)) {
+		this->pChild[0].get()->MappingObjectRect(object);
+	}
+	else if (this->pChild[1].get()->IsConstainObject(object)) {
+		this->pChild[1].get()->MappingObjectRect(object);
+	}
+	else if (this->pChild[2].get()->IsConstainObject(object)) {
+		this->pChild[2].get()->MappingObjectRect(object);
+	}
+	else if (this->pChild[3].get()->IsConstainObject(object)) {
+		this->pChild[3].get()->MappingObjectRect(object);
 	}
 }
 
 bool CQuadTree::IsConstainObject(CGameObject* object)
 {
 	Vector2D objectPos = object->GetPosition();
-	return rect.IsConstainPoint(objectPos);
+	return this->rect.IsConstainPoint(objectPos);
 }
 
 void CQuadTree::Update(std::vector<CGameObject*> objects)
 {
 	this->pObject.clear();
-	this->pObject.shrink_to_fit();
 
 	this->pChild[0] = nullptr;
 	this->pChild[1] = nullptr;
@@ -82,24 +91,24 @@ void CQuadTree::Update(std::vector<CGameObject*> objects)
 	this->pChild[3] = nullptr;
 
 	for (auto& object : objects) {
-		this->AddObject(object);
+		this->MappingObjectRect(object);
 	}
 }
 
-void CQuadTree::BringBack(std::vector<CGameObject*>& container, const SRect& rect)
+void CQuadTree::ContainerizeObject(std::vector<CGameObject*>& container, const SRect& rect)
 {
-	if (pChild[0] != nullptr) {
-		if (pChild[0]->rect.IsOverlap(rect)) {
-			pChild[0]->BringBack(container, rect);
+	if (this->pChild[0].get() != nullptr) {
+		if (this->pChild[0].get()->rect.IsOverlap(rect)) {
+			this->pChild[0].get()->ContainerizeObject(container, rect);
 		}
-		if (pChild[1]->rect.IsOverlap(rect)) {
-			pChild[1]->BringBack(container, rect);
+		if (this->pChild[1].get()->rect.IsOverlap(rect)) {
+			this->pChild[1].get()->ContainerizeObject(container, rect);
 		}
-		if (pChild[2]->rect.IsOverlap(rect)) {
-			pChild[2]->BringBack(container, rect);
+		if (this->pChild[2].get()->rect.IsOverlap(rect)) {
+			this->pChild[2].get()->ContainerizeObject(container, rect);
 		}
-		if (pChild[3]->rect.IsOverlap(rect)) {
-			pChild[3]->BringBack(container, rect);
+		if (this->pChild[3].get()->rect.IsOverlap(rect)) {
+			this->pChild[3].get()->ContainerizeObject(container, rect);
 		}
 
 		return;

@@ -114,9 +114,6 @@
     <ClInclude Include="GameMovement.h">
       <Filter>Framework\Game movement</Filter>
     </ClInclude>
-    <ClInclude Include="Game.h">
-      <Filter>Framework\Game</Filter>
-    </ClInclude>
     <ClInclude Include="prepare.h">
       <Filter>Framework\Prepare</Filter>
     </ClInclude>
@@ -131,6 +128,9 @@
     </ClInclude>
     <ClInclude Include="QuadTree.h">
       <Filter>Framework\QuadTree</Filter>
+    </ClInclude>
+    <ClInclude Include="Game.h">
+      <Filter>Framework\Game</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

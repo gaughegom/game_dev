@@ -328,15 +328,15 @@ void CGame::Init(HWND hWnd)
 	pNpcTest->SetState(NPC_STATE_MOVING_DOWN);
 	pNpcTest->SetVelocity(0, 0);
 
-	pGameObjects.push_back(pNpc);
 	pGameObjects.push_back(pPlayer);
+	pGameObjects.push_back(pNpc);
 	pGameObjects.push_back(pNpcTest);
 
 	pCamera = new CCamera();
 	pCamera->SetTarget(pPlayer);
-	pCamera->SetSize(SCREEN_WIDTH, SCREEN_HEIGHT);
+	pCamera->SetSize(this->backBufferWidth, this->backBufferHeight);
 
-	pQuadTree = new CQuadTree(0, SRect(0, SCREEN_HEIGHT * 10, SCREEN_WIDTH * 10, 0));
+	pQuadTree = new CQuadTree(0, SRect(0, this->backBufferHeight * 10, this->backBufferWidth * 10, 0));
 }
 
 void CGame::Update(DWORD dt)
@@ -346,7 +346,7 @@ void CGame::Update(DWORD dt)
 	pRenderObjects.clear();
 	
 	pQuadTree->Update(pGameObjects);
-	pQuadTree->BringBack(pRenderObjects, pCamera->GetBox());
+	pQuadTree->ContainerizeObject(pRenderObjects, pCamera->GetBox());
 
 	for (auto pObject : pRenderObjects) {
 		pObject->Update(dt);

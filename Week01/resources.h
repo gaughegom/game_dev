@@ -37,8 +37,8 @@
 
 #pragma region PLAYER SETTINGS
 
-#define PLAYER_START_X				50.0f
-#define PLAYER_START_Y				50.0f
+#define PLAYER_START_X				100.0f
+#define PLAYER_START_Y				200.0f
 #define PLAYER_WIDTH				30
 #define PLAYER_HEIGHT				32
 #define PLAYER_MOVING_SPEED			0.15f
@@ -47,8 +47,8 @@
 
 #pragma region NPC SETTINGS
 
-#define NPC_START_X					0.0f
-#define NPC_START_Y					0.0f
+#define NPC_START_X					100.0f
+#define NPC_START_Y					180.0f
 #define NPC_WIDTH					30
 #define NPC_HEIGHT					32
 #define NPC_MOVING_SPEED			0.2f

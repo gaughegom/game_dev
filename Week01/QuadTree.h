@@ -18,12 +18,13 @@ private:
 
 public:
 	CQuadTree(const int level, const SRect& rect);
-	void DevideScreen();
-	void AddObject(CGameObject* object);
+	void DivideScreen();
+	void MappingObjectRect(CGameObject* object);
+	void AddObjectToRect(CGameObject* object);
 	bool IsConstainObject(CGameObject* object);
 
 	void Update(std::vector<CGameObject*> objects);
-	void BringBack(std::vector<CGameObject*>& container, const SRect& rect);
+	void ContainerizeObject(std::vector<CGameObject*>& container, const SRect& rect);
 };
 
 #endif // !_QUADTREE_H
