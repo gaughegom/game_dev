@@ -18,12 +18,12 @@ Vector2D CGameObject::GetPosition()
 	return this->position;
 }
 
-void CGameObject::SetNewX(float x)
+void CGameObject::SetX(float x)
 {
 	this->position.x = x;
 }
 
-void CGameObject::SetNewY(float y)
+void CGameObject::SetY(float y)
 {
 	this->position.y = y;
 }

@@ -13,41 +13,10 @@ void CEnemyRobot::Render()
 
 int CEnemyRobot::GetState()
 {
-	switch (this->state)
-	{
-	case NPC_STATE_MOVING_LEFT:
-		return NPC_ANIMATION_MOVING_LEFT;
-	case NPC_STATE_MOVING_DOWN:
-		return NPC_ANIMATION_MOVING_DOWN;
-	case NPC_STATE_MOVING_UP:
-		return NPC_ANIMATION_MOVING_UP;
-	default:
-		return NPC_ANIMATION_MOVING_RIGHT;
-	}
+	return 0;
 }
 
 void CEnemyRobot::SetState(int state)
 {
-	CGameObject::SetState(state);
-	switch (state)
-	{
-	case NPC_STATE_MOVING_RIGHT:
-		this->velocity.x = NPC_MOVING_SPEED;
-		this->velocity.y = 0;
-		break;
-	case NPC_STATE_MOVING_LEFT:
-		this->velocity.x = -NPC_MOVING_SPEED;
-		this->velocity.y = 0;
-		break;
-	case NPC_STATE_MOVING_DOWN:
-		this->velocity.x = 0;
-		this->velocity.y = NPC_MOVING_SPEED;
-		break;
-	case NPC_STATE_MOVING_UP:
-		this->velocity.x = 0;
-		this->velocity.y = -NPC_MOVING_SPEED;
-		break;
-	default:
-		break;
-	}
+	
 }

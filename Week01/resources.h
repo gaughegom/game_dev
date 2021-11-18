@@ -27,15 +27,18 @@
 
 #pragma region TEXTURES ID
 
-#define ID_TEXTURES_SOPHIA			0
-#define ID_TEXTURES_ENEMY_ROBOT		1
+#define TEXTURES_SOPHIA_ID			0
+#define TEXTURES_ENEMY_ROBOT_ID		1
 
 #pragma endregion
 
-#define MARIO_TEXTURE_PATH			L"resources//mario.png"
+#pragma region TEXTURES PATH
+
 #define SOPHIA_TEXTURE_PATH			L"resources//player.png"
 #define ENEMY_TEXTURE_PATH			L"resources//enemies.png"
 #define TEXTURE_TRANS_COLOR			D3DCOLOR_XRGB(41, 255, 4)
+
+#pragma endregion
 
 #pragma region PLAYER SETTINGS
 
@@ -66,11 +69,6 @@
 #define SOPHIA_STATE_MOVING_RIGHT	15
 #define SOPHIA_STATE_MOVING_LEFT	20
 
-#define NPC_STATE_MOVING_RIGHT		50
-#define NPC_STATE_MOVING_LEFT		60
-#define NPC_STATE_MOVING_UP			70
-#define NPC_STATE_MOVING_DOWN		80
-
 #pragma endregion
 
 #pragma region ANIMATION
@@ -85,16 +83,14 @@
 #define PLAYER_ANIMATION_MOVING_RIGHT		4
 #define PLAYER_ANIMATION_MOVING_LEFT		5
 
-
-#define NPC_ANIMATION_MOVING_RIGHT		8
-#define NPC_ANIMATION_MOVING_LEFT		9
-#define NPC_ANIMATION_MOVING_UP			10
-#define NPC_ANIMATION_MOVING_DOWN		11
-
 #pragma endregion
+
+#pragma region KEYBOARD
 
 #define DIRECTINPUT_VERSION			0x0800
 #define KEYBOARD_BUFFER_SIZE		1024
 
-#endif // !_RESOURCES_H
+#pragma endregion
 
+
+#endif // !_RESOURCES_H

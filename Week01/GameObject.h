@@ -24,8 +24,8 @@ public:
 	// position
 	void SetPosition(float newX, float newY) { this->position.x = newX, this->position.y = newY; }
 	Vector2D GetPosition();
-	void SetNewX(float newX);
-	void SetNewY(float newY);
+	void SetX(float newX);
+	void SetY(float newY);
 	void SetNx(float newNX);
 	float GetX();
 	float GetY();
@@ -33,10 +33,11 @@ public:
 
 	// velocity
 	void SetVelocity(float newVx, float newVy) { this->velocity.x = newVx, this->velocity.y = newVy; }
+	Vector2D GetVelocity() { return this->velocity; }
 
 	// state
 	void SetState(int newState) { this->state = newState; }
-	int Get_state() { return this->state; }
+	int GetState() { return this->state; }
 
 
 	static void AddAnimation(int animationId);

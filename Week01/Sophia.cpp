@@ -22,11 +22,11 @@ void CSophia::EdgeCollisionHandler(int width)
 	{
 	case SOPHIA_STATE_MOVING_RIGHT:
 		if (this->position.x > width * 10 - PLAYER_WIDTH) {
-			this->SetNewX(width * 10 - PLAYER_WIDTH);
+			this->SetX(width * 10 - PLAYER_WIDTH);
 		}
 	case SOPHIA_STATE_MOVING_LEFT:
 		if (this->position.x < 0) {
-			this->SetNewX(0);
+			this->SetX(0);
 		}
 	default:
 		break;

@@ -26,7 +26,7 @@ public:
 	float GetY();
 	int GetWidth();
 	int GetHeight();
-	SRect GetBox();
+	SRect GetBoundingBox();
 
 	// target
 	void SetTarget(CGameObject* target);

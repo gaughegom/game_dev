@@ -51,7 +51,7 @@ int CCamera::GetHeight()
 	return this->height;
 }
 
-SRect CCamera::GetBox()
+SRect CCamera::GetBoundingBox()
 {
 	SRect rect;
 	rect.left = this->position.x;

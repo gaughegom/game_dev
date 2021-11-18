@@ -244,14 +244,14 @@ void CGame::Draw(Vector2D position, int nx, LPDIRECT3DTEXTURE9 texture, int left
 	D3DXMatrixIdentity(&matrix);
 
 	// flip X
-	/*D3DXMATRIX dmFlipX;
-	D3DXMatrixScaling(&dmFlipX, -nx, 1.0f, 1.0f);*/
+	D3DXMATRIX dmFlipX;
+	D3DXMatrixScaling(&dmFlipX, -nx, 1.0f, 1.0f);
 
 	// translate 
 	D3DXMATRIX dmTranslation;
 	D3DXMatrixTranslation(&dmTranslation, (position.x - cameraPos.x), (-position.y + cameraPos.y), 0.0f);
 
-	//matrix *= dmFlipX;
+	matrix *= dmFlipX;
 	matrix *= dmTranslation;
 
 	spriteHandler->SetTransform(&matrix);
@@ -267,10 +267,10 @@ void CGame::Init(HWND hWnd)
 {
 	this->InitDirectX(hWnd);
 
-	pTextures->Add(ID_TEXTURES_SOPHIA, SOPHIA_TEXTURE_PATH, TEXTURE_TRANS_COLOR);
-	pTextures->Add(ID_TEXTURES_ENEMY_ROBOT, ENEMY_TEXTURE_PATH, TEXTURE_TRANS_COLOR);
-	LPDIRECT3DTEXTURE9 texSophia = pTextures->Get(ID_TEXTURES_SOPHIA);
-	LPDIRECT3DTEXTURE9 texRobot = pTextures->Get(ID_TEXTURES_ENEMY_ROBOT);
+	pTextures->Add(TEXTURES_SOPHIA_ID, SOPHIA_TEXTURE_PATH, TEXTURE_TRANS_COLOR);
+	pTextures->Add(TEXTURES_ENEMY_ROBOT_ID, ENEMY_TEXTURE_PATH, TEXTURE_TRANS_COLOR);
+	LPDIRECT3DTEXTURE9 texSophia = pTextures->Get(TEXTURES_SOPHIA_ID);
+	LPDIRECT3DTEXTURE9 texRobot = pTextures->Get(TEXTURES_ENEMY_ROBOT_ID);
 
 	#pragma region SOPHIA SPRITES
 	
@@ -355,7 +355,7 @@ void CGame::Update(DWORD dt)
 	pRenderObjects.clear();
 	
 	pQuadTree->Update(pGameObjects);
-	pQuadTree->ContainerizeObject(pRenderObjects, pCamera->GetBox());
+	pQuadTree->ContainerizeObject(pRenderObjects, pCamera->GetBoundingBox());
 
 	for (auto pObject : pRenderObjects) {
 		pObject->Update(dt);
