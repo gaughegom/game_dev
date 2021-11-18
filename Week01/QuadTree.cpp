@@ -98,17 +98,17 @@ void CQuadTree::Update(std::vector<CGameObject*> objects)
 void CQuadTree::ContainerizeObject(std::vector<CGameObject*>& container, const SRect& rect)
 {
 	if (this->pChild[0].get() != nullptr) {
-		if (this->pChild[0].get()->rect.IsOverlap(rect)) {
-			this->pChild[0].get()->ContainerizeObject(container, rect);
+		if (this->pChild[0]->rect.IsOverlap(rect)) {
+			this->pChild[0]->ContainerizeObject(container, rect);
 		}
-		if (this->pChild[1].get()->rect.IsOverlap(rect)) {
-			this->pChild[1].get()->ContainerizeObject(container, rect);
+		if (this->pChild[1]->rect.IsOverlap(rect)) {
+			this->pChild[1]->ContainerizeObject(container, rect);
 		}
-		if (this->pChild[2].get()->rect.IsOverlap(rect)) {
-			this->pChild[2].get()->ContainerizeObject(container, rect);
+		if (this->pChild[2]->rect.IsOverlap(rect)) {
+			this->pChild[2]->ContainerizeObject(container, rect);
 		}
-		if (this->pChild[3].get()->rect.IsOverlap(rect)) {
-			this->pChild[3].get()->ContainerizeObject(container, rect);
+		if (this->pChild[3]->rect.IsOverlap(rect)) {
+			this->pChild[3]->ContainerizeObject(container, rect);
 		}
 
 		return;

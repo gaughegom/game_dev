@@ -27,10 +27,10 @@ bool SRect::IsConstain(const SRect& rect)
 
 bool SRect::IsOverlap(const SRect& rect)
 {
-	if (this->right <= rect.left && this->left >= rect.right) {
+	if (this->right <= rect.left || this->left >= rect.right) {
 		return false;
 	}
-	if (this->top <= rect.bottom && this->bottom >= rect.top) {
+	if (this->top <= rect.bottom || this->bottom >= rect.top) {
 		return false;
 	}
 	return true;
