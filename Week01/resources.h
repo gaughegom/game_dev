@@ -33,9 +33,9 @@
 #pragma endregion
 
 #define MARIO_TEXTURE_PATH			L"resources//mario.png"
-#define SOPHIA_TEXTURE_PATH			L"resources//jason-and-sophia.png"
-#define ENEMY_TEXTURE_PATH			L"resources//enemies.gif"
-#define TEXTURE_TRANS_COLOR			D3DCOLOR_XRGB(255, 255, 255)
+#define SOPHIA_TEXTURE_PATH			L"resources//player.png"
+#define ENEMY_TEXTURE_PATH			L"resources//enemies.png"
+#define TEXTURE_TRANS_COLOR			D3DCOLOR_XRGB(41, 255, 4)
 
 #pragma region PLAYER SETTINGS
 

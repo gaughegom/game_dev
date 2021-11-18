@@ -11,7 +11,6 @@ CSophia::CSophia()
 void CSophia::Update(DWORD dt)
 {
 	LinearMovement(this->position, this->velocity, dt);
-	DebugOut(L"[POS]  %f, %f\n", this->position.x, this->position.y);
 
 	int backbufferWidth = CGame::GetInstance()->GetBackbufferWidth();
 	this->EdgeCollisionHandler(CGame::GetInstance()->GetBackbufferWidth());

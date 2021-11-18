@@ -6,7 +6,6 @@
 #include "QuadTree.h"
 
 CSophia* pSophia;
-CEnemyRobot* pRobot;
 CCamera* pCamera;
 CTextures* pTextures = CTextures::GetInstance();
 CQuadTree* pQuadTree;
@@ -229,9 +228,6 @@ void CGame::InitDirectX(HWND hWnd)
 */
 void CGame::Draw(Vector2D position, int nx, LPDIRECT3DTEXTURE9 texture, int left, int top, int right, int bottom)
 {
-	if (nx == -2 || nx == 2) {
-		nx = nx / 2;
-	}
 
 	Vector2D cameraPos = pCamera->GetPosition();
 
@@ -303,40 +299,52 @@ void CGame::Init(HWND hWnd)
 
 	CSophia::AddAnimation(300);
 	CSophia::AddAnimation(301);
-	
-	pSophia = new CSophia();
-	pSophia->SetPosition(PLAYER_START_X, PLAYER_START_Y);
-	pSophia->SetVelocity(0, 0);
 
 	#pragma endregion
 
 	#pragma region ENEMY SPRITES
 
-	g_sprites->Add(20000, 132, 275, 150, 293, texRobot);
+	g_sprites->Add(20000, 104, 0, 118, 26, texRobot);
 	lpAni = new CAnimation(5);
 	lpAni->Add(20000);
 	g_animations->Add(1000, lpAni);
 
 	CEnemyRobot::AddAnimation(1000);
 
-	pRobot = new CEnemyRobot();
-	pRobot->SetPosition(PLAYER_START_X - 5, PLAYER_START_Y - 5);
-	pRobot->SetVelocity(0, 0);
-
 	#pragma endregion
 
-
-
+	#pragma region KEYBOARD
+	
 	this->keyHandler = new CKeyHander();
 	this->InitKeyboard(keyHandler);
 
-	pGameObjects.push_back(pSophia);
-	pGameObjects.push_back(pRobot);
+	#pragma endregion
 
+	// create sophia
+	pSophia = new CSophia();
+	pSophia->SetPosition(PLAYER_START_X, PLAYER_START_Y);
+	pSophia->SetVelocity(0, 0);
+
+	// create 10 enemy robot at random position
+	CEnemyRobot* pRobot;
+	srand(time(0));
+	for (int i = 0; i < 20; i++) {
+		pRobot = new CEnemyRobot();
+		pRobot->SetVelocity(0, 0);
+		pRobot->SetPosition(PLAYER_START_X + i * 100, PLAYER_START_Y - 10);
+		pGameObjects.push_back(pRobot);
+	}
+
+
+	// push sophia in gameObject vector
+	pGameObjects.push_back(pSophia);
+
+	// Camera setting
 	pCamera = new CCamera();
 	pCamera->SetTarget(pSophia);
 	pCamera->SetSize(this->backBufferWidth, this->backBufferHeight);
 
+	// Init quadtree
 	pQuadTree = new CQuadTree(0, SRect(0, this->backBufferHeight * 10, this->backBufferWidth * 10, 0));
 }
 
@@ -352,6 +360,7 @@ void CGame::Update(DWORD dt)
 	for (auto pObject : pRenderObjects) {
 		pObject->Update(dt);
 	}
+	DebugOut(L"[INFO] render object: %d\n", pRenderObjects.size());
 }
 
 void CGame::Render()
