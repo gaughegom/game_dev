@@ -1,6 +1,6 @@
 #include "GameObject.h"
 
-vector<LPANIMATION> CGameObject::animations;
+std::vector<LPANIMATION> CGameObject::animations;
 
 CGameObject::CGameObject()
 {

@@ -6,6 +6,7 @@
 #include "Sprites.h"
 #include "Game.h"
 #include "GameMovement.h"
+#include "Animations.h"
 
 class CGameObject
 {

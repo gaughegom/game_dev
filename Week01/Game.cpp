@@ -1,8 +1,9 @@
 #include "Game.h"
+#include "Textures.h"
+#include "Animations.h"
 #include "Sophia.h"
 #include "EnemyLib.h"
 #include "Camera.h"
-#include "Textures.h"
 #include "QuadTree.h"
 
 CSophia* pSophia;
