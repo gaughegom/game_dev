@@ -43,7 +43,7 @@ public:
 	int GetState() { return this->state; }
 
 	// animation
-	void AddAnimation(int animationId, int spriteId);
+	void AddAnimation(int key, int animationId);
 	std::unordered_map<int, LPANIMATION> GetAnimations() { return this->animations; }
 
 

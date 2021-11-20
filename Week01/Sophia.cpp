@@ -1,19 +1,23 @@
 #include "Sophia.h"
+#include "SophiaStateIdle.h"
+#include "SophiaStateMoveForward.h"
+#include "SophiaStateMoveBackward.h"
+#include "SophiaStateNotMove.h"
 
 CSophia::CSophia()
 {
-	this->AddAnimation(2, 300);
-	this->AddAnimation(3, 301);
+	this->AddAnimation(LEFT_WHEEL, ANIMATION_SOPHIA_LEFT_WHEEL);
+	this->AddAnimation(RIGHT_WHEEL, ANIMATION_SOPHIA_RIGHT_WHEEL);
+	lpsBody = CSprites::GetInstance()->Get(SPRITE_SOPHIA_BODY);
 
-	this->vt2LeftWheel = this->position - Vector2D(8, 0);
-	this->vt2RightWheel = this->position + Vector2D(8, 0);
-	this->lpsBody = CSprites::GetInstance()->Get(10020);
-	this->lpsCabin = CSprites::GetInstance()->Get(10030);
+	this->wheelState = new CSophiaStateNotMove;
+	this->directState = new CSophiaStateIdle;
 }
 
 void CSophia::Update(DWORD dt)
 {
 	LinearMovement(this->position, this->velocity, dt);
+	this->directState->Update(dt, this->nx, *this);
 
 	int backbufferWidth = CGame::GetInstance()->GetBackbufferWidth();
 	this->EdgeCollisionHandler(CGame::GetInstance()->GetBackbufferWidth());
@@ -38,17 +42,11 @@ void CSophia::EdgeCollisionHandler(int width)
 
 void CSophia::Render()
 {
-	/*int animation = this->GetState();
-	animations[animation]->Render(this->position, this->nx);*/
-	
-	animations.at(2)->Render(
-		this->position + this->vt2LeftWheel,
-		this->nx);
-	animations.at(3)->Render(
-		this->position + this->vt2RightWheel,
-		this->nx);
-	this->lpsBody->Draw(this->position + Vector2D(0, 3), this->nx);
-	this->lpsCabin->Draw(this->position + Vector2D(0, 11), this->nx);
+	this->wheelState->Render(*this);
+	animations.at(LEFT_WHEEL)->Render(this->position + this->leftWheel, 1);
+	animations.at(RIGHT_WHEEL)->Render(this->position + this->rightWheel, 1);
+	lpsBody->Draw(this->position + this->body, this->nx);
+	lpsCabin->Draw(this->position + this->cabin, this->nx);
 }
 
 int CSophia::GetState()
@@ -78,18 +76,22 @@ void CSophia::SetState(int state)
 	case SOPHIA_STATE_MOVING_RIGHT:
 		this->SetVelocity(PLAYER_MOVING_SPEED, 0);
 		this->nx = 1;
+		this->wheelState = new CSophiaStateMoveForward;
 		break;
 	case SOPHIA_STATE_MOVING_LEFT:
 		this->SetVelocity(-PLAYER_MOVING_SPEED, 0);
 		this->nx = -1;
+		this->wheelState = new CSophiaStateMoveBackward;
 		break;
 
 	case SOPHIA_STATE_IDLE:
 		this->SetVelocity(0, 0);
+		this->wheelState = new CSophiaStateNotMove;
 		break;
 	default:
 		this->SetVelocity(0, 0);
 		this->position.x;
+		this->wheelState = new CSophiaStateNotMove;
 		break;
 	}
 }

@@ -50,6 +50,15 @@
     <Filter Include="Game Objects\Enemies\Robot">
       <UniqueIdentifier>{5f7d7bcf-f04d-408e-966e-f59f1d1c4b40}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Framework\Sprites\Animation">
+      <UniqueIdentifier>{25859531-b9ad-4ffc-811b-6e72c45d36f1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game Objects\Sophia\State direction">
+      <UniqueIdentifier>{4df4708a-a2a6-4047-a158-5963ce069246}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game Objects\Sophia\State action">
+      <UniqueIdentifier>{8d8efb4a-c9bf-4d69-b215-02447ec85ea3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -92,13 +101,28 @@
       <Filter>Framework\Sprites</Filter>
     </ClCompile>
     <ClCompile Include="Animation.cpp">
-      <Filter>Framework\Sprites</Filter>
+      <Filter>Framework\Sprites\Animation</Filter>
     </ClCompile>
     <ClCompile Include="AnimationFrame.cpp">
-      <Filter>Framework\Sprites</Filter>
+      <Filter>Framework\Sprites\Animation</Filter>
     </ClCompile>
     <ClCompile Include="Animations.cpp">
-      <Filter>Framework\Sprites</Filter>
+      <Filter>Framework\Sprites\Animation</Filter>
+    </ClCompile>
+    <ClCompile Include="SophiaState.cpp">
+      <Filter>Game Objects\Sophia</Filter>
+    </ClCompile>
+    <ClCompile Include="SophiaStateMoveForward.cpp">
+      <Filter>Game Objects\Sophia\State direction</Filter>
+    </ClCompile>
+    <ClCompile Include="SophiaStateMoveBackward.cpp">
+      <Filter>Game Objects\Sophia\State direction</Filter>
+    </ClCompile>
+    <ClCompile Include="SophiaStateIdle.cpp">
+      <Filter>Game Objects\Sophia\State action</Filter>
+    </ClCompile>
+    <ClCompile Include="SophiaStateNotMove.cpp">
+      <Filter>Game Objects\Sophia\State direction</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -145,13 +169,28 @@
       <Filter>Framework\Sprites</Filter>
     </ClInclude>
     <ClInclude Include="Animation.h">
-      <Filter>Framework\Sprites</Filter>
+      <Filter>Framework\Sprites\Animation</Filter>
     </ClInclude>
     <ClInclude Include="AnimationFrame.h">
-      <Filter>Framework\Sprites</Filter>
+      <Filter>Framework\Sprites\Animation</Filter>
     </ClInclude>
     <ClInclude Include="Animations.h">
-      <Filter>Framework\Sprites</Filter>
+      <Filter>Framework\Sprites\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="SophiaState.h">
+      <Filter>Game Objects\Sophia</Filter>
+    </ClInclude>
+    <ClInclude Include="SophiaStateMoveForward.h">
+      <Filter>Game Objects\Sophia\State direction</Filter>
+    </ClInclude>
+    <ClInclude Include="SophiaStateMoveBackward.h">
+      <Filter>Game Objects\Sophia\State direction</Filter>
+    </ClInclude>
+    <ClInclude Include="SophiaStateIdle.h">
+      <Filter>Game Objects\Sophia\State action</Filter>
+    </ClInclude>
+    <ClInclude Include="SophiaStateNotMove.h">
+      <Filter>Game Objects\Sophia\State direction</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
