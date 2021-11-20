@@ -8,7 +8,9 @@ CSophia::CSophia()
 {
 	this->AddAnimation(LEFT_WHEEL, ANIMATION_SOPHIA_LEFT_WHEEL);
 	this->AddAnimation(RIGHT_WHEEL, ANIMATION_SOPHIA_RIGHT_WHEEL);
-	lpsBody = CSprites::GetInstance()->Get(SPRITE_SOPHIA_BODY);
+	auto sprites = CSprites::GetInstance();
+	this->lpsBody = sprites->Get(SPRITE_SOPHIA_BODY);
+	this->lpsCabin = sprites->Get(SPRITE_SOPHIA_CABIN);
 
 	this->wheelState = new CSophiaStateNotMove;
 	this->directState = new CSophiaStateIdle;

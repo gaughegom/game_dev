@@ -50,6 +50,8 @@ public:
 	void Render();
 	void Run();
 
+	void CreateGameObject();
+
 	LPDIRECT3DDEVICE9 GetDirect3dDevice() { return this->d3ddv; }
 	LPDIRECT3DSURFACE9 GetBackbuffer() { return backBuffer; }
 	LPD3DXSPRITE GetSpriteHandler() { return this->spriteHandler; }

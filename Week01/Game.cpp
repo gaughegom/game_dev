@@ -289,6 +289,7 @@ void CGame::Init(HWND hWnd)
 
 
 	LPANIMATION lpAni;
+	// add left wheel
 	lpAni = new CAnimation(5);
 	lpAni->Add(SPRITE_SOPHIA_WHEEL_1);
 	lpAni->Add(SPRITE_SOPHIA_WHEEL_3);
@@ -297,6 +298,7 @@ void CGame::Init(HWND hWnd)
 	g_animations->Add(ANIMATION_SOPHIA_LEFT_WHEEL, lpAni);
 
 	lpAni = new CAnimation(5);
+	// add right wheel
 	lpAni->Add(SPRITE_SOPHIA_WHEEL_2);
 	lpAni->Add(SPRITE_SOPHIA_WHEEL_4);
 	lpAni->Add(SPRITE_SOPHIA_WHEEL_1);
@@ -321,6 +323,23 @@ void CGame::Init(HWND hWnd)
 
 	#pragma endregion
 
+	CreateGameObject();
+
+	// create camera
+	#pragma region CAMERA SETTINGS
+	
+	pCamera = new CCamera();
+	pCamera->SetTarget(pSophia);
+	pCamera->SetSize(this->backBufferWidth, this->backBufferHeight);
+
+	#pragma endregion
+
+	// Init quadtree
+	pQuadTree = new CQuadTree(0, SRect(0, this->backBufferHeight * 10, this->backBufferWidth * 10, 0));
+}
+
+void CGame::CreateGameObject()
+{
 	// create sophia
 	pSophia = new CSophia();
 	pSophia->SetPosition(PLAYER_START_X, PLAYER_START_Y);
@@ -336,17 +355,8 @@ void CGame::Init(HWND hWnd)
 		pGameObjects.push_back(pRobot);
 	}
 
-
 	// push sophia in gameObject vector
 	pGameObjects.push_back(pSophia);
-
-	// Camera setting
-	pCamera = new CCamera();
-	pCamera->SetTarget(pSophia);
-	pCamera->SetSize(this->backBufferWidth, this->backBufferHeight);
-
-	// Init quadtree
-	pQuadTree = new CQuadTree(0, SRect(0, this->backBufferHeight * 10, this->backBufferWidth * 10, 0));
 }
 
 void CGame::Update(DWORD dt)

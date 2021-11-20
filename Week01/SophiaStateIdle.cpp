@@ -7,8 +7,8 @@ void CSophiaStateIdle::Update(DWORD dt, int nx, CSophia& sophia)
 	sophia.body = Vector2D(0, 1);
 	sophia.cabin = Vector2D(-3.5 * nx, 9);
 
-	auto sprites = CSprites::GetInstance();
-	sophia.lpsCabin = sprites->Get(SPRITE_SOPHIA_CABIN);
+	/*auto sprites = CSprites::GetInstance();
+	sophia.lpsCabin = sprites->Get(SPRITE_SOPHIA_CABIN);*/
 }
 
 void CSophiaStateIdle::Render()
