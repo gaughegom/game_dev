@@ -1,5 +1,10 @@
 #include "EnemyRobot.h"
 
+CEnemyRobot::CEnemyRobot()
+{
+	this->AddAnimation(1, 1000);
+}
+
 void CEnemyRobot::Update(DWORD dt)
 {
 	this->position.x += this->velocity.x * dt;
@@ -8,7 +13,8 @@ void CEnemyRobot::Update(DWORD dt)
 
 void CEnemyRobot::Render()
 {
-	animations.at(ENEMY_ROBOT_IDLE)->Render(this->position, this->nx);
+	auto animation = this->animations.at(1);
+	animation->Render(this->position, this->nx);
 }
 
 int CEnemyRobot::GetState()

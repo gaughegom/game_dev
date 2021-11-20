@@ -19,9 +19,11 @@ protected:
 
 	int state;
 
-	static std::vector<LPANIMATION> animations;
+	std::unordered_map<int, LPANIMATION> animations;
 
 public:
+	CGameObject();
+
 	// position
 	void SetPosition(float newX, float newY) { this->position.x = newX, this->position.y = newY; }
 	Vector2D GetPosition();
@@ -30,7 +32,7 @@ public:
 	void SetNx(float newNX);
 	float GetX();
 	float GetY();
-	int GetNX() { return this->nx; }
+	int GetNx();
 
 	// velocity
 	void SetVelocity(float newVx, float newVy) { this->velocity.x = newVx, this->velocity.y = newVy; }
@@ -40,10 +42,10 @@ public:
 	void SetState(int newState) { this->state = newState; }
 	int GetState() { return this->state; }
 
+	// animation
+	void AddAnimation(int animationId, int spriteId);
+	std::unordered_map<int, LPANIMATION> GetAnimations() { return this->animations; }
 
-	static void AddAnimation(int animationId);
-
-	CGameObject();
 
 	virtual void Update(DWORD dt) = 0;
 	virtual void Render() = 0;

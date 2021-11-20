@@ -9,6 +9,8 @@
 class CEnemyRobot : public CGameObject
 {
 public:
+	CEnemyRobot();
+
 	void Update(DWORD dt);
 	void Render();
 	

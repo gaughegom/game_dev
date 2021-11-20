@@ -298,8 +298,8 @@ void CGame::Init(HWND hWnd)
 	lpAni->Add(10010);
 	g_animations->Add(301, lpAni);
 
-	CSophia::AddAnimation(300);
-	CSophia::AddAnimation(301);
+	//CSophia::AddAnimation(300);
+	//CSophia::AddAnimation(301);
 
 	#pragma endregion
 
@@ -310,7 +310,8 @@ void CGame::Init(HWND hWnd)
 	lpAni->Add(20000);
 	g_animations->Add(1000, lpAni);
 
-	CEnemyRobot::AddAnimation(1000);
+	//CEnemyRobot::AddAnimation(1000);
+
 
 	#pragma endregion
 

@@ -2,6 +2,9 @@
 
 CSophia::CSophia()
 {
+	this->AddAnimation(2, 300);
+	this->AddAnimation(3, 301);
+
 	this->vt2LeftWheel = this->position - Vector2D(8, 0);
 	this->vt2RightWheel = this->position + Vector2D(8, 0);
 	this->lpsBody = CSprites::GetInstance()->Get(10020);
@@ -38,10 +41,10 @@ void CSophia::Render()
 	/*int animation = this->GetState();
 	animations[animation]->Render(this->position, this->nx);*/
 	
-	animations.at(SOPHIA_LEFT_WHEEL_ANIMATION)->Render(
+	animations.at(2)->Render(
 		this->position + this->vt2LeftWheel,
 		this->nx);
-	animations.at(SOPHIA_RIGHT_WHEEL_ANIMATION)->Render(
+	animations.at(3)->Render(
 		this->position + this->vt2RightWheel,
 		this->nx);
 	this->lpsBody->Draw(this->position + Vector2D(0, 3), this->nx);

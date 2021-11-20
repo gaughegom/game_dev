@@ -1,6 +1,6 @@
 #include "GameObject.h"
 
-std::vector<LPANIMATION> CGameObject::animations;
+//std::vector<LPANIMATION> CGameObject::animations;
 
 CGameObject::CGameObject()
 {
@@ -43,12 +43,18 @@ float CGameObject::GetY()
 	return this->position.y;
 }
 
-void CGameObject::AddAnimation(int animationId)
+int CGameObject::GetNx()
 {
-	LPANIMATION ani = CAnimations::GetInstance()->Get(animationId);
-	animations.push_back(ani);
+	return this->nx;
+}
+
+void CGameObject::AddAnimation(int animationId, int spriteId)
+{
+	LPANIMATION ani = CAnimations::GetInstance()->Get(spriteId);
+	this->animations.insert(std::make_pair(animationId, ani));
 }
 
 CGameObject::~CGameObject()
 {
+	this->animations.clear();
 }
