@@ -40,6 +40,21 @@
 
 #pragma endregion
 
+#pragma region SPRITE, ANIMATION ID
+
+#define SPRITE_SOPHIA_WHEEL_1			0
+#define SPRITE_SOPHIA_WHEEL_2			1
+#define SPRITE_SOPHIA_WHEEL_3			2
+#define SPRITE_SOPHIA_WHEEL_4			3
+#define SPRITE_SOPHIA_BODY				4
+#define SPRITE_SOPHIA_CABIN				5
+
+#define ANIMATION_SOPHIA_LEFT_WHEEL		0
+#define ANIMATION_SOPHIA_RIGHT_WHEEL	1
+
+
+#pragma endregion
+
 #pragma region PLAYER SETTINGS
 
 #define PLAYER_START_X				100.0f
@@ -50,20 +65,7 @@
 
 #pragma endregion
 
-#pragma region NPC SETTINGS
-
-#define NPC_START_X					100.0f
-#define NPC_START_Y					180.0f
-#define NPC_WIDTH					30
-#define NPC_HEIGHT					32
-#define NPC_MOVING_SPEED			0.2f
-
-#pragma endregion
-
-#pragma region GAME OBJECT STATE
-
-#define SOPHIA_LEFT_WHEEL			0
-#define SOPHIA_WHEEL_RIGHT			5
+#pragma region SOPHIA STATE
 
 #define SOPHIA_STATE_IDLE			10
 #define SOPHIA_STATE_MOVING_RIGHT	15
@@ -71,17 +73,13 @@
 
 #pragma endregion
 
-#pragma region ANIMATION
+#pragma region NPC SETTINGS
 
-#define SOPHIA_LEFT_WHEEL_ANIMATION			0
-#define SOPHIA_RIGHT_WHEEL_ANIMATION		1
-
-#define ENEMY_ROBOT_IDLE				2
-
-#define PLAYER_ANIMATION_IDLE_RIGHT			2
-#define PLAYER_ANIMATION_IDLE_LEFT			3
-#define PLAYER_ANIMATION_MOVING_RIGHT		4
-#define PLAYER_ANIMATION_MOVING_LEFT		5
+#define NPC_START_X					100.0f
+#define NPC_START_Y					180.0f
+#define NPC_WIDTH					30
+#define NPC_HEIGHT					32
+#define NPC_MOVING_SPEED			0.2f
 
 #pragma endregion
 

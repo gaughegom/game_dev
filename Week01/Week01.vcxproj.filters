@@ -50,6 +50,12 @@
     <Filter Include="Game Objects\Enemies\Robot">
       <UniqueIdentifier>{5f7d7bcf-f04d-408e-966e-f59f1d1c4b40}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Framework\Sprites\Animation">
+      <UniqueIdentifier>{25859531-b9ad-4ffc-811b-6e72c45d36f1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game Objects\Sophia\State">
+      <UniqueIdentifier>{7a2df675-18ae-4077-a486-99da8c3761ff}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -92,13 +98,22 @@
       <Filter>Framework\Sprites</Filter>
     </ClCompile>
     <ClCompile Include="Animation.cpp">
-      <Filter>Framework\Sprites</Filter>
+      <Filter>Framework\Sprites\Animation</Filter>
     </ClCompile>
     <ClCompile Include="AnimationFrame.cpp">
-      <Filter>Framework\Sprites</Filter>
+      <Filter>Framework\Sprites\Animation</Filter>
     </ClCompile>
     <ClCompile Include="Animations.cpp">
-      <Filter>Framework\Sprites</Filter>
+      <Filter>Framework\Sprites\Animation</Filter>
+    </ClCompile>
+    <ClCompile Include="SophiaState.cpp">
+      <Filter>Game Objects\Sophia</Filter>
+    </ClCompile>
+    <ClCompile Include="SophiaDirectState.cpp">
+      <Filter>Game Objects\Sophia\State</Filter>
+    </ClCompile>
+    <ClCompile Include="SophiaActionState.cpp">
+      <Filter>Game Objects\Sophia\State</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -145,13 +160,22 @@
       <Filter>Framework\Sprites</Filter>
     </ClInclude>
     <ClInclude Include="Animation.h">
-      <Filter>Framework\Sprites</Filter>
+      <Filter>Framework\Sprites\Animation</Filter>
     </ClInclude>
     <ClInclude Include="AnimationFrame.h">
-      <Filter>Framework\Sprites</Filter>
+      <Filter>Framework\Sprites\Animation</Filter>
     </ClInclude>
     <ClInclude Include="Animations.h">
-      <Filter>Framework\Sprites</Filter>
+      <Filter>Framework\Sprites\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="SophiaState.h">
+      <Filter>Game Objects\Sophia</Filter>
+    </ClInclude>
+    <ClInclude Include="SophiaDirectState.h">
+      <Filter>Game Objects\Sophia\State</Filter>
+    </ClInclude>
+    <ClInclude Include="SophiaActionState.h">
+      <Filter>Game Objects\Sophia\State</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

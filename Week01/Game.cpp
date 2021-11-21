@@ -276,30 +276,34 @@ void CGame::Init(HWND hWnd)
 	#pragma region SOPHIA SPRITES
 	
 	// Add 2 wheel
-	g_sprites->Add(10000, 3, 21, 11, 29, texSophia);
-	g_sprites->Add(10001, 21, 21, 29, 29, texSophia);
-	g_sprites->Add(10010, 12, 21, 20, 29, texSophia);
-	g_sprites->Add(10011, 30, 21, 38, 29, texSophia);
+	g_sprites->Add(SPRITE_SOPHIA_WHEEL_1, 3, 21, 11, 29, texSophia);
+	g_sprites->Add(SPRITE_SOPHIA_WHEEL_2, 21, 21, 29, 29, texSophia);
+	g_sprites->Add(SPRITE_SOPHIA_WHEEL_3, 12, 21, 20, 29, texSophia);
+	g_sprites->Add(SPRITE_SOPHIA_WHEEL_4, 30, 21, 38, 29, texSophia);
 
 	// Add sophia body
-	g_sprites->Add(10020, 3, 12, 11, 20, texSophia);
+	g_sprites->Add(SPRITE_SOPHIA_BODY, 3, 12, 11, 20, texSophia);
 
 	// Add cabin
-	g_sprites->Add(10030, 39, 3, 55, 11, texSophia);
+	g_sprites->Add(SPRITE_SOPHIA_CABIN, 39, 3, 55, 11, texSophia);
 
 
 	LPANIMATION lpAni;
+	// add left wheel
 	lpAni = new CAnimation(5);
-	lpAni->Add(10000);
-	//lpAni->Add(10002);
-	g_animations->Add(300, lpAni);
+	lpAni->Add(SPRITE_SOPHIA_WHEEL_1);
+	lpAni->Add(SPRITE_SOPHIA_WHEEL_3);
+	lpAni->Add(SPRITE_SOPHIA_WHEEL_2);
+	lpAni->Add(SPRITE_SOPHIA_WHEEL_4);
+	g_animations->Add(ANIMATION_SOPHIA_LEFT_WHEEL, lpAni);
 
 	lpAni = new CAnimation(5);
-	lpAni->Add(10010);
-	g_animations->Add(301, lpAni);
-
-	//CSophia::AddAnimation(300);
-	//CSophia::AddAnimation(301);
+	// add right wheel
+	lpAni->Add(SPRITE_SOPHIA_WHEEL_2);
+	lpAni->Add(SPRITE_SOPHIA_WHEEL_4);
+	lpAni->Add(SPRITE_SOPHIA_WHEEL_1);
+	lpAni->Add(SPRITE_SOPHIA_WHEEL_3);
+	g_animations->Add(ANIMATION_SOPHIA_RIGHT_WHEEL, lpAni);
 
 	#pragma endregion
 
@@ -310,9 +314,6 @@ void CGame::Init(HWND hWnd)
 	lpAni->Add(20000);
 	g_animations->Add(1000, lpAni);
 
-	//CEnemyRobot::AddAnimation(1000);
-
-
 	#pragma endregion
 
 	#pragma region KEYBOARD
@@ -322,6 +323,23 @@ void CGame::Init(HWND hWnd)
 
 	#pragma endregion
 
+	CreateGameObject();
+
+	// create camera
+	#pragma region CAMERA SETTINGS
+	
+	pCamera = new CCamera();
+	pCamera->SetTarget(pSophia);
+	pCamera->SetSize(this->backBufferWidth, this->backBufferHeight);
+
+	#pragma endregion
+
+	// Init quadtree
+	pQuadTree = new CQuadTree(0, SRect(0, this->backBufferHeight * 10, this->backBufferWidth * 10, 0));
+}
+
+void CGame::CreateGameObject()
+{
 	// create sophia
 	pSophia = new CSophia();
 	pSophia->SetPosition(PLAYER_START_X, PLAYER_START_Y);
@@ -337,17 +355,8 @@ void CGame::Init(HWND hWnd)
 		pGameObjects.push_back(pRobot);
 	}
 
-
 	// push sophia in gameObject vector
 	pGameObjects.push_back(pSophia);
-
-	// Camera setting
-	pCamera = new CCamera();
-	pCamera->SetTarget(pSophia);
-	pCamera->SetSize(this->backBufferWidth, this->backBufferHeight);
-
-	// Init quadtree
-	pQuadTree = new CQuadTree(0, SRect(0, this->backBufferHeight * 10, this->backBufferWidth * 10, 0));
 }
 
 void CGame::Update(DWORD dt)

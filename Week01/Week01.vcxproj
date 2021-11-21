@@ -31,6 +31,9 @@
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="QuadTree.cpp" />
+    <ClCompile Include="SophiaActionState.cpp" />
+    <ClCompile Include="SophiaDirectState.cpp" />
+    <ClCompile Include="SophiaState.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="Sprites.cpp" />
     <ClCompile Include="Textures.cpp" />
@@ -50,6 +53,9 @@
     <ClInclude Include="Sophia.h" />
     <ClInclude Include="QuadTree.h" />
     <ClInclude Include="resources.h" />
+    <ClInclude Include="SophiaActionState.h" />
+    <ClInclude Include="SophiaDirectState.h" />
+    <ClInclude Include="SophiaState.h" />
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="Sprites.h" />
     <ClInclude Include="Textures.h" />

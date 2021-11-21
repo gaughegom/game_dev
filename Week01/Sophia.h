@@ -2,20 +2,34 @@
 #ifndef _GAMEPLAYER_H
 #define _GAMEPLAYER_H
 
-#include "resources.h"
 #include "GameObject.h"
-#include "Game.h"
+#include "SophiaDirectState.h"
+#include "SophiaActionState.h"
+
+
+#define LEFT_WHEEL		0
+#define RIGHT_WHEEL		1
+
+class CSophiaDirectState;
+class CSophiaActionState;
 
 class CSophia : public CGameObject
 {
 private:
-	Vector2D vt2LeftWheel;
-	Vector2D vt2RightWheel;
+	/*CSophiaState* wheelState;
+	CSophiaState* directState;*/
 
-	LPSPRITE lpsBody;
-	LPSPRITE lpsCabin;
+	CSophiaDirectState* directState;
+	CSophiaActionState* actionState;
 
 public:
+	Vector2D leftWheel;
+	Vector2D rightWheel;
+	LPSPRITE lpsBody;
+	Vector2D body;
+	LPSPRITE lpsCabin;
+	Vector2D cabin;
+
 	CSophia();
 
 	void Update(DWORD dt);

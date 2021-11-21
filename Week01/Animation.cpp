@@ -13,22 +13,68 @@ void CAnimation::Add(int spriteId, DWORD time)
 void CAnimation::Render(Vector2D position, int nx)
 {
 	DWORD now = GetTickCount();
-	if (this->currentFrame == -1)
-	{
-		this->currentFrame = 0;
-		this->lastFrameTime = now;
-	}
-	else
-	{
-		DWORD t = this->frames[currentFrame]->GetTime();
-		if (now - this->lastFrameTime > t)
-		{
-			this->currentFrame++;
-			this->lastFrameTime = now;
-			if (currentFrame == frames.size()) this->currentFrame = 0;
-		}
 
+	if (!this->reverse) {
+		if (this->currentFrame == -1)
+		{
+			this->currentFrame = 0;
+			this->lastFrameTime = now;
+		}
+		else
+		{
+			DWORD t = this->frames[currentFrame]->GetTime();
+			if (now - this->lastFrameTime > t)
+			{
+				if (!this->wait) {
+					this->currentFrame++;
+				}
+				this->lastFrameTime = now;
+				if (currentFrame == frames.size()) 
+					this->currentFrame = 0;
+			}
+
+		}
+	}
+	else {
+		if (this->currentFrame == -1)
+		{
+			this->currentFrame = this->frames.size() - 1;
+			this->lastFrameTime = now;
+		}
+		else
+		{
+			DWORD t = this->frames[currentFrame]->GetTime();
+			if (now - this->lastFrameTime > t)
+			{
+				if (!this->wait) {
+					this->currentFrame--;
+				}
+				this->lastFrameTime = now;
+				if (currentFrame == -1)
+					this->currentFrame = this->frames.size() - 1;
+			}
+		}
 	}
 
 	this->frames[currentFrame]->GetSprite()->Draw(position, nx);
+}
+
+void CAnimation::SetWait(bool value)
+{
+	this->wait = value;
+}
+
+void CAnimation::SetReverse(bool value)
+{
+	this->reverse = value;
+}
+
+bool CAnimation::GetWait()
+{
+	return this->wait;
+}
+
+bool CAnimation::GetReverse()
+{
+	return this->reverse;
 }
