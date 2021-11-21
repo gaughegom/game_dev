@@ -9,10 +9,9 @@ CSophia::CSophia()
 	this->AddAnimation(RIGHT_WHEEL, ANIMATION_SOPHIA_RIGHT_WHEEL);
 	auto sprites = CSprites::GetInstance();
 	this->lpsBody = sprites->Get(SPRITE_SOPHIA_BODY);
-	this->lpsCabin = sprites->Get(SPRITE_SOPHIA_CABIN);
 
-	this->directState->SetNotMove();
-	this->actionState->SetIdleState();
+	this->directState->Stay();
+	this->actionState->IdleState();
 }
 
 void CSophia::UpdateGame(DWORD dt)
@@ -27,11 +26,11 @@ void CSophia::EdgeCollisionHandler(int width)
 {
 	switch (this->state)
 	{
-	case SOPHIA_STATE_MOVING_RIGHT:
+	case SOPHIA_STATE_DIRECTION_FORWARD:
 		if (this->position.x > width * 10 - PLAYER_WIDTH) {
 			this->SetX(width * 10 - PLAYER_WIDTH);
 		}
-	case SOPHIA_STATE_MOVING_LEFT:
+	case SOPHIA_STATE_DIRECTION_BACKWARD:
 		if (this->position.x < 0) {
 			this->SetX(0);
 		}
@@ -44,13 +43,59 @@ void CSophia::RenderGame()
 {
 	animations.at(LEFT_WHEEL)->RenderGame(this->position + this->leftWheel, 1);
 	animations.at(RIGHT_WHEEL)->RenderGame(this->position + this->rightWheel, 1);
-	lpsBody->Draw(this->position + this->body, this->nx);
-	lpsCabin->Draw(this->position + this->cabin, this->nx);
+	this->lpsBody->Draw(this->position + this->body, this->nx);
+	this->lpsCabin->Draw(this->position + this->cabin, this->nx);
+	this->lpsGun->Draw(this->position + this->gun, this->nx);
 }
 
-int CSophia::GetState()
+void CSophia::ObserveDirectState(int directState)
 {
-	return 0; // Not use temporarily
+	this->directState->SetState(directState);
+	switch (directState)
+	{
+	case SOPHIA_STATE_DIRECTION_STAY:
+		this->SetVelocity(0, 0);
+		this->directState->Stay();
+		this->ObserveActionState(this->actionState->GetState());
+		break;
+	case SOPHIA_STATE_DIRECTION_BACKWARD:
+		this->SetVelocity(-PLAYER_MOVING_SPEED, 0);
+		this->nx = -1;
+		this->directState->MoveBackward();
+		this->ObserveActionState(this->actionState->GetState());
+		break;
+	case SOPHIA_STATE_DIRECTION_FORWARD:
+		this->SetVelocity(PLAYER_MOVING_SPEED, 0);
+		this->nx = 1;
+		this->directState->MoveForward();
+		this->ObserveActionState(this->actionState->GetState());
+		break;
+	default:
+		this->SetVelocity(0, 0);
+		this->directState->Stay();
+		this->ObserveActionState(this->actionState->GetState());
+		break;
+	}
+}
+
+void CSophia::ObserveActionState(int actionState)
+{
+	this->actionState->SetState(actionState);
+	switch (actionState)
+	{
+	case SOPHIA_STATE_ACTION_IDLE:
+		this->actionState->IdleState();
+		break;
+	case SOPHIA_STATE_ACTION_TILE_45:
+		this->actionState->Tilt45State();
+		break;
+	case SOPHIA_STATE_ACTION_UP_90:
+		this->actionState->Up90State();
+		break;
+	default:
+		this->actionState->IdleState();
+		break;
+	}
 }
 
 void CSophia::SetState(int state)
@@ -58,29 +103,28 @@ void CSophia::SetState(int state)
 	CGameObject::SetState(state);
 	switch (state)
 	{
-	case SOPHIA_STATE_MOVING_RIGHT:
+	case SOPHIA_STATE_DIRECTION_FORWARD:
 		this->SetVelocity(PLAYER_MOVING_SPEED, 0);
 		this->nx = 1;
-		this->directState->SetMoveForward();
-		this->actionState->SetIdleState(); // Build upward later
+		this->directState->MoveForward();
+		this->actionState->IdleState(); // Build upward later
 		break;
-	case SOPHIA_STATE_MOVING_LEFT:
+	case SOPHIA_STATE_DIRECTION_BACKWARD:
 		this->SetVelocity(-PLAYER_MOVING_SPEED, 0);
 		this->nx = -1;
-		this->directState->SetMoveBackward();
-		this->actionState->SetIdleState();
+		this->directState->MoveBackward();
+		this->actionState->IdleState();
 		break;
-
-	case SOPHIA_STATE_IDLE:
+	case SOPHIA_STATE_DIRECTION_STAY:
 		this->SetVelocity(0, 0);
-		this->directState->SetNotMove();
-		this->actionState->SetIdleState();
+		this->directState->Stay();
+		this->actionState->IdleState();
 		break;
 	default:
 		this->SetVelocity(0, 0);
 		this->position.x;
-		this->directState->SetNotMove();
-		this->actionState->SetIdleState();
+		this->directState->Stay();
+		this->actionState->IdleState();
 		break;
 	}
 }

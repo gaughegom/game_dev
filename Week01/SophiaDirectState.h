@@ -9,6 +9,7 @@ class CSophia;
 class CSophiaDirectState {
 private:
 	CSophia* target;
+	int state;
 
 public:
 	CSophiaDirectState();
@@ -16,9 +17,12 @@ public:
 
 	void SetTarget(CSophia* target);
 
-	void SetNotMove();
-	void SetMoveBackward();
-	void SetMoveForward();
+	void Stay();
+	void MoveBackward();
+	void MoveForward();
+
+	void SetState(int state);
+	int GetState();
 };
 
 #endif // !_SOPHIA_DIRECT_STATE_H

@@ -16,19 +16,22 @@ class CSophiaActionState;
 class CSophia : public CGameObject
 {
 private:
-	/*CSophiaState* wheelState;
-	CSophiaState* directState;*/
-
 	CSophiaDirectState* directState;
 	CSophiaActionState* actionState;
 
+
 public:
+	DWORD lasttime;
+	DWORD lasttime2;
+
 	Vector2D leftWheel;
 	Vector2D rightWheel;
 	LPSPRITE lpsBody;
 	Vector2D body;
 	LPSPRITE lpsCabin;
 	Vector2D cabin;
+	LPSPRITE lpsGun;
+	Vector2D gun;
 
 	CSophia();
 
@@ -36,6 +39,12 @@ public:
 	void RenderGame();
 	void SetState(int state);
 	int GetState();
+
+	void ObserveDirectState(int directState);
+	void ObserveActionState(int actionState);
+
+	CSophiaDirectState* GetDirectState() { return this->directState; }
+	CSophiaActionState* GetActionState() { return this->actionState; }
 
 	void EdgeCollisionHandler(int width);
 };

@@ -14,7 +14,7 @@ void CSophiaDirectState::SetTarget(CSophia* target)
 	this->target = target;
 }
 
-void CSophiaDirectState::SetNotMove()
+void CSophiaDirectState::Stay()
 {
 	auto animations = this->target->GetAnimations();
 	auto left_wheel = animations.at(LEFT_WHEEL);
@@ -24,7 +24,7 @@ void CSophiaDirectState::SetNotMove()
 	right_wheel->SetWait(true);
 }
 
-void CSophiaDirectState::SetMoveBackward()
+void CSophiaDirectState::MoveBackward()
 {
 	auto animations = this->target->GetAnimations();
 	auto left_wheel = animations.at(LEFT_WHEEL);
@@ -37,7 +37,7 @@ void CSophiaDirectState::SetMoveBackward()
 	right_wheel->SetWait(false);
 }
 
-void CSophiaDirectState::SetMoveForward()
+void CSophiaDirectState::MoveForward()
 {
 	auto animations = this->target->GetAnimations();
 	auto left_wheel = animations.at(LEFT_WHEEL);
@@ -48,4 +48,14 @@ void CSophiaDirectState::SetMoveForward()
 
 	left_wheel->SetWait(false);
 	right_wheel->SetWait(false);
+}
+
+void CSophiaDirectState::SetState(int state)
+{
+	this->state = state;
+}
+
+int CSophiaDirectState::GetState()
+{
+	return this->state;
 }

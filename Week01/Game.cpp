@@ -41,13 +41,40 @@ void CKeyHander::OnKeyUp(int keyCode)
 void CKeyHander::KeyState(BYTE* states)
 {
 	CGame* game = CGame::GetInstance();
+	// observe sophia direction
 	if (game->IsKeyDown(DIK_RIGHT)) {
-		pSophia->SetState(SOPHIA_STATE_MOVING_RIGHT);
+		pSophia->ObserveDirectState(SOPHIA_STATE_DIRECTION_FORWARD);
 	}
 	else if (game->IsKeyDown(DIK_LEFT)) {
-		pSophia->SetState(SOPHIA_STATE_MOVING_LEFT);
+		pSophia->ObserveDirectState(SOPHIA_STATE_DIRECTION_BACKWARD);
 	}
-	else pSophia->SetState(SOPHIA_STATE_IDLE);
+	else {
+		pSophia->ObserveDirectState(SOPHIA_STATE_DIRECTION_STAY);
+	}
+
+	// observe sophia action
+	if (game->IsKeyDown(DIK_UP)) {
+		DWORD now = GetTickCount();
+		pSophia->lasttime2 = now;
+		auto actionState = pSophia->GetActionState()->GetState();
+		if (actionState == SOPHIA_STATE_ACTION_IDLE) {
+			pSophia->ObserveActionState(SOPHIA_STATE_ACTION_TILE_45);
+		}
+		else if (now - pSophia->lasttime > 200 && actionState == SOPHIA_STATE_ACTION_TILE_45) {
+			pSophia->ObserveActionState(SOPHIA_STATE_ACTION_UP_90);
+		}
+	}
+	else {
+		DWORD now = GetTickCount();
+		pSophia->lasttime = now;
+		auto actionState = pSophia->GetActionState()->GetState();
+		if (actionState == SOPHIA_STATE_ACTION_UP_90) {
+			pSophia->ObserveActionState(SOPHIA_STATE_ACTION_TILE_45);
+		}
+		else if (now - pSophia->lasttime2 > 100 && actionState == SOPHIA_STATE_ACTION_TILE_45) {
+			pSophia->ObserveActionState(SOPHIA_STATE_ACTION_IDLE);
+		}
+	}
 }
 
 int CGame::IsKeyDown(int KeyCode)
@@ -285,11 +312,18 @@ void CGame::InitGame(HWND hWnd)
 	g_sprites->Add(SPRITE_SOPHIA_BODY, 3, 12, 11, 20, texSophia);
 
 	// Add cabin
-	g_sprites->Add(SPRITE_SOPHIA_CABIN, 39, 3, 55, 11, texSophia);
+	g_sprites->Add(SPRITE_SOPHIA_CABIN_00, 39, 3, 55, 11, texSophia);
+	//g_sprites->Add(SPRITE_SOPHIA_CABIN_OPEN, 56, 3, 72, 11, texSophia); // fix open later
+	g_sprites->Add(SPRITE_SOPHIA_CABIN_45, 73, 4, 89, 19, texSophia);
+
+	// add gun
+	g_sprites->Add(SPRITE_SOPHIA_GUN_00, 12, 5, 19, 9, texSophia);
+	g_sprites->Add(SPRITE_SOPHIA_GUN_45, 21, 3, 29, 11, texSophia);
+	g_sprites->Add(SPRITE_SOPHIA_GUN_90, 32, 3, 36, 10, texSophia);
 
 
 	LPANIMATION lpAni;
-	// add left wheel
+	// add sophia left wheel
 	lpAni = new CAnimation(5);
 	lpAni->Add(SPRITE_SOPHIA_WHEEL_1);
 	lpAni->Add(SPRITE_SOPHIA_WHEEL_3);
@@ -298,7 +332,7 @@ void CGame::InitGame(HWND hWnd)
 	g_animations->Add(ANIMATION_SOPHIA_LEFT_WHEEL, lpAni);
 
 	lpAni = new CAnimation(5);
-	// add right wheel
+	// add sophia right wheel
 	lpAni->Add(SPRITE_SOPHIA_WHEEL_2);
 	lpAni->Add(SPRITE_SOPHIA_WHEEL_4);
 	lpAni->Add(SPRITE_SOPHIA_WHEEL_1);

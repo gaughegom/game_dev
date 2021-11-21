@@ -9,13 +9,19 @@ class CSophia;
 class CSophiaActionState {
 private:
 	CSophia* target;
+	int state;
 
 public:
 	CSophiaActionState();
 	CSophiaActionState(CSophia* target);
 
 	void SetTarget(CSophia* target);
-	void SetIdleState();
+	void IdleState();
+	void Tilt45State();
+	void Up90State();
+
+	void SetState(int state);
+	int GetState();
 };
 
 #endif // !_SOPHIA_ACTION_STATE_H
