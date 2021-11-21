@@ -35,10 +35,8 @@ public:
 
 	CSophia();
 
-	void UpdateGame(DWORD dt);
-	void RenderGame();
-	void SetState(int state);
-	int GetState();
+	void Update(DWORD dt);
+	void Render();
 
 	void ObserveDirectState(int directState);
 	void ObserveActionState(int actionState);

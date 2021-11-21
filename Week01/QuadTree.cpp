@@ -81,7 +81,7 @@ bool CQuadTree::IsConstainObject(CGameObject* object)
 	return this->rect.IsConstain(objectPos);
 }
 
-void CQuadTree::UpdateGame(std::vector<CGameObject*> objects)
+void CQuadTree::Update(std::vector<CGameObject*> objects)
 {
 	this->pObject.clear();
 

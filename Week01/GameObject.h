@@ -47,8 +47,8 @@ public:
 	std::unordered_map<int, LPANIMATION> GetAnimations() { return this->animations; }
 
 
-	virtual void UpdateGame(DWORD dt) = 0;
-	virtual void RenderGame() = 0;
+	virtual void Update(DWORD dt) = 0;
+	virtual void Render() = 0;
 	~CGameObject();
 };
 

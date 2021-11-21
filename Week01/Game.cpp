@@ -395,15 +395,15 @@ void CGame::CreateGameObject()
 
 void CGame::UpdateGame(DWORD dt)
 {
-	pCamera->UpdateGame();
+	pCamera->Update();
 	
 	pRenderObjects.clear();
 	
-	pQuadTree->UpdateGame(pGameObjects);
+	pQuadTree->Update(pGameObjects);
 	pQuadTree->ContainerizeObject(pRenderObjects, pCamera->GetBoundingBox());
 
 	for (auto pObject : pRenderObjects) {
-		pObject->UpdateGame(dt);
+		pObject->Update(dt);
 	}
 	DebugOut(L"[INFO] render object: %d\n", pRenderObjects.size());
 }
@@ -422,7 +422,7 @@ void CGame::RenderGame()
 		spriteHandler->Begin(D3DXSPRITE_ALPHABLEND);
 
 		for (auto object : pRenderObjects) {
-			object->RenderGame();
+			object->Render();
 		}
 
 		spriteHandler->End();

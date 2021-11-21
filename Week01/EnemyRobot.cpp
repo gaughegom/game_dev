@@ -5,13 +5,13 @@ CEnemyRobot::CEnemyRobot()
 	this->AddAnimation(1, 1000);
 }
 
-void CEnemyRobot::UpdateGame(DWORD dt)
+void CEnemyRobot::Update(DWORD dt)
 {
 	this->position.x += this->velocity.x * dt;
 	this->position.y += this->velocity.y * dt;
 }
 
-void CEnemyRobot::RenderGame()
+void CEnemyRobot::Render()
 {
 	auto animation = this->animations.at(1);
 	animation->RenderGame(this->position, this->nx);

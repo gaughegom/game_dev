@@ -19,7 +19,7 @@ public:
 	// position and site
 	void SetPosition(Vector2D position);
 	void SetSize(int newWidth, int newHeight);
-	void UpdateGame();
+	void Update();
 
 	Vector2D GetPosition();
 	float GetX();

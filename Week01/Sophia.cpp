@@ -14,7 +14,7 @@ CSophia::CSophia()
 	this->actionState->IdleState();
 }
 
-void CSophia::UpdateGame(DWORD dt)
+void CSophia::Update(DWORD dt)
 {
 	LinearMovement(this->position, this->velocity, dt);
 
@@ -39,7 +39,7 @@ void CSophia::EdgeCollisionHandler(int width)
 	}
 }
 
-void CSophia::RenderGame()
+void CSophia::Render()
 {
 	animations.at(LEFT_WHEEL)->RenderGame(this->position + this->leftWheel, 1);
 	animations.at(RIGHT_WHEEL)->RenderGame(this->position + this->rightWheel, 1);
@@ -93,37 +93,6 @@ void CSophia::ObserveActionState(int actionState)
 		this->actionState->Up90State();
 		break;
 	default:
-		this->actionState->IdleState();
-		break;
-	}
-}
-
-void CSophia::SetState(int state)
-{
-	CGameObject::SetState(state);
-	switch (state)
-	{
-	case SOPHIA_STATE_DIRECTION_FORWARD:
-		this->SetVelocity(PLAYER_MOVING_SPEED, 0);
-		this->nx = 1;
-		this->directState->MoveForward();
-		this->actionState->IdleState(); // Build upward later
-		break;
-	case SOPHIA_STATE_DIRECTION_BACKWARD:
-		this->SetVelocity(-PLAYER_MOVING_SPEED, 0);
-		this->nx = -1;
-		this->directState->MoveBackward();
-		this->actionState->IdleState();
-		break;
-	case SOPHIA_STATE_DIRECTION_STAY:
-		this->SetVelocity(0, 0);
-		this->directState->Stay();
-		this->actionState->IdleState();
-		break;
-	default:
-		this->SetVelocity(0, 0);
-		this->position.x;
-		this->directState->Stay();
 		this->actionState->IdleState();
 		break;
 	}

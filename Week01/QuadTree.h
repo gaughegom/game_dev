@@ -23,7 +23,7 @@ public:
 	void AddObjectToRect(CGameObject* object);
 	bool IsConstainObject(CGameObject* object);
 
-	void UpdateGame(std::vector<CGameObject*> objects);
+	void Update(std::vector<CGameObject*> objects);
 	void ContainerizeObject(std::vector<CGameObject*>& container, const SRect& rect);
 };
 

@@ -9,7 +9,7 @@ CGameObject::CGameObject()
 	this->nx = 1;
 }
 
-void CGameObject::RenderGame()
+void CGameObject::Render()
 {
 }
 
