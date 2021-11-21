@@ -53,11 +53,8 @@
     <Filter Include="Framework\Sprites\Animation">
       <UniqueIdentifier>{25859531-b9ad-4ffc-811b-6e72c45d36f1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Game Objects\Sophia\State direction">
-      <UniqueIdentifier>{4df4708a-a2a6-4047-a158-5963ce069246}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Game Objects\Sophia\State action">
-      <UniqueIdentifier>{8d8efb4a-c9bf-4d69-b215-02447ec85ea3}</UniqueIdentifier>
+    <Filter Include="Game Objects\Sophia\State">
+      <UniqueIdentifier>{7a2df675-18ae-4077-a486-99da8c3761ff}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -112,17 +109,11 @@
     <ClCompile Include="SophiaState.cpp">
       <Filter>Game Objects\Sophia</Filter>
     </ClCompile>
-    <ClCompile Include="SophiaStateMoveForward.cpp">
-      <Filter>Game Objects\Sophia\State direction</Filter>
+    <ClCompile Include="SophiaDirectState.cpp">
+      <Filter>Game Objects\Sophia\State</Filter>
     </ClCompile>
-    <ClCompile Include="SophiaStateMoveBackward.cpp">
-      <Filter>Game Objects\Sophia\State direction</Filter>
-    </ClCompile>
-    <ClCompile Include="SophiaStateIdle.cpp">
-      <Filter>Game Objects\Sophia\State action</Filter>
-    </ClCompile>
-    <ClCompile Include="SophiaStateNotMove.cpp">
-      <Filter>Game Objects\Sophia\State direction</Filter>
+    <ClCompile Include="SophiaActionState.cpp">
+      <Filter>Game Objects\Sophia\State</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -180,17 +171,11 @@
     <ClInclude Include="SophiaState.h">
       <Filter>Game Objects\Sophia</Filter>
     </ClInclude>
-    <ClInclude Include="SophiaStateMoveForward.h">
-      <Filter>Game Objects\Sophia\State direction</Filter>
+    <ClInclude Include="SophiaDirectState.h">
+      <Filter>Game Objects\Sophia\State</Filter>
     </ClInclude>
-    <ClInclude Include="SophiaStateMoveBackward.h">
-      <Filter>Game Objects\Sophia\State direction</Filter>
-    </ClInclude>
-    <ClInclude Include="SophiaStateIdle.h">
-      <Filter>Game Objects\Sophia\State action</Filter>
-    </ClInclude>
-    <ClInclude Include="SophiaStateNotMove.h">
-      <Filter>Game Objects\Sophia\State direction</Filter>
+    <ClInclude Include="SophiaActionState.h">
+      <Filter>Game Objects\Sophia\State</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
