@@ -109,9 +109,6 @@
     <ClCompile Include="Animations.cpp">
       <Filter>Framework\Sprites\Animation</Filter>
     </ClCompile>
-    <ClCompile Include="SophiaState.cpp">
-      <Filter>Game Objects\Sophia</Filter>
-    </ClCompile>
     <ClCompile Include="SophiaDirectState.cpp">
       <Filter>Game Objects\Sophia\State</Filter>
     </ClCompile>
@@ -173,9 +170,6 @@
     </ClInclude>
     <ClInclude Include="Animations.h">
       <Filter>Framework\Sprites\Animation</Filter>
-    </ClInclude>
-    <ClInclude Include="SophiaState.h">
-      <Filter>Game Objects\Sophia</Filter>
     </ClInclude>
     <ClInclude Include="SophiaDirectState.h">
       <Filter>Game Objects\Sophia\State</Filter>
