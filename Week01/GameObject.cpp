@@ -1,6 +1,6 @@
 #include "GameObject.h"
 
-vector<LPANIMATION> CGameObject::animations;
+//std::vector<LPANIMATION> CGameObject::animations;
 
 CGameObject::CGameObject()
 {
@@ -13,37 +13,48 @@ void CGameObject::Render()
 {
 }
 
-Vector2D CGameObject::Get_position()
+Vector2D CGameObject::GetPosition()
 {
 	return this->position;
 }
 
-void CGameObject::Set_x(float x)
+void CGameObject::SetX(float x)
 {
 	this->position.x = x;
 }
 
-void CGameObject::Set_y(float y)
+void CGameObject::SetY(float y)
 {
 	this->position.y = y;
 }
 
-float CGameObject::Get_x()
+void CGameObject::SetNx(float newNX)
+{
+	this->nx = newNX;
+}
+
+float CGameObject::GetX()
 {
 	return this->position.x;
 }
 
-float CGameObject::Get_y()
+float CGameObject::GetY()
 {
 	return this->position.y;
 }
 
-void CGameObject::Add_animation(int animationId)
+int CGameObject::GetNx()
 {
-	LPANIMATION ani = CAnimations::Get_instance()->Get(animationId);
-	animations.push_back(ani);
+	return this->nx;
+}
+
+void CGameObject::AddAnimation(int key, int animationId)
+{
+	LPANIMATION ani = CAnimations::GetInstance()->Get(animationId);
+	this->animations.insert(std::make_pair(key, ani));
 }
 
 CGameObject::~CGameObject()
 {
+	this->animations.clear();
 }

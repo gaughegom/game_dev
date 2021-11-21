@@ -6,14 +6,13 @@ CCamera::CCamera()
 }
 
 // set camera position
-void CCamera::Set_position(float newX, float newY)
+void CCamera::SetPosition(Vector2D posotion)
 {
-	this->position.x = newX;
-	this->position.y = newY;
+	this->position = position;
 }
 
 // set new size of camera
-void CCamera::Set_size(int newWidth, int newHeight)
+void CCamera::SetSize(int newWidth, int newHeight)
 {
 	this->width = newWidth;
 	this->height = newHeight;
@@ -21,43 +20,54 @@ void CCamera::Set_size(int newWidth, int newHeight)
 
 void CCamera::Update()
 {
-	Vector2D targetPosition = target->Get_position();
+	Vector2D targetPosition = target->GetPosition();
 	this->position.x = targetPosition.x - this->width / static_cast<float>(2);
-	this->position.y = targetPosition.y - this->height / static_cast<float>(2);
+	this->position.y = targetPosition.y + this->height / static_cast<float>(2);
 }
 
 // get and set field of camera
-Vector2D CCamera::Get_position()
+Vector2D CCamera::GetPosition()
 {
 	return Vector2D(this->position.x, this->position.y);
 }
 
-float CCamera::Get_x()
+float CCamera::GetX()
 {
 	return this->position.x;
 }
 
-float CCamera::Get_y()
+float CCamera::GetY()
 {
 	return this->position.y;
 }
 
-int CCamera::Get_width()
+int CCamera::GetWidth()
 {
 	return this->width;
 }
 
-int CCamera::Get_height()
+int CCamera::GetHeight()
 {
 	return this->height;
 }
 
-void CCamera::Set_target(CGameObject* target)
+SRect CCamera::GetBoundingBox()
+{
+	SRect rect;
+	rect.left = this->position.x;
+	rect.top = this->position.y;
+	rect.right = this->position.x + this->width;
+	rect.bottom = this->position.y - this->height;
+
+	return rect;
+}
+
+void CCamera::SetTarget(CGameObject* target)
 {
 	this->target = target;
 }
 
-CGameObject* CCamera::Get_target()
+CGameObject* CCamera::GetTarget()
 {
 	return this->target;
 }

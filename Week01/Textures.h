@@ -21,7 +21,7 @@ public:
 	void Add(int id, LPCWSTR filePath, D3DCOLOR transparentColor);
 	LPDIRECT3DTEXTURE9 Get(unsigned int i);
 
-	static CTextures* Get_instance();
+	static CTextures* GetInstance();
 };
 
 #endif // !_TEXTURES_H

@@ -4,6 +4,7 @@
 
 #include "resources.h"
 #include "GameObject.h"
+#include "Transform.h"
 
 class CCamera {
 protected:
@@ -16,19 +17,20 @@ public:
 	CCamera();
 
 	// position and site
-	void Set_position(float newX, float newY);
-	void Set_size(int newWidth, int newHeight);
+	void SetPosition(Vector2D position);
+	void SetSize(int newWidth, int newHeight);
 	void Update();
 
-	Vector2D Get_position();
-	float Get_x();
-	float Get_y();
-	int Get_width();
-	int Get_height();
+	Vector2D GetPosition();
+	float GetX();
+	float GetY();
+	int GetWidth();
+	int GetHeight();
+	SRect GetBoundingBox();
 
 	// target
-	void Set_target(CGameObject* target);
-	CGameObject* Get_target();
+	void SetTarget(CGameObject* target);
+	CGameObject* GetTarget();
 };
 
 #endif // !_CAMERA_H

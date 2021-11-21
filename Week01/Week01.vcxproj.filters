@@ -11,23 +11,11 @@
     <Filter Include="Game Objects\Base">
       <UniqueIdentifier>{635c6bf1-dd07-4f83-9edc-483c171038e6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Game Objects\Player">
-      <UniqueIdentifier>{970a2267-9c06-411d-add0-550f9651acbc}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Game Objects\Npc">
-      <UniqueIdentifier>{1000ea67-8118-4f8a-8421-6b43b6bf7d56}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Framework">
       <UniqueIdentifier>{6ec4c09e-d309-4619-a690-3c6cf7f6b90a}</UniqueIdentifier>
     </Filter>
     <Filter Include="Framework\Game">
       <UniqueIdentifier>{e00d61de-d3c7-41eb-a8ee-2ba85b8bbb33}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Framework\Prepare">
-      <UniqueIdentifier>{41f0b68e-631a-4f7a-b726-7367a44e7a4c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Framework\Common">
-      <UniqueIdentifier>{7781f070-6cc1-410f-8537-cec7f38d5bb3}</UniqueIdentifier>
     </Filter>
     <Filter Include="Framework\Game movement">
       <UniqueIdentifier>{c1deae0b-8f64-4139-b3ce-5bab24f4db97}</UniqueIdentifier>
@@ -40,6 +28,36 @@
     </Filter>
     <Filter Include="Framework\Camera">
       <UniqueIdentifier>{58c4f323-3716-43a1-8975-6314f66d2031}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Framework\Debug">
+      <UniqueIdentifier>{7781f070-6cc1-410f-8537-cec7f38d5bb3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Framework\Common">
+      <UniqueIdentifier>{91b32f09-ed54-4c94-8748-daa339c3be00}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Framework\Transform">
+      <UniqueIdentifier>{26c9e379-87c0-4787-9673-584c0de4d03d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Framework\QuadTree">
+      <UniqueIdentifier>{9075b275-fdc5-4b13-8912-3101b99c75b9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game Objects\Sophia">
+      <UniqueIdentifier>{970a2267-9c06-411d-add0-550f9651acbc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game Objects\Enemies">
+      <UniqueIdentifier>{1000ea67-8118-4f8a-8421-6b43b6bf7d56}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game Objects\Enemies\Robot">
+      <UniqueIdentifier>{5f7d7bcf-f04d-408e-966e-f59f1d1c4b40}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Framework\Sprites\Animation">
+      <UniqueIdentifier>{25859531-b9ad-4ffc-811b-6e72c45d36f1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game Objects\Sophia\State">
+      <UniqueIdentifier>{7a2df675-18ae-4077-a486-99da8c3761ff}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Framework\Key Handler">
+      <UniqueIdentifier>{e9d5e5d1-2c93-4da8-bd99-f2609b43eb4a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -55,14 +73,11 @@
     <ClCompile Include="GameObject.cpp">
       <Filter>Game Objects\Base</Filter>
     </ClCompile>
-    <ClCompile Include="GamePlayer.cpp">
-      <Filter>Game Objects\Player</Filter>
-    </ClCompile>
-    <ClCompile Include="GameNpc.cpp">
-      <Filter>Game Objects\Npc</Filter>
+    <ClCompile Include="Sophia.cpp">
+      <Filter>Game Objects\Sophia</Filter>
     </ClCompile>
     <ClCompile Include="debug.cpp">
-      <Filter>Framework\Common</Filter>
+      <Filter>Framework\Debug</Filter>
     </ClCompile>
     <ClCompile Include="GameMovement.cpp">
       <Filter>Framework\Game movement</Filter>
@@ -70,11 +85,41 @@
     <ClCompile Include="Game.cpp">
       <Filter>Framework\Game</Filter>
     </ClCompile>
-    <ClCompile Include="prepare.cpp">
-      <Filter>Framework\Prepare</Filter>
-    </ClCompile>
     <ClCompile Include="Camera.cpp">
       <Filter>Framework\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="Transform.cpp">
+      <Filter>Framework\Transform</Filter>
+    </ClCompile>
+    <ClCompile Include="QuadTree.cpp">
+      <Filter>Framework\QuadTree</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyRobot.cpp">
+      <Filter>Game Objects\Enemies\Robot</Filter>
+    </ClCompile>
+    <ClCompile Include="Sprite.cpp">
+      <Filter>Framework\Sprites</Filter>
+    </ClCompile>
+    <ClCompile Include="Animation.cpp">
+      <Filter>Framework\Sprites\Animation</Filter>
+    </ClCompile>
+    <ClCompile Include="AnimationFrame.cpp">
+      <Filter>Framework\Sprites\Animation</Filter>
+    </ClCompile>
+    <ClCompile Include="Animations.cpp">
+      <Filter>Framework\Sprites\Animation</Filter>
+    </ClCompile>
+    <ClCompile Include="SophiaState.cpp">
+      <Filter>Game Objects\Sophia</Filter>
+    </ClCompile>
+    <ClCompile Include="SophiaDirectState.cpp">
+      <Filter>Game Objects\Sophia\State</Filter>
+    </ClCompile>
+    <ClCompile Include="SophiaActionState.cpp">
+      <Filter>Game Objects\Sophia\State</Filter>
+    </ClCompile>
+    <ClCompile Include="KeyEventHandler.cpp">
+      <Filter>Framework\Key Handler</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -87,29 +132,59 @@
     <ClInclude Include="GameObject.h">
       <Filter>Game Objects\Base</Filter>
     </ClInclude>
-    <ClInclude Include="GamePlayer.h">
-      <Filter>Game Objects\Player</Filter>
-    </ClInclude>
-    <ClInclude Include="GameNpc.h">
-      <Filter>Game Objects\Npc</Filter>
+    <ClInclude Include="Sophia.h">
+      <Filter>Game Objects\Sophia</Filter>
     </ClInclude>
     <ClInclude Include="debug.h">
-      <Filter>Framework\Common</Filter>
-    </ClInclude>
-    <ClInclude Include="resources.h">
-      <Filter>Framework\Common</Filter>
+      <Filter>Framework\Debug</Filter>
     </ClInclude>
     <ClInclude Include="GameMovement.h">
       <Filter>Framework\Game movement</Filter>
     </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>Framework\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="resources.h">
+      <Filter>Framework\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Transform.h">
+      <Filter>Framework\Transform</Filter>
+    </ClInclude>
+    <ClInclude Include="QuadTree.h">
+      <Filter>Framework\QuadTree</Filter>
+    </ClInclude>
     <ClInclude Include="Game.h">
       <Filter>Framework\Game</Filter>
     </ClInclude>
-    <ClInclude Include="prepare.h">
-      <Filter>Framework\Prepare</Filter>
+    <ClInclude Include="EnemyRobot.h">
+      <Filter>Game Objects\Enemies\Robot</Filter>
     </ClInclude>
-    <ClInclude Include="Camera.h">
-      <Filter>Framework\Camera</Filter>
+    <ClInclude Include="EnemyLib.h">
+      <Filter>Game Objects\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="Sprite.h">
+      <Filter>Framework\Sprites</Filter>
+    </ClInclude>
+    <ClInclude Include="Animation.h">
+      <Filter>Framework\Sprites\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimationFrame.h">
+      <Filter>Framework\Sprites\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="Animations.h">
+      <Filter>Framework\Sprites\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="SophiaState.h">
+      <Filter>Game Objects\Sophia</Filter>
+    </ClInclude>
+    <ClInclude Include="SophiaDirectState.h">
+      <Filter>Game Objects\Sophia\State</Filter>
+    </ClInclude>
+    <ClInclude Include="SophiaActionState.h">
+      <Filter>Game Objects\Sophia\State</Filter>
+    </ClInclude>
+    <ClInclude Include="KeyEventHandler.h">
+      <Filter>Framework\Key Handler</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -6,6 +6,7 @@
 #include "Sprites.h"
 #include "Game.h"
 #include "GameMovement.h"
+#include "Animations.h"
 
 class CGameObject
 {
@@ -18,28 +19,33 @@ protected:
 
 	int state;
 
-	static std::vector<LPANIMATION> animations;
+	std::unordered_map<int, LPANIMATION> animations;
 
 public:
+	CGameObject();
+
 	// position
-	void Set_position(float newX, float newY) { this->position.x = newX, this->position.y = newY; }
-	Vector2D Get_position();
-	void Set_x(float newX);
-	void Set_y(float newY);
-	float Get_x();
-	float Get_y();
+	void SetPosition(float newX, float newY) { this->position.x = newX, this->position.y = newY; }
+	Vector2D GetPosition();
+	void SetX(float newX);
+	void SetY(float newY);
+	void SetNx(float newNX);
+	float GetX();
+	float GetY();
+	int GetNx();
 
 	// velocity
-	void Set_velocity(float newVx, float newVy) { this->velocity.x = newVx, this->velocity.y = newVy; }
+	void SetVelocity(float newVx, float newVy) { this->velocity.x = newVx, this->velocity.y = newVy; }
+	Vector2D GetVelocity() { return this->velocity; }
 
 	// state
-	void Set_state(int newState) { this->state = newState; }
-	int Get_state() { return this->state; }
+	void SetState(int newState) { this->state = newState; }
+	int GetState() { return this->state; }
 
+	// animation
+	void AddAnimation(int key, int animationId);
+	std::unordered_map<int, LPANIMATION> GetAnimations() { return this->animations; }
 
-	static void Add_animation(int animationId);
-
-	CGameObject();
 
 	virtual void Update(DWORD dt) = 0;
 	virtual void Render() = 0;

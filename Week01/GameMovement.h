@@ -5,6 +5,6 @@
 #include "resources.h"
 #include <math.h>
 
-void Move_rectilinear(Vector2D& vPosition, Vector2D& vVelocity, DWORD dt);
+void LinearMovement(Vector2D& vPosition, Vector2D& vVelocity, DWORD dt);
 
 #endif // !_GAMEMOVEMENT_H

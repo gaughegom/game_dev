@@ -3,16 +3,8 @@
 #define _GAME_H
 
 #include "resources.h"
+#include "KeyEventHandler.h"
 
-class CKeyEventHandler
-{
-public:
-	virtual void Key_state(BYTE* state) = 0;
-	virtual void On_key_down(int KeyCode) = 0;
-	virtual void On_key_up(int KeyCode) = 0;
-};
-
-typedef CKeyEventHandler* LPKEYEVENTHANDLER;
 
 class CGame
 {
@@ -37,21 +29,31 @@ class CGame
 	int backBufferHeight = 0;
 
 public:
-	void Init_keyboard(LPKEYEVENTHANDLER handler);
-	void Init_directX(HWND hWnd);
-	void Draw(float x, float y, LPDIRECT3DTEXTURE9 texture, int left, int top, int right, int bottom);
+	void InitKeyboard(LPKEYEVENTHANDLER handler);
 
-	int Is_key_down(int KeyCode);
-	void Process_keyboard();
+	int IsKeyDown(int KeyCode);
+	void ProcessKeyboard();
+	
+	void InitDirectX(HWND hWnd);
+	void Draw(Vector2D position, int nx, LPDIRECT3DTEXTURE9 texture, int left, int top, int right, int bottom);
 
-	LPDIRECT3DDEVICE9 Get_direct3D_device() { return this->d3ddv; }
-	LPDIRECT3DSURFACE9 Get_backbuffer() { return backBuffer; }
-	LPD3DXSPRITE Get_sprite_handler() { return this->spriteHandler; }
+	void InitGame(HWND hWnd);
+	void UpdateGame(DWORD dt);
+	void RenderGame();
+	void RunGame();
 
-	static CGame* Get_instance();
+	void CreateGameObject();
 
-	int Get_backbuffer_width() { return this->backBufferWidth; }
-	int Get_backbuffer_height() { return this->backBufferHeight; }
+	LPDIRECT3DDEVICE9 GetDirect3dDevice() { return this->d3ddv; }
+	LPDIRECT3DSURFACE9 GetBackbuffer() { return backBuffer; }
+	LPD3DXSPRITE GetSpriteHandler() { return this->spriteHandler; }
+
+	int GetBackbufferWidth() { return this->backBufferWidth; }
+	int GetBackbufferHeight() { return this->backBufferHeight; }
+
+	LPKEYEVENTHANDLER GetKeyHandler() { return this->keyHandler; }
+
+	static CGame* GetInstance();
 
 	~CGame();
 };
