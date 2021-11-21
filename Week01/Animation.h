@@ -12,16 +12,16 @@ class CAnimation
 	int currentFrame;
 	std::vector<LPANIMATION_FRAME> frames;
 
-	bool transfer = true;
+	bool wait = true;
 	bool reverse = false;
 public:
 	CAnimation(int defaultTime) { this->defaultTime = defaultTime; lastFrameTime = -1; currentFrame = -1; }
 	void Add(int spriteId, DWORD time = 0);
 	void Render(Vector2D position, int nx);
 
-	void SetTransfer(bool value);
+	void SetWait(bool value);
 	void SetReverse(bool value);
-	bool GetTransfer();
+	bool GetWait();
 	bool GetReverse();
 };
 typedef CAnimation* LPANIMATION;

@@ -6,6 +6,6 @@ void CSophiaStateNotMove::Render(CSophia& sophia)
 	LPANIMATION left_wheel = animations.at(LEFT_WHEEL);
 	LPANIMATION right_wheel = animations.at(RIGHT_WHEEL);
 
-	left_wheel->SetTransfer(false);
-	right_wheel->SetTransfer(false);
+	left_wheel->SetWait(true);
+	right_wheel->SetWait(true);
 }

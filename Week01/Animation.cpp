@@ -25,7 +25,7 @@ void CAnimation::Render(Vector2D position, int nx)
 			DWORD t = this->frames[currentFrame]->GetTime();
 			if (now - this->lastFrameTime > t)
 			{
-				if (this->transfer) {
+				if (!this->wait) {
 					this->currentFrame++;
 				}
 				this->lastFrameTime = now;
@@ -46,7 +46,7 @@ void CAnimation::Render(Vector2D position, int nx)
 			DWORD t = this->frames[currentFrame]->GetTime();
 			if (now - this->lastFrameTime > t)
 			{
-				if (this->transfer) {
+				if (!this->wait) {
 					this->currentFrame--;
 				}
 				this->lastFrameTime = now;
@@ -59,9 +59,9 @@ void CAnimation::Render(Vector2D position, int nx)
 	this->frames[currentFrame]->GetSprite()->Draw(position, nx);
 }
 
-void CAnimation::SetTransfer(bool value)
+void CAnimation::SetWait(bool value)
 {
-	this->transfer = value;
+	this->wait = value;
 }
 
 void CAnimation::SetReverse(bool value)
@@ -69,9 +69,9 @@ void CAnimation::SetReverse(bool value)
 	this->reverse = value;
 }
 
-bool CAnimation::GetTransfer()
+bool CAnimation::GetWait()
 {
-	return this->transfer;
+	return this->wait;
 }
 
 bool CAnimation::GetReverse()

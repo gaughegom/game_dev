@@ -9,6 +9,6 @@ void CSophiaStateMoveBackward::Render(CSophia& sophia)
 	left_wheel->SetReverse(false);
 	right_wheel->SetReverse(false);
 
-	left_wheel->SetTransfer(true);
-	right_wheel->SetTransfer(true);
+	left_wheel->SetWait(false);
+	right_wheel->SetWait(false);
 }
