@@ -68,10 +68,12 @@
 #pragma region PLAYER SETTINGS
 
 #define PLAYER_START_X				100.0f
-#define PLAYER_START_Y				200.0f
+#define PLAYER_START_Y				80.0f
 #define PLAYER_WIDTH				30
 #define PLAYER_HEIGHT				32
 #define PLAYER_MOVING_SPEED			0.15f
+#define PLAYER_GRAVITY				0.2f
+#define PLAYER_JUMP_VELOCITY_FORCE	3.0f
 
 #pragma endregion
 

@@ -59,6 +59,12 @@ void CSophia::Update(DWORD dt)
 		}
 	}
 
+	if (game->IsKeyDown(DIK_X)) {
+		if (this->position.y == 30) {
+			this->velocity.y = PLAYER_JUMP_VELOCITY_FORCE;
+		}
+	}
+
 	#pragma endregion
 }
 
@@ -76,6 +82,9 @@ void CSophia::EdgeCollisionHandler(int width)
 		}
 	default:
 		break;
+	}
+	if (this->position.y <= 30) {
+		this->position.y = 30;
 	}
 }
 
@@ -120,7 +129,6 @@ void CSophia::SubcribeDirectState(int directState)
 
 void CSophia::SubcribeActionState(int actionState)
 {
-	this->actionState->SetState(actionState);
 	switch (actionState)
 	{
 	case SOPHIA_STATE_ACTION_IDLE:
