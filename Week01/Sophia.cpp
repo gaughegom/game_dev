@@ -20,6 +20,7 @@ void CSophia::Update(DWORD dt)
 
 	int backbufferWidth = CGame::GetInstance()->GetBackbufferWidth();
 	this->EdgeCollisionHandler(CGame::GetInstance()->GetBackbufferWidth());
+
 }
 
 void CSophia::EdgeCollisionHandler(int width)

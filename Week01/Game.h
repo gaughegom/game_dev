@@ -3,16 +3,8 @@
 #define _GAME_H
 
 #include "resources.h"
+#include "KeyEventHandler.h"
 
-class CKeyEventHandler
-{
-public:
-	virtual void KeyState(BYTE* state) = 0;
-	virtual void OnKeyDown(int KeyCode) = 0;
-	virtual void OnKeyUp(int KeyCode) = 0;
-};
-
-typedef CKeyEventHandler* LPKEYEVENTHANDLER;
 
 class CGame
 {
@@ -58,6 +50,8 @@ public:
 
 	int GetBackbufferWidth() { return this->backBufferWidth; }
 	int GetBackbufferHeight() { return this->backBufferHeight; }
+
+	LPKEYEVENTHANDLER GetKeyHandler() { return this->keyHandler; }
 
 	static CGame* GetInstance();
 
