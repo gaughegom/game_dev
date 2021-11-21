@@ -21,8 +21,8 @@ private:
 
 
 public:
-	DWORD lasttime;
-	DWORD lasttime2;
+	DWORD stateTime;
+	DWORD prevStateTime;
 
 	Vector2D leftWheel;
 	Vector2D rightWheel;
@@ -38,11 +38,8 @@ public:
 	void Update(DWORD dt);
 	void Render();
 
-	void ObserveDirectState(int directState);
-	void ObserveActionState(int actionState);
-
-	CSophiaDirectState* GetDirectState() { return this->directState; }
-	CSophiaActionState* GetActionState() { return this->actionState; }
+	void SubcribeDirectState(int directState);
+	void SubcribeActionState(int actionState);
 
 	void EdgeCollisionHandler(int width);
 };

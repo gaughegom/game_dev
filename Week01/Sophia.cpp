@@ -21,6 +21,45 @@ void CSophia::Update(DWORD dt)
 	int backbufferWidth = CGame::GetInstance()->GetBackbufferWidth();
 	this->EdgeCollisionHandler(CGame::GetInstance()->GetBackbufferWidth());
 
+	#pragma region OBSERVE KEYBOARD
+
+	auto game = CGame::GetInstance();
+	// observe direct state
+	if (game->IsKeyDown(DIK_RIGHT)) {
+		this->SubcribeDirectState(SOPHIA_STATE_DIRECTION_FORWARD);
+	}
+	else if (game->IsKeyDown(DIK_LEFT)) {
+		this->SubcribeDirectState(SOPHIA_STATE_DIRECTION_BACKWARD);
+	}
+	else {
+		this->SubcribeDirectState(SOPHIA_STATE_DIRECTION_STAY);
+	}
+
+	// observe sophia action
+	if (game->IsKeyDown(DIK_UP)) {
+		DWORD now = GetTickCount();
+		this->stateTime = now;
+		int state = this->actionState->GetState();
+		if (state == SOPHIA_STATE_ACTION_IDLE) {
+			this->actionState->SetState(SOPHIA_STATE_ACTION_TILE_45);
+		}
+		else if (now - this->prevStateTime > 200 && state == SOPHIA_STATE_ACTION_TILE_45) {
+			this->actionState->SetState(SOPHIA_STATE_ACTION_UP_90);
+		}
+	}
+	else {
+		DWORD now = GetTickCount();
+		this->prevStateTime = now;
+		int state = this->actionState->GetState();
+		if (state == SOPHIA_STATE_ACTION_UP_90) {
+			this->actionState->SetState(SOPHIA_STATE_ACTION_TILE_45);
+		}
+		else if (now - this->stateTime > 100 && state == SOPHIA_STATE_ACTION_TILE_45) {
+			this->actionState->SetState(SOPHIA_STATE_ACTION_IDLE);
+		}
+	}
+
+	#pragma endregion
 }
 
 void CSophia::EdgeCollisionHandler(int width)
@@ -49,7 +88,7 @@ void CSophia::Render()
 	this->lpsGun->Draw(this->position + this->gun, this->nx);
 }
 
-void CSophia::ObserveDirectState(int directState)
+void CSophia::SubcribeDirectState(int directState)
 {
 	this->directState->SetState(directState);
 	switch (directState)
@@ -57,29 +96,29 @@ void CSophia::ObserveDirectState(int directState)
 	case SOPHIA_STATE_DIRECTION_STAY:
 		this->SetVelocity(0, 0);
 		this->directState->Stay();
-		this->ObserveActionState(this->actionState->GetState());
+		this->SubcribeActionState(this->actionState->GetState());
 		break;
 	case SOPHIA_STATE_DIRECTION_BACKWARD:
 		this->SetVelocity(-PLAYER_MOVING_SPEED, 0);
 		this->nx = -1;
 		this->directState->MoveBackward();
-		this->ObserveActionState(this->actionState->GetState());
+		this->SubcribeActionState(this->actionState->GetState());
 		break;
 	case SOPHIA_STATE_DIRECTION_FORWARD:
 		this->SetVelocity(PLAYER_MOVING_SPEED, 0);
 		this->nx = 1;
 		this->directState->MoveForward();
-		this->ObserveActionState(this->actionState->GetState());
+		this->SubcribeActionState(this->actionState->GetState());
 		break;
 	default:
 		this->SetVelocity(0, 0);
 		this->directState->Stay();
-		this->ObserveActionState(this->actionState->GetState());
+		this->SubcribeActionState(this->actionState->GetState());
 		break;
 	}
 }
 
-void CSophia::ObserveActionState(int actionState)
+void CSophia::SubcribeActionState(int actionState)
 {
 	this->actionState->SetState(actionState);
 	switch (actionState)

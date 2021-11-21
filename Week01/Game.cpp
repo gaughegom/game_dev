@@ -40,41 +40,7 @@ void CKeyHander::OnKeyUp(int keyCode)
 
 void CKeyHander::KeyState(BYTE* states)
 {
-	CGame* game = CGame::GetInstance();
-	// observe sophia direction
-	if (game->IsKeyDown(DIK_RIGHT)) {
-		pSophia->ObserveDirectState(SOPHIA_STATE_DIRECTION_FORWARD);
-	}
-	else if (game->IsKeyDown(DIK_LEFT)) {
-		pSophia->ObserveDirectState(SOPHIA_STATE_DIRECTION_BACKWARD);
-	}
-	else {
-		pSophia->ObserveDirectState(SOPHIA_STATE_DIRECTION_STAY);
-	}
-
-	// observe sophia action
-	if (game->IsKeyDown(DIK_UP)) {
-		DWORD now = GetTickCount();
-		pSophia->lasttime2 = now;
-		auto actionState = pSophia->GetActionState()->GetState();
-		if (actionState == SOPHIA_STATE_ACTION_IDLE) {
-			pSophia->ObserveActionState(SOPHIA_STATE_ACTION_TILE_45);
-		}
-		else if (now - pSophia->lasttime > 200 && actionState == SOPHIA_STATE_ACTION_TILE_45) {
-			pSophia->ObserveActionState(SOPHIA_STATE_ACTION_UP_90);
-		}
-	}
-	else {
-		DWORD now = GetTickCount();
-		pSophia->lasttime = now;
-		auto actionState = pSophia->GetActionState()->GetState();
-		if (actionState == SOPHIA_STATE_ACTION_UP_90) {
-			pSophia->ObserveActionState(SOPHIA_STATE_ACTION_TILE_45);
-		}
-		else if (now - pSophia->lasttime2 > 100 && actionState == SOPHIA_STATE_ACTION_TILE_45) {
-			pSophia->ObserveActionState(SOPHIA_STATE_ACTION_IDLE);
-		}
-	}
+	// empty
 }
 
 int CGame::IsKeyDown(int KeyCode)
