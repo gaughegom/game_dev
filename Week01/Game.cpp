@@ -326,7 +326,7 @@ void CGame::InitGame(HWND hWnd)
 	CreateGameObject();
 
 	// create camera
-	#pragma region CAMERA SETTINGS
+	#pragma region CAMERA START
 	
 	pCamera = new CCamera();
 	pCamera->SetTarget(pSophia);
@@ -335,7 +335,20 @@ void CGame::InitGame(HWND hWnd)
 	#pragma endregion
 
 	// InitGame quadtree
+	#pragma region QUADTREE START
+	
 	pQuadTree = new CQuadTree(0, SRect(0, this->backBufferHeight * 10, this->backBufferWidth * 10, 0));
+	ObserverGame();
+
+	#pragma endregion
+}
+
+void CGame::ObserverGame()
+{
+	pRenderObjects.clear();
+	pCamera->Update();
+	pQuadTree->Update(pGameObjects);
+	pQuadTree->ContainerizeObject(pRenderObjects, pCamera->GetBoundingBox());
 }
 
 void CGame::CreateGameObject()
@@ -361,17 +374,18 @@ void CGame::CreateGameObject()
 
 void CGame::UpdateGame(DWORD dt)
 {
-	pCamera->Update();
-	
-	pRenderObjects.clear();
-	
-	pQuadTree->Update(pGameObjects);
-	pQuadTree->ContainerizeObject(pRenderObjects, pCamera->GetBoundingBox());
-
+	bool activeObserver = false;
 	for (auto pObject : pRenderObjects) {
+		Vector2D prevPos = pObject->GetPosition();
 		pObject->Update(dt);
+		if (pObject->GetPosition() != prevPos) {
+			activeObserver = true;
+		}
 	}
-	DebugOut(L"[INFO] render object: %d\n", pRenderObjects.size());
+	if (activeObserver) {
+		ObserverGame();
+		DebugOut(L"[INFO] render object: %d\n", pRenderObjects.size());
+	}
 }
 
 void CGame::RenderGame()
