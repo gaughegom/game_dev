@@ -11,8 +11,8 @@ class CEnemyRobot : public CGameObject
 public:
 	CEnemyRobot();
 
-	void Update(DWORD dt);
-	void Render();
+	void UpdateGame(DWORD dt);
+	void RenderGame();
 	
 	int GetState();
 	void SetState(int state);

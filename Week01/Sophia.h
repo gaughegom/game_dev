@@ -32,8 +32,8 @@ public:
 
 	CSophia();
 
-	void Update(DWORD dt);
-	void Render();
+	void UpdateGame(DWORD dt);
+	void RenderGame();
 	void SetState(int state);
 	int GetState();
 

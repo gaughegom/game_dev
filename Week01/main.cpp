@@ -66,11 +66,11 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	CGame* game = new CGame();
 	game = CGame::GetInstance();
-	game->Init(hWnd);
+	game->InitGame(hWnd);
 
 	SetWindowPos(hWnd, 0, 0, 0, SCREEN_WIDTH * 2, SCREEN_HEIGHT * 2, SWP_NOMOVE | SWP_NOOWNERZORDER | SWP_NOZORDER);
 
-	game->Run();
+	game->RunGame();
 
 	return 0;
 }

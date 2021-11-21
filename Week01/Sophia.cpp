@@ -15,7 +15,7 @@ CSophia::CSophia()
 	this->actionState->SetIdleState();
 }
 
-void CSophia::Update(DWORD dt)
+void CSophia::UpdateGame(DWORD dt)
 {
 	LinearMovement(this->position, this->velocity, dt);
 
@@ -40,10 +40,10 @@ void CSophia::EdgeCollisionHandler(int width)
 	}
 }
 
-void CSophia::Render()
+void CSophia::RenderGame()
 {
-	animations.at(LEFT_WHEEL)->Render(this->position + this->leftWheel, 1);
-	animations.at(RIGHT_WHEEL)->Render(this->position + this->rightWheel, 1);
+	animations.at(LEFT_WHEEL)->RenderGame(this->position + this->leftWheel, 1);
+	animations.at(RIGHT_WHEEL)->RenderGame(this->position + this->rightWheel, 1);
 	lpsBody->Draw(this->position + this->body, this->nx);
 	lpsCabin->Draw(this->position + this->cabin, this->nx);
 }

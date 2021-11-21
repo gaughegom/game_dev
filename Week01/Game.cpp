@@ -264,7 +264,7 @@ void CGame::Draw(Vector2D position, int nx, LPDIRECT3DTEXTURE9 texture, int left
 
 #pragma region GAME PROCESS
 
-void CGame::Init(HWND hWnd)
+void CGame::InitGame(HWND hWnd)
 {
 	this->InitDirectX(hWnd);
 
@@ -334,7 +334,7 @@ void CGame::Init(HWND hWnd)
 
 	#pragma endregion
 
-	// Init quadtree
+	// InitGame quadtree
 	pQuadTree = new CQuadTree(0, SRect(0, this->backBufferHeight * 10, this->backBufferWidth * 10, 0));
 }
 
@@ -359,22 +359,22 @@ void CGame::CreateGameObject()
 	pGameObjects.push_back(pSophia);
 }
 
-void CGame::Update(DWORD dt)
+void CGame::UpdateGame(DWORD dt)
 {
-	pCamera->Update();
+	pCamera->UpdateGame();
 	
 	pRenderObjects.clear();
 	
-	pQuadTree->Update(pGameObjects);
+	pQuadTree->UpdateGame(pGameObjects);
 	pQuadTree->ContainerizeObject(pRenderObjects, pCamera->GetBoundingBox());
 
 	for (auto pObject : pRenderObjects) {
-		pObject->Update(dt);
+		pObject->UpdateGame(dt);
 	}
 	DebugOut(L"[INFO] render object: %d\n", pRenderObjects.size());
 }
 
-void CGame::Render()
+void CGame::RenderGame()
 {
 	LPDIRECT3DDEVICE9 d3ddv = CGame::GetInstance()->GetDirect3dDevice();
 	LPDIRECT3DSURFACE9 bb = CGame::GetInstance()->GetBackbuffer();
@@ -388,7 +388,7 @@ void CGame::Render()
 		spriteHandler->Begin(D3DXSPRITE_ALPHABLEND);
 
 		for (auto object : pRenderObjects) {
-			object->Render();
+			object->RenderGame();
 		}
 
 		spriteHandler->End();
@@ -399,7 +399,7 @@ void CGame::Render()
 	d3ddv->Present(NULL, NULL, NULL, NULL);
 }
 
-void CGame::Run()
+void CGame::RunGame()
 {
 	MSG msg;
 	int done = 0;
@@ -428,8 +428,8 @@ void CGame::Run()
 
 			this->ProcessKeyboard();
 
-			Update(dt);
-			Render();
+			UpdateGame(dt);
+			RenderGame();
 		}
 		else
 			Sleep(tickPerFrame - dt);

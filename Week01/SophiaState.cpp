@@ -1,9 +1,9 @@
 #include "SophiaState.h"
 
-void CSophiaState::Update(DWORD dt, int nx, CSophia& sophia)
+void CSophiaState::UpdateGame(DWORD dt, int nx, CSophia& sophia)
 {
 }
 
-void CSophiaState::Render(CSophia& sophia)
+void CSophiaState::RenderGame(CSophia& sophia)
 {
 }

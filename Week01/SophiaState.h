@@ -8,8 +8,8 @@ class CSophia;
 
 class CSophiaState {
 public:
-	virtual void Update(DWORD dt, int nx, CSophia& sophia);
-	virtual void Render(CSophia& sophia);
+	virtual void UpdateGame(DWORD dt, int nx, CSophia& sophia);
+	virtual void RenderGame(CSophia& sophia);
 };
 
 #endif // !_SOPHIA_STATE_H

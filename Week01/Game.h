@@ -45,10 +45,10 @@ public:
 	void InitDirectX(HWND hWnd);
 	void Draw(Vector2D position, int nx, LPDIRECT3DTEXTURE9 texture, int left, int top, int right, int bottom);
 
-	void Init(HWND hWnd);
-	void Update(DWORD dt);
-	void Render();
-	void Run();
+	void InitGame(HWND hWnd);
+	void UpdateGame(DWORD dt);
+	void RenderGame();
+	void RunGame();
 
 	void CreateGameObject();
 
