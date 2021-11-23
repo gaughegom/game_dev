@@ -25,6 +25,11 @@ public:
 
 	void Update(std::vector<CGameObject*> objects);
 	void ContainerizeObject(std::vector<CGameObject*>& container, const SRect& rect);
+
+	bool HaveObject(CGameObject* object);
+	CQuadTree* GetObjectNode(CGameObject* object);
+
+	SRect GetRect() { return this->rect; }
 };
 
 #endif // !_QUADTREE_H

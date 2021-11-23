@@ -9,10 +9,6 @@ CGameObject::CGameObject()
 	this->nx = 1;
 }
 
-void CGameObject::Render()
-{
-}
-
 Vector2D CGameObject::GetPosition()
 {
 	return this->position;
@@ -52,6 +48,10 @@ void CGameObject::AddAnimation(int key, int animationId)
 {
 	LPANIMATION ani = CAnimations::GetInstance()->Get(animationId);
 	this->animations.insert(std::make_pair(key, ani));
+}
+
+void CGameObject::EdgeCollisionHandler()
+{
 }
 
 CGameObject::~CGameObject()

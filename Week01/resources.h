@@ -23,18 +23,22 @@
 
 #define MAX_FRAME_RATE				90
 
+#define	QUADTREE_WIDTH				SCREEN_WIDTH * 10
+#define QUADTREE_HEIGHT				SCREEN_HEIGHT * 3
+
 #pragma endregion
 
 #pragma region TEXTURES ID
 
 #define TEXTURES_SOPHIA_ID			0
-#define TEXTURES_ENEMY_ROBOT_ID		1
+#define TEXTURES_JASON_ID			1
+#define TEXTURES_ENEMY_ROBOT_ID		2
 
 #pragma endregion
 
 #pragma region TEXTURES PATH
 
-#define SOPHIA_TEXTURE_PATH			L"resources//player.png"
+#define SOPHIA_JASON_TEXTURE_PATH	L"resources//player.png"
 #define ENEMY_TEXTURE_PATH			L"resources//enemies.png"
 #define TEXTURE_TRANS_COLOR			D3DCOLOR_XRGB(41, 255, 4)
 
@@ -43,24 +47,39 @@
 #pragma region SPRITE, ANIMATION ID
 
 // sprites
-#define SPRITE_SOPHIA_WHEEL_1			0
+#define SPRITE_SOPHIA_WHEEL_1			0 // sophia 0 -19
 #define SPRITE_SOPHIA_WHEEL_2			1
 #define SPRITE_SOPHIA_WHEEL_3			2
 #define SPRITE_SOPHIA_WHEEL_4			3
-
 #define SPRITE_SOPHIA_BODY				4
-
 #define SPRITE_SOPHIA_CABIN_00			5
 #define SPRITE_SOPHIA_CABIN_OPEN		6
 #define SPRITE_SOPHIA_CABIN_45			7
-
 #define SPRITE_SOPHIA_GUN_00			8
 #define SPRITE_SOPHIA_GUN_45			9
 #define SPRITE_SOPHIA_GUN_90			10
 
+#define SPRITE_JASON_LEFT_01			20 // jason 20 - 29
+#define SPRITE_JASON_LEFT_02			21
+#define SPRITE_JASON_LEFT_03			22
+#define SPRITE_JASON_UP_01				23
+#define SPRITE_JASON_UP_02				24
+#define SPRITE_JASON_UP_03				25
+#define SPRITE_JASON_DOWN_01			26
+#define SPRITE_JASON_DOWN_02			27
+#define SPRITE_JASON_DOWN_03			28
+
+#define SPRITE_ENEMY_ROBOT				50 // enemy from 50
+
 // animations
 #define ANIMATION_SOPHIA_LEFT_WHEEL		0
 #define ANIMATION_SOPHIA_RIGHT_WHEEL	1
+
+#define ANIMATION_JASON_LEFT			20
+#define ANIMATION_JASON_UP				21
+#define	ANIMATION_JASON_DOWN			22
+
+#define ANIMATION_ENEMY_ROBOT			50
 
 
 #pragma endregion
@@ -68,12 +87,12 @@
 #pragma region PLAYER SETTINGS
 
 #define PLAYER_START_X				100.0f
-#define PLAYER_START_Y				80.0f
+#define PLAYER_START_Y				50.0f
 #define PLAYER_WIDTH				30
 #define PLAYER_HEIGHT				32
 #define PLAYER_MOVING_SPEED			0.15f
-#define PLAYER_GRAVITY				0.2f
-#define PLAYER_JUMP_VELOCITY_FORCE	3.0f
+#define PLAYER_GRAVITY				0.8f
+#define PLAYER_JUMP_FORCE			1.0f
 
 #pragma endregion
 
@@ -88,6 +107,17 @@
 #define SOPHIA_STATE_ACTION_UP_90			90
 
 #pragma endregion
+
+#pragma region JASON STATE
+
+#define JASON_STATE_DIRECTION_IDLE			0
+#define JASON_STATE_DIRECTION_FORWARD		1
+#define JASON_STATE_DIRECTION_BACKWARD		2
+#define JASON_STATE_DIRECTION_UPWARD		3
+#define JASON_STATE_DIRECTION_DOWNWARD		4
+
+#pragma endregion
+
 
 #pragma region NPC SETTINGS
 

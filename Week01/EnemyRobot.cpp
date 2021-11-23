@@ -2,7 +2,8 @@
 
 CEnemyRobot::CEnemyRobot()
 {
-	this->AddAnimation(1, 1000);
+	this->AddAnimation(C_ROBOT, ANIMATION_ENEMY_ROBOT);
+	this->SetSize(14, 26);
 }
 
 void CEnemyRobot::Update(DWORD dt)
@@ -13,8 +14,8 @@ void CEnemyRobot::Update(DWORD dt)
 
 void CEnemyRobot::Render()
 {
-	auto animation = this->animations.at(1);
-	animation->RenderGame(this->position, this->nx);
+	auto animation = this->animations.at(C_ROBOT);
+	animation->Render(this->position, this->nx);
 }
 
 int CEnemyRobot::GetState()

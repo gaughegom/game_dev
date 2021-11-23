@@ -40,18 +40,6 @@ void CQuadTree::MappingObjectRect(CGameObject* object)
 	if (this->pObject.size() >= 1 && ((rect.right - rect.left)/2 >= SCREEN_WIDTH/2)) {
 		DivideScreen();
 		for (auto obj : this->pObject) {
-			/*if (this->pChild[0].get()->IsConstainObject(obj)) {
-				this->pChild[0].get()->MappingObjectRect(obj);
-			}
-			else if (this->pChild[1].get()->IsConstainObject(obj)) {
-				this->pChild[1].get()->MappingObjectRect(obj);
-			}
-			else if (this->pChild[2].get()->IsConstainObject(obj)) {
-				this->pChild[2].get()->MappingObjectRect(obj);
-			}
-			else if (this->pChild[3].get()->IsConstainObject(obj)) {
-				this->pChild[3].get()->MappingObjectRect(obj);
-			}*/
 			AddObjectToRect(object);
 		}
 		this->pObject.clear();
@@ -116,5 +104,34 @@ void CQuadTree::ContainerizeObject(std::vector<CGameObject*>& container, const S
 
 	for (auto& object : this->pObject) {
 		container.emplace_back(object);
+	}
+}
+
+bool CQuadTree::HaveObject(CGameObject* object)
+{
+	if (std::find(this->pObject.begin(), this->pObject.end(), object) != this->pObject.end()) {
+		return true;
+	}
+	return false;
+}
+
+CQuadTree* CQuadTree::GetObjectNode(CGameObject* object)
+{
+	if (this->pChild[0].get() != nullptr) {
+		if (this->pChild[0].get()->IsConstainObject(object)) {
+			return this->pChild[0].get()->GetObjectNode(object);
+		}
+		else if (this->pChild[1].get()->IsConstainObject(object)) {
+			return this->pChild[1].get()->GetObjectNode(object);
+		}
+		else if (this->pChild[2].get()->IsConstainObject(object)) {
+			return this->pChild[2].get()->GetObjectNode(object);
+		}
+		else if (this->pChild[3].get()->IsConstainObject(object)) {
+			return this->pChild[3].get()->GetObjectNode(object);
+		}
+	}
+	else {
+		return this;
 	}
 }

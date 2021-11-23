@@ -2,6 +2,9 @@
 
 CSophia::CSophia()
 {
+	this->SetSize(17, 10);
+	this->SetPosition(PLAYER_START_X, PLAYER_START_Y);
+	this->SetVelocity(0, -PLAYER_GRAVITY);
 	this->directState = new CSophiaDirectState(this);
 	this->actionState = new CSophiaActionState(this);
 
@@ -16,24 +19,33 @@ CSophia::CSophia()
 
 void CSophia::Update(DWORD dt)
 {
-	LinearMovement(this->position, this->velocity, dt);
+	LinearMoveWithGravity(*this, dt);
+
+	DebugOut(L"[vy] %f, [pos] %f, %f\n", this->velocity.y, this->position.x, this->position.y);
 
 	int backbufferWidth = CGame::GetInstance()->GetBackbufferWidth();
 	this->EdgeCollisionHandler(CGame::GetInstance()->GetBackbufferWidth());
 
-	#pragma region OBSERVE KEYBOARD
+	ListenKeyEvent();
+}
+
+void CSophia::ListenKeyEvent()
+{
+	#pragma region LISTEN KEYBOARD
 
 	auto game = CGame::GetInstance();
 	// observe direct state
 	if (game->IsKeyDown(DIK_RIGHT)) {
-		this->SubcribeDirectState(SOPHIA_STATE_DIRECTION_FORWARD);
+		this->directState->SetState(SOPHIA_STATE_DIRECTION_FORWARD);
 	}
 	else if (game->IsKeyDown(DIK_LEFT)) {
-		this->SubcribeDirectState(SOPHIA_STATE_DIRECTION_BACKWARD);
+		this->directState->SetState(SOPHIA_STATE_DIRECTION_BACKWARD);
 	}
 	else {
-		this->SubcribeDirectState(SOPHIA_STATE_DIRECTION_STAY);
+		this->directState->SetState(SOPHIA_STATE_DIRECTION_STAY);
 	}
+
+	this->SubcribeDirectState(this->directState->GetState());
 
 	// observe sophia action
 	if (game->IsKeyDown(DIK_UP)) {
@@ -60,8 +72,8 @@ void CSophia::Update(DWORD dt)
 	}
 
 	if (game->IsKeyDown(DIK_X)) {
-		if (this->position.y == 30) {
-			this->velocity.y = PLAYER_JUMP_VELOCITY_FORCE;
+		if (this->velocity.y <= 0) {
+			this->velocity.y += PLAYER_JUMP_FORCE;
 		}
 	}
 
@@ -70,28 +82,28 @@ void CSophia::Update(DWORD dt)
 
 void CSophia::EdgeCollisionHandler(int width)
 {
-	switch (this->state)
+	switch (this->directState->GetState())
 	{
 	case SOPHIA_STATE_DIRECTION_FORWARD:
 		if (this->position.x > width * 10 - PLAYER_WIDTH) {
 			this->SetX(width * 10 - PLAYER_WIDTH);
 		}
 	case SOPHIA_STATE_DIRECTION_BACKWARD:
-		if (this->position.x < 0) {
+		if (this->position.x <= 0) {
 			this->SetX(0);
 		}
 	default:
 		break;
 	}
-	if (this->position.y <= 30) {
-		this->position.y = 30;
+	if (this->position.y <= 20) {
+		this->position.y = 20;
 	}
 }
 
 void CSophia::Render()
 {
-	animations.at(LEFT_WHEEL)->RenderGame(this->position + this->leftWheel, 1);
-	animations.at(RIGHT_WHEEL)->RenderGame(this->position + this->rightWheel, 1);
+	animations.at(LEFT_WHEEL)->Render(this->position + this->leftWheel, 1);
+	animations.at(RIGHT_WHEEL)->Render(this->position + this->rightWheel, 1);
 	this->lpsBody->Draw(this->position + this->body, this->nx);
 	this->lpsCabin->Draw(this->position + this->cabin, this->nx);
 	this->lpsGun->Draw(this->position + this->gun, this->nx);

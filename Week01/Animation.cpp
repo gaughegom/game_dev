@@ -10,7 +10,7 @@ void CAnimation::Add(int spriteId, DWORD time)
 	this->frames.push_back(frame);
 }
 
-void CAnimation::RenderGame(Vector2D position, int nx)
+void CAnimation::Render(Vector2D position, int nx)
 {
 	DWORD now = GetTickCount();
 

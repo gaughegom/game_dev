@@ -2,11 +2,13 @@
 #include "Textures.h"
 #include "Animations.h"
 #include "Sophia.h"
+#include "Jason.h"
 #include "EnemyLib.h"
 #include "Camera.h"
 #include "QuadTree.h"
 
 CSophia* pSophia;
+CJason* pJason;
 CCamera* pCamera;
 CTextures* pTextures = CTextures::GetInstance();
 CQuadTree* pQuadTree;
@@ -261,9 +263,11 @@ void CGame::InitGame(HWND hWnd)
 {
 	this->InitDirectX(hWnd);
 
-	pTextures->Add(TEXTURES_SOPHIA_ID, SOPHIA_TEXTURE_PATH, TEXTURE_TRANS_COLOR);
+	pTextures->Add(TEXTURES_SOPHIA_ID, SOPHIA_JASON_TEXTURE_PATH, TEXTURE_TRANS_COLOR);
+	pTextures->Add(TEXTURES_JASON_ID, SOPHIA_JASON_TEXTURE_PATH, TEXTURE_TRANS_COLOR);
 	pTextures->Add(TEXTURES_ENEMY_ROBOT_ID, ENEMY_TEXTURE_PATH, TEXTURE_TRANS_COLOR);
 	LPDIRECT3DTEXTURE9 texSophia = pTextures->Get(TEXTURES_SOPHIA_ID);
+	LPDIRECT3DTEXTURE9 texJason = pTextures->Get(TEXTURES_JASON_ID);
 	LPDIRECT3DTEXTURE9 texRobot = pTextures->Get(TEXTURES_ENEMY_ROBOT_ID);
 
 	#pragma region SOPHIA SPRITES
@@ -307,12 +311,48 @@ void CGame::InitGame(HWND hWnd)
 
 	#pragma endregion
 
+	#pragma region JASON SPRITES
+
+	// jason left
+	g_sprites->Add(SPRITE_JASON_LEFT_01, 208, 69, 232, 100, texJason);
+	g_sprites->Add(SPRITE_JASON_LEFT_02, 233, 69, 257, 101, texJason);
+	g_sprites->Add(SPRITE_JASON_LEFT_03, 258, 69, 282, 100, texJason);
+	// jason up
+	g_sprites->Add(SPRITE_JASON_UP_01, 210, 36, 230, 67, texJason);
+	g_sprites->Add(SPRITE_JASON_UP_02, 235, 36, 255, 68, texJason);
+	g_sprites->Add(SPRITE_JASON_UP_03, 260, 36, 280, 67, texJason);
+	// jason down
+	g_sprites->Add(SPRITE_JASON_DOWN_01, 210, 3, 230, 34, texJason);
+	g_sprites->Add(SPRITE_JASON_DOWN_02, 235, 3, 255, 35, texJason);
+	g_sprites->Add(SPRITE_JASON_DOWN_03, 280, 3, 280, 34, texJason);
+
+	// add animation jason left
+	lpAni = new CAnimation(5);
+	lpAni->Add(SPRITE_JASON_LEFT_01);
+	lpAni->Add(SPRITE_JASON_LEFT_02);
+	lpAni->Add(SPRITE_JASON_LEFT_03);
+	g_animations->Add(ANIMATION_JASON_LEFT, lpAni);
+	// add animation jason up
+	lpAni = new CAnimation(5);
+	lpAni->Add(SPRITE_JASON_UP_01);
+	lpAni->Add(SPRITE_JASON_UP_02);
+	lpAni->Add(SPRITE_JASON_UP_03);
+	g_animations->Add(ANIMATION_JASON_UP, lpAni);
+	// add aniamtion jason down
+	lpAni = new CAnimation(5);
+	lpAni->Add(SPRITE_JASON_DOWN_01);
+	lpAni->Add(SPRITE_JASON_DOWN_02);
+	lpAni->Add(SPRITE_JASON_DOWN_03);
+	g_animations->Add(ANIMATION_JASON_DOWN, lpAni);
+
+	#pragma endregion
+
 	#pragma region ENEMY SPRITES
 
-	g_sprites->Add(20000, 104, 0, 118, 26, texRobot);
+	g_sprites->Add(SPRITE_ENEMY_ROBOT, 104, 0, 118, 26, texRobot);
 	lpAni = new CAnimation(5);
-	lpAni->Add(20000);
-	g_animations->Add(1000, lpAni);
+	lpAni->Add(SPRITE_ENEMY_ROBOT);
+	g_animations->Add(ANIMATION_ENEMY_ROBOT, lpAni);
 
 	#pragma endregion
 
@@ -331,6 +371,7 @@ void CGame::InitGame(HWND hWnd)
 	pCamera = new CCamera();
 	pCamera->SetTarget(pSophia);
 	pCamera->SetSize(this->backBufferWidth, this->backBufferHeight);
+	pCamera->Update();
 
 	#pragma endregion
 
@@ -346,7 +387,6 @@ void CGame::InitGame(HWND hWnd)
 void CGame::ObserverGame()
 {
 	pRenderObjects.clear();
-	pCamera->Update();
 	pQuadTree->Update(pGameObjects);
 	pQuadTree->ContainerizeObject(pRenderObjects, pCamera->GetBoundingBox());
 }
@@ -355,8 +395,9 @@ void CGame::CreateGameObject()
 {
 	// create sophia
 	pSophia = new CSophia();
-	pSophia->SetPosition(PLAYER_START_X, PLAYER_START_Y);
-	pSophia->SetVelocity(0, 0);
+
+	// create jason
+	pJason = new CJason();
 
 	// create 10 enemy robot at random position
 	CEnemyRobot* pRobot;
@@ -370,10 +411,13 @@ void CGame::CreateGameObject()
 
 	// push sophia in gameObject vector
 	pGameObjects.push_back(pSophia);
+	pGameObjects.push_back(pJason);
 }
 
 void CGame::UpdateGame(DWORD dt)
 {
+	pCamera->Update();
+
 	bool activeObserver = false;
 	for (auto pObject : pRenderObjects) {
 		Vector2D prevPos = pObject->GetPosition();
@@ -381,6 +425,17 @@ void CGame::UpdateGame(DWORD dt)
 		if (pObject->GetPosition() != prevPos) {
 			activeObserver = true;
 		}
+		
+		/*auto pObjectNode = pQuadTree->GetObjectNode(pObject);
+		SRect objRect = SRect(
+			pObject->GetX(),
+			pObject->GetY() + pObject->GetHeight(),
+			pObject->GetX() + pObject->GetWidth(),
+			pObject->GetY());
+		if (!pObjectNode->GetRect().IsConstain(objRect)) {
+			activeObserver = true;
+		}*/
+
 	}
 	if (activeObserver) {
 		ObserverGame();

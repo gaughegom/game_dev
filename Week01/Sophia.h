@@ -37,6 +37,7 @@ public:
 
 	void Update(DWORD dt);
 	void Render();
+	void ListenKeyEvent();
 
 	void SubcribeDirectState(int directState);
 	void SubcribeActionState(int actionState);

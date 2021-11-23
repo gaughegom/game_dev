@@ -25,6 +25,8 @@
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="GameMovement.cpp" />
     <ClCompile Include="EnemyRobot.cpp" />
+    <ClCompile Include="Jason.cpp" />
+    <ClCompile Include="JasonDirectionState.cpp" />
     <ClCompile Include="KeyEventHandler.cpp" />
     <ClCompile Include="Sophia.cpp" />
     <ClCompile Include="debug.cpp" />
@@ -50,6 +52,8 @@
     <ClInclude Include="GameMovement.h" />
     <ClInclude Include="EnemyRobot.h" />
     <ClInclude Include="GameObject.h" />
+    <ClInclude Include="Jason.h" />
+    <ClInclude Include="JasonDirectionState.h" />
     <ClInclude Include="KeyEventHandler.h" />
     <ClInclude Include="Sophia.h" />
     <ClInclude Include="QuadTree.h" />

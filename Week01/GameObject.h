@@ -16,8 +16,10 @@ protected:
 	Vector2D velocity;
 
 	int nx;
+	int state; // use for single state object
 
-	int state;
+	float width;
+	float height;
 
 	std::unordered_map<int, LPANIMATION> animations;
 
@@ -38,6 +40,11 @@ public:
 	void SetVelocity(float newVx, float newVy) { this->velocity.x = newVx, this->velocity.y = newVy; }
 	Vector2D GetVelocity() { return this->velocity; }
 
+	// width and height
+	void SetSize(float newWidth, float newHeight) { this->width = newWidth, this->height = newHeight; }
+	float GetWidth() { return this->width; }
+	float GetHeight() { return this->height; }
+
 	// state
 	void SetState(int newState) { this->state = newState; }
 	int GetState() { return this->state; }
@@ -49,6 +56,9 @@ public:
 
 	virtual void Update(DWORD dt) = 0;
 	virtual void Render() = 0;
+
+	virtual void EdgeCollisionHandler();
+
 	~CGameObject();
 };
 

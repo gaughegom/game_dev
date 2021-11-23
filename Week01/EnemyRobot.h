@@ -6,6 +6,8 @@
 #include "GameObject.h"
 #include "Game.h"
 
+#define C_ROBOT 0
+
 class CEnemyRobot : public CGameObject
 {
 public:
