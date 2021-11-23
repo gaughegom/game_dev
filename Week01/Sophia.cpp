@@ -21,12 +21,10 @@ void CSophia::Update(DWORD dt)
 {
 	LinearMoveWithGravity(*this, dt);
 
-	DebugOut(L"[vy] %f, [pos] %f, %f\n", this->velocity.y, this->position.x, this->position.y);
-
 	int backbufferWidth = CGame::GetInstance()->GetBackbufferWidth();
 	this->EdgeCollisionHandler(CGame::GetInstance()->GetBackbufferWidth());
 
-	ListenKeyEvent();
+	this->ListenKeyEvent();
 }
 
 void CSophia::ListenKeyEvent()

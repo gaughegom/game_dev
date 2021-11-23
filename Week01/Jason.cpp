@@ -31,6 +31,9 @@ void CJason::Update(DWORD dt)
 void CJason::Render()
 {
 	auto animationId = this->directState->MappingStateOfAnimation(this->directState->GetState());
+	
+	DebugOut(L"[animationid] %d\n", animationId);
+	
 	this->animations.at(animationId)->
 		Render(this->position, this->nx);
 }
@@ -38,26 +41,53 @@ void CJason::Render()
 void CJason::ListenKeyEvent()
 {
 	auto game = CGame::GetInstance();
-	// listen key
+
+	if (game->IsKeyDown(DIK_RIGHT)) {
+		this->directState->SetState(JASON_STATE_DIRECTION_FORWARD);
+	}
+	else if (game->IsKeyDown(DIK_LEFT)) {
+		this->directState->SetState(JASON_STATE_DIRECTION_BACKWARD);
+	}
+	else if (game->IsKeyDown(DIK_UP)) {
+		this->directState->SetState(JASON_STATE_DIRECTION_UPWARD);
+	}
+	else if (game->IsKeyDown(DIK_DOWN)) {
+		this->directState->SetState(JASON_STATE_DIRECTION_DOWNWARD);
+	}
+	else {
+		this->directState->SetState(JASON_STATE_DIRECTION_IDLE);
+	}
+
+	this->SubcribeDirectionState(this->directState->GetState());
 }
 
 void CJason::EdgeCollisionHandler()
 {
-	if (this->position.x >=	QUADTREE_WIDTH - this->width) {
-		this->position.x = QUADTREE_WIDTH - this->width;
-		return;
-	}
-	if (this->position.x <= 0) {
-		this->position.x = 0;
-		return;
-	}
-	if (this->position.y >= QUADTREE_HEIGHT - this->height) {
-		this->position.y = QUADTREE_HEIGHT - this->height;
-		return;
-	}
-	if (this->position.y <= -10) {
-		this->position.y = -10;
-		return;
+	auto directState = this->directState->GetState();
+	switch (directState)
+	{
+	case JASON_STATE_DIRECTION_FORWARD:
+		if (this->position.x >= QUADTREE_WIDTH - this->width) {
+			this->position.x = QUADTREE_WIDTH - this->width;
+		}
+		break;
+	case JASON_STATE_DIRECTION_BACKWARD:
+		if (this->position.x <= 0) {
+			this->position.x = 0;
+		}
+		break;
+	case JASON_STATE_DIRECTION_UPWARD:
+		if (this->position.y >= QUADTREE_HEIGHT - this->height) {
+			this->position.y = QUADTREE_HEIGHT - this->height;
+		}
+		break;
+	case JASON_STATE_DIRECTION_DOWNWARD:
+		if (this->position.y <= -10) {
+			this->position.y = -10;
+		}
+		break;
+	default:
+		break;
 	}
 }
 

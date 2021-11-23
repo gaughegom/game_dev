@@ -28,10 +28,10 @@ int CJasonDirectionState::MappingStateOfAnimation(int state)
 {
 	switch (state)
 	{
-	case JASON_STATE_DIRECTION_DOWNWARD:
-		return C_JASON_DOWN;
 	case JASON_STATE_DIRECTION_UPWARD:
 		return C_JASON_UP;
+	case JASON_STATE_DIRECTION_DOWNWARD:
+		return C_JASON_DOWN;
 	default:
 		return C_JASON_HORIZON;
 	}
