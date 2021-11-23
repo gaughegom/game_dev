@@ -4,7 +4,6 @@ CSophia::CSophia()
 {
 	this->SetSize(17, 10);
 	this->SetPosition(PLAYER_START_X, PLAYER_START_Y);
-	this->SetVelocity(0, 0);
 	this->directState = new CSophiaDirectState(this);
 	this->actionState = new CSophiaActionState(this);
 
@@ -19,7 +18,7 @@ CSophia::CSophia()
 
 void CSophia::Update(DWORD dt)
 {
-	LinearMoveWithGravity(*this, dt);
+	LinearMoveWithGravity(this->position, this->velocity, dt);
 
 	int backbufferWidth = CGame::GetInstance()->GetBackbufferWidth();
 	this->EdgeCollisionHandler(CGame::GetInstance()->GetBackbufferWidth());
@@ -71,7 +70,7 @@ void CSophia::ListenKeyEvent()
 
 	if (input->OnKeyDown(DIK_X)) {
 		if (this->velocity.y <= 0) {
-			this->velocity.y += PLAYER_JUMP_FORCE;
+			this->velocity.y = PLAYER_JUMP_FORCE;
 		}
 	}
 
@@ -113,24 +112,24 @@ void CSophia::SubcribeDirectState(int directState)
 	switch (directState)
 	{
 	case SOPHIA_STATE_DIRECTION_STAY:
-		this->SetVelocity(0, 0);
+		this->velocity.x = 0;
 		this->directState->Stay();
 		this->SubcribeActionState(this->actionState->GetState());
 		break;
 	case SOPHIA_STATE_DIRECTION_BACKWARD:
-		this->SetVelocity(-PLAYER_MOVING_SPEED, 0);
+		this->velocity.x = -PLAYER_MOVING_SPEED;
 		this->nx = -1;
 		this->directState->MoveBackward();
 		this->SubcribeActionState(this->actionState->GetState());
 		break;
 	case SOPHIA_STATE_DIRECTION_FORWARD:
-		this->SetVelocity(PLAYER_MOVING_SPEED, 0);
+		this->velocity.x = PLAYER_MOVING_SPEED;
 		this->nx = 1;
 		this->directState->MoveForward();
 		this->SubcribeActionState(this->actionState->GetState());
 		break;
 	default:
-		this->SetVelocity(0, 0);
+		this->velocity.x = 0;
 		this->directState->Stay();
 		this->SubcribeActionState(this->actionState->GetState());
 		break;

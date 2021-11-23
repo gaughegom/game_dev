@@ -283,6 +283,7 @@ void CGame::CreateGameObject()
 {
 	// create sophia
 	pSophia = new CSophia();
+	pSophia->SetVelocity(0, 0);
 
 	// create jason
 	pJason = new CJason();

@@ -22,7 +22,7 @@ CJason::CJason()
 
 void CJason::Update(DWORD dt)
 {
-	LinearMove(*this, dt);
+	LinearMove(this->position, this->velocity, dt);
 	this->EdgeCollisionHandler();
 
 	//this->ListenKeyEvent();
@@ -31,9 +31,7 @@ void CJason::Update(DWORD dt)
 void CJason::Render()
 {
 	auto animationId = this->directState->MappingStateOfAnimation(this->directState->GetState());
-	
-	DebugOut(L"[animationid] %d\n", animationId);
-	
+		
 	this->animations.at(animationId)->
 		Render(this->position, this->nx);
 }

@@ -91,8 +91,8 @@
 #define PLAYER_WIDTH				30
 #define PLAYER_HEIGHT				32
 #define PLAYER_MOVING_SPEED			0.15f
-#define PLAYER_GRAVITY				0.8f
-#define PLAYER_JUMP_FORCE			1.0f
+#define PLAYER_GRAVITY				0.01f
+#define PLAYER_JUMP_FORCE			0.22f
 
 #pragma endregion
 

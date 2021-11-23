@@ -4,11 +4,8 @@
 
 #include "resources.h"
 #include <math.h>
-#include "GameObject.h"
 
-class CGameObject;
-
-void LinearMoveWithGravity(CGameObject& object, DWORD dt);
-void LinearMove(CGameObject& object, DWORD dt);
+void LinearMoveWithGravity(Vector2D& position, Vector2D& velocity, DWORD dt);
+void LinearMove(Vector2D& position, Vector2D& velocity, DWORD dt);
 
 #endif // !_GAMEMOVEMENT_H
