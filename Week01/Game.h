@@ -17,22 +17,13 @@ class CGame
 	LPDIRECT3DSURFACE9 backBuffer = NULL;
 	LPD3DXSPRITE spriteHandler = NULL;			// Sprite helper library to help us draw 2D image on the screen 
 
-	LPDIRECTINPUT8       di;		// The DirectInput object         
-	LPDIRECTINPUTDEVICE8 didv;		// The keyboard device 
-
-	BYTE  keyStates[256];			// DirectInput keyboard state buffer 
-	DIDEVICEOBJECTDATA keyEvents[KEYBOARD_BUFFER_SIZE];		// Buffered keyboard data
-
 	LPKEYEVENTHANDLER keyHandler;
 
 	int backBufferWidth = 0;
 	int backBufferHeight = 0;
 
 public:
-	void InitKeyboard(LPKEYEVENTHANDLER handler);
-
 	int IsKeyDown(int KeyCode);
-	void ProcessKeyboard();
 	
 	void InitDirectX(HWND hWnd);
 	void Draw(Vector2D position, int nx, LPDIRECT3DTEXTURE9 texture, int left, int top, int right, int bottom);

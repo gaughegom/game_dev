@@ -25,7 +25,7 @@ void CJason::Update(DWORD dt)
 	LinearMove(*this, dt);
 	this->EdgeCollisionHandler();
 
-	this->ListenKeyEvent();
+	//this->ListenKeyEvent();
 }
 
 void CJason::Render()
@@ -40,24 +40,26 @@ void CJason::Render()
 
 void CJason::ListenKeyEvent()
 {
-	auto game = CGame::GetInstance();
+	auto input = CInputHandler::GetInstance();
 
-	if (game->IsKeyDown(DIK_RIGHT)) {
+	// map direct state
+	if (input->IsKeyDown(DIK_RIGHT)) {
 		this->directState->SetState(JASON_STATE_DIRECTION_FORWARD);
 	}
-	else if (game->IsKeyDown(DIK_LEFT)) {
+	else if (input->IsKeyDown(DIK_LEFT)) {
 		this->directState->SetState(JASON_STATE_DIRECTION_BACKWARD);
 	}
-	else if (game->IsKeyDown(DIK_UP)) {
+	else if (input->IsKeyDown(DIK_UP)) {
 		this->directState->SetState(JASON_STATE_DIRECTION_UPWARD);
 	}
-	else if (game->IsKeyDown(DIK_DOWN)) {
+	else if (input->IsKeyDown(DIK_DOWN)) {
 		this->directState->SetState(JASON_STATE_DIRECTION_DOWNWARD);
 	}
 	else {
 		this->directState->SetState(JASON_STATE_DIRECTION_IDLE);
 	}
 
+	// subcribe direct state
 	this->SubcribeDirectionState(this->directState->GetState());
 }
 

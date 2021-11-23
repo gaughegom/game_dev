@@ -56,14 +56,14 @@
     <Filter Include="Game Objects\Sophia\State">
       <UniqueIdentifier>{7a2df675-18ae-4077-a486-99da8c3761ff}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Framework\Key Handler">
-      <UniqueIdentifier>{e9d5e5d1-2c93-4da8-bd99-f2609b43eb4a}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Game Objects\Jason">
       <UniqueIdentifier>{8e747e62-5174-4e06-8ebd-c2858108be33}</UniqueIdentifier>
     </Filter>
     <Filter Include="Game Objects\Jason\State">
       <UniqueIdentifier>{d66ed72c-e488-4303-a84e-e65a30745cb9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Framework\Keyboard Handler">
+      <UniqueIdentifier>{e9d5e5d1-2c93-4da8-bd99-f2609b43eb4a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -122,13 +122,16 @@
       <Filter>Game Objects\Sophia\State</Filter>
     </ClCompile>
     <ClCompile Include="KeyEventHandler.cpp">
-      <Filter>Framework\Key Handler</Filter>
+      <Filter>Framework\Keyboard Handler</Filter>
     </ClCompile>
     <ClCompile Include="Jason.cpp">
       <Filter>Game Objects\Jason</Filter>
     </ClCompile>
     <ClCompile Include="JasonDirectionState.cpp">
       <Filter>Game Objects\Jason\State</Filter>
+    </ClCompile>
+    <ClCompile Include="InputHandler.cpp">
+      <Filter>Framework\Keyboard Handler</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -190,13 +193,16 @@
       <Filter>Game Objects\Sophia\State</Filter>
     </ClInclude>
     <ClInclude Include="KeyEventHandler.h">
-      <Filter>Framework\Key Handler</Filter>
+      <Filter>Framework\Keyboard Handler</Filter>
     </ClInclude>
     <ClInclude Include="Jason.h">
       <Filter>Game Objects\Jason</Filter>
     </ClInclude>
     <ClInclude Include="JasonDirectionState.h">
       <Filter>Game Objects\Jason\State</Filter>
+    </ClInclude>
+    <ClInclude Include="InputHandler.h">
+      <Filter>Framework\Keyboard Handler</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

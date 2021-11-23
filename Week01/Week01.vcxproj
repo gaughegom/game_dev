@@ -25,6 +25,7 @@
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="GameMovement.cpp" />
     <ClCompile Include="EnemyRobot.cpp" />
+    <ClCompile Include="InputHandler.cpp" />
     <ClCompile Include="Jason.cpp" />
     <ClCompile Include="JasonDirectionState.cpp" />
     <ClCompile Include="KeyEventHandler.cpp" />
@@ -52,6 +53,7 @@
     <ClInclude Include="GameMovement.h" />
     <ClInclude Include="EnemyRobot.h" />
     <ClInclude Include="GameObject.h" />
+    <ClInclude Include="InputHandler.h" />
     <ClInclude Include="Jason.h" />
     <ClInclude Include="JasonDirectionState.h" />
     <ClInclude Include="KeyEventHandler.h" />

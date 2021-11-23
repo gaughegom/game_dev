@@ -5,7 +5,7 @@
 #include "GameObject.h"
 #include "SophiaDirectState.h"
 #include "SophiaActionState.h"
-
+#include "InputHandler.h"
 
 #define LEFT_WHEEL		0
 #define RIGHT_WHEEL		1

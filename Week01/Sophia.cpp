@@ -4,7 +4,7 @@ CSophia::CSophia()
 {
 	this->SetSize(17, 10);
 	this->SetPosition(PLAYER_START_X, PLAYER_START_Y);
-	this->SetVelocity(0, -PLAYER_GRAVITY);
+	this->SetVelocity(0, 0);
 	this->directState = new CSophiaDirectState(this);
 	this->actionState = new CSophiaActionState(this);
 
@@ -31,12 +31,12 @@ void CSophia::ListenKeyEvent()
 {
 	#pragma region LISTEN KEYBOARD
 
-	auto game = CGame::GetInstance();
+	auto input = CInputHandler::GetInstance();
 	// observe direct state
-	if (game->IsKeyDown(DIK_RIGHT)) {
+	if (input->IsKeyDown(DIK_RIGHT)) {
 		this->directState->SetState(SOPHIA_STATE_DIRECTION_FORWARD);
 	}
-	else if (game->IsKeyDown(DIK_LEFT)) {
+	else if (input->IsKeyDown(DIK_LEFT)) {
 		this->directState->SetState(SOPHIA_STATE_DIRECTION_BACKWARD);
 	}
 	else {
@@ -46,7 +46,7 @@ void CSophia::ListenKeyEvent()
 	this->SubcribeDirectState(this->directState->GetState());
 
 	// observe sophia action
-	if (game->IsKeyDown(DIK_UP)) {
+	if (input->IsKeyDown(DIK_UP)) {
 		DWORD now = GetTickCount();
 		this->stateTime = now;
 		int state = this->actionState->GetState();
@@ -69,7 +69,7 @@ void CSophia::ListenKeyEvent()
 		}
 	}
 
-	if (game->IsKeyDown(DIK_X)) {
+	if (input->OnKeyDown(DIK_X)) {
 		if (this->velocity.y <= 0) {
 			this->velocity.y += PLAYER_JUMP_FORCE;
 		}

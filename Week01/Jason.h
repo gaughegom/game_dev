@@ -5,6 +5,7 @@
 #include "GameObject.h"
 #include "GameMovement.h"
 #include "JasonDirectionState.h"
+#include "InputHandler.h"
 
 #define	C_JASON_HORIZON	0 // move
 #define C_JASON_UP		1
