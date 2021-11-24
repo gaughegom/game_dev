@@ -6,6 +6,7 @@
 #include "GameMovement.h"
 #include "JasonDirectionState.h"
 #include "InputHandler.h"
+#include "ControllerObject.h"
 
 #define	C_JASON_HORIZON	0 // move
 #define C_JASON_UP		1
@@ -16,7 +17,7 @@
 
 class CJasonDirectionState;
 
-class CJason : public CGameObject {
+class CJason : public CGameObject, public CControllerObject {
 private:
 	CJasonDirectionState* directState;
 

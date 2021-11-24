@@ -6,6 +6,7 @@
 #include "SophiaDirectState.h"
 #include "SophiaActionState.h"
 #include "InputHandler.h"
+#include "ControllerObject.h"
 
 #define LEFT_WHEEL		0
 #define RIGHT_WHEEL		1
@@ -13,7 +14,7 @@
 class CSophiaDirectState;
 class CSophiaActionState;
 
-class CSophia : public CGameObject
+class CSophia : public CGameObject, public CControllerObject
 {
 private:
 	CSophiaDirectState* directState;

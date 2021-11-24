@@ -1,14 +1,20 @@
 #include "GameMovement.h"
 
-void LinearMoveWithGravity(Vector2D& position, Vector2D& velocity, DWORD dt)
+void LinearMove(CGameObject* target, DWORD dt)
 {
-	position.x += velocity.x * dt;
-	position.y += velocity.y * dt;
-
-	velocity.y += -PLAYER_GRAVITY;
+	Vector2D position = target->GetPosition();
+	Vector2D velocity = target->GetVelocity();
+	position += velocity * dt;
+	target->SetPosition(position.x, position.y);
 }
 
-void LinearMove(Vector2D& position, Vector2D& velocity, DWORD dt)
+void LinearMoveInGravity(CGameObject* target, DWORD dt)
 {
+	Vector2D position = target->GetPosition();
+	Vector2D velocity = target->GetVelocity();
+
 	position += velocity * dt;
+	target->SetPosition(position.x, position.y);
+	velocity.y += -PLAYER_GRAVITY;
+	target->SetVelocity(velocity.x, velocity.y);
 }

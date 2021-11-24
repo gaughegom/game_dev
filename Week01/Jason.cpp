@@ -22,10 +22,12 @@ CJason::CJason()
 
 void CJason::Update(DWORD dt)
 {
-	LinearMove(this->position, this->velocity, dt);
+	LinearMove(this, dt);
 	this->EdgeCollisionHandler();
 
-	//this->ListenKeyEvent();
+	if (this->IsSelected()) {
+		this->ListenKeyEvent();
+	}
 }
 
 void CJason::Render()

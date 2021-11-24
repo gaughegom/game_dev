@@ -23,6 +23,7 @@
     <ClCompile Include="AnimationFrame.cpp" />
     <ClCompile Include="Animations.cpp" />
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="ControllerObject.cpp" />
     <ClCompile Include="GameMovement.cpp" />
     <ClCompile Include="EnemyRobot.cpp" />
     <ClCompile Include="InputHandler.cpp" />
@@ -47,6 +48,7 @@
     <ClInclude Include="AnimationFrame.h" />
     <ClInclude Include="Animations.h" />
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="ControllerObject.h" />
     <ClInclude Include="debug.h" />
     <ClInclude Include="EnemyLib.h" />
     <ClInclude Include="Game.h" />

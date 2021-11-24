@@ -18,12 +18,14 @@ CSophia::CSophia()
 
 void CSophia::Update(DWORD dt)
 {
-	LinearMoveWithGravity(this->position, this->velocity, dt);
+	LinearMoveInGravity(this, dt);
 
 	int backbufferWidth = CGame::GetInstance()->GetBackbufferWidth();
 	this->EdgeCollisionHandler(CGame::GetInstance()->GetBackbufferWidth());
 
-	this->ListenKeyEvent();
+	if (this->IsSelected()) {
+		this->ListenKeyEvent();
+	}
 }
 
 void CSophia::ListenKeyEvent()

@@ -71,6 +71,7 @@
 
 #define SPRITE_ENEMY_ROBOT				50 // enemy from 50
 
+
 // animations
 #define ANIMATION_SOPHIA_LEFT_WHEEL		0
 #define ANIMATION_SOPHIA_RIGHT_WHEEL	1

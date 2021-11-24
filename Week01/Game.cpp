@@ -11,17 +11,17 @@
 CSophia* pSophia;
 CJason* pJason;
 CCamera* pCamera;
-CTextures* pTextures = CTextures::GetInstance();
 CQuadTree* pQuadTree;
 
 std::vector<CGameObject*> pGameObjects;
 std::vector<CGameObject*> pRenderObjects;
 
+CTextures* g_textures = CTextures::GetInstance();
 CSprites* g_sprites = CSprites::GetInstance();
 CAnimations* g_animations = CAnimations::GetInstance();
+CInputHandler* g_inputHandler = CInputHandler::GetInstance();
 
 CGame* CGame::__instance = NULL;
-CInputHandler* g_inputHandler = CInputHandler::GetInstance();
 
 #pragma region KEYBOARD
 
@@ -34,7 +34,21 @@ class CKeyHander : public CKeyEventHandler
 
 void CKeyHander::OnKeyDown(int keyCode)
 {
-	DebugOut(L"[INFO] KeyDown: %d\n", keyCode);
+	if (keyCode == DIK_A) {
+		pSophia->AlterSelect();
+		pJason->AlterSelect();
+		if (pSophia->IsSelected()) {
+			pCamera->SetTarget(pSophia);
+			pCamera->Update();
+			CGame::GetInstance()->ObserverGame();
+		}
+		else {
+			pCamera->SetTarget(pJason);
+			pCamera->Update();
+			CGame::GetInstance()->ObserverGame();
+		}
+	}
+	DebugOut(L"[INFO] alter controller, %d\n", keyCode);
 }
 
 void CKeyHander::OnKeyUp(int keyCode)
@@ -44,12 +58,8 @@ void CKeyHander::OnKeyUp(int keyCode)
 
 void CKeyHander::KeyState(BYTE* states)
 {
+	// switch selected object by key
 	// empty
-}
-
-int CGame::IsKeyDown(int KeyCode)
-{
-	return 0;
 }
 
 #pragma endregion
@@ -147,12 +157,12 @@ void CGame::InitGame(HWND hWnd)
 {
 	this->InitDirectX(hWnd);
 
-	pTextures->Add(TEXTURES_SOPHIA_ID, SOPHIA_JASON_TEXTURE_PATH, TEXTURE_TRANS_COLOR);
-	pTextures->Add(TEXTURES_JASON_ID, SOPHIA_JASON_TEXTURE_PATH, TEXTURE_TRANS_COLOR);
-	pTextures->Add(TEXTURES_ENEMY_ROBOT_ID, ENEMY_TEXTURE_PATH, TEXTURE_TRANS_COLOR);
-	LPDIRECT3DTEXTURE9 texSophia = pTextures->Get(TEXTURES_SOPHIA_ID);
-	LPDIRECT3DTEXTURE9 texJason = pTextures->Get(TEXTURES_JASON_ID);
-	LPDIRECT3DTEXTURE9 texRobot = pTextures->Get(TEXTURES_ENEMY_ROBOT_ID);
+	g_textures->Add(TEXTURES_SOPHIA_ID, SOPHIA_JASON_TEXTURE_PATH, TEXTURE_TRANS_COLOR);
+	g_textures->Add(TEXTURES_JASON_ID, SOPHIA_JASON_TEXTURE_PATH, TEXTURE_TRANS_COLOR);
+	g_textures->Add(TEXTURES_ENEMY_ROBOT_ID, ENEMY_TEXTURE_PATH, TEXTURE_TRANS_COLOR);
+	LPDIRECT3DTEXTURE9 texSophia = g_textures->Get(TEXTURES_SOPHIA_ID);
+	LPDIRECT3DTEXTURE9 texJason = g_textures->Get(TEXTURES_JASON_ID);
+	LPDIRECT3DTEXTURE9 texRobot = g_textures->Get(TEXTURES_ENEMY_ROBOT_ID);
 
 	#pragma region SOPHIA SPRITES
 	
@@ -266,7 +276,7 @@ void CGame::InitGame(HWND hWnd)
 	// InitGame quadtree
 	#pragma region QUADTREE START
 	
-	pQuadTree = new CQuadTree(0, SRect(0, this->backBufferHeight * 10, this->backBufferWidth * 10, 0));
+	pQuadTree = new CQuadTree(0, SRect(0, QUADTREE_HEIGHT, QUADTREE_WIDTH, 0));
 	ObserverGame();
 
 	#pragma endregion
@@ -284,6 +294,7 @@ void CGame::CreateGameObject()
 	// create sophia
 	pSophia = new CSophia();
 	pSophia->SetVelocity(0, 0);
+	pSophia->Select(true);
 
 	// create jason
 	pJason = new CJason();
@@ -306,6 +317,8 @@ void CGame::CreateGameObject()
 void CGame::UpdateGame(DWORD dt)
 {
 	pCamera->Update();
+	/*pRenderObjects.clear();
+	pQuadTree->ContainerizeObject(pRenderObjects, pCamera->GetBoundingBox());*/
 
 	bool activeObserver = false;
 	for (auto pObject : pRenderObjects) {
@@ -410,7 +423,7 @@ CGame::~CGame()
 	}
 }
 
-// get game instance 
+ //get game instance 
 CGame* CGame::GetInstance()
 {
 	if (__instance == NULL) __instance = new CGame();

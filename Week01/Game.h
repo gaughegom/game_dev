@@ -5,10 +5,9 @@
 #include "resources.h"
 #include "KeyEventHandler.h"
 
-
-class CGame
-{
+class CGame {
 	static CGame* __instance;
+
 	HWND hWnd;									// Window handle
 
 	LPDIRECT3D9 d3d = NULL;						// Direct3D handle
@@ -23,8 +22,6 @@ class CGame
 	int backBufferHeight = 0;
 
 public:
-	int IsKeyDown(int KeyCode);
-	
 	void InitDirectX(HWND hWnd);
 	void Draw(Vector2D position, int nx, LPDIRECT3DTEXTURE9 texture, int left, int top, int right, int bottom);
 
