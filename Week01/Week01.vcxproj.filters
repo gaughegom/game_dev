@@ -14,9 +14,6 @@
     <Filter Include="Framework">
       <UniqueIdentifier>{6ec4c09e-d309-4619-a690-3c6cf7f6b90a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Framework\Game">
-      <UniqueIdentifier>{e00d61de-d3c7-41eb-a8ee-2ba85b8bbb33}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Framework\Game movement">
       <UniqueIdentifier>{c1deae0b-8f64-4139-b3ce-5bab24f4db97}</UniqueIdentifier>
     </Filter>
@@ -47,9 +44,6 @@
     <Filter Include="Game Objects\Enemies">
       <UniqueIdentifier>{1000ea67-8118-4f8a-8421-6b43b6bf7d56}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Game Objects\Enemies\Robot">
-      <UniqueIdentifier>{5f7d7bcf-f04d-408e-966e-f59f1d1c4b40}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Framework\Sprites\Animation">
       <UniqueIdentifier>{25859531-b9ad-4ffc-811b-6e72c45d36f1}</UniqueIdentifier>
     </Filter>
@@ -67,6 +61,33 @@
     </Filter>
     <Filter Include="Framework\Controller Object">
       <UniqueIdentifier>{3d495df0-1ee0-4ebd-bb4b-7be349c822ef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game">
+      <UniqueIdentifier>{e00d61de-d3c7-41eb-a8ee-2ba85b8bbb33}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game Objects\Enemies\Eyelet">
+      <UniqueIdentifier>{49b3ddb9-9149-4fba-b1a6-7f5978b0bda3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game Objects\Enemies\NeoEyelet">
+      <UniqueIdentifier>{6cc7ebf9-d1b2-488a-b7f8-b66d775a8386}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game Objects\Enemies\Drap">
+      <UniqueIdentifier>{54dcf7fd-5161-4238-a203-bf3f039e9944}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game Objects\Enemies\Stuka">
+      <UniqueIdentifier>{229d5642-cc13-417c-93a5-875430136bf5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game Objects\Enemies\GX-680">
+      <UniqueIdentifier>{bec3366a-fc84-4792-9ff1-f4f0413b48ab}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game Objects\Enemies\GX-680S">
+      <UniqueIdentifier>{9739e1de-0b17-4b12-bc0e-3a775a4194e4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game Objects\Enemies\Laser Guard">
+      <UniqueIdentifier>{401e90de-9098-4775-aa0b-6c913d3da027}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game Objects\Enemies\Offside">
+      <UniqueIdentifier>{8b524ba3-3e50-466c-be7b-373b8552afcd}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -92,7 +113,7 @@
       <Filter>Framework\Game movement</Filter>
     </ClCompile>
     <ClCompile Include="Game.cpp">
-      <Filter>Framework\Game</Filter>
+      <Filter>Game</Filter>
     </ClCompile>
     <ClCompile Include="Camera.cpp">
       <Filter>Framework\Camera</Filter>
@@ -102,9 +123,6 @@
     </ClCompile>
     <ClCompile Include="QuadTree.cpp">
       <Filter>Framework\QuadTree</Filter>
-    </ClCompile>
-    <ClCompile Include="EnemyRobot.cpp">
-      <Filter>Game Objects\Enemies\Robot</Filter>
     </ClCompile>
     <ClCompile Include="Sprite.cpp">
       <Filter>Framework\Sprites</Filter>
@@ -139,6 +157,21 @@
     <ClCompile Include="ControllerObject.cpp">
       <Filter>Framework\Controller Object</Filter>
     </ClCompile>
+    <ClCompile Include="EnemyDrap.cpp">
+      <Filter>Game Objects\Enemies\Drap</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyEyelet.cpp">
+      <Filter>Game Objects\Enemies\Eyelet</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyGX-680.cpp">
+      <Filter>Game Objects\Enemies\GX-680</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyStuka.cpp">
+      <Filter>Game Objects\Enemies\Stuka</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyOffside.cpp">
+      <Filter>Game Objects\Enemies\Offside</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Textures.h">
@@ -172,10 +205,7 @@
       <Filter>Framework\QuadTree</Filter>
     </ClInclude>
     <ClInclude Include="Game.h">
-      <Filter>Framework\Game</Filter>
-    </ClInclude>
-    <ClInclude Include="EnemyRobot.h">
-      <Filter>Game Objects\Enemies\Robot</Filter>
+      <Filter>Game</Filter>
     </ClInclude>
     <ClInclude Include="EnemyLib.h">
       <Filter>Game Objects\Enemies</Filter>
@@ -212,6 +242,21 @@
     </ClInclude>
     <ClInclude Include="ControllerObject.h">
       <Filter>Framework\Controller Object</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyDrap.h">
+      <Filter>Game Objects\Enemies\Drap</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyEyelet.h">
+      <Filter>Game Objects\Enemies\Eyelet</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyGX-680.h">
+      <Filter>Game Objects\Enemies\GX-680</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyStuka.h">
+      <Filter>Game Objects\Enemies\Stuka</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyOffside.h">
+      <Filter>Game Objects\Enemies\Offside</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

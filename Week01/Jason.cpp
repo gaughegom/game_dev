@@ -84,8 +84,8 @@ void CJason::EdgeCollisionHandler()
 		}
 		break;
 	case JASON_STATE_DIRECTION_DOWNWARD:
-		if (this->position.y <= -10) {
-			this->position.y = -10;
+		if (this->position.y <= 0) {
+			this->position.y = 0;
 		}
 		break;
 	default:

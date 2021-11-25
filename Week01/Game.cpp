@@ -159,10 +159,18 @@ void CGame::InitGame(HWND hWnd)
 
 	g_textures->Add(TEXTURES_SOPHIA_ID, SOPHIA_JASON_TEXTURE_PATH, TEXTURE_TRANS_COLOR);
 	g_textures->Add(TEXTURES_JASON_ID, SOPHIA_JASON_TEXTURE_PATH, TEXTURE_TRANS_COLOR);
-	g_textures->Add(TEXTURES_ENEMY_ROBOT_ID, ENEMY_TEXTURE_PATH, TEXTURE_TRANS_COLOR);
+	g_textures->Add(TEXTURES_ENEMY_DRAP_ID, ENEMY_TEXTURE_PATH, TEXTURE_TRANS_COLOR);
+	g_textures->Add(TEXTURES_ENEMY_EYELET_ID, ENEMY_TEXTURE_PATH, TEXTURE_TRANS_COLOR);
+	g_textures->Add(TEXTURES_ENEMY_GX680_ID, ENEMY_TEXTURE_PATH, TEXTURE_TRANS_COLOR);
+	g_textures->Add(TEXTURES_ENEMY_STUKA_ID, ENEMY_TEXTURE_PATH, TEXTURE_TRANS_COLOR);
+	g_textures->Add(TEXTURES_ENEMY_OFFSIDE_ID, ENEMY_TEXTURE_PATH, TEXTURE_TRANS_COLOR);
 	LPDIRECT3DTEXTURE9 texSophia = g_textures->Get(TEXTURES_SOPHIA_ID);
 	LPDIRECT3DTEXTURE9 texJason = g_textures->Get(TEXTURES_JASON_ID);
-	LPDIRECT3DTEXTURE9 texRobot = g_textures->Get(TEXTURES_ENEMY_ROBOT_ID);
+	LPDIRECT3DTEXTURE9 texEnemyDrap = g_textures->Get(TEXTURES_ENEMY_DRAP_ID);
+	LPDIRECT3DTEXTURE9 texEnemyEyelet = g_textures->Get(TEXTURES_ENEMY_EYELET_ID);
+	LPDIRECT3DTEXTURE9 texEnemyGX680 = g_textures->Get(TEXTURES_ENEMY_GX680_ID);
+	LPDIRECT3DTEXTURE9 texEnemyStuka = g_textures->Get(TEXTURES_ENEMY_STUKA_ID);
+	LPDIRECT3DTEXTURE9 texEnemyOffside = g_textures->Get(TEXTURES_ENEMY_OFFSIDE_ID);
 
 	#pragma region SOPHIA SPRITES
 	
@@ -243,10 +251,101 @@ void CGame::InitGame(HWND hWnd)
 
 	#pragma region ENEMY SPRITES
 
-	g_sprites->Add(SPRITE_ENEMY_ROBOT, 104, 0, 118, 26, texRobot);
+		#pragma region DRAP
+
+	g_sprites->Add(SPRITE_ENEMY_DRAP_01, 40, 276, 58, 292, texEnemyDrap);
+	g_sprites->Add(SPRITE_ENEMY_DRAP_02, 60, 274, 78, 292, texEnemyDrap);
+	g_sprites->Add(SPRITE_ENEMY_DRAP_03, 80, 276, 98, 292, texEnemyDrap);
+	g_sprites->Add(SPRITE_ENEMY_DRAP_04, 100, 274, 118, 292, texEnemyDrap);
+	g_sprites->Add(SPRITE_ENEMY_DRAP_05, 128, 274, 146, 292, texEnemyDrap);
+	g_sprites->Add(SPRITE_ENEMY_DRAP_06, 148, 276, 166, 292, texEnemyDrap);
+	g_sprites->Add(SPRITE_ENEMY_DRAP_07, 168, 274, 186, 292, texEnemyDrap);
+	g_sprites->Add(SPRITE_ENEMY_DRAP_08, 188, 276, 206, 292, texEnemyDrap);
+	lpAni = new CAnimation(20);
+	lpAni->Add(SPRITE_ENEMY_DRAP_01);
+	lpAni->Add(SPRITE_ENEMY_DRAP_02);
+	lpAni->Add(SPRITE_ENEMY_DRAP_03);
+	lpAni->Add(SPRITE_ENEMY_DRAP_04);
+	g_animations->Add(ANIMATION_ENEMY_DRAP, lpAni);
+	lpAni = new CAnimation(20);
+	lpAni->Add(SPRITE_ENEMY_DRAP_05);
+	lpAni->Add(SPRITE_ENEMY_DRAP_06);
+	lpAni->Add(SPRITE_ENEMY_DRAP_07);
+	lpAni->Add(SPRITE_ENEMY_DRAP_08);
+	g_animations->Add(ANIMATION_ENEMY_DRAP_REVERSE, lpAni);
+
+		#pragma endregion
+
+		#pragma region EYELET
+
+	g_sprites->Add(SPRITE_ENEMY_EYELET_01, 40, 36, 58, 46, texEnemyEyelet);
+	g_sprites->Add(SPRITE_ENEMY_EYELET_02, 60, 31, 78, 46, texEnemyEyelet);
+	g_sprites->Add(SPRITE_ENEMY_EYELET_03, 80, 28, 98, 46, texEnemyEyelet);
+	g_sprites->Add(SPRITE_ENEMY_EYELET_04, 100, 31, 118, 46, texEnemyEyelet);
+	g_sprites->Add(SPRITE_ENEMY_EYELET_05, 128, 31, 146, 46, texEnemyEyelet);
+	g_sprites->Add(SPRITE_ENEMY_EYELET_06, 148, 28, 166, 46, texEnemyEyelet);
+	g_sprites->Add(SPRITE_ENEMY_EYELET_07, 168, 31, 186, 46, texEnemyEyelet);
+	g_sprites->Add(SPRITE_ENEMY_EYELET_08, 188, 36, 206, 46, texEnemyEyelet);
+	lpAni = new CAnimation(20);
+	lpAni->Add(SPRITE_ENEMY_EYELET_01);
+	lpAni->Add(SPRITE_ENEMY_EYELET_02);
+	lpAni->Add(SPRITE_ENEMY_EYELET_03);
+	lpAni->Add(SPRITE_ENEMY_EYELET_04);
+	g_animations->Add(ANIMATION_ENEMY_EYELET, lpAni);
+	lpAni = new CAnimation(20);
+	lpAni->Add(SPRITE_ENEMY_EYELET_05);
+	lpAni->Add(SPRITE_ENEMY_EYELET_06);
+	lpAni->Add(SPRITE_ENEMY_EYELET_07);
+	lpAni->Add(SPRITE_ENEMY_EYELET_08);
+
+		#pragma endregion
+
+		#pragma region GX680
+
+	g_sprites->Add(SPRITE_ENEMY_GX680_01, 80, 295, 98, 312, texEnemyGX680);
+	g_sprites->Add(SPRITE_ENEMY_GX680_02, 100, 296, 118, 312, texEnemyGX680);
+	g_sprites->Add(SPRITE_ENEMY_GX680_03, 128, 296, 146, 312, texEnemyGX680);
+	g_sprites->Add(SPRITE_ENEMY_GX680_04, 148, 295, 166, 312, texEnemyGX680);
+	lpAni = new CAnimation(10);
+	lpAni->Add(SPRITE_ENEMY_GX680_01);
+	lpAni->Add(SPRITE_ENEMY_GX680_02);
+	lpAni->Add(SPRITE_ENEMY_GX680_03);
+	lpAni->Add(SPRITE_ENEMY_GX680_04);
+	g_animations->Add(ANIMATION_ENEMY_GX680, lpAni);
+
+		#pragma endregion
+
+		#pragma region STUKA
+
+	g_sprites->Add(SPRITE_ENEMY_STUKA_01, 74, 386, 92, 404, texEnemyStuka);
+	g_sprites->Add(SPRITE_ENEMY_STUKA_02, 94, 386, 112, 404, texEnemyStuka);
+	g_sprites->Add(SPRITE_ENEMY_STUKA_03, 114, 386, 132, 404, texEnemyStuka);
+	g_sprites->Add(SPRITE_ENEMY_STUKA_04, 134, 386, 152, 404, texEnemyStuka);
+	g_sprites->Add(SPRITE_ENEMY_STUKA_05, 154, 386, 172, 404, texEnemyStuka);
+	lpAni = new CAnimation(10);
+	lpAni->Add(SPRITE_ENEMY_STUKA_01);
+	lpAni->Add(SPRITE_ENEMY_STUKA_02);
+	lpAni->Add(SPRITE_ENEMY_STUKA_03);
+	lpAni->Add(SPRITE_ENEMY_STUKA_04);
+	lpAni->Add(SPRITE_ENEMY_STUKA_05);
+	g_animations->Add(ANIMATION_ENEMY_STUKA, lpAni);
+		#pragma endregion
+
+		#pragma region OFFSIDE
+
+	g_sprites->Add(SPRITE_ENEMY_OFFSIDE_01, 26, 56, 44, 74, texEnemyOffside);
+	g_sprites->Add(SPRITE_ENEMY_OFFSIDE_02, 46, 56, 60, 74, texEnemyOffside);
+	g_sprites->Add(SPRITE_ENEMY_OFFSIDE_03, 186, 56, 200, 74, texEnemyOffside);
+	g_sprites->Add(SPRITE_ENEMY_OFFSIDE_04, 202, 56, 220, 74, texEnemyOffside);
 	lpAni = new CAnimation(5);
-	lpAni->Add(SPRITE_ENEMY_ROBOT);
-	g_animations->Add(ANIMATION_ENEMY_ROBOT, lpAni);
+	lpAni->Add(SPRITE_ENEMY_OFFSIDE_01);
+	lpAni->Add(SPRITE_ENEMY_OFFSIDE_02);
+	lpAni->Add(SPRITE_ENEMY_OFFSIDE_03);
+	lpAni->Add(SPRITE_ENEMY_OFFSIDE_04);
+	g_animations->Add(ANIMATION_ENEMY_OFFSIDE, lpAni);
+
+		#pragma endregion
+
 
 	#pragma endregion
 
@@ -299,15 +398,24 @@ void CGame::CreateGameObject()
 	// create jason
 	pJason = new CJason();
 
-	// create 10 enemy robot at random position
-	CEnemyRobot* pRobot;
-	srand(time(0));
-	for (int i = 0; i < 20; i++) {
-		pRobot = new CEnemyRobot();
-		pRobot->SetVelocity(0, 0);
-		pRobot->SetPosition(PLAYER_START_X + i * 100, PLAYER_START_Y - 10);
-		pGameObjects.push_back(pRobot);
-	}
+	// create drap
+	auto pDrap = new CEnemyDrap();
+	pGameObjects.push_back(pDrap);
+
+	// create eyelet
+	auto pEyelet = new CEnemyEyelet();
+	pGameObjects.push_back(pEyelet);
+
+	// create gx680
+	auto pGX680 = new CEnemyGX680();
+	pGameObjects.push_back(pGX680);
+
+	// create stuka
+	auto pStuka = new CEnemyStuka();
+	pGameObjects.push_back(pStuka);
+
+	auto pOffside = new CEnemyOffside();
+	pGameObjects.push_back(pOffside);
 
 	// push sophia in gameObject vector
 	pGameObjects.push_back(pSophia);

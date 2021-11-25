@@ -12,7 +12,7 @@ class CAnimation
 	int currentFrame;
 	std::vector<LPANIMATION_FRAME> frames;
 
-	bool wait = true;
+	bool wait = false;
 	bool reverse = false;
 public:
 	CAnimation(int defaultTime) { this->defaultTime = defaultTime; lastFrameTime = -1; currentFrame = -1; }
