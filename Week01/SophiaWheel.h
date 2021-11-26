@@ -3,16 +3,30 @@
 #define	_SOPHIA_WHEEL_H
 
 #include "GameObject.h"
+#include "Sophia.h"
+
+#define C_A_DEFAULT_KEY	"default"
+
+class CSophia;
+enum SophiaDirectState;
+enum SophiaActionState;
 
 class CSophiaWheel : public CGameObject {
 private:
-	CGameObject* target;
+	CSophia* sophia;
 
 public:
-	CSophiaWheel(CGameObject* target);
+	CSophiaWheel(CSophia* target);
 
 	void Update(DWORD dt);
 	void Render();
+
+	void HandleAnimationDirectState(SophiaDirectState directState);
+	void HandleAnimationActionState(SophiaActionState actionState);
+
+	void NotMove();
+	void RightMove();
+	void LeftMove();
 };
 
 #endif // !_SOPHIA_WHEEL_H

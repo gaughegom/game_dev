@@ -48,7 +48,6 @@ void CKeyHander::OnKeyDown(int keyCode)
 			CGame::GetInstance()->ObserverGame();
 		}
 	}
-	DebugOut(L"[INFO] alter controller, %d\n", keyCode);
 }
 
 void CKeyHander::OnKeyUp(int keyCode)
@@ -492,7 +491,7 @@ void CGame::RunGame()
 {
 	MSG msg;
 	int done = 0;
-	DWORD frameStart = GetTickCount();
+	DWORD frameStart = GetTickCount64();
 	DWORD tickPerFrame = 1000 / MAX_FRAME_RATE;
 
 	while (!done)

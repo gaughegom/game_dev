@@ -56,9 +56,6 @@
     <Filter Include="Game\Game objects\Sophia">
       <UniqueIdentifier>{970a2267-9c06-411d-add0-550f9651acbc}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Game\Game objects\Sophia\State">
-      <UniqueIdentifier>{7a2df675-18ae-4077-a486-99da8c3761ff}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Game\Game objects\Enemies">
       <UniqueIdentifier>{1000ea67-8118-4f8a-8421-6b43b6bf7d56}</UniqueIdentifier>
     </Filter>
@@ -94,6 +91,18 @@
     </Filter>
     <Filter Include="Game\Game objects\Sophia\Parts">
       <UniqueIdentifier>{906345ed-91e6-4720-b0e7-c628e6e5e4e0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Game objects\Sophia\Parts\Wheel">
+      <UniqueIdentifier>{3af5c48c-cea7-41cb-8d2b-cc69e724611e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Game objects\Sophia\Parts\Body">
+      <UniqueIdentifier>{b36e2552-0859-49fc-862b-e839b3f8349b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Game objects\Sophia\Parts\Cabin">
+      <UniqueIdentifier>{b570774f-78a9-414a-9aa1-6543722693a2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Game objects\Sophia\Parts\Gun">
+      <UniqueIdentifier>{5629d4c7-0134-4126-bd29-ba98ae1d768a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -139,12 +148,6 @@
     <ClCompile Include="Animations.cpp">
       <Filter>Framework\Sprites\Animation</Filter>
     </ClCompile>
-    <ClCompile Include="SophiaDirectState.cpp">
-      <Filter>Game\Game objects\Sophia\State</Filter>
-    </ClCompile>
-    <ClCompile Include="SophiaActionState.cpp">
-      <Filter>Game\Game objects\Sophia\State</Filter>
-    </ClCompile>
     <ClCompile Include="KeyEventHandler.cpp">
       <Filter>Framework\Keyboard Handler</Filter>
     </ClCompile>
@@ -179,7 +182,16 @@
       <Filter>Game\Base</Filter>
     </ClCompile>
     <ClCompile Include="SophiaWheel.cpp">
-      <Filter>Game\Game objects\Sophia\Parts</Filter>
+      <Filter>Game\Game objects\Sophia\Parts\Wheel</Filter>
+    </ClCompile>
+    <ClCompile Include="SophiaBody.cpp">
+      <Filter>Game\Game objects\Sophia\Parts\Body</Filter>
+    </ClCompile>
+    <ClCompile Include="SophiaCabin.cpp">
+      <Filter>Game\Game objects\Sophia\Parts\Cabin</Filter>
+    </ClCompile>
+    <ClCompile Include="SophiaGun.cpp">
+      <Filter>Game\Game objects\Sophia\Parts\Gun</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -228,12 +240,6 @@
     <ClInclude Include="Animations.h">
       <Filter>Framework\Sprites\Animation</Filter>
     </ClInclude>
-    <ClInclude Include="SophiaDirectState.h">
-      <Filter>Game\Game objects\Sophia\State</Filter>
-    </ClInclude>
-    <ClInclude Include="SophiaActionState.h">
-      <Filter>Game\Game objects\Sophia\State</Filter>
-    </ClInclude>
     <ClInclude Include="KeyEventHandler.h">
       <Filter>Framework\Keyboard Handler</Filter>
     </ClInclude>
@@ -268,7 +274,16 @@
       <Filter>Game\Base</Filter>
     </ClInclude>
     <ClInclude Include="SophiaWheel.h">
-      <Filter>Game\Game objects\Sophia\Parts</Filter>
+      <Filter>Game\Game objects\Sophia\Parts\Wheel</Filter>
+    </ClInclude>
+    <ClInclude Include="SophiaBody.h">
+      <Filter>Game\Game objects\Sophia\Parts\Body</Filter>
+    </ClInclude>
+    <ClInclude Include="SophiaCabin.h">
+      <Filter>Game\Game objects\Sophia\Parts\Cabin</Filter>
+    </ClInclude>
+    <ClInclude Include="SophiaGun.h">
+      <Filter>Game\Game objects\Sophia\Parts\Gun</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

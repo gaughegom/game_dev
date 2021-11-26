@@ -4,21 +4,22 @@ CSophia::CSophia()
 {
 	this->SetSize(17, 10);
 	this->SetPosition(PLAYER_START_X, PLAYER_START_Y);
-	this->directState = new CSophiaDirectState(this);
-	this->actionState = new CSophiaActionState(this);
+	this->directState = SophiaDirectState::Stay;
+	this->actionState = SophiaActionState::Idle;
 
-	this->AddAnimation("left-wheel", ANIMATION_SOPHIA_LEFT_WHEEL);
-	this->AddAnimation("right-wheel", ANIMATION_SOPHIA_RIGHT_WHEEL);
-	auto sprites = CSprites::GetInstance();
-	this->lpsBody = sprites->Get(SPRITE_SOPHIA_BODY);
-
-	this->directState->Stay();
-	this->actionState->IdleState();
+	this->leftWheel = new CSophiaWheel(this);
+	this->rightWheel = new CSophiaWheel(this);
+	this->body = new CSophiaBody(this);
+	this->cabin = new CSophiaCabin(this);
+	this->gun = new CSophiaGun(this);
+	this->leftWheel->AddAnimation(C_A_DEFAULT_KEY, ANIMATION_SOPHIA_LEFT_WHEEL);
+	this->rightWheel->AddAnimation(C_A_DEFAULT_KEY, ANIMATION_SOPHIA_RIGHT_WHEEL);
 }
 
 void CSophia::Update(DWORD dt)
 {
-	LinearMoveInGravity(this, dt);
+	//LinearMoveInGravity(this, dt);
+	LinearMove(this, dt);
 
 	int backbufferWidth = CGame::GetInstance()->GetBackbufferWidth();
 	this->EdgeCollisionHandler(CGame::GetInstance()->GetBackbufferWidth());
@@ -35,59 +36,57 @@ void CSophia::ListenKeyEvent()
 	auto input = CInputHandler::GetInstance();
 	// observe direct state
 	if (input->IsKeyDown(DIK_RIGHT)) {
-		this->directState->SetState(SOPHIA_STATE_DIRECTION_FORWARD);
+		this->directState = SophiaDirectState::RightMove;
 	}
 	else if (input->IsKeyDown(DIK_LEFT)) {
-		this->directState->SetState(SOPHIA_STATE_DIRECTION_BACKWARD);
+		this->directState = SophiaDirectState::LeftMove;
 	}
 	else {
-		this->directState->SetState(SOPHIA_STATE_DIRECTION_STAY);
+		this->directState = SophiaDirectState::Stay;
 	}
 
-	this->SubcribeDirectState(this->directState->GetState());
+	this->SubcribeDirectState(this->directState);
 
 	// observe sophia action
 	if (input->IsKeyDown(DIK_UP)) {
-		DWORD now = GetTickCount();
+		DWORD now = GetTickCount64();
 		this->stateTime = now;
-		int state = this->actionState->GetState();
-		if (state == SOPHIA_STATE_ACTION_IDLE) {
-			this->actionState->SetState(SOPHIA_STATE_ACTION_TILE_45);
+		if (this->actionState == SophiaActionState::Idle) {
+			this->actionState = SophiaActionState::Tile45;
 		}
-		else if (now - this->prevStateTime > 200 && state == SOPHIA_STATE_ACTION_TILE_45) {
-			this->actionState->SetState(SOPHIA_STATE_ACTION_UP_90);
+		else if (now - this->prevStateTime > 200 && this->actionState == SophiaActionState::Tile45) {
+			this->actionState = SophiaActionState::Up90;
 		}
 	}
 	else {
 		DWORD now = GetTickCount64();
 		this->prevStateTime = now;
-		int state = this->actionState->GetState();
-		if (state == SOPHIA_STATE_ACTION_UP_90) {
-			this->actionState->SetState(SOPHIA_STATE_ACTION_TILE_45);
+		if (this->actionState == SophiaActionState::Up90) {
+			this->actionState = SophiaActionState::Tile45;
 		}
-		else if (now - this->stateTime > 100 && state == SOPHIA_STATE_ACTION_TILE_45) {
-			this->actionState->SetState(SOPHIA_STATE_ACTION_IDLE);
+		else if (now - this->stateTime > 100 && this->actionState == SophiaActionState::Tile45) {
+			this->actionState = SophiaActionState::Idle;
 		}
 	}
 
-	if (input->OnKeyDown(DIK_X)) {
-		if (this->velocity.y <= 0) {
-			this->velocity.y = PLAYER_JUMP_FORCE;
-		}
-	}
+	//if (input->OnKeyDown(DIK_X)) {
+	//	if (this->velocity.y <= 0) {
+	//		this->velocity.y = PLAYER_JUMP_FORCE;
+	//	}
+	//}
 
 	#pragma endregion
 }
 
 void CSophia::EdgeCollisionHandler(int width)
 {
-	switch (this->directState->GetState())
+	/*switch (this->directState->GetState())
 	{
-	case SOPHIA_STATE_DIRECTION_FORWARD:
+	case SOPHIA_STATE_DIRECTION_RIGHT:
 		if (this->position.x > width * 10 - PLAYER_WIDTH) {
 			this->SetX(width * 10 - PLAYER_WIDTH);
 		}
-	case SOPHIA_STATE_DIRECTION_BACKWARD:
+	case SOPHIA_STATE_DIRECTION_LEFT:
 		if (this->position.x <= 0) {
 			this->SetX(0);
 		}
@@ -96,51 +95,46 @@ void CSophia::EdgeCollisionHandler(int width)
 	}
 	if (this->position.y <= 20) {
 		this->position.y = 20;
-	}
+	}*/
 }
 
 void CSophia::Render()
 {
-	animations.at("left-wheel")->Render(this->position + this->leftWheel, 1);
-	animations.at("right-wheel")->Render(this->position + this->rightWheel, 1);
-	this->lpsBody->Draw(this->position + this->body, this->nx);
-	this->lpsCabin->Draw(this->position + this->cabin, this->nx);
-	this->lpsGun->Draw(this->position + this->gun, this->nx);
+	this->leftWheel->Render();
+	this->rightWheel->Render();
+	this->body->Render();
+	this->cabin->Render();
+	this->gun->Render();
 }
 
-void CSophia::SubcribeDirectState(int directState)
+void CSophia::SubcribeDirectState(SophiaDirectState directState)
 {
-	this->directState->SetState(directState);
 	switch (directState)
 	{
-	case SOPHIA_STATE_DIRECTION_STAY:
+	case SophiaDirectState::Stay:
 		this->velocity.x = 0;
-		this->directState->Stay();
-		this->SubcribeActionState(this->actionState->GetState());
 		break;
-	case SOPHIA_STATE_DIRECTION_BACKWARD:
+
+	case SophiaDirectState::LeftMove:
 		this->velocity.x = -PLAYER_MOVING_SPEED;
 		this->nx = -1;
-		this->directState->MoveBackward();
-		this->SubcribeActionState(this->actionState->GetState());
+
 		break;
-	case SOPHIA_STATE_DIRECTION_FORWARD:
+	case SophiaDirectState::RightMove:
 		this->velocity.x = PLAYER_MOVING_SPEED;
 		this->nx = 1;
-		this->directState->MoveForward();
-		this->SubcribeActionState(this->actionState->GetState());
+
 		break;
 	default:
 		this->velocity.x = 0;
-		this->directState->Stay();
-		this->SubcribeActionState(this->actionState->GetState());
 		break;
 	}
+	
 }
 
-void CSophia::SubcribeActionState(int actionState)
+void CSophia::SubcribeActionState(SophiaActionState actionState)
 {
-	switch (actionState)
+	/*switch (actionState)
 	{
 	case SOPHIA_STATE_ACTION_IDLE:
 		this->actionState->IdleState();
@@ -154,5 +148,5 @@ void CSophia::SubcribeActionState(int actionState)
 	default:
 		this->actionState->IdleState();
 		break;
-	}
+	}*/
 }

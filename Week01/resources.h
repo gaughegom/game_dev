@@ -9,6 +9,7 @@
 #include <unordered_map>
 #include <vector>
 #include <dinput.h>
+#include <type_traits>
 #include "debug.h"
 #include "Transform.h"
 
@@ -152,18 +153,6 @@
 
 #pragma endregion
 
-#pragma region SOPHIA STATE
-
-#define SOPHIA_STATE_DIRECTION_STAY			0
-#define SOPHIA_STATE_DIRECTION_FORWARD		3
-#define SOPHIA_STATE_DIRECTION_BACKWARD		9
-
-#define SOPHIA_STATE_ACTION_IDLE			00
-#define SOPHIA_STATE_ACTION_TILE_45			45
-#define SOPHIA_STATE_ACTION_UP_90			90
-
-#pragma endregion
-
 #pragma region JASON STATE
 
 #define JASON_STATE_DIRECTION_IDLE			0
@@ -173,7 +162,6 @@
 #define JASON_STATE_DIRECTION_DOWNWARD		4
 
 #pragma endregion
-
 
 #pragma region NPC SETTINGS
 
