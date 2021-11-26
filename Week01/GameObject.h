@@ -21,7 +21,7 @@ protected:
 	float width;
 	float height;
 
-	std::unordered_map<int, LPANIMATION> animations;
+	std::unordered_map<std::string, LPANIMATION> animations;
 
 public:
 	CGameObject();
@@ -50,8 +50,8 @@ public:
 	int GetState() { return this->state; }
 
 	// animation
-	void AddAnimation(int key, int animationId);
-	std::unordered_map<int, LPANIMATION> GetAnimations() { return this->animations; }
+	void AddAnimation(std::string key, int animationId);
+	std::unordered_map<std::string, LPANIMATION> GetAnimations() { return this->animations; }
 
 
 	virtual void Update(DWORD dt) = 0;

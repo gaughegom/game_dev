@@ -24,23 +24,24 @@ int CJasonDirectionState::GetState()
 	return this->state;
 }
 
-int CJasonDirectionState::MappingStateOfAnimation(int state)
+std::string CJasonDirectionState::MappingStateOfAnimation(int state)
 {
 	switch (state)
 	{
 	case JASON_STATE_DIRECTION_UPWARD:
-		return C_JASON_UP;
+		return "up";
 	case JASON_STATE_DIRECTION_DOWNWARD:
-		return C_JASON_DOWN;
+		return "down";
 	default:
-		return C_JASON_HORIZON;
+		return "horizon";
 	}
 }
 
 void CJasonDirectionState::Stay()
 {
 	auto targetAnimations = this->target->GetAnimations();
-	auto animation = targetAnimations.at(MappingStateOfAnimation(this->GetState()));
+	auto key = MappingStateOfAnimation(this->GetState());
+	auto animation = targetAnimations.at(key);
 	animation->SetWait(true);
 }
 

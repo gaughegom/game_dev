@@ -17,8 +17,8 @@ void CSophiaDirectState::SetTarget(CSophia* target)
 void CSophiaDirectState::Stay()
 {
 	auto animations = this->target->GetAnimations();
-	auto left_wheel = animations.at(LEFT_WHEEL);
-	auto right_wheel = animations.at(RIGHT_WHEEL);
+	auto left_wheel = animations.at("left-wheel");
+	auto right_wheel = animations.at("right-wheel");
 
 	left_wheel->SetWait(true);
 	right_wheel->SetWait(true);
@@ -27,8 +27,8 @@ void CSophiaDirectState::Stay()
 void CSophiaDirectState::MoveBackward()
 {
 	auto animations = this->target->GetAnimations();
-	auto left_wheel = animations.at(LEFT_WHEEL);
-	auto right_wheel = animations.at(RIGHT_WHEEL);
+	auto left_wheel = animations.at("left-wheel");
+	auto right_wheel = animations.at("right-wheel");
 
 	left_wheel->SetReverse(false);
 	right_wheel->SetReverse(false);
@@ -40,8 +40,8 @@ void CSophiaDirectState::MoveBackward()
 void CSophiaDirectState::MoveForward()
 {
 	auto animations = this->target->GetAnimations();
-	auto left_wheel = animations.at(LEFT_WHEEL);
-	auto right_wheel = animations.at(RIGHT_WHEEL);
+	auto left_wheel = animations.at("left-wheel");
+	auto right_wheel = animations.at("right-wheel");
 
 	left_wheel->SetReverse(true);
 	right_wheel->SetReverse(true);

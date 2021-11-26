@@ -20,7 +20,7 @@ public:
 	void SetState(int state);
 	int GetState();
 
-	int MappingStateOfAnimation(int state);
+	std::string MappingStateOfAnimation(int state);
 
 	void Stay();
 	void MoveBackward();

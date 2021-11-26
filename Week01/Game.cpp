@@ -164,6 +164,7 @@ void CGame::InitGame(HWND hWnd)
 	g_textures->Add(TEXTURES_ENEMY_GX680_ID, ENEMY_TEXTURE_PATH, TEXTURE_TRANS_COLOR);
 	g_textures->Add(TEXTURES_ENEMY_STUKA_ID, ENEMY_TEXTURE_PATH, TEXTURE_TRANS_COLOR);
 	g_textures->Add(TEXTURES_ENEMY_OFFSIDE_ID, ENEMY_TEXTURE_PATH, TEXTURE_TRANS_COLOR);
+	g_textures->Add(100, BACKGOUND_TEXTURE_PATH, TEXTURE_TRANS_COLOR);
 	LPDIRECT3DTEXTURE9 texSophia = g_textures->Get(TEXTURES_SOPHIA_ID);
 	LPDIRECT3DTEXTURE9 texJason = g_textures->Get(TEXTURES_JASON_ID);
 	LPDIRECT3DTEXTURE9 texEnemyDrap = g_textures->Get(TEXTURES_ENEMY_DRAP_ID);
@@ -171,6 +172,13 @@ void CGame::InitGame(HWND hWnd)
 	LPDIRECT3DTEXTURE9 texEnemyGX680 = g_textures->Get(TEXTURES_ENEMY_GX680_ID);
 	LPDIRECT3DTEXTURE9 texEnemyStuka = g_textures->Get(TEXTURES_ENEMY_STUKA_ID);
 	LPDIRECT3DTEXTURE9 texEnemyOffside = g_textures->Get(TEXTURES_ENEMY_OFFSIDE_ID);
+
+	LPDIRECT3DTEXTURE9 texBackground = g_textures->Get(100);
+
+	g_sprites->Add(1000, 0, 0, 1376, 528, texBackground);
+	this->lpsBackground = CSprites::GetInstance()->Get(1000);
+	this->backgound = Vector2D(550, 200);
+	
 
 	#pragma region SOPHIA SPRITES
 	
@@ -449,6 +457,7 @@ void CGame::UpdateGame(DWORD dt)
 	}
 	if (activeObserver) {
 		ObserverGame();
+		//pQuadTree->Update(pGameObjects);
 		DebugOut(L"[INFO] render object: %d\n", pRenderObjects.size());
 	}
 }
@@ -466,6 +475,7 @@ void CGame::RenderGame()
 
 		spriteHandler->Begin(D3DXSPRITE_ALPHABLEND);
 
+		this->lpsBackground->Draw(this->backgound, 1);
 		for (auto object : pRenderObjects) {
 			object->Render();
 		}
@@ -531,7 +541,6 @@ CGame::~CGame()
 	}
 }
 
- //get game instance 
 CGame* CGame::GetInstance()
 {
 	if (__instance == NULL) __instance = new CGame();

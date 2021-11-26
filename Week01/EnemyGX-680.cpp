@@ -3,7 +3,7 @@
 CEnemyGX680::CEnemyGX680()
 {
 	// add animation
-	this->AddAnimation(C_GX680, ANIMATION_ENEMY_GX680);
+	this->AddAnimation("default", ANIMATION_ENEMY_GX680);
 	// set size
 	this->SetSize(18, 18);
 	// set postition
@@ -19,5 +19,5 @@ void CEnemyGX680::Update(DWORD dt)
 
 void CEnemyGX680::Render()
 {
-	animations.at(C_GX680)->Render(this->position, 1);
+	animations.at("default")->Render(this->position, 1);
 }

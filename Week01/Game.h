@@ -5,6 +5,8 @@
 #include "resources.h"
 #include "KeyEventHandler.h"
 
+class CSprite;
+
 class CGame {
 	static CGame* __instance;
 
@@ -21,7 +23,10 @@ class CGame {
 	int backBufferWidth = 0;
 	int backBufferHeight = 0;
 
+
 public:
+	CSprite* lpsBackground;
+	Vector2D backgound;
 	void InitDirectX(HWND hWnd);
 	void Draw(Vector2D position, int nx, LPDIRECT3DTEXTURE9 texture, int left, int top, int right, int bottom);
 

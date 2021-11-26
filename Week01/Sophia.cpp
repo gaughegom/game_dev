@@ -7,8 +7,8 @@ CSophia::CSophia()
 	this->directState = new CSophiaDirectState(this);
 	this->actionState = new CSophiaActionState(this);
 
-	this->AddAnimation(LEFT_WHEEL, ANIMATION_SOPHIA_LEFT_WHEEL);
-	this->AddAnimation(RIGHT_WHEEL, ANIMATION_SOPHIA_RIGHT_WHEEL);
+	this->AddAnimation("left-wheel", ANIMATION_SOPHIA_LEFT_WHEEL);
+	this->AddAnimation("right-wheel", ANIMATION_SOPHIA_RIGHT_WHEEL);
 	auto sprites = CSprites::GetInstance();
 	this->lpsBody = sprites->Get(SPRITE_SOPHIA_BODY);
 
@@ -59,7 +59,7 @@ void CSophia::ListenKeyEvent()
 		}
 	}
 	else {
-		DWORD now = GetTickCount();
+		DWORD now = GetTickCount64();
 		this->prevStateTime = now;
 		int state = this->actionState->GetState();
 		if (state == SOPHIA_STATE_ACTION_UP_90) {
@@ -101,8 +101,8 @@ void CSophia::EdgeCollisionHandler(int width)
 
 void CSophia::Render()
 {
-	animations.at(LEFT_WHEEL)->Render(this->position + this->leftWheel, 1);
-	animations.at(RIGHT_WHEEL)->Render(this->position + this->rightWheel, 1);
+	animations.at("left-wheel")->Render(this->position + this->leftWheel, 1);
+	animations.at("right-wheel")->Render(this->position + this->rightWheel, 1);
 	this->lpsBody->Draw(this->position + this->body, this->nx);
 	this->lpsCabin->Draw(this->position + this->cabin, this->nx);
 	this->lpsGun->Draw(this->position + this->gun, this->nx);

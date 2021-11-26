@@ -44,7 +44,7 @@ int CGameObject::GetNx()
 	return this->nx;
 }
 
-void CGameObject::AddAnimation(int key, int animationId)
+void CGameObject::AddAnimation(std::string key, int animationId)
 {
 	LPANIMATION ani = CAnimations::GetInstance()->Get(animationId);
 	this->animations.insert(std::make_pair(key, ani));

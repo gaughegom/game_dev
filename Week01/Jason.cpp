@@ -3,9 +3,9 @@
 CJason::CJason()
 {
 	// add animation
-	this->AddAnimation(C_JASON_HORIZON, ANIMATION_JASON_LEFT);
-	this->AddAnimation(C_JASON_UP, ANIMATION_JASON_UP);
-	this->AddAnimation(C_JASON_DOWN, ANIMATION_JASON_DOWN);
+	this->AddAnimation("horizon", ANIMATION_JASON_LEFT);
+	this->AddAnimation("up", ANIMATION_JASON_UP);
+	this->AddAnimation("down", ANIMATION_JASON_DOWN);
 	// set size
 	this->SetSize(24, 32);
 
@@ -32,9 +32,9 @@ void CJason::Update(DWORD dt)
 
 void CJason::Render()
 {
-	auto animationId = this->directState->MappingStateOfAnimation(this->directState->GetState());
+	auto key = this->directState->MappingStateOfAnimation(this->directState->GetState());
 		
-	this->animations.at(animationId)->
+	this->animations.at(key)->
 		Render(this->position, this->nx);
 }
 

@@ -45,6 +45,7 @@
 #define SOPHIA_JASON_TEXTURE_PATH	L"resources//player.png"
 #define ENEMY_TEXTURE_PATH			L"resources//enemies.png"
 #define TEXTURE_TRANS_COLOR			D3DCOLOR_XRGB(41, 255, 4)
+#define BACKGOUND_TEXTURE_PATH		L"map//sectionB.png"
 
 #pragma endregion
 
@@ -146,7 +147,7 @@
 #define PLAYER_WIDTH				30
 #define PLAYER_HEIGHT				32
 #define PLAYER_MOVING_SPEED			0.15f
-#define PLAYER_GRAVITY				0.01f
+#define PLAYER_GRAVITY				0.018f
 #define PLAYER_JUMP_FORCE			0.22f
 
 #pragma endregion
