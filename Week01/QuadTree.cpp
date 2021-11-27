@@ -1,137 +1,152 @@
 #include "QuadTree.h"
 
-CQuadTree::CQuadTree(const int level, const SRect& rect) 
+CQuadTree::CQuadTree(const int level, SRect rect) : level(level), nodes{ nullptr, nullptr, nullptr, nullptr }
 {
-	this->level = level;
-	this->rect = rect;
-}
-
-void CQuadTree::DivideScreen()
-{
-	float posX = this->rect.left;
-	float posY = this->rect.bottom;
-
-	float camWidth = this->rect.right - this->rect.left;
-	float camHeight = this->rect.top - this->rect.bottom;
-
-	float halfWidth = camWidth / 2;
-	float halfHeight = camHeight / 2;
-
-	SRect s_left_bot = SRect(posX, posY + halfHeight, posX + halfWidth, posY);
-	SRect s_left_top = SRect(posX, posY + camHeight, posX + halfWidth, posY + halfHeight);
-	SRect s_right_bot = SRect(posX + halfWidth, posY + halfHeight, posX + camWidth, posY);
-	SRect s_right_top = SRect(posX + halfWidth, posY + camHeight, posX + camWidth, posY + halfHeight);
-
-	pChild[0] = std::make_unique<CQuadTree>(this->level + 1, s_left_bot);
-	pChild[1] = std::make_unique<CQuadTree>(this->level + 1, s_right_bot);
-	pChild[2] = std::make_unique<CQuadTree>(this->level + 1, s_right_top);
-	pChild[3] = std::make_unique<CQuadTree>(this->level + 1, s_left_top);
-}
-
-void CQuadTree::MappingObjectRect(CGameObject* object)
-{
-	if (this->pChild[0].get() != nullptr) {
-		AddObjectToRect(object);
-
-		return;
-	}
-
-	this->pObject.emplace_back(object);
-	if (this->pObject.size() >= 1 && ((rect.right - rect.left)/2 >= SCREEN_WIDTH/2)) {
-		DivideScreen();
-		for (auto obj : this->pObject) {
-			AddObjectToRect(object);
-		}
-		this->pObject.clear();
-		this->pObject.shrink_to_fit();
-	}
-}
-
-void CQuadTree::AddObjectToRect(CGameObject* object)
-{
-	if (this->pChild[0].get()->IsConstainObject(object)) {
-		this->pChild[0].get()->MappingObjectRect(object);
-	}
-	else if (this->pChild[1].get()->IsConstainObject(object)) {
-		this->pChild[1].get()->MappingObjectRect(object);
-	}
-	else if (this->pChild[2].get()->IsConstainObject(object)) {
-		this->pChild[2].get()->MappingObjectRect(object);
-	}
-	else if (this->pChild[3].get()->IsConstainObject(object)) {
-		this->pChild[3].get()->MappingObjectRect(object);
-	}
-}
-
-bool CQuadTree::IsConstainObject(CGameObject* object)
-{
-	Vector2D objectPos = object->GetPosition();
-	return this->rect.IsConstain(objectPos);
-}
-
-void CQuadTree::Update(std::vector<CGameObject*> objects)
-{
-	this->pObject.clear();
-
-	this->pChild[0] = nullptr;
-	this->pChild[1] = nullptr;
-	this->pChild[2] = nullptr;
-	this->pChild[3] = nullptr;
-
-	for (auto& object : objects) {
-		this->MappingObjectRect(object);
-	}
-}
-
-void CQuadTree::ContainerizeObject(std::vector<CGameObject*>& container, const SRect& rect)
-{
-	if (this->pChild[0].get() != nullptr) {
-		if (this->pChild[0]->rect.IsOverlap(rect)) {
-			this->pChild[0]->ContainerizeObject(container, rect);
-		}
-		if (this->pChild[1]->rect.IsOverlap(rect)) {
-			this->pChild[1]->ContainerizeObject(container, rect);
-		}
-		if (this->pChild[2]->rect.IsOverlap(rect)) {
-			this->pChild[2]->ContainerizeObject(container, rect);
-		}
-		if (this->pChild[3]->rect.IsOverlap(rect)) {
-			this->pChild[3]->ContainerizeObject(container, rect);
-		}
-
-		return;
-	}
-
-	for (auto& object : this->pObject) {
-		container.emplace_back(object);
-	}
-}
-
-bool CQuadTree::HaveObject(CGameObject* object)
-{
-	if (std::find(this->pObject.begin(), this->pObject.end(), object) != this->pObject.end()) {
-		return true;
-	}
-	return false;
-}
-
-CQuadTree* CQuadTree::GetObjectNode(CGameObject* object)
-{
-	if (this->pChild[0].get() != nullptr) {
-		if (this->pChild[0].get()->IsConstainObject(object)) {
-			return this->pChild[0].get()->GetObjectNode(object);
-		}
-		else if (this->pChild[1].get()->IsConstainObject(object)) {
-			return this->pChild[1].get()->GetObjectNode(object);
-		}
-		else if (this->pChild[2].get()->IsConstainObject(object)) {
-			return this->pChild[2].get()->GetObjectNode(object);
-		}
-		else if (this->pChild[3].get()->IsConstainObject(object)) {
-			return this->pChild[3].get()->GetObjectNode(object);
-		}
+	float w = rect.right - rect.left;
+	float h = rect.top - rect.right;
+	auto diff = abs(w - h);
+	if (w < h) {
+		rect.right += diff;
 	}
 	else {
-		return this;
+		h += diff;
 	}
+	
+	this->rect = rect;
+
+	this->entities.reserve(MAX_NODE_ENTITES);
+}
+
+bool CQuadTree::HasChildren()
+{
+	return this->nodes[0].get() != nullptr;
+}
+
+bool CQuadTree::IsOverlap(LPGAMEOBJECT& entity)
+{
+	auto entityRect = SRect(
+		entity->GetX(),
+		entity->GetY() + entity->GetHeight(),
+		entity->GetX() + entity->GetWidth(),
+		entity->GetY()
+	);
+	bool result = this->rect.IsOverlap(entityRect);
+	return result;
+}
+
+void CQuadTree::Insert(LPGAMEOBJECT entity)
+{
+	if (this->HasChildren()) {
+		if (this->nodes[0].get()->IsOverlap(entity)) {
+			this->nodes[0].get()->Insert(entity);
+		}
+		else if (this->nodes[1].get()->IsOverlap(entity)) {
+			this->nodes[1].get()->Insert(entity);
+		}
+		else if (this->nodes[2].get()->IsOverlap(entity)) {
+			this->nodes[2].get()->Insert(entity);
+		}
+		else if (this->nodes[3].get()->IsOverlap(entity)) {
+			this->nodes[3].get()->Insert(entity);
+		}
+
+		return;
+	}
+
+	this->entities.emplace_back(entity);
+	if (this->entities.size() > MAX_NODE_ENTITES && this->level < MAX_NODE_LEVEL) {
+		if (!this->HasChildren()) {
+			this->SplitArea();
+		}
+		for (auto& object : this->entities) {
+			if (this->HasChildren()) {
+				if (this->nodes[0].get()->IsOverlap(object)) {
+					this->nodes[0].get()->Insert(object);
+				}
+				else if (this->nodes[1].get()->IsOverlap(object)) {
+					this->nodes[1].get()->Insert(object);
+				}
+				else if (this->nodes[2].get()->IsOverlap(object)) {
+					this->nodes[2].get()->Insert(object);
+				}
+				else if (this->nodes[3].get()->IsOverlap(object)) {
+					this->nodes[3].get()->Insert(object);
+				}
+			}
+		}
+
+		// remove all entities in this node
+		this->entities.clear();
+		this->entities.shrink_to_fit();
+	}
+}
+
+void CQuadTree::SplitArea()
+{
+	// get origin xy
+	auto ox = this->rect.left;
+	auto oy = this->rect.bottom;
+	// get width, height of area
+	auto areaWidth = this->rect.right - this->rect.left;
+	auto areaHeight = this->rect.top - this->rect.bottom;
+
+	auto halfWidth = areaWidth / 2;
+	auto halfHeight = areaHeight / 2;
+
+	// 0: left bot, 1: left top, 2: right top, 3: right bot
+	SRect area_lb = SRect(ox, oy + halfHeight, ox + halfWidth, oy);
+	SRect area_lt = SRect(ox, oy + areaHeight, ox + halfWidth, oy + halfHeight);
+	SRect area_rb = SRect(ox + halfWidth, oy + halfHeight, ox + areaWidth, oy);
+	SRect area_rt = SRect(ox + halfWidth, oy + areaHeight, ox + areaWidth, oy + halfHeight);
+
+	this->nodes[0] = std::make_unique<CQuadTree>(this->level + 1, area_lb);
+	this->nodes[1] = std::make_unique<CQuadTree>(this->level + 1, area_lt);
+	this->nodes[2] = std::make_unique<CQuadTree>(this->level + 1, area_rt);
+	this->nodes[3] = std::make_unique<CQuadTree>(this->level + 1, area_rb);
+}
+
+void CQuadTree::Retrieve(std::vector<LPGAMEOBJECT>& container, const SRect& targetRect)
+{
+	if (this->HasChildren()) {
+		if (this->nodes[0].get()->rect.IsOverlap(targetRect)) {
+			this->nodes[0].get()->Retrieve(container, targetRect);
+		}
+		if (this->nodes[1].get()->rect.IsOverlap(targetRect)) {
+			this->nodes[1].get()->Retrieve(container, targetRect);
+		}
+		if (this->nodes[2].get()->rect.IsOverlap(targetRect)) {
+			this->nodes[2].get()->Retrieve(container, targetRect);
+		}
+		if (this->nodes[3].get()->rect.IsOverlap(targetRect)) {
+			this->nodes[3].get()->Retrieve(container, targetRect);
+		}
+	}
+
+	for (const auto& obj : this->entities) {
+		if (std::find(container.begin(), container.end(), obj) == container.end())
+		container.emplace_back(obj);
+	}
+}
+
+void CQuadTree::Update(std::vector<LPGAMEOBJECT> updateEntities)
+{
+	this->entities.clear();
+	this->nodes[0] = nullptr;
+	this->nodes[1] = nullptr;
+	this->nodes[2] = nullptr;
+	this->nodes[3] = nullptr;
+
+	for (auto& obj : updateEntities) {
+		this->Insert(obj);
+	}
+}
+
+CQuadTree::~CQuadTree()
+{
+	this->entities.clear();
+	this->entities.shrink_to_fit();
+	this->nodes[0] = nullptr;
+	this->nodes[1] = nullptr;
+	this->nodes[2] = nullptr;
+	this->nodes[3] = nullptr;
 }

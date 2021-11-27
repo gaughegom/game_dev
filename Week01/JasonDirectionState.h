@@ -5,28 +5,27 @@
 #include "Jason.h"
 
 class CJason;
+enum class JasonDirectState;
 
 class CJasonDirectionState
 {
 private:
 	CJason* target;
-	int state;
+	JasonDirectState state;
 
 public:
 	CJasonDirectionState();
 	CJasonDirectionState(CJason* target);
 
 	void SetTarget(CJason* target);
-	void SetState(int state);
-	int GetState();
+	void SetState(JasonDirectState state);
+	JasonDirectState GetState();
 
-	std::string MappingStateOfAnimation(int state);
+	std::string MappingStateOfAnimation(JasonDirectState state);
 
 	void Stay();
 	void MoveBackward();
 	void MoveForward();
-	void MoveUpward();
-	void MoveDownWard();
 };
 
 #endif // !_JASON_DIRECTION_STATE_H

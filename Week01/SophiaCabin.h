@@ -5,7 +5,7 @@
 #include "Sophia.h"
 
 class CSophia;
-enum SophiaActionState;
+enum class SophiaActionState;
 
 class CSophiaCabin : public CGameObject {
 private:

@@ -21,6 +21,13 @@ protected:
 	float width;
 	float height;
 
+	SRect rect = SRect(
+		position.x - width / 2 ,
+		position.y + height / 2,
+		position.x + width / 2,
+		position.y - height / 2
+	);
+
 	std::unordered_map<std::string, LPANIMATION> animations;
 
 public:
@@ -49,6 +56,8 @@ public:
 	void SetState(int newState) { this->state = newState; }
 	int GetState() { return this->state; }
 
+	SRect GetRect() { return this->rect; }
+
 	// animation
 	void AddAnimation(std::string key, int animationId);
 	std::unordered_map<std::string, LPANIMATION> GetAnimations() { return this->animations; }
@@ -61,5 +70,6 @@ public:
 
 	~CGameObject();
 };
+typedef CGameObject* LPGAMEOBJECT;
 
 #endif // !_GAMEOBJECT_H

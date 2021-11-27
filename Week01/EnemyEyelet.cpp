@@ -6,6 +6,7 @@ CEnemyEyelet::CEnemyEyelet()
 	this->AddAnimation("default", ANIMATION_ENEMY_EYELET);
 	// position
 	this->SetPosition(PLAYER_START_X + 50, PLAYER_START_Y + 20);
+	this->SetSize(18, 18);
 	// velocity
 	this->SetVelocity(0, 0);
 }

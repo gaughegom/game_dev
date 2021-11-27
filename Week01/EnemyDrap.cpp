@@ -4,6 +4,7 @@ CEnemyDrap::CEnemyDrap()
 {
 	// set position
 	this->SetPosition(PLAYER_START_X + 20, PLAYER_START_Y + 20);
+	this->SetSize(18, 18);
 	// add animation
 	this->AddAnimation("default", ANIMATION_ENEMY_DRAP);
 	// set velocity

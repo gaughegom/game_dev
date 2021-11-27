@@ -8,8 +8,8 @@
 #define C_A_DEFAULT_KEY	"default"
 
 class CSophia;
-enum SophiaDirectState;
-enum SophiaActionState;
+enum class SophiaDirectState;
+enum class SophiaActionState;
 
 class CSophiaWheel : public CGameObject {
 private:

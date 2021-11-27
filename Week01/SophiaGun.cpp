@@ -28,15 +28,15 @@ int CSophiaGun::MappingGunSpriteState(SophiaActionState actionState)
 {
 	switch (actionState)
 	{
-	case Idle:
+	case SophiaActionState::Idle:
 		this->SetPosition(8.0f * this->sophia->GetNx(), 9.0f);
 		return SPRITE_SOPHIA_GUN_00;
 		break;
-	case Tile45:
+	case SophiaActionState::Tile45:
 		this->SetPosition(8.0f * this->sophia->GetNx(), 21.0f);
 		return SPRITE_SOPHIA_GUN_45;
 		break;
-	case Up90:
+	case SophiaActionState::Up90:
 		this->SetPosition(3.0f * this->sophia->GetNx(), 24.0f);
 		return SPRITE_SOPHIA_GUN_90;
 		break;

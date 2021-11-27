@@ -2,7 +2,7 @@
 
 CSophia::CSophia()
 {
-	this->SetSize(17, 10);
+	this->SetSize(20, 20);
 	this->SetPosition(PLAYER_START_X, PLAYER_START_Y);
 	this->directState = SophiaDirectState::Stay;
 	this->actionState = SophiaActionState::Idle;
@@ -18,8 +18,7 @@ CSophia::CSophia()
 
 void CSophia::Update(DWORD dt)
 {
-	//LinearMoveInGravity(this, dt);
-	LinearMove(this, dt);
+	LinearMoveInGravity(this, dt);
 
 	int backbufferWidth = CGame::GetInstance()->GetBackbufferWidth();
 	this->EdgeCollisionHandler(CGame::GetInstance()->GetBackbufferWidth());
@@ -69,33 +68,33 @@ void CSophia::ListenKeyEvent()
 		}
 	}
 
-	//if (input->OnKeyDown(DIK_X)) {
-	//	if (this->velocity.y <= 0) {
-	//		this->velocity.y = PLAYER_JUMP_FORCE;
-	//	}
-	//}
+	if (input->OnKeyDown(DIK_X)) {
+		if (this->velocity.y <= 0) {
+			this->velocity.y = PLAYER_JUMP_FORCE;
+		}
+	}
 
 	#pragma endregion
 }
 
 void CSophia::EdgeCollisionHandler(int width)
 {
-	/*switch (this->directState->GetState())
+	switch (this->directState)
 	{
-	case SOPHIA_STATE_DIRECTION_RIGHT:
+	case SophiaDirectState::RightMove:
 		if (this->position.x > width * 10 - PLAYER_WIDTH) {
 			this->SetX(width * 10 - PLAYER_WIDTH);
 		}
-	case SOPHIA_STATE_DIRECTION_LEFT:
+	case SophiaDirectState::LeftMove:
 		if (this->position.x <= 0) {
 			this->SetX(0);
 		}
 	default:
 		break;
 	}
-	if (this->position.y <= 20) {
-		this->position.y = 20;
-	}*/
+	if (this->position.y <= GAME_GROUND) {
+		this->position.y = GAME_GROUND;
+	}
 }
 
 void CSophia::Render()
@@ -105,6 +104,10 @@ void CSophia::Render()
 	this->body->Render();
 	this->cabin->Render();
 	this->gun->Render();
+
+	auto debugPosSprite = CSprites::GetInstance()->Get(2000);
+	Vector2D debugPos = Vector2D(this->position.x - 8, this->position.y);
+	debugPosSprite->Draw(debugPos, this->nx);
 }
 
 void CSophia::SubcribeDirectState(SophiaDirectState directState)

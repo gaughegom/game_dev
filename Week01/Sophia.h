@@ -15,14 +15,14 @@ class CSophiaWheel;
 class CSophiaBody;
 class CSophiaGun;
 
-enum SophiaDirectState
+enum class SophiaDirectState : int
 {
 	Stay = 0,
 	RightMove = 1,
 	LeftMove = -1
 };
 
-enum SophiaActionState {
+enum class SophiaActionState : int {
 	Idle = 0,
 	Tile45 = 1,
 	Up90 = 2,
@@ -55,8 +55,8 @@ public:
 
 	void EdgeCollisionHandler(int width);
 
-	SophiaDirectState GetDirectState() { return directState; }
-	SophiaActionState GetActionState() { return actionState; }
+	SophiaDirectState GetDirectState() { return this->directState; }
+	SophiaActionState GetActionState() { return this->actionState; }
 
 	CSophiaWheel* GetLeftWheel() { return this->leftWheel; }
 	CSophiaWheel* GetRightWheel() { return this->rightWheel; }

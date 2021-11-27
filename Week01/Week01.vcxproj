@@ -34,12 +34,12 @@
     <ClCompile Include="Jason.cpp" />
     <ClCompile Include="JasonDirectionState.cpp" />
     <ClCompile Include="KeyEventHandler.cpp" />
+    <ClCompile Include="QuadTree.cpp" />
     <ClCompile Include="Sophia.cpp" />
     <ClCompile Include="debug.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="QuadTree.cpp" />
     <ClCompile Include="SophiaBody.cpp" />
     <ClCompile Include="SophiaCabin.cpp" />
     <ClCompile Include="SophiaGun.cpp" />
@@ -69,8 +69,8 @@
     <ClInclude Include="Jason.h" />
     <ClInclude Include="JasonDirectionState.h" />
     <ClInclude Include="KeyEventHandler.h" />
-    <ClInclude Include="Sophia.h" />
     <ClInclude Include="QuadTree.h" />
+    <ClInclude Include="Sophia.h" />
     <ClInclude Include="resources.h" />
     <ClInclude Include="SophiaBody.h" />
     <ClInclude Include="SophiaCabin.h" />

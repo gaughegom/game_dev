@@ -23,13 +23,13 @@ void CSophiaBody::HandleAnimationActionState(SophiaActionState actionState)
 {
 	switch (actionState)
 	{
-	case Idle:
+	case SophiaActionState::Idle:
 		this->SetPosition(0.0f, 1.0f);
 		break;
-	case Tile45:
+	case SophiaActionState::Tile45:
 		this->SetPosition(0.0f, 6.0f);
 		break;
-	case Up90:
+	case SophiaActionState::Up90:
 		this->SetPosition(0.0f, 7.0f);
 		break;
 	default:

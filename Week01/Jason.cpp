@@ -3,18 +3,17 @@
 CJason::CJason()
 {
 	// add animation
-	this->AddAnimation("horizon", ANIMATION_JASON_LEFT);
-	this->AddAnimation("up", ANIMATION_JASON_UP);
-	this->AddAnimation("down", ANIMATION_JASON_DOWN);
+	this->AddAnimation("walk", ANIMATION_SMALL_JASON_WALK);
+	this->AddAnimation("stay", ANIMATION_SMALL_JASON_STAY);
 	// set size
-	this->SetSize(24, 32);
+	this->SetSize(8, 16);
 
 	// set state
 	this->directState = new CJasonDirectionState(this);
-	this->directState->Stay();
+	this->directState->SetState(JasonDirectState::STAY);
 
 	// set position
-	this->SetPosition(140, 20);
+	this->SetPosition(140, 70);
 
 	// set velocity
 	this->SetVelocity(0, 0);
@@ -22,7 +21,7 @@ CJason::CJason()
 
 void CJason::Update(DWORD dt)
 {
-	LinearMove(this, dt);
+	LinearMoveInGravity(this, dt);
 	this->EdgeCollisionHandler();
 
 	if (this->IsSelected()) {
@@ -32,10 +31,15 @@ void CJason::Update(DWORD dt)
 
 void CJason::Render()
 {
-	auto key = this->directState->MappingStateOfAnimation(this->directState->GetState());
+	auto key = this->directState->MappingStateOfAnimation(
+		this->directState->GetState());
 		
 	this->animations.at(key)->
 		Render(this->position, this->nx);
+
+	auto debugPosSprite = CSprites::GetInstance()->Get(2000);
+	Vector2D debugPos = Vector2D(this->position.x - 8, this->position.y);
+	debugPosSprite->Draw(debugPos, this->nx);
 }
 
 void CJason::ListenKeyEvent()
@@ -44,19 +48,13 @@ void CJason::ListenKeyEvent()
 
 	// map direct state
 	if (input->IsKeyDown(DIK_RIGHT)) {
-		this->directState->SetState(JASON_STATE_DIRECTION_FORWARD);
+		this->directState->SetState(JasonDirectState::RIGHTWALK);
 	}
 	else if (input->IsKeyDown(DIK_LEFT)) {
-		this->directState->SetState(JASON_STATE_DIRECTION_BACKWARD);
-	}
-	else if (input->IsKeyDown(DIK_UP)) {
-		this->directState->SetState(JASON_STATE_DIRECTION_UPWARD);
-	}
-	else if (input->IsKeyDown(DIK_DOWN)) {
-		this->directState->SetState(JASON_STATE_DIRECTION_DOWNWARD);
+		this->directState->SetState(JasonDirectState::LEFTWALK);
 	}
 	else {
-		this->directState->SetState(JASON_STATE_DIRECTION_IDLE);
+		this->directState->SetState(JasonDirectState::STAY);
 	}
 
 	// subcribe direct state
@@ -68,54 +66,42 @@ void CJason::EdgeCollisionHandler()
 	auto directState = this->directState->GetState();
 	switch (directState)
 	{
-	case JASON_STATE_DIRECTION_FORWARD:
+	case JasonDirectState::RIGHTWALK:
 		if (this->position.x >= QUADTREE_WIDTH - this->width) {
 			this->position.x = QUADTREE_WIDTH - this->width;
 		}
 		break;
-	case JASON_STATE_DIRECTION_BACKWARD:
+	case JasonDirectState::LEFTWALK:
 		if (this->position.x <= 0) {
 			this->position.x = 0;
 		}
 		break;
-	case JASON_STATE_DIRECTION_UPWARD:
-		if (this->position.y >= QUADTREE_HEIGHT - this->height) {
-			this->position.y = QUADTREE_HEIGHT - this->height;
-		}
-		break;
-	case JASON_STATE_DIRECTION_DOWNWARD:
-		if (this->position.y <= 0) {
-			this->position.y = 0;
-		}
-		break;
+
 	default:
 		break;
 	}
+	if (this->position.y - this->height / 2 <= GAME_GROUND) {
+		this->position.y = GAME_GROUND + this->height / 2;
+	}
 }
 
-void CJason::SubcribeDirectionState(int directState)
+void CJason::SubcribeDirectionState(JasonDirectState directState)
 {
 	this->directState->SetState(directState);
 	switch (directState)
 	{
-	case JASON_STATE_DIRECTION_FORWARD:
+	case JasonDirectState::RIGHTWALK:
 		this->SetVelocity(PLAYER_MOVING_SPEED, 0);
 		this->nx = 1;
 		this->directState->MoveForward();
 		break;
-	case JASON_STATE_DIRECTION_BACKWARD:
+
+	case JasonDirectState::LEFTWALK:
 		this->SetVelocity(-PLAYER_MOVING_SPEED, 0);
 		this->nx = -1;
 		this->directState->MoveBackward();
 		break;
-	case JASON_STATE_DIRECTION_UPWARD:
-		this->SetVelocity(0, PLAYER_MOVING_SPEED);
-		this->directState->MoveUpward();
-		break;
-	case JASON_STATE_DIRECTION_DOWNWARD:
-		this->SetVelocity(0, -PLAYER_MOVING_SPEED);
-		this->directState->MoveDownWard();
-		break;
+
 	default:
 		this->SetVelocity(0, 0);
 		this->directState->Stay();

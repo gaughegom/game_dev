@@ -5,31 +5,31 @@
 #include <vector>
 #include <memory>
 #include <array>
-#include "Transform.h"
 #include "GameObject.h"
+#include "Transform.h"
 
-class CQuadTree
-{
+#define MAX_NODE_ENTITES	2
+#define MAX_NODE_LEVEL		5
+
+class CQuadTree {
 private:
 	int level;
 	SRect rect;
-	std::unique_ptr<CQuadTree> pChild[4];
-	std::vector<CGameObject*> pObject;
+	std::unique_ptr<CQuadTree> nodes[4];
+	std::vector<LPGAMEOBJECT> entities;
 
 public:
-	CQuadTree(const int level, const SRect& rect);
-	void DivideScreen();
-	void MappingObjectRect(CGameObject* object);
-	void AddObjectToRect(CGameObject* object);
-	bool IsConstainObject(CGameObject* object);
+	CQuadTree(const int level, SRect rect);
 
-	void Update(std::vector<CGameObject*> objects);
-	void ContainerizeObject(std::vector<CGameObject*>& container, const SRect& rect);
+	bool HasChildren();
+	bool IsOverlap(LPGAMEOBJECT& entity);
 
-	bool HaveObject(CGameObject* object);
-	CQuadTree* GetObjectNode(CGameObject* object);
+	void Insert(LPGAMEOBJECT entity);
+	void SplitArea();
+	void Retrieve(std::vector<LPGAMEOBJECT>& container, const SRect& targetRect);
+	void Update(std::vector<LPGAMEOBJECT> updateEntities);
 
-	SRect GetRect() { return this->rect; }
+	~CQuadTree();
 };
 
 #endif // !_QUADTREE_H

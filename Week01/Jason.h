@@ -17,6 +17,12 @@
 
 class CJasonDirectionState;
 
+enum class JasonDirectState : int {
+	STAY = 0,
+	RIGHTWALK = 1,
+	LEFTWALK = -1
+};
+
 class CJason : public CGameObject, public CControllerObject {
 private:
 	CJasonDirectionState* directState;
@@ -30,7 +36,7 @@ public:
 
 	void EdgeCollisionHandler();
 
-	void SubcribeDirectionState(int directState);
+	void SubcribeDirectionState(JasonDirectState directState);
 };
 
 #endif // !_JASON_H

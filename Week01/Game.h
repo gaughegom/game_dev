@@ -6,6 +6,7 @@
 #include "KeyEventHandler.h"
 
 class CSprite;
+class CGameObject;
 
 class CGame {
 	static CGame* __instance;
@@ -31,7 +32,6 @@ public:
 	void Draw(Vector2D position, int nx, LPDIRECT3DTEXTURE9 texture, int left, int top, int right, int bottom);
 
 	void InitGame(HWND hWnd);
-	void ObserverGame();
 	void UpdateGame(DWORD dt);
 	void RenderGame();
 	void RunGame();

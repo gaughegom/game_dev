@@ -48,15 +48,15 @@ void CSophiaWheel::HandleAnimationActionState(SophiaActionState actionState)
 {
 	switch (actionState)
 	{
-	case Idle:
+	case SophiaActionState::Idle:
 		this->sophia->GetLeftWheel()->SetPosition(-8.0f, 0.0f);
 		this->sophia->GetRightWheel()->SetPosition(8.0f, 0.0f);
 		break;
-	case Tile45:
+	case SophiaActionState::Tile45:
 		this->sophia->GetLeftWheel()->SetPosition(-6.5f, 0.0f);
 		this->sophia->GetRightWheel()->SetPosition(06.5f, 0.0f);
 		break;
-	case Up90:
+	case SophiaActionState::Up90:
 		this->sophia->GetLeftWheel()->SetPosition(-5.0f, 0.0f);
 		this->sophia->GetRightWheel()->SetPosition(5.0f, 0.0f);
 		break;
