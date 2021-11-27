@@ -11,12 +11,12 @@ class CSprite
 
 	int left;
 	int top;
-	int right;
-	int bottom;
+	int width;
+	int height;
 
 	LPDIRECT3DTEXTURE9 texture;
 public:
-	CSprite(int id, int left, int top, int right, int bottom, LPDIRECT3DTEXTURE9 tex);
+	CSprite(int id, int left, int top, int width, int height, LPDIRECT3DTEXTURE9 tex);
 
 	void Draw(Vector2D position, int nx);
 };

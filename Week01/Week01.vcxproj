@@ -57,7 +57,6 @@
     <ClInclude Include="ControllerObject.h" />
     <ClInclude Include="debug.h" />
     <ClInclude Include="EnemyDrap.h" />
-    <ClInclude Include="EnemyLib.h" />
     <ClInclude Include="EnemyEyelet.h" />
     <ClInclude Include="EnemyOffside.h" />
     <ClInclude Include="EnemyStuka.h" />

@@ -1,12 +1,23 @@
+#include <fstream>
 #include "Game.h"
 #include "Textures.h"
 #include "Animations.h"
-#include "Sophia.h"
-#include "Jason.h"
-#include "EnemyLib.h"
 #include "Camera.h"
 #include "QuadTree.h"
 #include "InputHandler.h"
+
+#include "Sophia.h"
+#include "Jason.h"
+#include "EnemyDrap.h"
+#include "EnemyEyelet.h"
+#include "EnemyGX-680.h"
+#include "EnemyOffside.h"
+#include "EnemyStuka.h"
+
+#include "rapidjson/include/rapidjson/document.h"
+#include "rapidjson/include/rapidjson/writer.h"
+#include "rapidjson/include/rapidjson/stringbuffer.h"
+#include "rapidjson/include/rapidjson/filereadstream.h"
 
 CSophia* pSophia;
 CJason* pJason;
@@ -179,23 +190,23 @@ void CGame::InitGame(HWND hWnd)
 	#pragma region SOPHIA SPRITES
 	
 	// Add 2 wheel
-	g_sprites->Add(SPRITE_SOPHIA_WHEEL_1, 3, 21, 11, 29, texPlayer);
-	g_sprites->Add(SPRITE_SOPHIA_WHEEL_2, 21, 21, 29, 29, texPlayer);
-	g_sprites->Add(SPRITE_SOPHIA_WHEEL_3, 12, 21, 20, 29, texPlayer);
-	g_sprites->Add(SPRITE_SOPHIA_WHEEL_4, 30, 21, 38, 29, texPlayer);
+	g_sprites->Add(SPRITE_SOPHIA_WHEEL_1, 3, 21, 8, 8, texPlayer);
+	g_sprites->Add(SPRITE_SOPHIA_WHEEL_2, 21, 21, 8, 8, texPlayer);
+	g_sprites->Add(SPRITE_SOPHIA_WHEEL_3, 12, 21, 8, 8, texPlayer);
+	g_sprites->Add(SPRITE_SOPHIA_WHEEL_4, 30, 21, 8, 8, texPlayer);
 
 	// Add sophia body
-	g_sprites->Add(SPRITE_SOPHIA_BODY, 3, 12, 11, 20, texPlayer);
+	g_sprites->Add(SPRITE_SOPHIA_BODY, 3, 12, 6, 7, texPlayer);
 
 	// Add cabin
-	g_sprites->Add(SPRITE_SOPHIA_CABIN_00, 39, 3, 55, 11, texPlayer);
+	g_sprites->Add(SPRITE_SOPHIA_CABIN_00, 39, 3, 16, 8, texPlayer);
+	g_sprites->Add(SPRITE_SOPHIA_CABIN_45, 73, 4, 16, 15, texPlayer);
 	//g_sprites->Add(SPRITE_SOPHIA_CABIN_OPEN, 56, 3, 72, 11, texPlayer); // fix open later
-	g_sprites->Add(SPRITE_SOPHIA_CABIN_45, 73, 4, 89, 19, texPlayer);
 
 	// add gun
-	g_sprites->Add(SPRITE_SOPHIA_GUN_00, 12, 5, 19, 9, texPlayer);
-	g_sprites->Add(SPRITE_SOPHIA_GUN_45, 21, 3, 29, 11, texPlayer);
-	g_sprites->Add(SPRITE_SOPHIA_GUN_90, 32, 3, 36, 10, texPlayer);
+	g_sprites->Add(SPRITE_SOPHIA_GUN_00, 12, 5, 7, 4, texPlayer);
+	g_sprites->Add(SPRITE_SOPHIA_GUN_45, 21, 3, 8, 8, texPlayer);
+	g_sprites->Add(SPRITE_SOPHIA_GUN_90, 32, 3, 4, 7, texPlayer);
 
 
 	LPANIMATION lpAni;
@@ -220,10 +231,10 @@ void CGame::InitGame(HWND hWnd)
 	#pragma region JASON SPRITES
 
 	// small jason
-	g_sprites->Add(SPRITE_SMALL_JASON_WALK_01, 3, 30, 11, 46, texPlayer);
-	g_sprites->Add(SPRITE_SMALL_JASON_WALK_02, 12, 31, 20, 46, texPlayer);
-	g_sprites->Add(SPRITE_SMALL_JASON_WALK_03, 21, 30, 29, 46, texPlayer);
-	g_sprites->Add(SPRITE_SMALL_JASON_WALK_04, 30, 31, 38, 46, texPlayer);
+	g_sprites->Add(SPRITE_SMALL_JASON_WALK_01, 3, 30, 8, 16, texPlayer);
+	g_sprites->Add(SPRITE_SMALL_JASON_WALK_02, 12, 31, 8, 16, texPlayer);
+	g_sprites->Add(SPRITE_SMALL_JASON_WALK_03, 21, 30, 8, 16, texPlayer);
+	g_sprites->Add(SPRITE_SMALL_JASON_WALK_04, 30, 31, 8, 16, texPlayer);
 
 	lpAni = new CAnimation(5);
 	lpAni->Add(SPRITE_SMALL_JASON_WALK_01);
@@ -273,14 +284,14 @@ void CGame::InitGame(HWND hWnd)
 
 		#pragma region DRAP
 
-	g_sprites->Add(SPRITE_ENEMY_DRAP_01, 40, 276, 58, 292, texEnemy);
-	g_sprites->Add(SPRITE_ENEMY_DRAP_02, 60, 274, 78, 292, texEnemy);
-	g_sprites->Add(SPRITE_ENEMY_DRAP_03, 80, 276, 98, 292, texEnemy);
-	g_sprites->Add(SPRITE_ENEMY_DRAP_04, 100, 274, 118, 292, texEnemy);
-	g_sprites->Add(SPRITE_ENEMY_DRAP_05, 128, 274, 146, 292, texEnemy);
-	g_sprites->Add(SPRITE_ENEMY_DRAP_06, 148, 276, 166, 292, texEnemy);
-	g_sprites->Add(SPRITE_ENEMY_DRAP_07, 168, 274, 186, 292, texEnemy);
-	g_sprites->Add(SPRITE_ENEMY_DRAP_08, 188, 276, 206, 292, texEnemy);
+	g_sprites->Add(SPRITE_ENEMY_DRAP_01, 40, 276, 18, 18, texEnemy);
+	g_sprites->Add(SPRITE_ENEMY_DRAP_02, 60, 274, 18, 18, texEnemy);
+	g_sprites->Add(SPRITE_ENEMY_DRAP_03, 80, 276, 18, 18, texEnemy);
+	g_sprites->Add(SPRITE_ENEMY_DRAP_04, 100, 274, 18, 18, texEnemy);
+	g_sprites->Add(SPRITE_ENEMY_DRAP_05, 128, 274, 18, 18, texEnemy);
+	g_sprites->Add(SPRITE_ENEMY_DRAP_06, 148, 276, 18, 18, texEnemy);
+	g_sprites->Add(SPRITE_ENEMY_DRAP_07, 168, 274, 18, 18, texEnemy);
+	g_sprites->Add(SPRITE_ENEMY_DRAP_08, 188, 276, 18, 18, texEnemy);
 	lpAni = new CAnimation(20);
 	lpAni->Add(SPRITE_ENEMY_DRAP_01);
 	lpAni->Add(SPRITE_ENEMY_DRAP_02);
@@ -298,14 +309,14 @@ void CGame::InitGame(HWND hWnd)
 
 		#pragma region EYELET
 
-	g_sprites->Add(SPRITE_ENEMY_EYELET_01, 40, 36, 58, 46, texEnemy);
-	g_sprites->Add(SPRITE_ENEMY_EYELET_02, 60, 31, 78, 46, texEnemy);
-	g_sprites->Add(SPRITE_ENEMY_EYELET_03, 80, 28, 98, 46, texEnemy);
-	g_sprites->Add(SPRITE_ENEMY_EYELET_04, 100, 31, 118, 46, texEnemy);
-	g_sprites->Add(SPRITE_ENEMY_EYELET_05, 128, 31, 146, 46, texEnemy);
-	g_sprites->Add(SPRITE_ENEMY_EYELET_06, 148, 28, 166, 46, texEnemy);
-	g_sprites->Add(SPRITE_ENEMY_EYELET_07, 168, 31, 186, 46, texEnemy);
-	g_sprites->Add(SPRITE_ENEMY_EYELET_08, 188, 36, 206, 46, texEnemy);
+	g_sprites->Add(SPRITE_ENEMY_EYELET_01, 40, 36, 18, 10, texEnemy);
+	g_sprites->Add(SPRITE_ENEMY_EYELET_02, 60, 31, 18, 15, texEnemy);
+	g_sprites->Add(SPRITE_ENEMY_EYELET_03, 80, 28, 18, 18, texEnemy);
+	g_sprites->Add(SPRITE_ENEMY_EYELET_04, 100, 31, 18, 15, texEnemy);
+	g_sprites->Add(SPRITE_ENEMY_EYELET_05, 128, 31, 18, 15, texEnemy);
+	g_sprites->Add(SPRITE_ENEMY_EYELET_06, 148, 28, 18, 18, texEnemy);
+	g_sprites->Add(SPRITE_ENEMY_EYELET_07, 168, 31, 18, 15, texEnemy);
+	g_sprites->Add(SPRITE_ENEMY_EYELET_08, 188, 36, 18, 10, texEnemy);
 	lpAni = new CAnimation(20);
 	lpAni->Add(SPRITE_ENEMY_EYELET_01);
 	lpAni->Add(SPRITE_ENEMY_EYELET_02);
@@ -322,10 +333,10 @@ void CGame::InitGame(HWND hWnd)
 
 		#pragma region GX680
 
-	g_sprites->Add(SPRITE_ENEMY_GX680_01, 80, 295, 98, 312, texEnemy);
-	g_sprites->Add(SPRITE_ENEMY_GX680_02, 100, 296, 118, 312, texEnemy);
-	g_sprites->Add(SPRITE_ENEMY_GX680_03, 128, 296, 146, 312, texEnemy);
-	g_sprites->Add(SPRITE_ENEMY_GX680_04, 148, 295, 166, 312, texEnemy);
+	g_sprites->Add(SPRITE_ENEMY_GX680_01, 80, 295, 18, 17, texEnemy);
+	g_sprites->Add(SPRITE_ENEMY_GX680_02, 100, 296, 18, 17, texEnemy);
+	g_sprites->Add(SPRITE_ENEMY_GX680_03, 128, 296, 18, 17, texEnemy);
+	g_sprites->Add(SPRITE_ENEMY_GX680_04, 148, 295, 18, 17, texEnemy);
 	lpAni = new CAnimation(10);
 	lpAni->Add(SPRITE_ENEMY_GX680_01);
 	lpAni->Add(SPRITE_ENEMY_GX680_02);
@@ -337,11 +348,11 @@ void CGame::InitGame(HWND hWnd)
 
 		#pragma region STUKA
 
-	g_sprites->Add(SPRITE_ENEMY_STUKA_01, 74, 386, 92, 404, texEnemy);
-	g_sprites->Add(SPRITE_ENEMY_STUKA_02, 94, 386, 112, 404, texEnemy);
-	g_sprites->Add(SPRITE_ENEMY_STUKA_03, 114, 386, 132, 404, texEnemy);
-	g_sprites->Add(SPRITE_ENEMY_STUKA_04, 134, 386, 152, 404, texEnemy);
-	g_sprites->Add(SPRITE_ENEMY_STUKA_05, 154, 386, 172, 404, texEnemy);
+	g_sprites->Add(SPRITE_ENEMY_STUKA_01, 74, 386, 18, 18, texEnemy);
+	g_sprites->Add(SPRITE_ENEMY_STUKA_02, 94, 386, 18, 18, texEnemy);
+	g_sprites->Add(SPRITE_ENEMY_STUKA_03, 114, 386, 18, 18, texEnemy);
+	g_sprites->Add(SPRITE_ENEMY_STUKA_04, 134, 386, 18, 18, texEnemy);
+	g_sprites->Add(SPRITE_ENEMY_STUKA_05, 154, 386, 18, 18, texEnemy);
 	lpAni = new CAnimation(10);
 	lpAni->Add(SPRITE_ENEMY_STUKA_01);
 	lpAni->Add(SPRITE_ENEMY_STUKA_02);
@@ -353,10 +364,10 @@ void CGame::InitGame(HWND hWnd)
 
 		#pragma region OFFSIDE
 
-	g_sprites->Add(SPRITE_ENEMY_OFFSIDE_01, 26, 56, 44, 74, texEnemy);
-	g_sprites->Add(SPRITE_ENEMY_OFFSIDE_02, 46, 56, 60, 74, texEnemy);
-	g_sprites->Add(SPRITE_ENEMY_OFFSIDE_03, 186, 56, 200, 74, texEnemy);
-	g_sprites->Add(SPRITE_ENEMY_OFFSIDE_04, 202, 56, 220, 74, texEnemy);
+	g_sprites->Add(SPRITE_ENEMY_OFFSIDE_01, 26, 56, 18, 18, texEnemy);
+	g_sprites->Add(SPRITE_ENEMY_OFFSIDE_02, 46, 56, 18, 18, texEnemy);
+	g_sprites->Add(SPRITE_ENEMY_OFFSIDE_03, 186, 56, 18, 18, texEnemy);
+	g_sprites->Add(SPRITE_ENEMY_OFFSIDE_04, 202, 56, 18, 18, texEnemy);
 	lpAni = new CAnimation(5);
 	lpAni->Add(SPRITE_ENEMY_OFFSIDE_01);
 	lpAni->Add(SPRITE_ENEMY_OFFSIDE_02);
@@ -401,6 +412,11 @@ void CGame::InitGame(HWND hWnd)
 	pQuadtree->Retrieve(pRenderObjects, pCamera->GetBoundingBox());
 
 	#pragma endregion
+}
+
+void CGame::LoadResource()
+{
+
 }
 
 void CGame::CreateGameObject()

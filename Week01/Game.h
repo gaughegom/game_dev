@@ -36,6 +36,7 @@ public:
 	void RenderGame();
 	void RunGame();
 
+	void LoadResource();
 	void CreateGameObject();
 
 	LPDIRECT3DDEVICE9 GetDirect3dDevice() { return this->d3ddv; }

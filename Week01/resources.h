@@ -39,10 +39,11 @@
 
 #pragma region TEXTURES PATH
 
-#define SOPHIA_JASON_TEXTURE_PATH	L"resources//player.png"
-#define ENEMY_TEXTURE_PATH			L"resources//enemies.png"
-#define TEXTURE_TRANS_COLOR			D3DCOLOR_XRGB(41, 255, 4)
-#define BACKGOUND_TEXTURE_PATH		L"map//sectionB.png"
+#define SOPHIA_JASON_TEXTURE_PATH			L"resources//player.png"
+#define ENEMY_TEXTURE_PATH					L"resources//enemies.png"
+#define TILESET_OVER_W3_TEXTURE_PATH		L"resources//tileset-overworld3.png"
+#define TEXTURE_TRANS_COLOR					D3DCOLOR_XRGB(41, 255, 4)
+#define BACKGOUND_TEXTURE_PATH				L"map//sectionB.png"
 
 #pragma endregion
 
@@ -61,20 +62,20 @@
 #define SPRITE_SOPHIA_GUN_45			9
 #define SPRITE_SOPHIA_GUN_90			10
 
-#define SPRITE_BIG_JASON_LEFT_01			20 // big jason 20 - 29
-#define SPRITE_BIG_JASON_LEFT_02			21
-#define SPRITE_BIG_JASON_LEFT_03			22
-#define SPRITE_BIG_JASON_UP_01				23
-#define SPRITE_BIG_JASON_UP_02				24
-#define SPRITE_BIG_JASON_UP_03				25
-#define SPRITE_BIG_JASON_DOWN_01			26
-#define SPRITE_BIG_JASON_DOWN_02			27
-#define SPRITE_BIG_JASON_DOWN_03			28
+#define SPRITE_BIG_JASON_LEFT_01			30 // big jason 20 - 29
+#define SPRITE_BIG_JASON_LEFT_02			31
+#define SPRITE_BIG_JASON_LEFT_03			32
+#define SPRITE_BIG_JASON_UP_01				33
+#define SPRITE_BIG_JASON_UP_02				34
+#define SPRITE_BIG_JASON_UP_03				35
+#define SPRITE_BIG_JASON_DOWN_01			36
+#define SPRITE_BIG_JASON_DOWN_02			37
+#define SPRITE_BIG_JASON_DOWN_03			38
 
-#define SPRITE_SMALL_JASON_WALK_01		30 // small jason
-#define SPRITE_SMALL_JASON_WALK_02		31
-#define SPRITE_SMALL_JASON_WALK_03		32
-#define SPRITE_SMALL_JASON_WALK_04		33
+#define SPRITE_SMALL_JASON_WALK_01		20 // small jason
+#define SPRITE_SMALL_JASON_WALK_02		21
+#define SPRITE_SMALL_JASON_WALK_03		22
+#define SPRITE_SMALL_JASON_WALK_04		23
 
 #define SPRITE_ENEMY_ROBOT				49 // enemy from 50
 
