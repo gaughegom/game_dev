@@ -104,6 +104,9 @@
     <Filter Include="Framework\Util">
       <UniqueIdentifier>{b48ec041-8e0d-4b7b-9ad1-1bd84e4704ae}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Game\Game objects\Brick">
+      <UniqueIdentifier>{9d2825ae-a7b0-4e5c-9c57-86e7ebc6a25c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -193,6 +196,9 @@
     <ClCompile Include="Util.cpp">
       <Filter>Framework\Util</Filter>
     </ClCompile>
+    <ClCompile Include="Brick.cpp">
+      <Filter>Game\Game objects\Brick</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Textures.h">
@@ -281,6 +287,9 @@
     </ClInclude>
     <ClInclude Include="Util.h">
       <Filter>Framework\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="Brick.h">
+      <Filter>Game\Game objects\Brick</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

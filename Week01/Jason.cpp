@@ -2,26 +2,18 @@
 
 CJason::CJason()
 {
-	// add animation
+	this->SetSize(8, 16);
+	
 	this->AddAnimation("stay", 30);
 	this->AddAnimation("walk", 31);
-	// set size
-	this->SetSize(8, 16);
 
-	// set state
 	this->directState = new CJasonDirectionState(this);
 	this->directState->SetState(JasonDirectState::STAY);
-
-	// set position
-	this->SetPosition(140, 70);
-
-	// set velocity
-	this->SetVelocity(0, 0);
 }
 
 void CJason::Update(DWORD dt)
 {
-	LinearMoveInGravity(this, dt);
+	//LinearMoveInGravity(this, dt);
 	this->EdgeCollisionHandler();
 
 	if (this->IsSelected()) {
@@ -37,6 +29,7 @@ void CJason::Render()
 	this->animations.at(key)->
 		Render(this->position, this->nx);
 
+	// draw center point
 	auto debugPosSprite = CSprites::GetInstance()->Get(2000);
 	Vector2D debugPos = Vector2D(this->position.x - 8, this->position.y);
 	debugPosSprite->Draw(debugPos, this->nx);

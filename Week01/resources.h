@@ -37,9 +37,8 @@
 
 #pragma region TEXTURES PATH
 
-#define SOPHIA_JASON_TEXTURE_PATH			L"resources//player.png"
+#define SOPHIA_JASON_TEXTURE_PATH			L"textures//player.png"
 #define TEXTURE_TRANS_COLOR					D3DCOLOR_XRGB(41, 255, 4)
-#define BACKGOUND_TEXTURE_PATH				L"map//sectionB.png"
 
 #pragma endregion
 

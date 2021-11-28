@@ -3,7 +3,6 @@
 CSophia::CSophia()
 {
 	this->SetSize(20, 20);
-	this->SetPosition(PLAYER_START_X, PLAYER_START_Y);
 	this->directState = SophiaDirectState::Stay;
 	this->actionState = SophiaActionState::Idle;
 
@@ -18,10 +17,11 @@ CSophia::CSophia()
 
 void CSophia::Update(DWORD dt)
 {
-	LinearMoveInGravity(this, dt);
+	//LinearMoveInGravity(this, dt);
+	LinearMove(this, dt);
 
-	int backbufferWidth = CGame::GetInstance()->GetBackbufferWidth();
-	this->EdgeCollisionHandler(CGame::GetInstance()->GetBackbufferWidth());
+	int backbufferWidth = CGame::GetInstance()->GetMapWidth();
+	//this->EdgeCollisionHandler(CGame::GetInstance()->GetMapWidth());
 
 	if (this->IsSelected()) {
 		this->ListenKeyEvent();
@@ -106,7 +106,7 @@ void CSophia::Render()
 	this->gun->Render();
 
 	auto debugPosSprite = CSprites::GetInstance()->Get(2000);
-	Vector2D debugPos = Vector2D(this->position.x - 8, this->position.y);
+	Vector2D debugPos = Vector2D(this->position.x - 16, this->position.y);
 	debugPosSprite->Draw(debugPos, this->nx);
 }
 

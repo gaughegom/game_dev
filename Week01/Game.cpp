@@ -1,10 +1,11 @@
-#include <fstream>
 #include "Game.h"
-#include "Textures.h"
+
 #include "Animations.h"
 #include "Camera.h"
-#include "QuadTree.h"
+#include "KeyEventHandler.h"
 #include "InputHandler.h"
+#include "QuadTree.h"
+#include "Textures.h"
 
 #include "Sophia.h"
 #include "Jason.h"
@@ -34,7 +35,7 @@ CInputHandler* g_inputHandler = CInputHandler::GetInstance();
 
 CGame* CGame::__instance = NULL;
 
-#pragma region KEYBOARD
+#pragma region Keyboard
 
 class CKeyHander : public CKeyEventHandler
 {
@@ -78,7 +79,7 @@ void CKeyHander::KeyState(BYTE* states)
 
 #pragma endregion
 
-#pragma region DIRECTX
+#pragma region DirectX
 
 void CGame::InitDirectX(HWND hWnd)
 {
@@ -101,8 +102,8 @@ void CGame::InitDirectX(HWND hWnd)
 	d3dpp.BackBufferHeight = r.bottom + 1;
 	d3dpp.BackBufferWidth = r.right + 1;
 
-	backBufferWidth = d3dpp.BackBufferWidth;
-	backBufferHeight = d3dpp.BackBufferHeight;
+	mapWidth = d3dpp.BackBufferWidth;
+	mapHeight = d3dpp.BackBufferHeight;
 
 	d3d->CreateDevice(
 		D3DADAPTER_DEFAULT,
@@ -124,7 +125,7 @@ void CGame::InitDirectX(HWND hWnd)
 	D3DXCreateSprite(d3ddv, &spriteHandler);
 
 	DebugOut(L"[INFO] InitGame done;\n");
-	DebugOut(L"[INFO] Screen: %d, %d\n", backBufferWidth, backBufferHeight);
+	DebugOut(L"[INFO] Screen: %d, %d\n", mapWidth, mapHeight);
 }
 
 /*
@@ -149,7 +150,7 @@ void CGame::Draw(Vector2D position, int nx, LPDIRECT3DTEXTURE9 texture, int left
 
 	// flip X
 	D3DXMATRIX dmFlipX;
-	D3DXMatrixScaling(&dmFlipX, -nx, 1.0f, 1.0f);
+	D3DXMatrixScaling(&dmFlipX, nx, 1.0f, 1.0f);
 
 	// translate 
 	D3DXMATRIX dmTranslation;
@@ -165,24 +166,25 @@ void CGame::Draw(Vector2D position, int nx, LPDIRECT3DTEXTURE9 texture, int left
 
 #pragma endregion
 
-#pragma region GAME PROCESS
+#pragma region Game process
 
 void CGame::InitGame(HWND hWnd)
 {
 	this->InitDirectX(hWnd);
 
+	#pragma region TEXTURES FOR TEST ONLY
+	
 	// For only test
 	g_textures->Add(10, SOPHIA_JASON_TEXTURE_PATH, D3DCOLOR_XRGB(0, 0, 0));
-	g_textures->Add(100, BACKGOUND_TEXTURE_PATH, TEXTURE_TRANS_COLOR);
 	LPDIRECT3DTEXTURE9 texTestDebug = g_textures->Get(10);
-	LPDIRECT3DTEXTURE9 texBackground = g_textures->Get(100);
-
-	g_sprites->Add(1000, 0, 0, 1376, 528, texBackground);
-	this->lpsBackground = CSprites::GetInstance()->Get(1000);
-	this->backgound = Vector2D(550, 200);
-	
 	g_sprites->Add(2000, 0, 0, 1, 1, texTestDebug);
 
+	#pragma endregion
+
+	this->LoadResource();
+	//this->CreateGameObject();
+	
+	// start keyboard
 	#pragma region KEYBOARD
 	
 	g_inputHandler->SetHandleWindow(this->hWnd);
@@ -192,40 +194,10 @@ void CGame::InitGame(HWND hWnd)
 	g_inputHandler->InitKeyboard();
 
 	#pragma endregion
-
-	this->LoadResource();
-	this->CreateGameObject();
-
-	// start camera
-	#pragma region CAMERA START
-	
-	pCamera = new CCamera();
-	pCamera->SetTarget(pSophia);
-	pCamera->SetSize(this->backBufferWidth, this->backBufferHeight);
-	pCamera->Update();
-
-	#pragma endregion
-
-	// start quadtree
-	#pragma region QUADTREE START
-	
-	pQuadtree = new CQuadTree(0, SRect(0, QUADTREE_HEIGHT, QUADTREE_WIDTH * 5, 0));
-	pQuadtree->Update(pGameObjects);
-	pRenderObjects.clear();
-	pQuadtree->Retrieve(pRenderObjects, pCamera->GetBoundingBox());
-
-	#pragma endregion
 }
 
 void CGame::CreateGameObject()
 {
-	// create sophia
-	pSophia = new CSophia();
-	pSophia->Select(true);
-
-	// create jason
-	pJason = new CJason();
-
 	// create drap
 	auto pDrap = new CEnemyDrap();
 	pGameObjects.push_back(pDrap);
@@ -244,125 +216,6 @@ void CGame::CreateGameObject()
 
 	auto pOffside = new CEnemyOffside();
 	pGameObjects.push_back(pOffside);
-
-	// push sophia in gameObject vector
-	pGameObjects.push_back(pSophia);
-	pGameObjects.push_back(pJason);
-}
-
-void CGame::LoadResource()
-{
-	LPCWSTR sceneFilePath = SCENE2_PATH;
-	DebugOut(L"[INFO] Start loading scene resouce %s\n", sceneFilePath);
-
-	// Load camera
-	pCamera = new CCamera();
-	pCamera->SetTarget(pSophia);
-	pCamera->SetSize(this->backBufferWidth, this->backBufferHeight);
-
-	// open scene file path
-	ifstream fs;
-	fs.open(sceneFilePath);
-
-	SceneSection section = SceneSection::SCENE_SECTION_UNKNOW;
-	char str[1024];
-	while (fs.getline(str, 1024))
-	{
-		std::string line(str);
-
-		// set section
-		if (line[0] == '#') continue; // skip comment line
-		if (line == "[TEXTURES]") {
-			section = SceneSection::SCENE_SECTION_TEXTURES;
-			continue;
-		}
-		if (line == "[SPRITES]") {
-			section = SceneSection::SCENE_SECTION_SPRITES;
-			continue;
-		}
-		if (line == "[ANIMATIONS]") {
-			section = SceneSection::SCENE_SECTION_ANIMATIONS;
-			continue;
-		}
-		if (line[0] == '[') {
-			section = SceneSection::SCENE_SECTION_UNKNOW;
-			continue;
-		}
-
-		switch (section)
-		{
-		case SceneSection::SCENE_SECTION_UNKNOW:
-			break;
-		case SceneSection::SCENE_SECTION_TEXTURES:
-			__ParseSection_TEXTURES__(line);
-			break;
-		case SceneSection::SCENE_SECTION_SPRITES:
-			__ParseSection_SPRITES__(line);
-			break;
-		case SceneSection::SCENE_SECTION_ANIMATIONS:
-			__ParseSection_ANIMATIONS__(line);
-			break;
-		case SceneSection::SCENE_SECTION_MAP:
-			break;
-		default:
-			break;
-		}
-	}
-	fs.close();
-	DebugOut(L"[INFO] Load scene resource done\n");
-}
-
-void CGame::__ParseSection_TEXTURES__(std::string line)
-{
-	std::vector<std::string> tokens = SplitLine(line);
-	if (tokens.size() < 5)
-		return;
-
-	int texId = atoi(tokens[0].c_str());
-	wstring texPath = ToWSTR(tokens[1]);
-	int R = atoi(tokens[2].c_str());
-	int G = atoi(tokens[3].c_str());
-	int B = atoi(tokens[4].c_str());
-
-	g_textures->Add(texId, texPath.c_str(), D3DCOLOR_XRGB(R, G, B));
-}
-
-void CGame::__ParseSection_SPRITES__(std::string line)
-{
-	std::vector<std::string> tokens = SplitLine(line);
-	if (tokens.size() < 6)
-		return; // skip
-
-	int id = atoi(tokens[0].c_str());
-	int left = atoi(tokens[1].c_str());
-	int top = atoi(tokens[2].c_str());
-	int width = atoi(tokens[3].c_str());
-	int height = atoi(tokens[4].c_str());
-	int texId = atoi(tokens[5].c_str());
-
-	LPDIRECT3DTEXTURE9 texOfThis = g_textures->Get(texId);
-	if (texOfThis == nullptr) {
-		DebugOut(L"[ERROR] TexId %d is not existed\n", texId);
-		return; // skip
-	}
-
-	g_sprites->Add(id, left, top, width, height, texOfThis);
-}
-
-void CGame::__ParseSection_ANIMATIONS__(std::string line)
-{
-	std::vector<std::string> tokens = SplitLine(line);
-	if (tokens.size() < 3)
-		return; // skip
-	LPANIMATION lpAni = new CAnimation();
-	int id = atoi(tokens[0].c_str());
-	for (int i = 1; i < tokens.size(); i += 2) {
-		int spriteId = atoi(tokens[i].c_str());
-		int frameTime = atoi(tokens[i + 1].c_str());
-		lpAni->Add(spriteId, frameTime);
-	}
-
-	g_animations->Add(id, lpAni);
 }
 
 void CGame::UpdateGame(DWORD dt)
@@ -390,7 +243,7 @@ void CGame::RenderGame()
 
 		spriteHandler->Begin(D3DXSPRITE_ALPHABLEND);
 
-		this->lpsBackground->Draw(this->backgound, 1);
+		this->map->Draw(Vector2D(this->mapWidth / 2, this->mapHeight / 2), 1);
 		for (auto object : pRenderObjects) {
 			object->Render();
 		}
@@ -462,4 +315,225 @@ CGame* CGame::GetInstance()
 	return __instance;
 }
 
+#pragma endregion
+
+#pragma region Load Resources
+
+void CGame::LoadResource()
+{
+	LPCWSTR sceneFilePath = SCENE2_PATH;
+	DebugOut(L"[INFO] Start loading scene resouce %s\n", sceneFilePath);
+
+	// start game camera
+	pCamera = new CCamera();
+	pCamera->SetSize(Vector2D(this->mapWidth, this->mapHeight));
+
+	// open scene file path
+	ifstream fs;
+	fs.open(sceneFilePath);
+
+	SceneSection section = SceneSection::SCENE_SECTION_UNKNOW;
+	char str[2048];
+	while (fs.getline(str, 2048))
+	{
+		std::string line(str);
+
+		// set section
+		if (line[0] == '#') continue; // skip comment line
+		if (line == "[TEXTURES]") {
+			section = SceneSection::SCENE_SECTION_TEXTURES;
+			continue;
+		}
+		if (line == "[SPRITES]") {
+			section = SceneSection::SCENE_SECTION_SPRITES;
+			continue;
+		}
+		if (line == "[ANIMATIONS]") {
+			section = SceneSection::SCENE_SECTION_ANIMATIONS;
+			continue;
+		}
+		if (line == "[TILEMAP]") {
+			section = SceneSection::SCENE_SECTION_MAP;
+			continue;
+		}
+		if (line[0] == '[') {
+			section = SceneSection::SCENE_SECTION_UNKNOW;
+			continue;
+		}
+
+		switch (section)
+		{
+		case SceneSection::SCENE_SECTION_UNKNOW:
+			break;
+		case SceneSection::SCENE_SECTION_TEXTURES:
+			__ParseSection_TEXTURES__(line);
+			break;
+		case SceneSection::SCENE_SECTION_SPRITES:
+			__ParseSection_SPRITES__(line);
+			break;
+		case SceneSection::SCENE_SECTION_ANIMATIONS:
+			__ParseSection_ANIMATIONS__(line);
+			break;
+		case SceneSection::SCENE_SECTION_MAP:
+			__ParseSection_MAP__(line);
+		default:
+			break;
+		}
+	}
+	fs.close();
+	DebugOut(L"[INFO] Load scene resource done\n");
+}
+
+void CGame::__ParseSection_TEXTURES__(std::string line)
+{
+	std::vector<std::string> tokens = SplitLine(line);
+	if (tokens.size() < 5)
+		return;
+
+	int texId = atoi(tokens[0].c_str());
+	wstring texPath = ToWSTR(tokens[1]);
+	int R = atoi(tokens[2].c_str());
+	int G = atoi(tokens[3].c_str());
+	int B = atoi(tokens[4].c_str());
+
+	g_textures->Add(texId, texPath.c_str(), D3DCOLOR_XRGB(R, G, B));
+}
+
+void CGame::__ParseSection_SPRITES__(std::string line)
+{
+	std::vector<std::string> tokens = SplitLine(line);
+	if (tokens.size() < 6)
+		return; // skip
+
+	int id = atoi(tokens[0].c_str());
+	int left = atoi(tokens[1].c_str());
+	int top = atoi(tokens[2].c_str());
+	int width = atoi(tokens[3].c_str());
+	int height = atoi(tokens[4].c_str());
+	int texId = atoi(tokens[5].c_str());
+
+	LPDIRECT3DTEXTURE9 texOfThis = g_textures->Get(texId);
+	if (texOfThis == nullptr) {
+		DebugOut(L"[ERROR] TexId %d is not existed\n", texId);
+		return; // skip
+	}
+
+	g_sprites->Add(id, left, top, width, height, texOfThis);
+}
+
+void CGame::__ParseSection_ANIMATIONS__(std::string line)
+{
+	std::vector<std::string> tokens = SplitLine(line);
+	if (tokens.size() < 3)
+		return; // skip
+	LPANIMATION lpAni = new CAnimation();
+	int id = atoi(tokens[0].c_str());
+	for (int i = 1; i < tokens.size(); i += 2) {
+		int spriteId = atoi(tokens[i].c_str());
+		int frameTime = atoi(tokens[i + 1].c_str());
+		lpAni->Add(spriteId, frameTime);
+	}
+
+	g_animations->Add(id, lpAni);
+}
+
+void CGame::__ParseSection_MAP__(std::string line)
+{
+	std::vector<std::string> tokens = SplitLine(line);
+
+	if (tokens.size() < 1 || tokens[0] == "")
+		return; // skip
+
+	std::string mapFilePath = tokens[0];
+	FILE* pf;
+	errno_t err = fopen_s(&pf, mapFilePath.c_str(), "r");
+
+	char readerBuffer[13000]{};
+	rapidjson::FileReadStream is(pf, readerBuffer, sizeof(readerBuffer));
+	rapidjson::Document doc;
+	doc.ParseStream(is);
+	
+	int tileWidth = doc["tilewidth"].GetInt();
+	int tileHeight = doc["tileheight"].GetInt();
+	int sectionWidth = doc["width"].GetInt();
+	int sectionHeight = doc["height"].GetInt();
+	
+	SRect mapBoundary = SRect(
+		0,
+		sectionHeight * tileHeight,
+		sectionWidth * tileWidth,
+		0
+	);
+
+	this->mapWidth = mapBoundary.right;
+	this->mapHeight = mapBoundary.top;
+
+	// camera
+	pCamera->SetBoundary(mapBoundary);
+	pQuadtree = new CQuadTree(0, mapBoundary);
+
+	// map texture
+	auto properties = doc["properties"].GetArray();
+	for (auto& prop : properties) {
+		if (strcmp(prop["name"].GetString(), "Image Path") == 0) {
+			std::string imagePath = prop["value"].GetString();
+			// process texId
+			int texId = 10;
+			g_textures->Add(texId, ToWSTR(imagePath).c_str(), D3DCOLOR_XRGB(0, 0, 0));
+			LPDIRECT3DTEXTURE9 texMap = g_textures->Get(texId);
+
+			int sprMapId = 3000;
+			g_sprites->Add(sprMapId, 0, 0, this->mapWidth, this->mapHeight, texMap);
+			this->map = g_sprites->Get(sprMapId);
+		}
+	}
+
+	// platform
+	auto layers = doc["layers"].GetArray();
+	for (auto& layer : layers) {
+		auto layerType = layer["type"].GetString();
+		auto visible = layer["visible"].GetBool();
+
+		// object group layer
+		if (strcmp(layerType, "objectgroup") == 0 && visible) {
+			auto objects = layer["objects"].GetArray();
+			for (auto& object : objects) {
+				LPGAMEOBJECT newObject = nullptr;
+				auto objectType = object["name"].GetString();
+
+				if (strcmp(objectType, "jason") == 0) {
+					newObject = new CJason;
+					pJason = (CJason*) newObject;
+					pJason->Select(false);
+					goto ParseObject;
+				}
+				if (strcmp(objectType, "sophia") == 0) {
+					newObject = new CSophia;
+					pSophia = (CSophia*)newObject;
+					pCamera->SetTarget(pSophia);
+					pSophia->Select(true);
+					goto ParseObject;
+				}
+
+			ParseObject:
+				float x = object["x"].GetFloat();
+				float y = object["y"].GetFloat();
+				float width = object["width"].GetFloat();
+				float height = object["height"].GetFloat();
+
+				newObject->SetPosition(x + width / 2, this->mapHeight - y + height / 2);
+				pGameObjects.push_back(newObject);
+				pQuadtree->Insert(newObject);
+			}
+		}
+	}
+
+	if (pf != 0) {
+		fclose(pf);
+	}
+}
+
+void CGame::__ParseSection_OBJECTS__(std::string line)
+{
+}
 #pragma endregion

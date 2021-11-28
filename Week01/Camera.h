@@ -9,28 +9,27 @@
 class CCamera {
 protected:
 	Vector2D position;
-	int width, height;
+	Vector2D size;
 	CGameObject* target;
-
+	SRect boundary;
 
 public:
 	CCamera();
 
 	// position and site
 	void SetPosition(Vector2D position);
-	void SetSize(int newWidth, int newHeight);
+	void SetSize(Vector2D size);
 	void Update();
 
 	Vector2D GetPosition();
-	float GetX();
-	float GetY();
-	int GetWidth();
-	int GetHeight();
 	SRect GetBoundingBox();
+	void SetBoundary(SRect boundary);
 
 	// target
 	void SetTarget(CGameObject* target);
 	CGameObject* GetTarget();
+
+	Vector2D TranslateWorldToScreen(Vector2D pos);
 };
 
 #endif // !_CAMERA_H
