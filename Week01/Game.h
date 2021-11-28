@@ -8,6 +8,14 @@
 class CSprite;
 class CGameObject;
 
+enum class SceneSection : int {
+	SCENE_SECTION_UNKNOW = -1,
+	SCENE_SECTION_TEXTURES = 1,
+	SCENE_SECTION_SPRITES = 2,
+	SCENE_SECTION_ANIMATIONS = 3,
+	SCENE_SECTION_MAP = 4
+};
+
 class CGame {
 	static CGame* __instance;
 
@@ -36,8 +44,11 @@ public:
 	void RenderGame();
 	void RunGame();
 
-	void LoadResource();
 	void CreateGameObject();
+	void LoadResource();
+	void __ParseSection_TEXTURES__(std::string line);
+	void __ParseSection_SPRITES__(std::string line);
+	void __ParseSection_ANIMATIONS__(std::string line);
 
 	LPDIRECT3DDEVICE9 GetDirect3dDevice() { return this->d3ddv; }
 	LPDIRECT3DSURFACE9 GetBackbuffer() { return backBuffer; }

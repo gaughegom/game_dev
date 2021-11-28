@@ -2,13 +2,10 @@
 
 CEnemyEyelet::CEnemyEyelet()
 {
-	// animation
-	this->AddAnimation("default", ANIMATION_ENEMY_EYELET);
-	// position
 	this->SetPosition(PLAYER_START_X + 50, PLAYER_START_Y + 20);
 	this->SetSize(18, 18);
-	// velocity
 	this->SetVelocity(0, 0);
+	this->AddAnimation("default", 220); // eyelet animation id
 }
 
 void CEnemyEyelet::Update(DWORD dt)

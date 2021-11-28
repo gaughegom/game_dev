@@ -30,15 +30,15 @@ int CSophiaGun::MappingGunSpriteState(SophiaActionState actionState)
 	{
 	case SophiaActionState::Idle:
 		this->SetPosition(8.0f * this->sophia->GetNx(), 9.0f);
-		return SPRITE_SOPHIA_GUN_00;
+		return 8; // gun_00
 		break;
 	case SophiaActionState::Tile45:
 		this->SetPosition(8.0f * this->sophia->GetNx(), 21.0f);
-		return SPRITE_SOPHIA_GUN_45;
+		return 9; // gun_45
 		break;
 	case SophiaActionState::Up90:
 		this->SetPosition(3.0f * this->sophia->GetNx(), 24.0f);
-		return SPRITE_SOPHIA_GUN_90;
+		return 10; // gun_90
 		break;
 	default:
 		break;

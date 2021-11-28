@@ -2,14 +2,10 @@
 
 CEnemyDrap::CEnemyDrap()
 {
-	// set position
 	this->SetPosition(PLAYER_START_X + 20, PLAYER_START_Y + 20);
 	this->SetSize(18, 18);
-	// add animation
-	this->AddAnimation("default", ANIMATION_ENEMY_DRAP);
-	// set velocity
 	this->SetVelocity(0, 0);
-	// set size
+	this->AddAnimation("default", 200); // 200: drap animation id
 }
 
 void CEnemyDrap::Update(DWORD dt)

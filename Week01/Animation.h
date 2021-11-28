@@ -15,6 +15,7 @@ class CAnimation
 	bool wait = false;
 	bool reverse = false;
 public:
+	CAnimation();
 	CAnimation(int defaultTime) { this->defaultTime = defaultTime; lastFrameTime = -1; currentFrame = -1; }
 	void Add(int spriteId, DWORD time = 0);
 	void Render(Vector2D position, int nx);

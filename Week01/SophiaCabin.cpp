@@ -27,17 +27,17 @@ int CSophiaCabin::MappingCabinSpriteState(SophiaActionState actionState)
 	{
 	case SophiaActionState::Idle:
 		this->SetPosition(-3.5f * this->sophia->GetNx(), 9.0f);
-		return SPRITE_SOPHIA_CABIN_00;
+		return 5; // cabin_00
 
 	case SophiaActionState::Tile45:
 		this->SetPosition(-3.5f * this->sophia->GetNx(), 13.0f);
-		return SPRITE_SOPHIA_CABIN_45;
+		return 6; // cabin_45
 
 	case SophiaActionState::Up90:
 		this->SetPosition(-3.5f * this->sophia->GetNx(), 14.0f);
-		return SPRITE_SOPHIA_CABIN_45;
+		return 6;
 
 	default:
-		return SPRITE_SOPHIA_CABIN_00;
+		return 5;
 	}
 }

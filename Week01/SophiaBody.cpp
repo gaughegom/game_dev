@@ -11,7 +11,7 @@ void CSophiaBody::Update(DWORD dt)
 
 void CSophiaBody::Render()
 {
-	auto sprite = CSprites::GetInstance()->Get(SPRITE_SOPHIA_BODY);
+	auto sprite = CSprites::GetInstance()->Get(4); // 4: sophia body
 
 	// handle animation action state
 	this->HandleAnimationActionState(this->sophia->GetActionState());

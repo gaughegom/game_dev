@@ -171,11 +171,7 @@ void CGame::InitGame(HWND hWnd)
 {
 	this->InitDirectX(hWnd);
 
-	g_textures->Add(TEXTURES_PLAYER_ID, SOPHIA_JASON_TEXTURE_PATH, TEXTURE_TRANS_COLOR);
-	g_textures->Add(TEXTURES_ENEMY_ID, ENEMY_TEXTURE_PATH, TEXTURE_TRANS_COLOR);
-	LPDIRECT3DTEXTURE9 texPlayer = g_textures->Get(TEXTURES_PLAYER_ID);
-	LPDIRECT3DTEXTURE9 texEnemy = g_textures->Get(TEXTURES_ENEMY_ID);
-
+	// For only test
 	g_textures->Add(10, SOPHIA_JASON_TEXTURE_PATH, D3DCOLOR_XRGB(0, 0, 0));
 	g_textures->Add(100, BACKGOUND_TEXTURE_PATH, TEXTURE_TRANS_COLOR);
 	LPDIRECT3DTEXTURE9 texTestDebug = g_textures->Get(10);
@@ -187,199 +183,6 @@ void CGame::InitGame(HWND hWnd)
 	
 	g_sprites->Add(2000, 0, 0, 1, 1, texTestDebug);
 
-	#pragma region SOPHIA SPRITES
-	
-	// Add 2 wheel
-	g_sprites->Add(SPRITE_SOPHIA_WHEEL_1, 3, 21, 8, 8, texPlayer);
-	g_sprites->Add(SPRITE_SOPHIA_WHEEL_2, 21, 21, 8, 8, texPlayer);
-	g_sprites->Add(SPRITE_SOPHIA_WHEEL_3, 12, 21, 8, 8, texPlayer);
-	g_sprites->Add(SPRITE_SOPHIA_WHEEL_4, 30, 21, 8, 8, texPlayer);
-
-	// Add sophia body
-	g_sprites->Add(SPRITE_SOPHIA_BODY, 3, 12, 6, 7, texPlayer);
-
-	// Add cabin
-	g_sprites->Add(SPRITE_SOPHIA_CABIN_00, 39, 3, 16, 8, texPlayer);
-	g_sprites->Add(SPRITE_SOPHIA_CABIN_45, 73, 4, 16, 15, texPlayer);
-	//g_sprites->Add(SPRITE_SOPHIA_CABIN_OPEN, 56, 3, 72, 11, texPlayer); // fix open later
-
-	// add gun
-	g_sprites->Add(SPRITE_SOPHIA_GUN_00, 12, 5, 7, 4, texPlayer);
-	g_sprites->Add(SPRITE_SOPHIA_GUN_45, 21, 3, 8, 8, texPlayer);
-	g_sprites->Add(SPRITE_SOPHIA_GUN_90, 32, 3, 4, 7, texPlayer);
-
-
-	LPANIMATION lpAni;
-	// add sophia left wheel
-	lpAni = new CAnimation(5);
-	lpAni->Add(SPRITE_SOPHIA_WHEEL_1);
-	lpAni->Add(SPRITE_SOPHIA_WHEEL_3);
-	lpAni->Add(SPRITE_SOPHIA_WHEEL_2);
-	lpAni->Add(SPRITE_SOPHIA_WHEEL_4);
-	g_animations->Add(ANIMATION_SOPHIA_LEFT_WHEEL, lpAni);
-
-	lpAni = new CAnimation(5);
-	// add sophia right wheel
-	lpAni->Add(SPRITE_SOPHIA_WHEEL_2);
-	lpAni->Add(SPRITE_SOPHIA_WHEEL_4);
-	lpAni->Add(SPRITE_SOPHIA_WHEEL_1);
-	lpAni->Add(SPRITE_SOPHIA_WHEEL_3);
-	g_animations->Add(ANIMATION_SOPHIA_RIGHT_WHEEL, lpAni);
-
-	#pragma endregion
-
-	#pragma region JASON SPRITES
-
-	// small jason
-	g_sprites->Add(SPRITE_SMALL_JASON_WALK_01, 3, 30, 8, 16, texPlayer);
-	g_sprites->Add(SPRITE_SMALL_JASON_WALK_02, 12, 31, 8, 16, texPlayer);
-	g_sprites->Add(SPRITE_SMALL_JASON_WALK_03, 21, 30, 8, 16, texPlayer);
-	g_sprites->Add(SPRITE_SMALL_JASON_WALK_04, 30, 31, 8, 16, texPlayer);
-
-	lpAni = new CAnimation(5);
-	lpAni->Add(SPRITE_SMALL_JASON_WALK_01);
-	lpAni->Add(SPRITE_SMALL_JASON_WALK_02);
-	lpAni->Add(SPRITE_SMALL_JASON_WALK_03);
-	lpAni->Add(SPRITE_SMALL_JASON_WALK_04);
-	g_animations->Add(ANIMATION_SMALL_JASON_WALK, lpAni);
-	lpAni = new CAnimation(5);
-	lpAni->Add(SPRITE_SMALL_JASON_WALK_03);
-	g_animations->Add(ANIMATION_SMALL_JASON_STAY, lpAni);
-
-	// big jason left
-	g_sprites->Add(SPRITE_BIG_JASON_LEFT_01, 208, 69, 232, 100, texPlayer);
-	g_sprites->Add(SPRITE_BIG_JASON_LEFT_02, 233, 69, 257, 101, texPlayer);
-	g_sprites->Add(SPRITE_BIG_JASON_LEFT_03, 258, 69, 282, 100, texPlayer);
-	// big jason up
-	g_sprites->Add(SPRITE_BIG_JASON_UP_01, 210, 36, 230, 67, texPlayer);
-	g_sprites->Add(SPRITE_BIG_JASON_UP_02, 235, 36, 255, 68, texPlayer);
-	g_sprites->Add(SPRITE_BIG_JASON_UP_03, 260, 36, 280, 67, texPlayer);
-	// big jason down
-	g_sprites->Add(SPRITE_BIG_JASON_DOWN_01, 210, 3, 230, 34, texPlayer);
-	g_sprites->Add(SPRITE_BIG_JASON_DOWN_02, 235, 3, 255, 35, texPlayer);
-	g_sprites->Add(SPRITE_BIG_JASON_DOWN_03, 280, 3, 280, 34, texPlayer);
-
-	// add animation jason left
-	lpAni = new CAnimation(5);
-	lpAni->Add(SPRITE_BIG_JASON_LEFT_01);
-	lpAni->Add(SPRITE_BIG_JASON_LEFT_02);
-	lpAni->Add(SPRITE_BIG_JASON_LEFT_03);
-	g_animations->Add(ANIMATION_JASON_LEFT, lpAni);
-	// add animation jason up
-	lpAni = new CAnimation(5);
-	lpAni->Add(SPRITE_BIG_JASON_UP_01);
-	lpAni->Add(SPRITE_BIG_JASON_UP_02);
-	lpAni->Add(SPRITE_BIG_JASON_UP_03);
-	g_animations->Add(ANIMATION_JASON_UP, lpAni);
-	// add aniamtion jason down
-	lpAni = new CAnimation(5);
-	lpAni->Add(SPRITE_BIG_JASON_DOWN_01);
-	lpAni->Add(SPRITE_BIG_JASON_DOWN_02);
-	lpAni->Add(SPRITE_BIG_JASON_DOWN_03);
-	g_animations->Add(ANIMATION_JASON_DOWN, lpAni);
-
-	#pragma endregion
-
-	#pragma region ENEMY SPRITES
-
-		#pragma region DRAP
-
-	g_sprites->Add(SPRITE_ENEMY_DRAP_01, 40, 276, 18, 18, texEnemy);
-	g_sprites->Add(SPRITE_ENEMY_DRAP_02, 60, 274, 18, 18, texEnemy);
-	g_sprites->Add(SPRITE_ENEMY_DRAP_03, 80, 276, 18, 18, texEnemy);
-	g_sprites->Add(SPRITE_ENEMY_DRAP_04, 100, 274, 18, 18, texEnemy);
-	g_sprites->Add(SPRITE_ENEMY_DRAP_05, 128, 274, 18, 18, texEnemy);
-	g_sprites->Add(SPRITE_ENEMY_DRAP_06, 148, 276, 18, 18, texEnemy);
-	g_sprites->Add(SPRITE_ENEMY_DRAP_07, 168, 274, 18, 18, texEnemy);
-	g_sprites->Add(SPRITE_ENEMY_DRAP_08, 188, 276, 18, 18, texEnemy);
-	lpAni = new CAnimation(20);
-	lpAni->Add(SPRITE_ENEMY_DRAP_01);
-	lpAni->Add(SPRITE_ENEMY_DRAP_02);
-	lpAni->Add(SPRITE_ENEMY_DRAP_03);
-	lpAni->Add(SPRITE_ENEMY_DRAP_04);
-	g_animations->Add(ANIMATION_ENEMY_DRAP, lpAni);
-	lpAni = new CAnimation(20);
-	lpAni->Add(SPRITE_ENEMY_DRAP_05);
-	lpAni->Add(SPRITE_ENEMY_DRAP_06);
-	lpAni->Add(SPRITE_ENEMY_DRAP_07);
-	lpAni->Add(SPRITE_ENEMY_DRAP_08);
-	g_animations->Add(ANIMATION_ENEMY_DRAP_REVERSE, lpAni);
-
-		#pragma endregion
-
-		#pragma region EYELET
-
-	g_sprites->Add(SPRITE_ENEMY_EYELET_01, 40, 36, 18, 10, texEnemy);
-	g_sprites->Add(SPRITE_ENEMY_EYELET_02, 60, 31, 18, 15, texEnemy);
-	g_sprites->Add(SPRITE_ENEMY_EYELET_03, 80, 28, 18, 18, texEnemy);
-	g_sprites->Add(SPRITE_ENEMY_EYELET_04, 100, 31, 18, 15, texEnemy);
-	g_sprites->Add(SPRITE_ENEMY_EYELET_05, 128, 31, 18, 15, texEnemy);
-	g_sprites->Add(SPRITE_ENEMY_EYELET_06, 148, 28, 18, 18, texEnemy);
-	g_sprites->Add(SPRITE_ENEMY_EYELET_07, 168, 31, 18, 15, texEnemy);
-	g_sprites->Add(SPRITE_ENEMY_EYELET_08, 188, 36, 18, 10, texEnemy);
-	lpAni = new CAnimation(20);
-	lpAni->Add(SPRITE_ENEMY_EYELET_01);
-	lpAni->Add(SPRITE_ENEMY_EYELET_02);
-	lpAni->Add(SPRITE_ENEMY_EYELET_03);
-	lpAni->Add(SPRITE_ENEMY_EYELET_04);
-	g_animations->Add(ANIMATION_ENEMY_EYELET, lpAni);
-	lpAni = new CAnimation(20);
-	lpAni->Add(SPRITE_ENEMY_EYELET_05);
-	lpAni->Add(SPRITE_ENEMY_EYELET_06);
-	lpAni->Add(SPRITE_ENEMY_EYELET_07);
-	lpAni->Add(SPRITE_ENEMY_EYELET_08);
-
-		#pragma endregion
-
-		#pragma region GX680
-
-	g_sprites->Add(SPRITE_ENEMY_GX680_01, 80, 295, 18, 17, texEnemy);
-	g_sprites->Add(SPRITE_ENEMY_GX680_02, 100, 296, 18, 17, texEnemy);
-	g_sprites->Add(SPRITE_ENEMY_GX680_03, 128, 296, 18, 17, texEnemy);
-	g_sprites->Add(SPRITE_ENEMY_GX680_04, 148, 295, 18, 17, texEnemy);
-	lpAni = new CAnimation(10);
-	lpAni->Add(SPRITE_ENEMY_GX680_01);
-	lpAni->Add(SPRITE_ENEMY_GX680_02);
-	lpAni->Add(SPRITE_ENEMY_GX680_03);
-	lpAni->Add(SPRITE_ENEMY_GX680_04);
-	g_animations->Add(ANIMATION_ENEMY_GX680, lpAni);
-
-		#pragma endregion
-
-		#pragma region STUKA
-
-	g_sprites->Add(SPRITE_ENEMY_STUKA_01, 74, 386, 18, 18, texEnemy);
-	g_sprites->Add(SPRITE_ENEMY_STUKA_02, 94, 386, 18, 18, texEnemy);
-	g_sprites->Add(SPRITE_ENEMY_STUKA_03, 114, 386, 18, 18, texEnemy);
-	g_sprites->Add(SPRITE_ENEMY_STUKA_04, 134, 386, 18, 18, texEnemy);
-	g_sprites->Add(SPRITE_ENEMY_STUKA_05, 154, 386, 18, 18, texEnemy);
-	lpAni = new CAnimation(10);
-	lpAni->Add(SPRITE_ENEMY_STUKA_01);
-	lpAni->Add(SPRITE_ENEMY_STUKA_02);
-	lpAni->Add(SPRITE_ENEMY_STUKA_03);
-	lpAni->Add(SPRITE_ENEMY_STUKA_04);
-	lpAni->Add(SPRITE_ENEMY_STUKA_05);
-	g_animations->Add(ANIMATION_ENEMY_STUKA, lpAni);
-		#pragma endregion
-
-		#pragma region OFFSIDE
-
-	g_sprites->Add(SPRITE_ENEMY_OFFSIDE_01, 26, 56, 18, 18, texEnemy);
-	g_sprites->Add(SPRITE_ENEMY_OFFSIDE_02, 46, 56, 18, 18, texEnemy);
-	g_sprites->Add(SPRITE_ENEMY_OFFSIDE_03, 186, 56, 18, 18, texEnemy);
-	g_sprites->Add(SPRITE_ENEMY_OFFSIDE_04, 202, 56, 18, 18, texEnemy);
-	lpAni = new CAnimation(5);
-	lpAni->Add(SPRITE_ENEMY_OFFSIDE_01);
-	lpAni->Add(SPRITE_ENEMY_OFFSIDE_02);
-	lpAni->Add(SPRITE_ENEMY_OFFSIDE_03);
-	lpAni->Add(SPRITE_ENEMY_OFFSIDE_04);
-	g_animations->Add(ANIMATION_ENEMY_OFFSIDE, lpAni);
-
-		#pragma endregion
-
-
-	#pragma endregion
-
 	#pragma region KEYBOARD
 	
 	g_inputHandler->SetHandleWindow(this->hWnd);
@@ -387,13 +190,13 @@ void CGame::InitGame(HWND hWnd)
 	this->keyHandler = new CKeyHander();
 	g_inputHandler->SetKeyHandler(keyHandler);
 	g_inputHandler->InitKeyboard();
-	//this->InitKeyboard(keyHandler);
 
 	#pragma endregion
 
-	CreateGameObject();
+	this->LoadResource();
+	this->CreateGameObject();
 
-	// create camera
+	// start camera
 	#pragma region CAMERA START
 	
 	pCamera = new CCamera();
@@ -403,7 +206,7 @@ void CGame::InitGame(HWND hWnd)
 
 	#pragma endregion
 
-	// InitGame quadtree
+	// start quadtree
 	#pragma region QUADTREE START
 	
 	pQuadtree = new CQuadTree(0, SRect(0, QUADTREE_HEIGHT, QUADTREE_WIDTH * 5, 0));
@@ -412,11 +215,6 @@ void CGame::InitGame(HWND hWnd)
 	pQuadtree->Retrieve(pRenderObjects, pCamera->GetBoundingBox());
 
 	#pragma endregion
-}
-
-void CGame::LoadResource()
-{
-
 }
 
 void CGame::CreateGameObject()
@@ -450,6 +248,121 @@ void CGame::CreateGameObject()
 	// push sophia in gameObject vector
 	pGameObjects.push_back(pSophia);
 	pGameObjects.push_back(pJason);
+}
+
+void CGame::LoadResource()
+{
+	LPCWSTR sceneFilePath = SCENE2_PATH;
+	DebugOut(L"[INFO] Start loading scene resouce %s\n", sceneFilePath);
+
+	// Load camera
+	pCamera = new CCamera();
+	pCamera->SetTarget(pSophia);
+	pCamera->SetSize(this->backBufferWidth, this->backBufferHeight);
+
+	// open scene file path
+	ifstream fs;
+	fs.open(sceneFilePath);
+
+	SceneSection section = SceneSection::SCENE_SECTION_UNKNOW;
+	char str[1024];
+	while (fs.getline(str, 1024))
+	{
+		std::string line(str);
+
+		// set section
+		if (line[0] == '#') continue; // skip comment line
+		if (line == "[TEXTURES]") {
+			section = SceneSection::SCENE_SECTION_TEXTURES;
+			continue;
+		}
+		if (line == "[SPRITES]") {
+			section = SceneSection::SCENE_SECTION_SPRITES;
+			continue;
+		}
+		if (line == "[ANIMATIONS]") {
+			section = SceneSection::SCENE_SECTION_ANIMATIONS;
+			continue;
+		}
+		if (line[0] == '[') {
+			section = SceneSection::SCENE_SECTION_UNKNOW;
+			continue;
+		}
+
+		switch (section)
+		{
+		case SceneSection::SCENE_SECTION_UNKNOW:
+			break;
+		case SceneSection::SCENE_SECTION_TEXTURES:
+			__ParseSection_TEXTURES__(line);
+			break;
+		case SceneSection::SCENE_SECTION_SPRITES:
+			__ParseSection_SPRITES__(line);
+			break;
+		case SceneSection::SCENE_SECTION_ANIMATIONS:
+			__ParseSection_ANIMATIONS__(line);
+			break;
+		case SceneSection::SCENE_SECTION_MAP:
+			break;
+		default:
+			break;
+		}
+	}
+	fs.close();
+	DebugOut(L"[INFO] Load scene resource done\n");
+}
+
+void CGame::__ParseSection_TEXTURES__(std::string line)
+{
+	std::vector<std::string> tokens = SplitLine(line);
+	if (tokens.size() < 5)
+		return;
+
+	int texId = atoi(tokens[0].c_str());
+	wstring texPath = ToWSTR(tokens[1]);
+	int R = atoi(tokens[2].c_str());
+	int G = atoi(tokens[3].c_str());
+	int B = atoi(tokens[4].c_str());
+
+	g_textures->Add(texId, texPath.c_str(), D3DCOLOR_XRGB(R, G, B));
+}
+
+void CGame::__ParseSection_SPRITES__(std::string line)
+{
+	std::vector<std::string> tokens = SplitLine(line);
+	if (tokens.size() < 6)
+		return; // skip
+
+	int id = atoi(tokens[0].c_str());
+	int left = atoi(tokens[1].c_str());
+	int top = atoi(tokens[2].c_str());
+	int width = atoi(tokens[3].c_str());
+	int height = atoi(tokens[4].c_str());
+	int texId = atoi(tokens[5].c_str());
+
+	LPDIRECT3DTEXTURE9 texOfThis = g_textures->Get(texId);
+	if (texOfThis == nullptr) {
+		DebugOut(L"[ERROR] TexId %d is not existed\n", texId);
+		return; // skip
+	}
+
+	g_sprites->Add(id, left, top, width, height, texOfThis);
+}
+
+void CGame::__ParseSection_ANIMATIONS__(std::string line)
+{
+	std::vector<std::string> tokens = SplitLine(line);
+	if (tokens.size() < 3)
+		return; // skip
+	LPANIMATION lpAni = new CAnimation();
+	int id = atoi(tokens[0].c_str());
+	for (int i = 1; i < tokens.size(); i += 2) {
+		int spriteId = atoi(tokens[i].c_str());
+		int frameTime = atoi(tokens[i + 1].c_str());
+		lpAni->Add(spriteId, frameTime);
+	}
+
+	g_animations->Add(id, lpAni);
 }
 
 void CGame::UpdateGame(DWORD dt)

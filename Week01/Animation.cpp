@@ -1,5 +1,9 @@
 #include "Animation.h"
 
+CAnimation::CAnimation()
+{
+}
+
 void CAnimation::Add(int spriteId, DWORD time)
 {
 	int t = time;
@@ -12,7 +16,7 @@ void CAnimation::Add(int spriteId, DWORD time)
 
 void CAnimation::Render(Vector2D position, int nx)
 {
-	DWORD now = GetTickCount();
+	DWORD now = GetTickCount64();
 
 	if (!this->reverse) {
 		if (this->currentFrame == -1)

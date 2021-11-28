@@ -3,113 +3,98 @@
 
 # id	file_path	transparent_color_r	g	b
 [TEXTURES]
-texPlayer	resources\player.png	41	255	4
-texEnemies	resources\enemies.png	41	255	4
-texTileW3	textures\tileset.png	0	0	0
+# texPlayer
+0	resources\player.png	41	255	4
+# 1
+1	resources\enemies.png	41	255	4
+2	textures\tileset.png	0	0	0
 
 # id			left	top	width	height	texture_id
 [SPRITES]
-# ==== SMALL JASON ===	//50 - 100
-# idle		//50 - 100				
-52	3	30	8	16	texPlayer
+# ==== SMALL JASON ===	// 50 -> 100
+# idle		// 50 - 100				
+52	21	30	8	16	0
 # walk					
-50	12	30	8	16	texPlayer
-51	21	30	8	16	texPlayer
-53	30	30	8	16	texPlayer
+50	3	30	8	16	0
+51	21	31	8	16	0
+53	30	31	8	16	0
 
-# ==== SOPHIA ===	//0 - 50
-# wheel part 	//0 - 3
-0	3	21	8	8	texPlayer
-1	12	21	8	8	texPlayer
-2	21	21	8	8	texPlayer
-3	30	21	8	8	texPlayer
+# ==== SOPHIA ===	// 0 -> 50
+# wheel part 	// 0 -> 3
+0	3	21	8	8	0
+1	12	21	8	8	0
+2	21	21	8	8	0
+3	30	21	8	8	0
 # body part 	//4
-4	3	12	8	8	texPlayer
-# cabin part 	//5- 7
-5	39	3	16	8	texPlayer
-6	56	3	16	8	texPlayer
-7	73	3	16	16	texPlayer
+4	3	12	8	8	0
+# cabin part 	// 5 -> 7
+5	39	3	16	8	0
+6	73	3	16	16	0
+7	56	3	16	8	0
 # gun part
-8	12	3	8	8	texPlayer
-9	21	3	8	8	texPlayer
-10	30	3	8	8	texPlayer
+8	12	5	7	4	0
+9	21	3	8	8	0
+10	32	3	4	7	0
 
 # === ENEMIES === 	// 200 -> ...
 # === DRAP ===	// 200 -> 209
-200	128	274	18	18	texEnemies
-201	148	276	18	16	texEnemies
-202	188	276	18	16	texEnemies
-203	168	274	18	18	texEnemies
+200	128	274	18	18	1
+201	148	276	18	16	1
+202	188	276	18	16	1
+203	168	274	18	18	1
 
 # === STUKA === // 210 -> 219
-210	74	386	18	18	texEnemies
-211	94	386	18	18	texEnemies
-212	114	386	18	18	texEnemies
-213	134	386	18	18	texEnemies
-214	154	386	18	18	texEnemies
+210	74	386	18	18	1
+211	94	386	18	18	1
+212	114	386	18	18	1
+213	134	386	18	18	1
+214	154	386	18	18	1
 
 # === EYELET === // 220 -> 229
-220	128	31	18	15	texEnemies
-221	148	28	18	18	texEnemies
-222	168	31	18	15	texEnemies
-223	188	36	18	10	texEnemies
+220	128	31	18	15	1
+221	148	28	18	18	1
+222	168	31	18	15	1
+223	188	36	18	10	1
 
 # === GX680 === // 230 -> 239
-230	128	296	18	16	texEnemies
-231	148	295	18	17	texEnemies
+230	128	296	18	16	1
+231	148	295	18	17	1
 
 # === OFFSIDE === // 240 -> 249
-240	128	717	17	18	texEnemies
-241	146	717	17	18	texEnemies
+240	24	56	18	18	1
+241	46	56	18	18	1
+242	186	56	18	18	1
+243	202	56	18	18	1
 
 # ani_id		sprite1_id	time1	sprite2_id	time2	...
 [ANIMATIONS]
 
 # ==== JASON =========
 # idle
-ani-jason-idle	spr-jason-idle	100
+30	52	100
 # walk
-ani-jason-walk	spr-jason-walk-jump	100	spr-jason-walk-0	100	spr-jason-walk-jump	100	spr-jason-walk-1	100
-# jump
-ani-jason-jump	spr-jason-walk-jump	100
-# die
-ani-jason-die	spr-jason-die-0	100	spr-jason-die-1	100	spr-jason-die-2	100	spr-jason-die-3	100
-# crouch
-ani-jason-crouch	spr-jason-crouch-0	100	spr-jason-crouch-1	100
-# lie
-ani-jason-lie	spr-jason-lie	100
+31	50	100	51	100	52	100	53	100
+
 
 # ==== SOPHIA ========
 # wheel
-ani-sophia-left-wheel	spr-sophia-wheel-0	100	spr-sophia-wheel-1	100	spr-sophia-wheel-2	100	spr-sophia-wheel-3	100
-ani-sophia-right-wheel	spr-sophia-wheel-3	100	spr-sophia-wheel-0	100	spr-sophia-wheel-1	100	spr-sophia-wheel-2	100
+0	0	100	1	100	2	100	3	100
+1	3	100	0	100	1	100	2	100
 
-# === NEOWORM ========
-ani-neoworm	spr-neoworm-0	100	spr-neoworm-1	100
+# === DRAP ===
+200	200	150	201	150	202	150	203	150
 
-# === BALLBOT ========
-ani-ballbot	spr-ballbot-0	100	spr-ballbot-1	100	spr-ballbot-2	100
+# === STUKA ===
+210	210	150	211	150	212	150	213	150	214	150
 
-# === STUKA ==========
-ani-stuka	spr-stuka-0	150	spr-stuka-1	150	spr-stuka-2	150	spr-stuka-3	150	spr-stuka-4	150
+# === EYELET ===
+220	220	100	221	100	222	100	223	100
 
-# === EYELET =========
-ani-eyelet	spr-eyelet-0	100	spr-eyelet-1	100	spr-eyelet-2	100	spr-eyelet-3	100
+# === GX680 ===
+230	230	100	231	100
 
-# === BALL CARRY =====
-ani-ballcarry	spr-ballcarry-move-0	100	spr-ballcarry-move-1	100
-
-# === DRAP ===========
-ani-drap	spr-drap-0	150	spr-drap-1	150	spr-drap-2	150	spr-drap-3	150
-
-# === GX680 ==========
-ani-gx680	spr-gx680-0	100	spr-gx680-1	100
-
-# === GX680S =========
-ani-gx680s	spr-gx680s-0	100	spr-gx680s-1	100
-
-# === LASER GUARD ====
-ani-laserguard	spr-laserguard-0	100	spr-laserguard-1	100
+# === OFFSIDE ====
+240	240	100	241	100	242	100	243	100
 
 [TILEMAP]
 maps\sectionB.json
@@ -122,23 +107,11 @@ obj-jason	1226	432
 # SOPHIA
 obj-sophia	1196	432
 
-# INTERRUPT
-obj-interrupt	1196	440
-
-# NEOWORM
-obj-neoworm	1146	440
-
-# BALLBOT
-obj-ballbot	1106	440
-
 # STUKA
 obj-stuka	1076	440
 
 # EYELET
 obj-eyelet	1046	440
-
-# BALL CARRY
-obj-ballcarry	1046	470
 
 # DRAP
 obj-drap	1076	470
@@ -146,10 +119,7 @@ obj-drap	1076	470
 # GX680
 obj-gx680	1106	470
 
-# GX680S
-obj-gx680s	1146	470
-
-# LASER GUARD
+# OFFSIDE
 obj-laserguard	1176	470
 
 # --- SCENE PORTAL ----

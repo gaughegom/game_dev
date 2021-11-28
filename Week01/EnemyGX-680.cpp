@@ -2,14 +2,10 @@
 
 CEnemyGX680::CEnemyGX680()
 {
-	// add animation
-	this->AddAnimation("default", ANIMATION_ENEMY_GX680);
-	// set size
 	this->SetSize(18, 18);
-	// set postition
 	this->SetPosition(PLAYER_START_X + 80, PLAYER_START_Y + 20);
-	// set velocity
 	this->SetVelocity(0, 0);
+	this->AddAnimation("default", 230); // 230: gx-680 animation id
 }
 
 void CEnemyGX680::Update(DWORD dt)

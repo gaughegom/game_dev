@@ -3,8 +3,8 @@
 CJason::CJason()
 {
 	// add animation
-	this->AddAnimation("walk", ANIMATION_SMALL_JASON_WALK);
-	this->AddAnimation("stay", ANIMATION_SMALL_JASON_STAY);
+	this->AddAnimation("stay", 30);
+	this->AddAnimation("walk", 31);
 	// set size
 	this->SetSize(8, 16);
 

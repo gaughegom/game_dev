@@ -17,9 +17,6 @@
     <Filter Include="Framework\Camera">
       <UniqueIdentifier>{58c4f323-3716-43a1-8975-6314f66d2031}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Framework\Debug">
-      <UniqueIdentifier>{7781f070-6cc1-410f-8537-cec7f38d5bb3}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Framework\Common">
       <UniqueIdentifier>{91b32f09-ed54-4c94-8748-daa339c3be00}</UniqueIdentifier>
     </Filter>
@@ -104,6 +101,9 @@
     <Filter Include="Game\Game objects\Sophia\Parts\Gun">
       <UniqueIdentifier>{5629d4c7-0134-4126-bd29-ba98ae1d768a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Framework\Util">
+      <UniqueIdentifier>{b48ec041-8e0d-4b7b-9ad1-1bd84e4704ae}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -120,9 +120,6 @@
     </ClCompile>
     <ClCompile Include="Sophia.cpp">
       <Filter>Game\Game objects\Sophia</Filter>
-    </ClCompile>
-    <ClCompile Include="debug.cpp">
-      <Filter>Framework\Debug</Filter>
     </ClCompile>
     <ClCompile Include="GameMovement.cpp">
       <Filter>Game\Game movement</Filter>
@@ -193,6 +190,9 @@
     <ClCompile Include="QuadTree.cpp">
       <Filter>Framework\QuadTree</Filter>
     </ClCompile>
+    <ClCompile Include="Util.cpp">
+      <Filter>Framework\Util</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Textures.h">
@@ -206,9 +206,6 @@
     </ClInclude>
     <ClInclude Include="Sophia.h">
       <Filter>Game\Game objects\Sophia</Filter>
-    </ClInclude>
-    <ClInclude Include="debug.h">
-      <Filter>Framework\Debug</Filter>
     </ClInclude>
     <ClInclude Include="GameMovement.h">
       <Filter>Game\Game movement</Filter>
@@ -281,6 +278,9 @@
     </ClInclude>
     <ClInclude Include="QuadTree.h">
       <Filter>Framework\QuadTree</Filter>
+    </ClInclude>
+    <ClInclude Include="Util.h">
+      <Filter>Framework\Util</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

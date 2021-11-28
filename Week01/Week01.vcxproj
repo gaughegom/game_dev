@@ -36,7 +36,6 @@
     <ClCompile Include="KeyEventHandler.cpp" />
     <ClCompile Include="QuadTree.cpp" />
     <ClCompile Include="Sophia.cpp" />
-    <ClCompile Include="debug.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="main.cpp" />
@@ -48,6 +47,7 @@
     <ClCompile Include="Sprites.cpp" />
     <ClCompile Include="Textures.cpp" />
     <ClCompile Include="Transform.cpp" />
+    <ClCompile Include="Util.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h" />
@@ -55,7 +55,6 @@
     <ClInclude Include="Animations.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="ControllerObject.h" />
-    <ClInclude Include="debug.h" />
     <ClInclude Include="EnemyDrap.h" />
     <ClInclude Include="EnemyEyelet.h" />
     <ClInclude Include="EnemyOffside.h" />
@@ -79,6 +78,7 @@
     <ClInclude Include="Sprites.h" />
     <ClInclude Include="Textures.h" />
     <ClInclude Include="Transform.h" />
+    <ClInclude Include="Util.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
