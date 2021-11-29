@@ -18,7 +18,7 @@ void CSophiaWheel::Render()
 
 	animation->Render(
 		this->position + this->sophia->GetPosition(), 
-		this->sophia->GetNx());
+		-this->sophia->GetNx());
 }
 
 // set prop in animation of wheel by target state

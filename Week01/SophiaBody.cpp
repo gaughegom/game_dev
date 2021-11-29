@@ -16,7 +16,7 @@ void CSophiaBody::Render()
 	// handle animation action state
 	this->HandleAnimationActionState(this->sophia->GetActionState());
 
-	sprite->Draw(this->position + this->sophia->GetPosition(), 1);
+	sprite->Draw(this->position + this->sophia->GetPosition(), -1);
 }
 
 void CSophiaBody::HandleAnimationActionState(SophiaActionState actionState)

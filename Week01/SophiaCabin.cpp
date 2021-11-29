@@ -18,7 +18,7 @@ void CSophiaCabin::Render()
 
 	sprite->Draw(
 		this->position + this->sophia->GetPosition(), 
-		this->sophia->GetNx());
+		-this->sophia->GetNx());
 }
 
 int CSophiaCabin::MappingCabinSpriteState(SophiaActionState actionState)

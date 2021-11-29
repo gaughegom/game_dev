@@ -19,7 +19,7 @@ void CSophiaGun::Render()
 	auto sprites = CSprites::GetInstance();
 	sprites->Get(spriteId)->Draw(
 		this->position + this->sophia->GetPosition(), 
-		this->sophia->GetNx());
+		-this->sophia->GetNx());
 }
 
 

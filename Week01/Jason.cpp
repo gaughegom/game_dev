@@ -14,6 +14,7 @@ CJason::CJason()
 void CJason::Update(DWORD dt)
 {
 	//LinearMoveInGravity(this, dt);
+	LinearMove(this, dt);
 	this->EdgeCollisionHandler();
 
 	if (this->IsSelected()) {
@@ -27,7 +28,7 @@ void CJason::Render()
 		this->directState->GetState());
 		
 	this->animations.at(key)->
-		Render(this->position, this->nx);
+		Render(this->position, -this->nx);
 
 	// draw center point
 	auto debugPosSprite = CSprites::GetInstance()->Get(2000);
