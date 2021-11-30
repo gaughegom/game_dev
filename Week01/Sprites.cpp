@@ -1,6 +1,6 @@
 #include "Sprites.h"
 
-CSprites* CSprites::__instance = NULL;
+CSprites* CSprites::__instance = nullptr;
 
 CSprites* CSprites::GetInstance()
 {

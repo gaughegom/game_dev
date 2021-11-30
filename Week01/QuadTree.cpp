@@ -22,31 +22,25 @@ bool CQuadTree::HasChildren()
 	return this->nodes[0].get() != nullptr;
 }
 
-bool CQuadTree::IsOverlap(LPGAMEOBJECT& entity)
+bool CQuadTree::Overlap(LPGAMEOBJECT& entity)
 {
-	auto entityRect = SRect(
-		entity->GetX(),
-		entity->GetY() + entity->GetHeight(),
-		entity->GetX() + entity->GetWidth(),
-		entity->GetY()
-	);
-	bool result = this->rect.IsOverlap(entityRect);
+	bool result = this->rect.Contain(entity->GetPosition());
 	return result;
 }
 
 void CQuadTree::Insert(LPGAMEOBJECT entity)
 {
 	if (this->HasChildren()) {
-		if (this->nodes[0].get()->IsOverlap(entity)) {
+		if (this->nodes[0].get()->Overlap(entity)) {
 			this->nodes[0].get()->Insert(entity);
 		}
-		else if (this->nodes[1].get()->IsOverlap(entity)) {
+		else if (this->nodes[1].get()->Overlap(entity)) {
 			this->nodes[1].get()->Insert(entity);
 		}
-		else if (this->nodes[2].get()->IsOverlap(entity)) {
+		else if (this->nodes[2].get()->Overlap(entity)) {
 			this->nodes[2].get()->Insert(entity);
 		}
-		else if (this->nodes[3].get()->IsOverlap(entity)) {
+		else if (this->nodes[3].get()->Overlap(entity)) {
 			this->nodes[3].get()->Insert(entity);
 		}
 
@@ -60,16 +54,16 @@ void CQuadTree::Insert(LPGAMEOBJECT entity)
 		}
 		for (auto& object : this->entities) {
 			if (this->HasChildren()) {
-				if (this->nodes[0].get()->IsOverlap(object)) {
+				if (this->nodes[0].get()->Overlap(object)) {
 					this->nodes[0].get()->Insert(object);
 				}
-				else if (this->nodes[1].get()->IsOverlap(object)) {
+				else if (this->nodes[1].get()->Overlap(object)) {
 					this->nodes[1].get()->Insert(object);
 				}
-				else if (this->nodes[2].get()->IsOverlap(object)) {
+				else if (this->nodes[2].get()->Overlap(object)) {
 					this->nodes[2].get()->Insert(object);
 				}
-				else if (this->nodes[3].get()->IsOverlap(object)) {
+				else if (this->nodes[3].get()->Overlap(object)) {
 					this->nodes[3].get()->Insert(object);
 				}
 			}
@@ -108,16 +102,16 @@ void CQuadTree::SplitArea()
 void CQuadTree::Retrieve(std::vector<LPGAMEOBJECT>& container, const SRect& targetRect)
 {
 	if (this->HasChildren()) {
-		if (this->nodes[0].get()->rect.IsOverlap(targetRect)) {
+		if (this->nodes[0].get()->rect.Overlap(targetRect)) {
 			this->nodes[0].get()->Retrieve(container, targetRect);
 		}
-		if (this->nodes[1].get()->rect.IsOverlap(targetRect)) {
+		if (this->nodes[1].get()->rect.Overlap(targetRect)) {
 			this->nodes[1].get()->Retrieve(container, targetRect);
 		}
-		if (this->nodes[2].get()->rect.IsOverlap(targetRect)) {
+		if (this->nodes[2].get()->rect.Overlap(targetRect)) {
 			this->nodes[2].get()->Retrieve(container, targetRect);
 		}
-		if (this->nodes[3].get()->rect.IsOverlap(targetRect)) {
+		if (this->nodes[3].get()->rect.Overlap(targetRect)) {
 			this->nodes[3].get()->Retrieve(container, targetRect);
 		}
 	}

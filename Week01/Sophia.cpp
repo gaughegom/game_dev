@@ -2,9 +2,10 @@
 
 CSophia::CSophia()
 {
-	this->SetSize(20, 20);
 	this->directState = SophiaDirectState::Stay;
 	this->actionState = SophiaActionState::Idle;
+
+	this->UpdateColliders();
 
 	this->leftWheel = new CSophiaWheel(this);
 	this->rightWheel = new CSophiaWheel(this);
@@ -19,9 +20,9 @@ void CSophia::Update(DWORD dt)
 {
 	//LinearMoveInGravity(this, dt);
 	LinearMove(this, dt);
+	this->UpdateColliders();
 
 	int backbufferWidth = CGame::GetInstance()->GetMapWidth();
-	//this->EdgeCollisionHandler(CGame::GetInstance()->GetMapWidth());
 
 	if (this->IsSelected()) {
 		this->ListenKeyEvent();
@@ -46,7 +47,7 @@ void CSophia::ListenKeyEvent()
 
 	this->SubcribeDirectState(this->directState);
 
-	// observe sophia action
+	// observe self action
 	if (input->IsKeyDown(DIK_UP)) {
 		DWORD now = GetTickCount64();
 		this->stateTime = now;
@@ -77,24 +78,33 @@ void CSophia::ListenKeyEvent()
 	#pragma endregion
 }
 
-void CSophia::EdgeCollisionHandler(int width)
+void CSophia::UpdateColliders()
 {
-	switch (this->directState)
+	this->colliders.clear();
+	auto collider = new CCollider2D;
+	collider->SetGameObject(this);
+
+	switch (this->actionState)
 	{
-	case SophiaDirectState::RightMove:
-		if (this->position.x > width * 10 - PLAYER_WIDTH) {
-			this->SetX(width * 10 - PLAYER_WIDTH);
-		}
-	case SophiaDirectState::LeftMove:
-		if (this->position.x <= 0) {
-			this->SetX(0);
-		}
+	case SophiaActionState::Idle:
+		collider->SetOffset(SOPHIA_OFFSET_IDLE);
+		collider->SetBoxSize(SOPHIA_BOX_IDLE);
+		break;
+	case SophiaActionState::Tile45:
+		collider->SetOffset(Vector2D(-0.5f * this->nx, 10.5f));
+		collider->SetBoxSize(SOPHIA_BOX_TILE45);
+		break;
+	case SophiaActionState::Up90:
+		collider->SetOffset(Vector2D(-3.0f * this->nx, 12.0f));
+		collider->SetBoxSize(SOPHIA_BOX_UP90);
+		break;
 	default:
 		break;
 	}
-	if (this->position.y <= GAME_GROUND) {
-		this->position.y = GAME_GROUND;
-	}
+
+	collider->SetDynamic(true);
+	this->colliders.push_back(collider);
+	this->SetColliders(colliders);
 }
 
 void CSophia::Render()
@@ -107,7 +117,7 @@ void CSophia::Render()
 
 	auto debugPosSprite = CSprites::GetInstance()->Get(2000);
 	Vector2D debugPos = Vector2D(this->position.x - 16, this->position.y);
-	debugPosSprite->Draw(debugPos, this->nx);
+	debugPosSprite->Draw(debugPos, this->nx, 255);
 }
 
 void CSophia::SubcribeDirectState(SophiaDirectState directState)
@@ -137,19 +147,16 @@ void CSophia::SubcribeDirectState(SophiaDirectState directState)
 
 void CSophia::SubcribeActionState(SophiaActionState actionState)
 {
-	/*switch (actionState)
-	{
-	case SOPHIA_STATE_ACTION_IDLE:
-		this->actionState->IdleState();
-		break;
-	case SOPHIA_STATE_ACTION_TILE_45:
-		this->actionState->Tilt45State();
-		break;
-	case SOPHIA_STATE_ACTION_UP_90:
-		this->actionState->Up90State();
-		break;
-	default:
-		this->actionState->IdleState();
-		break;
-	}*/
+}
+
+void CSophia::OnCollision(CCollider2D* self, LPCOLLISIONEVENT coEvent)
+{
+	if (dynamic_cast<CBrick*>(coEvent->object) 
+		&& !this->ground && coEvent->ny == 1) {
+		this->ground = true;
+	}
+}
+
+void CSophia::OnTrigger(CCollider2D* self, LPCOLLISIONEVENT coEvent)
+{
 }

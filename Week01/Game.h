@@ -24,6 +24,7 @@ enum class SceneSection : int {
 
 class CGame {
 	static CGame* __instance;
+	static DWORD dt;
 
 	HWND hWnd;									// Window handle
 
@@ -43,20 +44,20 @@ public:
 	LPSPRITE map;
 	Vector2D vBackground;
 	void InitDirectX(HWND hWnd);
-	void Draw(Vector2D position, int nx, LPDIRECT3DTEXTURE9 texture, int left, int top, int right, int bottom);
+	void Draw(Vector2D position, int nx, LPDIRECT3DTEXTURE9 texture, int left, int top, int right, int bottom, int alpha);
 
 	void InitGame(HWND hWnd);
 	void UpdateGame(DWORD dt);
 	void RenderGame();
 	void RunGame();
 
-	void CreateGameObject();
 	void LoadResource();
 	void __ParseSection_TEXTURES__(std::string line);
 	void __ParseSection_SPRITES__(std::string line);
 	void __ParseSection_ANIMATIONS__(std::string line);
 	void __ParseSection_MAP__(std::string line);
 	void __ParseSection_OBJECTS__(std::string line);
+	void PushGameObject(LPGAMEOBJECT& newObject);
 
 	LPDIRECT3DDEVICE9 GetDirect3dDevice() { return this->d3ddv; }
 	LPDIRECT3DSURFACE9 GetBackbuffer() { return backBuffer; }
@@ -68,7 +69,7 @@ public:
 	LPKEYEVENTHANDLER GetKeyHandler() { return this->keyHandler; }
 
 	static CGame* GetInstance();
-
+	static DWORD GetDeltaTime() { return dt; }
 	~CGame();
 };
 

@@ -9,7 +9,7 @@ enum class SophiaActionState;
 
 class CSophiaGun : public CGameObject {
 private:
-	CSophia* sophia;
+	CSophia* self;
 
 public:
 	CSophiaGun();

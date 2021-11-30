@@ -2,9 +2,8 @@
 
 CSophiaCabin::CSophiaCabin(CSophia* target)
 {
-	this->sophia = target;
+	this->self = target;
 }
-
 
 void CSophiaCabin::Update(DWORD dt)
 {
@@ -12,13 +11,14 @@ void CSophiaCabin::Update(DWORD dt)
 
 void CSophiaCabin::Render()
 {
-	// get sprite of sophia cabin
-	int spriteId = this->MappingCabinSpriteState(this->sophia->GetActionState());
+	// get sprite of self cabin
+	int spriteId = this->MappingCabinSpriteState(this->self->GetActionState());
 	auto sprite = CSprites::GetInstance()->Get(spriteId);
 
 	sprite->Draw(
-		this->position + this->sophia->GetPosition(), 
-		-this->sophia->GetNx());
+		this->position + this->self->GetPosition(), 
+		-this->self->GetNx(),
+		255);
 }
 
 int CSophiaCabin::MappingCabinSpriteState(SophiaActionState actionState)
@@ -26,15 +26,15 @@ int CSophiaCabin::MappingCabinSpriteState(SophiaActionState actionState)
 	switch (actionState)
 	{
 	case SophiaActionState::Idle:
-		this->SetPosition(-3.5f * this->sophia->GetNx(), 9.0f);
+		this->SetPosition(Vector2D(-3.5f * this->self->GetNx(), 9.0f));
 		return 5; // cabin_00
 
 	case SophiaActionState::Tile45:
-		this->SetPosition(-3.5f * this->sophia->GetNx(), 13.0f);
+		this->SetPosition(Vector2D(-3.5f * this->self->GetNx(), 13.0f));
 		return 6; // cabin_45
 
 	case SophiaActionState::Up90:
-		this->SetPosition(-3.5f * this->sophia->GetNx(), 14.0f);
+		this->SetPosition(Vector2D(-3.5f * this->self->GetNx(), 14.0f));
 		return 6;
 
 	default:

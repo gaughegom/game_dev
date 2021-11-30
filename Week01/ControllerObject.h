@@ -11,7 +11,7 @@ private:
 
 public:
 	void Select(bool value);
-	void AlterSelect();
+	void AlterSelect(); // toggle selected
 	bool IsSelected();
 };
 

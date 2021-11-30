@@ -6,7 +6,7 @@
 #include "Game.h"
 #include "Textures.h"
 
-CTextures* CTextures::__instance = NULL;
+CTextures* CTextures::__instance = nullptr;
 
 CTextures::CTextures()
 {

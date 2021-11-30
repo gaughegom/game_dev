@@ -50,7 +50,18 @@ void CGameObject::AddAnimation(std::string key, int animationId)
 	this->animations.insert(std::make_pair(key, ani));
 }
 
-void CGameObject::EdgeCollisionHandler()
+void CGameObject::PhysicalUpdate(std::vector<LPGAMEOBJECT>* coObjects)
+{
+	for (auto collider : this->colliders) {
+		collider->PhysicalUpdate(coObjects);
+	}
+}
+
+void CGameObject::OnCollision(CCollider2D* selfCollider, LPCOLLISIONEVENT collision)
+{
+}
+
+void CGameObject::OnTrigger(CCollider2D* selfCollider, LPCOLLISIONEVENT collsion)
 {
 }
 

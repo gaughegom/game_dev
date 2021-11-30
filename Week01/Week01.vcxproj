@@ -24,6 +24,7 @@
     <ClCompile Include="Animations.cpp" />
     <ClCompile Include="Brick.cpp" />
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="Collider2D.cpp" />
     <ClCompile Include="ControllerObject.cpp" />
     <ClCompile Include="EnemyDrap.cpp" />
     <ClCompile Include="EnemyEyelet.cpp" />
@@ -56,6 +57,7 @@
     <ClInclude Include="Animations.h" />
     <ClInclude Include="Brick.h" />
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="Collider2D.h" />
     <ClInclude Include="ControllerObject.h" />
     <ClInclude Include="EnemyDrap.h" />
     <ClInclude Include="EnemyEyelet.h" />

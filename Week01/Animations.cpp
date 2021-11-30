@@ -1,6 +1,6 @@
 #include "Animations.h"
 
-CAnimations* CAnimations::__instance = NULL;
+CAnimations* CAnimations::__instance = nullptr;
 
 CAnimations* CAnimations::GetInstance()
 {

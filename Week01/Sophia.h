@@ -9,6 +9,12 @@
 #include "SophiaBody.h"
 #include "SophiaCabin.h"
 #include "SophiaGun.h"
+#include "Brick.h"
+
+#define	SOPHIA_BOX_IDLE				Vector2D(24.0f, 17.0f)
+#define SOPHIA_OFFSET_IDLE			Vector2D(0.0f, 4.5f)
+#define SOPHIA_BOX_TILE45			Vector2D(23.0f, 29.0f)
+#define SOPHIA_BOX_UP90				Vector2D(24.0f, 32.0f)
 
 class CSophiaCabin;
 class CSophiaWheel;
@@ -49,11 +55,13 @@ public:
 	void Update(DWORD dt);
 	void Render();
 	void ListenKeyEvent();
+	void UpdateColliders();
 
 	void SubcribeDirectState(SophiaDirectState directState);
 	void SubcribeActionState(SophiaActionState actionState);
 
-	void EdgeCollisionHandler(int width);
+	void OnCollision(CCollider2D* self, LPCOLLISIONEVENT coEvent);
+	void OnTrigger(CCollider2D* self, LPCOLLISIONEVENT coEvent);
 
 	SophiaDirectState GetDirectState() { return this->directState; }
 	SophiaActionState GetActionState() { return this->actionState; }

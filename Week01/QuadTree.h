@@ -22,7 +22,7 @@ public:
 	CQuadTree(const int level, SRect rect);
 
 	bool HasChildren();
-	bool IsOverlap(LPGAMEOBJECT& entity);
+	bool Overlap(LPGAMEOBJECT& entity);
 
 	void Insert(LPGAMEOBJECT entity);
 	void SplitArea();

@@ -9,6 +9,7 @@
 
 #include "Sophia.h"
 #include "Jason.h"
+#include "Brick.h"
 #include "EnemyDrap.h"
 #include "EnemyEyelet.h"
 #include "EnemyGX-680.h"
@@ -33,7 +34,8 @@ CSprites* g_sprites = CSprites::GetInstance();
 CAnimations* g_animations = CAnimations::GetInstance();
 CInputHandler* g_inputHandler = CInputHandler::GetInstance();
 
-CGame* CGame::__instance = NULL;
+CGame* CGame::__instance = nullptr;
+DWORD CGame::dt = 0;
 
 #pragma region Keyboard
 
@@ -131,7 +133,7 @@ void CGame::InitDirectX(HWND hWnd)
 /*
 	Utility function to wrap LPD3DXSPRITE::Draw
 */
-void CGame::Draw(Vector2D position, int nx, LPDIRECT3DTEXTURE9 texture, int left, int top, int right, int bottom)
+void CGame::Draw(Vector2D position, int nx, LPDIRECT3DTEXTURE9 texture, int left, int top, int right, int bottom, int alpha)
 {
 
 	Vector2D cameraPos = pCamera->GetPosition();
@@ -161,7 +163,7 @@ void CGame::Draw(Vector2D position, int nx, LPDIRECT3DTEXTURE9 texture, int left
 
 	spriteHandler->SetTransform(&matrix);
 
-	spriteHandler->Draw(texture, &r, &center, &p, D3DCOLOR_XRGB(255, 255, 255));
+	spriteHandler->Draw(texture, &r, &center, &p, D3DCOLOR_ARGB(alpha, 255, 255, 255));
 }
 
 #pragma endregion
@@ -179,43 +181,21 @@ void CGame::InitGame(HWND hWnd)
 	LPDIRECT3DTEXTURE9 texTestDebug = g_textures->Get(10);
 	g_sprites->Add(2000, 0, 0, 1, 1, texTestDebug);
 
+	g_textures->Add(20, L"textures//bbox.png", D3DCOLOR_XRGB(0, 0, 0));
+
 	#pragma endregion
 
 	this->LoadResource();
-	//this->CreateGameObject();
 	
 	// start keyboard
 	#pragma region KEYBOARD
 	
-	g_inputHandler->SetHandleWindow(this->hWnd);
-
 	this->keyHandler = new CKeyHander();
+	g_inputHandler->SetHandleWindow(this->hWnd);
 	g_inputHandler->SetKeyHandler(keyHandler);
 	g_inputHandler->InitKeyboard();
 
 	#pragma endregion
-}
-
-void CGame::CreateGameObject()
-{
-	// create drap
-	auto pDrap = new CEnemyDrap();
-	pGameObjects.push_back(pDrap);
-
-	// create eyelet
-	auto pEyelet = new CEnemyEyelet();
-	pGameObjects.push_back(pEyelet);
-
-	// create gx680
-	auto pGX680 = new CEnemyGX680();
-	pGameObjects.push_back(pGX680);
-
-	// create stuka
-	auto pStuka = new CEnemyStuka();
-	pGameObjects.push_back(pStuka);
-
-	auto pOffside = new CEnemyOffside();
-	pGameObjects.push_back(pOffside);
 }
 
 void CGame::UpdateGame(DWORD dt)
@@ -225,6 +205,11 @@ void CGame::UpdateGame(DWORD dt)
 	pRenderObjects.clear();
 	pQuadtree->Retrieve(pRenderObjects, pCamera->GetBoundingBox());
 	DebugOut(L"render objects: %d\n", pRenderObjects.size());
+	
+	for (auto object : pRenderObjects) {
+		object->PhysicalUpdate(&pRenderObjects);
+	}
+	
 	for (auto object : pRenderObjects) {
 		object->Update(dt);
 	}
@@ -243,9 +228,15 @@ void CGame::RenderGame()
 
 		spriteHandler->Begin(D3DXSPRITE_ALPHABLEND);
 
-		this->map->Draw(Vector2D(this->mapWidth / 2, this->mapHeight / 2), 1);
+		this->map->Draw(Vector2D(this->mapWidth / 2, this->mapHeight / 2), 1, 255);
 		for (auto object : pRenderObjects) {
 			object->Render();
+		}
+
+		for (auto object : pRenderObjects) {
+			for (auto co : object->GetColliders()) {
+				co->RenderBoundingBox();
+			}
 		}
 
 		spriteHandler->End();
@@ -273,23 +264,23 @@ void CGame::RunGame()
 			DispatchMessage(&msg);
 		}
 
-		DWORD now = GetTickCount();
+		DWORD now = GetTickCount64();
 
 		// dt: the time between (beginning of last frame) and now
 		// this frame: the frame we are about to render
-		DWORD dt = now - frameStart;
+		this->dt = now - frameStart;
 
-		if (dt >= tickPerFrame)
+		if (this->dt >= tickPerFrame)
 		{
 			frameStart = now;
 
 			g_inputHandler->ProcessKeyboard();
 
-			UpdateGame(dt);
+			UpdateGame(this->dt);
 			RenderGame();
 		}
 		else
-			Sleep(tickPerFrame - dt);
+			Sleep(tickPerFrame - this->dt);
 	}
 }
 
@@ -298,12 +289,15 @@ CGame::~CGame()
 	if (spriteHandler != NULL) {
 		this->spriteHandler->Release();
 	}
+
 	if (backBuffer != NULL) {
 		this->backBuffer->Release();
 	}
+
 	if (d3ddv != NULL) {
 		this->d3ddv->Release();
 	}
+
 	if (d3d != NULL) {
 		this->d3d->Release();
 	}
@@ -505,25 +499,35 @@ void CGame::__ParseSection_MAP__(std::string line)
 					newObject = new CJason;
 					pJason = (CJason*) newObject;
 					pJason->Select(false);
-					goto ParseObject;
+					goto __parse_label;
 				}
 				if (strcmp(objectType, "sophia") == 0) {
 					newObject = new CSophia;
 					pSophia = (CSophia*)newObject;
 					pCamera->SetTarget(pSophia);
 					pSophia->Select(true);
-					goto ParseObject;
+					goto __parse_label;
+				}
+				if (strcmp(objectType, "eyelet") == 0) {
+					newObject = new CEnemyEyelet;
+					goto __parse_label;
+				}
+				if (strcmp(objectType, "brick") == 0) {
+					newObject = new CBrick;
+					goto __parse_label;
 				}
 
-			ParseObject:
+				DebugOut(L"[ERROR] Unknowed object\n");
+				return;
+
+			__parse_label:
 				float x = object["x"].GetFloat();
 				float y = object["y"].GetFloat();
 				float width = object["width"].GetFloat();
 				float height = object["height"].GetFloat();
 
-				newObject->SetPosition(x + width / 2, this->mapHeight - y + height / 2);
-				pGameObjects.push_back(newObject);
-				pQuadtree->Insert(newObject);
+				newObject->SetPosition(Vector2D(x + width / 2, this->mapHeight - y + height / 2));
+				this->PushGameObject(newObject);
 			}
 		}
 	}
@@ -535,5 +539,11 @@ void CGame::__ParseSection_MAP__(std::string line)
 
 void CGame::__ParseSection_OBJECTS__(std::string line)
 {
+}
+
+void CGame::PushGameObject(LPGAMEOBJECT& newObject)
+{
+	pGameObjects.push_back(newObject);
+	pQuadtree->Insert(newObject);
 }
 #pragma endregion

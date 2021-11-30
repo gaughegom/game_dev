@@ -34,8 +34,6 @@ public:
 	void Render();
 	void ListenKeyEvent();
 
-	void EdgeCollisionHandler();
-
 	void SubcribeDirectionState(JasonDirectState directState);
 };
 

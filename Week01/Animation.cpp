@@ -14,7 +14,7 @@ void CAnimation::Add(int spriteId, DWORD time)
 	this->frames.push_back(frame);
 }
 
-void CAnimation::Render(Vector2D position, int nx)
+void CAnimation::Render(Vector2D position, int nx, int alpha)
 {
 	DWORD now = GetTickCount64();
 
@@ -60,7 +60,7 @@ void CAnimation::Render(Vector2D position, int nx)
 		}
 	}
 
-	this->frames[currentFrame]->GetSprite()->Draw(position, nx);
+	this->frames[currentFrame]->GetSprite()->Draw(position, nx, alpha);
 }
 
 void CAnimation::SetWait(bool value)

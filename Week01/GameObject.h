@@ -7,6 +7,12 @@
 #include "Game.h"
 #include "GameMovement.h"
 #include "Animations.h"
+#include "Collider2D.h"
+#include "QuadTree.h"
+
+class CCollider2D;
+struct SCollisionEvent;
+typedef SCollisionEvent* LPCOLLISIONEVENT;
 
 class CGameObject
 {
@@ -14,19 +20,11 @@ protected:
 
 	Vector2D position;
 	Vector2D velocity;
+	std::vector<CCollider2D*> colliders;
 
 	int nx;
 	int state; // use for single state object
-
-	float width;
-	float height;
-
-	SRect rect = SRect(
-		position.x - width / 2 ,
-		position.y + height / 2,
-		position.x + width / 2,
-		position.y - height / 2
-	);
+	bool ground;
 
 	std::unordered_map<std::string, LPANIMATION> animations;
 
@@ -34,7 +32,7 @@ public:
 	CGameObject();
 
 	// position
-	void SetPosition(float newX, float newY) { this->position.x = newX, this->position.y = newY; }
+	void SetPosition(Vector2D position) { this->position = position; }
 	Vector2D GetPosition();
 	void SetX(float newX);
 	void SetY(float newY);
@@ -44,29 +42,26 @@ public:
 	int GetNx();
 
 	// velocity
-	void SetVelocity(float newVx, float newVy) { this->velocity.x = newVx, this->velocity.y = newVy; }
+	void SetVelocity(Vector2D velocity) { this->velocity = velocity; }
 	Vector2D GetVelocity() { return this->velocity; }
 
-	// width and height
-	void SetSize(float newWidth, float newHeight) { this->width = newWidth, this->height = newHeight; }
-	float GetWidth() { return this->width; }
-	float GetHeight() { return this->height; }
-
 	// state
-	void SetState(int newState) { this->state = newState; }
+	void SetState(int state) { this->state = state; }
 	int GetState() { return this->state; }
-
-	SRect GetRect() { return this->rect; }
 
 	// animation
 	void AddAnimation(std::string key, int animationId);
 	std::unordered_map<std::string, LPANIMATION> GetAnimations() { return this->animations; }
 
+	// collider
+	void SetColliders(std::vector<CCollider2D*> colliders) { this->colliders = colliders; }
+	std::vector<CCollider2D*> GetColliders() { return this->colliders; }
 
 	virtual void Update(DWORD dt) = 0;
 	virtual void Render() = 0;
-
-	virtual void EdgeCollisionHandler();
+	virtual void PhysicalUpdate(std::vector<LPGAMEOBJECT>* coObjects);
+	virtual void OnCollision(CCollider2D* self, LPCOLLISIONEVENT coEvent);
+	virtual void OnTrigger(CCollider2D* self, LPCOLLISIONEVENT coEvent);
 
 	~CGameObject();
 };

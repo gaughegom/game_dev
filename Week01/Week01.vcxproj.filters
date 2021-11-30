@@ -17,9 +17,6 @@
     <Filter Include="Framework\Camera">
       <UniqueIdentifier>{58c4f323-3716-43a1-8975-6314f66d2031}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Framework\Common">
-      <UniqueIdentifier>{91b32f09-ed54-4c94-8748-daa339c3be00}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Framework\Transform">
       <UniqueIdentifier>{26c9e379-87c0-4787-9673-584c0de4d03d}</UniqueIdentifier>
     </Filter>
@@ -106,6 +103,9 @@
     </Filter>
     <Filter Include="Game\Game objects\Brick">
       <UniqueIdentifier>{9d2825ae-a7b0-4e5c-9c57-86e7ebc6a25c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Framework\Collision">
+      <UniqueIdentifier>{a01183fa-2caa-4e06-a435-2ef9e489d45b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -199,6 +199,9 @@
     <ClCompile Include="Brick.cpp">
       <Filter>Game\Game objects\Brick</Filter>
     </ClCompile>
+    <ClCompile Include="Collider2D.cpp">
+      <Filter>Framework\Collision</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Textures.h">
@@ -218,9 +221,6 @@
     </ClInclude>
     <ClInclude Include="Camera.h">
       <Filter>Framework\Camera</Filter>
-    </ClInclude>
-    <ClInclude Include="resources.h">
-      <Filter>Framework\Common</Filter>
     </ClInclude>
     <ClInclude Include="Transform.h">
       <Filter>Framework\Transform</Filter>
@@ -290,6 +290,12 @@
     </ClInclude>
     <ClInclude Include="Brick.h">
       <Filter>Game\Game objects\Brick</Filter>
+    </ClInclude>
+    <ClInclude Include="resources.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Collider2D.h">
+      <Filter>Framework\Collision</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
