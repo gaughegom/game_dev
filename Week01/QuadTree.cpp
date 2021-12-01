@@ -48,6 +48,9 @@ void CQuadTree::Insert(LPGAMEOBJECT entity)
 	}
 
 	this->entities.emplace_back(entity);
+	entity->SetSelfNodeQt(this);
+	entity->SetSelfIndexInNodeQt(this->entities.size() - 1);
+
 	if (this->entities.size() > MAX_NODE_ENTITES && this->level < MAX_NODE_LEVEL) {
 		if (!this->HasChildren()) {
 			this->SplitArea();
@@ -124,15 +127,49 @@ void CQuadTree::Retrieve(std::vector<LPGAMEOBJECT>& container, const SRect& targ
 
 void CQuadTree::Update(std::vector<LPGAMEOBJECT> updateEntities)
 {
-	this->entities.clear();
-	this->nodes[0] = nullptr;
-	this->nodes[1] = nullptr;
-	this->nodes[2] = nullptr;
-	this->nodes[3] = nullptr;
+	for (const auto& entity : updateEntities) {
+		for (auto colliders : entity->GetColliders()) {
+			if (colliders->GetDynamic() == true) {
+				if (!entity->GetSelfNodeQt()->rect.Contain(entity->GetPosition())) {
+					RemoveEntityFromLeafNode(entity);
 
-	for (auto& obj : updateEntities) {
-		this->Insert(obj);
+					Insert(entity);
+				}
+			}
+		}
 	}
+}
+
+void CQuadTree::RemoveEntityFromLeafNode(LPGAMEOBJECT entity) {
+	auto entityRect = entity->GetSelfNodeQt()->rect;
+	if (this->HasChildren()) {
+		if (this->nodes[0].get()->rect.Contain(entityRect)) {
+			this->nodes[0].get()->RemoveEntityFromLeafNode(entity);
+		}
+		else if (this->nodes[1].get()->rect.Contain(entityRect)) {
+			this->nodes[1].get()->RemoveEntityFromLeafNode(entity);
+		}
+		else if (this->nodes[2].get()->rect.Contain(entityRect)) {
+			this->nodes[2].get()->RemoveEntityFromLeafNode(entity);
+		}
+		else if (this->nodes[3].get()->rect.Contain(entityRect)) {
+			this->nodes[3].get()->RemoveEntityFromLeafNode(entity);
+		}
+		return;
+	}
+
+	if (this->rect.Equal(entityRect)) {
+		this->entities[entity->GetSelfIndexInNodeQt()] = this->entities.back();
+		this->entities.pop_back();
+
+		if (entity->GetSelfIndexInNodeQt() < this->entities.size()) {
+			this->entities[entity->GetSelfIndexInNodeQt()]->
+				SetSelfIndexInNodeQt(entity->GetSelfIndexInNodeQt());
+		}
+		entity->SetSelfIndexInNodeQt(-1);
+		entity->SetSelfNodeQt(nullptr);
+	}
+
 }
 
 CQuadTree::~CQuadTree()

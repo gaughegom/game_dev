@@ -13,6 +13,15 @@ SRect::SRect(float _left, float _top, float _right, float _bottom)
 	this->bottom = _bottom;
 }
 
+bool SRect::Equal(const SRect& rect)
+{
+	if (this->left == rect.left && this->top == rect.top
+		&& this->right == rect.right && this->bottom == rect.bottom) {
+		return true;
+	}
+	return false;
+}
+
 bool SRect::Contain(const Vector2D& point)
 {
 	return point.x >= this->left && point.x <= this->right

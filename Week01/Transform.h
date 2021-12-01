@@ -12,6 +12,7 @@ struct SRect
 	float left, top, right, bottom;
 	SRect();
 	SRect(float _left, float _top, float _right, float _bottom);
+	bool Equal(const SRect& rect);
 	bool Contain(const Vector2D& point);
 	bool Contain(const SRect& rect);
 	bool Overlap(const SRect& rect);

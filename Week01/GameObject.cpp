@@ -1,7 +1,5 @@
 #include "GameObject.h"
 
-//std::vector<LPANIMATION> CGameObject::animations;
-
 CGameObject::CGameObject()
 {
 	this->position.x = this->position.y = 0;

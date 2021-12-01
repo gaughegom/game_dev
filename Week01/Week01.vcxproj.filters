@@ -124,7 +124,7 @@
     <ClCompile Include="Sophia.cpp">
       <Filter>Game\Game objects\Sophia</Filter>
     </ClCompile>
-    <ClCompile Include="GameMovement.cpp">
+    <ClCompile Include="SimulationEnviroment.cpp">
       <Filter>Game\Game movement</Filter>
     </ClCompile>
     <ClCompile Include="Camera.cpp">
@@ -216,7 +216,7 @@
     <ClInclude Include="Sophia.h">
       <Filter>Game\Game objects\Sophia</Filter>
     </ClInclude>
-    <ClInclude Include="GameMovement.h">
+    <ClInclude Include="SimulationEnvroment.h">
       <Filter>Game\Game movement</Filter>
     </ClInclude>
     <ClInclude Include="Camera.h">

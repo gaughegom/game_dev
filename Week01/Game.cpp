@@ -1,5 +1,4 @@
 #include "Game.h"
-
 #include "Animations.h"
 #include "Camera.h"
 #include "KeyEventHandler.h"
@@ -27,7 +26,7 @@ CCamera* pCamera;
 CQuadTree* pQuadtree;
 
 std::vector<CGameObject*> pGameObjects;
-std::vector<CGameObject*> pRenderObjects;
+std::vector<CGameObject*> pRenderedObjects;
 
 CTextures* g_textures = CTextures::GetInstance();
 CSprites* g_sprites = CSprites::GetInstance();
@@ -54,23 +53,22 @@ void CKeyHander::OnKeyDown(int keyCode)
 		if (pSophia->IsSelected()) {
 			pCamera->SetTarget(pSophia);
 			pCamera->Update();
-			pRenderObjects.clear();
+			pRenderedObjects.clear();
 			pQuadtree->Update(pGameObjects);
-			pQuadtree->Retrieve(pRenderObjects, pCamera->GetBoundingBox());
+			pQuadtree->Retrieve(pRenderedObjects, pCamera->GetBoundingBox());
 		}
 		else {
 			pCamera->SetTarget(pJason);
 			pCamera->Update();
-			pRenderObjects.clear();
+			pRenderedObjects.clear();
 			pQuadtree->Update(pGameObjects);
-			pQuadtree->Retrieve(pRenderObjects, pCamera->GetBoundingBox());
+			pQuadtree->Retrieve(pRenderedObjects, pCamera->GetBoundingBox());
 		}
 	}
 }
 
 void CKeyHander::OnKeyUp(int keyCode)
 {
-	DebugOut(L"[INFO] KeyUp: %d\n", keyCode);
 }
 
 void CKeyHander::KeyState(BYTE* states)
@@ -202,15 +200,14 @@ void CGame::UpdateGame(DWORD dt)
 {
 	pCamera->Update();
 	pQuadtree->Update(pGameObjects);
-	pRenderObjects.clear();
-	pQuadtree->Retrieve(pRenderObjects, pCamera->GetBoundingBox());
-	DebugOut(L"render objects: %d\n", pRenderObjects.size());
+	pRenderedObjects.clear();
+	pQuadtree->Retrieve(pRenderedObjects, pCamera->GetBoundingBox());
 	
-	for (auto object : pRenderObjects) {
-		object->PhysicalUpdate(&pRenderObjects);
+	for (auto object : pRenderedObjects) {
+		object->PhysicalUpdate(&pRenderedObjects);
 	}
 	
-	for (auto object : pRenderObjects) {
+	for (auto object : pRenderedObjects) {
 		object->Update(dt);
 	}
 }
@@ -229,11 +226,11 @@ void CGame::RenderGame()
 		spriteHandler->Begin(D3DXSPRITE_ALPHABLEND);
 
 		this->map->Draw(Vector2D(this->mapWidth / 2, this->mapHeight / 2), 1, 255);
-		for (auto object : pRenderObjects) {
+		for (auto object : pRenderedObjects) {
 			object->Render();
 		}
 
-		for (auto object : pRenderObjects) {
+		for (auto object : pRenderedObjects) {
 			for (auto co : object->GetColliders()) {
 				co->RenderBoundingBox();
 			}

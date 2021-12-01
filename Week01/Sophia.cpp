@@ -18,8 +18,7 @@ CSophia::CSophia()
 
 void CSophia::Update(DWORD dt)
 {
-	//LinearMoveInGravity(this, dt);
-	LinearMove(this, dt);
+	InGravityAffect(this, dt);
 	this->UpdateColliders();
 
 	int backbufferWidth = CGame::GetInstance()->GetMapWidth();
@@ -69,10 +68,10 @@ void CSophia::ListenKeyEvent()
 		}
 	}
 
-	if (input->OnKeyDown(DIK_X)) {
-		if (this->velocity.y <= 0) {
-			this->velocity.y = PLAYER_JUMP_FORCE;
-		}
+	// listen key W for jumping
+	if (input->OnKeyDown(DIK_X) && this->ground) {
+		this->ground = false;
+		this->velocity.y = PLAYER_JUMP_FORCE;
 	}
 
 	#pragma endregion
@@ -99,6 +98,8 @@ void CSophia::UpdateColliders()
 		collider->SetBoxSize(SOPHIA_BOX_UP90);
 		break;
 	default:
+		collider->SetOffset(SOPHIA_OFFSET_IDLE);
+		collider->SetBoxSize(SOPHIA_BOX_IDLE);
 		break;
 	}
 

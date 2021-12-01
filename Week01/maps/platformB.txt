@@ -1,0 +1,4 @@
+[PLATFORM]
+# type		x	y
+# brick
+brick	1226	432

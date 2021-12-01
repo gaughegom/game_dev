@@ -5,7 +5,7 @@
 #include "resources.h"
 #include "Sprites.h"
 #include "Game.h"
-#include "GameMovement.h"
+#include "SimulationEnvroment.h"
 #include "Animations.h"
 #include "Collider2D.h"
 #include "QuadTree.h"
@@ -13,6 +13,7 @@
 class CCollider2D;
 struct SCollisionEvent;
 typedef SCollisionEvent* LPCOLLISIONEVENT;
+class CQuadTree;
 
 class CGameObject
 {
@@ -24,7 +25,11 @@ protected:
 
 	int nx;
 	int state; // use for single state object
+	
 	bool ground;
+
+	CQuadTree* selfNode;
+	int selfIndexInNode = -1;
 
 	std::unordered_map<std::string, LPANIMATION> animations;
 
@@ -52,6 +57,12 @@ public:
 	// animation
 	void AddAnimation(std::string key, int animationId);
 	std::unordered_map<std::string, LPANIMATION> GetAnimations() { return this->animations; }
+
+	// quadtree node
+	void SetSelfNodeQt(CQuadTree* node) { this->selfNode = node; }
+	CQuadTree* GetSelfNodeQt() { return this->selfNode; }
+	void SetSelfIndexInNodeQt(int index) { this->selfIndexInNode = index; }
+	int GetSelfIndexInNodeQt() { return this->selfIndexInNode; }
 
 	// collider
 	void SetColliders(std::vector<CCollider2D*> colliders) { this->colliders = colliders; }

@@ -3,7 +3,6 @@
 #define _JASON_H
 
 #include "GameObject.h"
-#include "GameMovement.h"
 #include "JasonDirectionState.h"
 #include "InputHandler.h"
 #include "ControllerObject.h"

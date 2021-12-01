@@ -20,8 +20,7 @@ CJason::CJason()
 
 void CJason::Update(DWORD dt)
 {
-	//LinearMoveInGravity(this, dt);
-	LinearMove(this, dt);
+	InGravityAffect(this, dt);
 
 	if (this->IsSelected()) {
 		this->ListenKeyEvent();
