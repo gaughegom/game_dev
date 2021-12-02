@@ -3,18 +3,17 @@
 #define _GAMEOBJECT_H
 
 #include "resources.h"
-#include "Sprites.h"
-#include "Game.h"
-#include "SimulationEnvroment.h"
 #include "Animations.h"
 #include "Collider2D.h"
+#include "Game.h"
 #include "QuadTree.h"
+#include "Sprites.h"
+#include "SimulationEnvroment.h"
 
-class CCollider2D;
 struct SCollisionEvent;
 typedef SCollisionEvent* LPCOLLISIONEVENT;
 class CQuadTree;
-
+class CCollider2D;
 class CGameObject
 {
 protected:

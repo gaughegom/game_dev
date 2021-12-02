@@ -43,6 +43,7 @@ class CKeyHander : public CKeyEventHandler
 	virtual void KeyState(BYTE* states);
 	virtual void OnKeyDown(int KeyCode);
 	virtual void OnKeyUp(int KeyCode);
+	virtual void IsKeyDown(int keyCode);
 };
 
 void CKeyHander::OnKeyDown(int keyCode)
@@ -52,19 +53,15 @@ void CKeyHander::OnKeyDown(int keyCode)
 		pJason->AlterSelect();
 		if (pSophia->IsSelected()) {
 			pCamera->SetTarget(pSophia);
-			pCamera->Update();
-			pRenderedObjects.clear();
-			pQuadtree->Update(pGameObjects);
-			pQuadtree->Retrieve(pRenderedObjects, pCamera->GetBoundingBox());
 		}
-		else {
+		else if (pJason->IsSelected()) {
 			pCamera->SetTarget(pJason);
-			pCamera->Update();
-			pRenderedObjects.clear();
-			pQuadtree->Update(pGameObjects);
-			pQuadtree->Retrieve(pRenderedObjects, pCamera->GetBoundingBox());
 		}
 	}
+}
+
+void CKeyHander::IsKeyDown(int keyCode) {
+
 }
 
 void CKeyHander::OnKeyUp(int keyCode)
@@ -495,14 +492,15 @@ void CGame::__ParseSection_MAP__(std::string line)
 				if (strcmp(objectType, "jason") == 0) {
 					newObject = new CJason;
 					pJason = (CJason*) newObject;
-					pJason->Select(false);
+					pJason->Select(true);
+					pCamera->SetTarget(pJason);
 					goto __parse_label;
 				}
 				if (strcmp(objectType, "sophia") == 0) {
 					newObject = new CSophia;
 					pSophia = (CSophia*)newObject;
-					pCamera->SetTarget(pSophia);
-					pSophia->Select(true);
+					pSophia->Select(false);
+					//pCamera->SetTarget(pSophia);
 					goto __parse_label;
 				}
 				if (strcmp(objectType, "eyelet") == 0) {
@@ -514,7 +512,7 @@ void CGame::__ParseSection_MAP__(std::string line)
 					goto __parse_label;
 				}
 
-				DebugOut(L"[ERROR] Unknowed object\n");
+				DebugOut(L"[ERROR] Unknowed object: %s\n", objectType);
 				return;
 
 			__parse_label:

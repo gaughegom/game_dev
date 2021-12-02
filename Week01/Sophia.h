@@ -3,13 +3,14 @@
 #define _GAMEPLAYER_H
 
 #include "GameObject.h"
-#include "InputHandler.h"
 #include "ControllerObject.h"
+#include "InputHandler.h"
 #include "SophiaWheel.h"
 #include "SophiaBody.h"
 #include "SophiaCabin.h"
 #include "SophiaGun.h"
 #include "Brick.h"
+
 
 #define	SOPHIA_BOX_IDLE				Vector2D(24.0f, 17.0f)
 #define SOPHIA_OFFSET_IDLE			Vector2D(0.0f, 4.5f)
@@ -55,11 +56,11 @@ public:
 	void Update(DWORD dt);
 	void Render();
 	void ListenKeyEvent();
-	void UpdateColliders();
 
 	void SubcribeDirectState(SophiaDirectState directState);
 	void SubcribeActionState(SophiaActionState actionState);
 
+	void UpdateColliders();
 	void OnCollision(CCollider2D* self, LPCOLLISIONEVENT coEvent);
 	void OnTrigger(CCollider2D* self, LPCOLLISIONEVENT coEvent);
 

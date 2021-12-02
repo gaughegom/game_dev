@@ -17,6 +17,9 @@ struct SCollisionEvent
 	LPGAMEOBJECT object;
 	CCollider2D* collider;
 	float nx, ny, t;
+
+	bool deleted;
+
 	SCollisionEvent(float t, float nx, float ny,
 		LPGAMEOBJECT object = nullptr, CCollider2D* collider = nullptr) {
 		this->t = t;
@@ -24,6 +27,7 @@ struct SCollisionEvent
 		this->ny = ny;
 		this->object = object;
 		this->collider = collider;
+		this->deleted = false;
 	}
 
 	static bool compare(const LPCOLLISIONEVENT& a, LPCOLLISIONEVENT& b) {

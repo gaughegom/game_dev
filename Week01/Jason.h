@@ -2,17 +2,13 @@
 #ifndef _JASON_H
 #define _JASON_H
 
+#include "ControllerObject.h"
 #include "GameObject.h"
 #include "JasonDirectionState.h"
 #include "InputHandler.h"
-#include "ControllerObject.h"
+#include "Brick.h"
 
-#define	C_JASON_HORIZON	0 // move
-#define C_JASON_UP		1
-#define C_JASON_DOWN	2
-#define C_JASON_IDLE_L	3 // idle
-#define C_JASON_IDLE_U	4
-#define C_JASON_IDLE_D	5
+#define V_JASON_BOX_SIZE	Vector2D(8.0f, 16.0f)
 
 class CJasonDirectionState;
 
@@ -31,6 +27,11 @@ public:
 	
 	void Update(DWORD dt);
 	void Render();
+
+	void UpdateColliders();
+	void OnCollision(CCollider2D* self, LPCOLLISIONEVENT coEvent);
+	void OnTrigger(CCollider2D* self, LPCOLLISIONEVENT coEvent);
+
 	void ListenKeyEvent();
 
 	void SubcribeDirectionState(JasonDirectState directState);

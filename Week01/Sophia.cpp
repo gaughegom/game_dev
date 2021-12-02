@@ -5,8 +5,6 @@ CSophia::CSophia()
 	this->directState = SophiaDirectState::Stay;
 	this->actionState = SophiaActionState::Idle;
 
-	this->UpdateColliders();
-
 	this->leftWheel = new CSophiaWheel(this);
 	this->rightWheel = new CSophiaWheel(this);
 	this->body = new CSophiaBody(this);
@@ -14,14 +12,22 @@ CSophia::CSophia()
 	this->gun = new CSophiaGun(this);
 	this->leftWheel->AddAnimation(C_A_DEFAULT_KEY, 0); // 0: left wheel
 	this->rightWheel->AddAnimation(C_A_DEFAULT_KEY, 1); // 1: right wheel
+
+	//
+	auto collider = new CCollider2D;
+	collider->SetGameObject(this);
+	collider->SetOffset(VectorZero());
+	collider->SetOffset(SOPHIA_OFFSET_IDLE);
+	collider->SetBoxSize(SOPHIA_BOX_IDLE);
+	collider->SetDynamic(true);
+	this->colliders.push_back(collider);
+	this->SetColliders(colliders);
 }
 
 void CSophia::Update(DWORD dt)
 {
 	InGravityAffect(this, dt);
 	this->UpdateColliders();
-
-	int backbufferWidth = CGame::GetInstance()->GetMapWidth();
 
 	if (this->IsSelected()) {
 		this->ListenKeyEvent();
@@ -79,10 +85,8 @@ void CSophia::ListenKeyEvent()
 
 void CSophia::UpdateColliders()
 {
+	auto collider = this->colliders.at(0);
 	this->colliders.clear();
-	auto collider = new CCollider2D;
-	collider->SetGameObject(this);
-
 	switch (this->actionState)
 	{
 	case SophiaActionState::Idle:
@@ -115,10 +119,6 @@ void CSophia::Render()
 	this->body->Render();
 	this->cabin->Render();
 	this->gun->Render();
-
-	auto debugPosSprite = CSprites::GetInstance()->Get(2000);
-	Vector2D debugPos = Vector2D(this->position.x - 16, this->position.y);
-	debugPosSprite->Draw(debugPos, this->nx, 255);
 }
 
 void CSophia::SubcribeDirectState(SophiaDirectState directState)
@@ -139,9 +139,6 @@ void CSophia::SubcribeDirectState(SophiaDirectState directState)
 		this->nx = 1;
 
 		break;
-	default:
-		this->velocity.x = 0;
-		break;
 	}
 	
 }
@@ -152,9 +149,11 @@ void CSophia::SubcribeActionState(SophiaActionState actionState)
 
 void CSophia::OnCollision(CCollider2D* self, LPCOLLISIONEVENT coEvent)
 {
-	if (dynamic_cast<CBrick*>(coEvent->object) 
-		&& !this->ground && coEvent->ny == 1) {
-		this->ground = true;
+	if (dynamic_cast<CBrick*>(coEvent->object)) {
+
+		if (!this->ground && coEvent->ny == 1) {
+			this->ground = true;
+		}
 	}
 }
 

@@ -8,14 +8,17 @@ CJason::CJason()
 	this->directState = new CJasonDirectionState(this);
 	this->directState->SetState(JasonDirectState::STAY);
 
+	this->SetVelocity(VectorZero());
+
 	//
+	this->colliders.clear();
 	auto collider = new CCollider2D;
 	collider->SetGameObject(this);
 	collider->SetOffset(VectorZero());
-	collider->SetBoxSize(Vector2D(8.0f, 16.0f));
+	collider->SetBoxSize(V_JASON_BOX_SIZE);
 	collider->SetDynamic(true);
 	this->colliders.push_back(collider);
-	this->SetColliders(this->colliders);
+	this->SetColliders(colliders);
 }
 
 void CJason::Update(DWORD dt)
@@ -34,11 +37,24 @@ void CJason::Render()
 		
 	this->animations.at(key)->
 		Render(this->position, -this->nx, 255);
+}
 
-	// draw center point
-	auto debugPosSprite = CSprites::GetInstance()->Get(2000);
-	Vector2D debugPos = Vector2D(this->position.x - 8, this->position.y);
-	debugPosSprite->Draw(debugPos, this->nx, 255);
+void CJason::UpdateColliders()
+{
+
+}
+
+void CJason::OnCollision(CCollider2D* self, LPCOLLISIONEVENT coEvent)
+{
+	if (dynamic_cast<CBrick*>(coEvent->object)) {
+		if (!this->ground && coEvent->ny == 1) {
+			this->ground = true;
+		}
+	}
+}
+
+void CJason::OnTrigger(CCollider2D* self, LPCOLLISIONEVENT coEvent)
+{
 }
 
 void CJason::ListenKeyEvent()
@@ -56,6 +72,11 @@ void CJason::ListenKeyEvent()
 		this->directState->SetState(JasonDirectState::STAY);
 	}
 
+	if (input->OnKeyDown(DIK_X) && this->ground) {
+		this->ground = false;
+		this->velocity.y = PLAYER_JUMP_FORCE;
+	}
+
 	// subcribe direct state
 	this->SubcribeDirectionState(this->directState->GetState());
 }
@@ -66,19 +87,19 @@ void CJason::SubcribeDirectionState(JasonDirectState directState)
 	switch (directState)
 	{
 	case JasonDirectState::RIGHTWALK:
-		this->SetVelocity(Vector2D(PLAYER_MOVING_SPEED, 0));
+		this->SetVelocity(Vector2D(PLAYER_MOVING_SPEED, this->velocity.y));
 		this->nx = 1;
 		this->directState->MoveForward();
 		break;
 
 	case JasonDirectState::LEFTWALK:
-		this->SetVelocity(Vector2D(-PLAYER_MOVING_SPEED, 0));
+		this->SetVelocity(Vector2D(-PLAYER_MOVING_SPEED, this->velocity.y));
 		this->nx = -1;
 		this->directState->MoveBackward();
 		break;
 
-	default:
-		this->SetVelocity(VectorZero());
+	case JasonDirectState::STAY:
+		this->SetVelocity(Vector2D(0, this->velocity.y));
 		this->directState->Stay();
 		break;
 	}
