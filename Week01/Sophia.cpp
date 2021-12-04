@@ -2,6 +2,7 @@
 #include "Camera.h"
 #include "Jason.h"
 #include "ControllerObject.h"
+#include "SophiaBasicBullet.h"
 
 CSophia::CSophia()
 {
@@ -19,7 +20,6 @@ CSophia::CSophia()
 	//
 	auto collider = new CCollider2D;
 	collider->SetGameObject(this);
-	collider->SetOffset(VectorZero());
 	collider->SetOffset(SOPHIA_OFFSET_IDLE);
 	collider->SetBoxSize(SOPHIA_BOX_IDLE);
 	collider->SetDynamic(true);
@@ -34,7 +34,7 @@ void CSophia::Update(DWORD dt)
 		this->UpdateColliders();
 	}
 
-	if (CControllerObject::GetInstance()->SelectId() == ControllerObjectID::SOPHIA) {
+	if (CControllerObject::GetInstance()->GetSelectId() == ControllerObjectID::SOPHIA) {
 		ListenKeyEvent();
 	}
 }
@@ -88,6 +88,21 @@ void CSophia::ListenKeyEvent()
 	// listten key switch controller
 	if (input->OnKeyDown(SWITCH_CONTROLLER_KEYCODE)) {
 		CControllerObject::GetInstance()->Select(ControllerObjectID::JASON);
+	}
+
+	// listen key shooting
+	if (input->OnKeyDown(DIK_S)) {
+		int direct;
+		if (this->actionState == SophiaActionState::Idle) {
+			direct = this->nx;
+		}
+		else {
+			direct = 0;
+		}
+		LPGAMEOBJECT bullet = new CSophiaBasicBullet(direct);
+		Vector2D margin = direct == 0 ? Vector2D(0, 4) : Vector2D(4, 0);
+		bullet->SetPosition(this->position + this->gun->GetPosition() + margin);
+		CGame::GetInstance()->NewGameObject(bullet);
 	}
 
 	#pragma endregion

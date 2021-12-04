@@ -27,7 +27,7 @@ public:
 	void Insert(LPGAMEOBJECT entity);
 	void SplitArea();
 	void Retrieve(std::vector<LPGAMEOBJECT>& container, const SRect& targetRect);
-	void Update(std::vector<LPGAMEOBJECT> updateEntities);
+	void Update(std::vector<LPGAMEOBJECT>& updateEntities);
 	
 	void RemoveEntityFromLeafNode(LPGAMEOBJECT entity);
 

@@ -1,9 +1,12 @@
 #include "EnemyEyelet.h"
 #include "Sophia.h"
+#include "SophiaBasicBullet.h"
 
 CEnemyEyelet::CEnemyEyelet()
 {
 	this->AddAnimation("default", 220); // eyelet animation id
+
+	this->hp = 10;
 
 	//
 	this->colliders.clear();
@@ -28,7 +31,15 @@ void CEnemyEyelet::Render()
 
 void CEnemyEyelet::OnCollision(CCollider2D* self, LPCOLLISIONEVENT coEvent)
 {
-	
+	if (dynamic_cast<CSophiaBasicBullet*>(coEvent->object)) {
+		float attackDame = coEvent->object->GetDamage();
+		this->hp -= attackDame;
+		if (this->hp <= 0) {
+			this->live = false;
+			this->deleted = true;
+		}
+		coEvent->object->SetDeleted(true);
+	}
 }
 
 void CEnemyEyelet::OnTrigger(CCollider2D* self, LPCOLLISIONEVENT coEvent)

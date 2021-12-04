@@ -23,10 +23,14 @@ protected:
 	std::vector<CCollider2D*> colliders;
 
 	int nx;
-	
+
+	float hp;
+	float damage;
+
 	bool ground;
 	bool live = true;
 	bool active = true;
+	bool deleted = false;
 
 	CQuadTree* selfNode;
 	int selfIndexInNode = -1;
@@ -68,9 +72,21 @@ public:
 	void SetLive(bool value) { this->live = value; }
 	bool IsLive() { return this->live; }
 
+	// delete
+	void SetDeleted(bool value) { this->deleted = value; }
+	bool IsDeleted() { return this->deleted; }
+
 	// enable
 	void SetActive(bool value) { this->active = value; }
 	bool IsActive() { return this->active; }
+
+	// hp
+	void TakeDamage(float damage) { this->hp -= damage; }
+	float GetHp() { return this->hp; }
+
+	// damage
+	void SetDamage(float damage) { this->damage = damage; }
+	float GetDamage() { return this->damage; }
 
 	virtual void Update(DWORD dt) = 0;
 	virtual void Render() = 0;

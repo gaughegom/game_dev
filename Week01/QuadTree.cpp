@@ -1,4 +1,5 @@
 #include "QuadTree.h"
+#include "SophiaBasicBullet.h"
 
 CQuadTree::CQuadTree(const int level, SRect rect) : level(level), nodes{ nullptr, nullptr, nullptr, nullptr }
 {
@@ -125,9 +126,17 @@ void CQuadTree::Retrieve(std::vector<LPGAMEOBJECT>& container, const SRect& targ
 	}
 }
 
-void CQuadTree::Update(std::vector<LPGAMEOBJECT> updateEntities)
+void CQuadTree::Update(std::vector<LPGAMEOBJECT>& updateEntities)
 {
-	for (const auto& entity : updateEntities) {
+	for (int i = 0; i < updateEntities.size(); i++) {
+		auto entity = updateEntities.at(i);
+
+		if (entity->IsDeleted()) {
+			updateEntities.erase(std::next(updateEntities.begin() + i - 1));
+			RemoveEntityFromLeafNode(entity);
+			continue; // skip after delete
+		}
+
 		if (entity->IsLive() == false) continue;
 		for (auto colliders : entity->GetColliders()) {
 			if (colliders->IsDynamic() == true) {

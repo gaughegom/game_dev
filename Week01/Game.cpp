@@ -287,13 +287,6 @@ void CGame::NewGameObject(LPGAMEOBJECT& newObject)
 	pQuadtree->Insert(newObject);
 }
 
-void CGame::DeleteGameObject(LPGAMEOBJECT& object)
-{
-	pGameObjects.erase(std::remove(pGameObjects.begin(), pGameObjects.end(), object), pGameObjects.end());
-	pRenderedObjects.erase(std::remove(pRenderedObjects.begin(), pRenderedObjects.end(), object), pRenderedObjects.end());
-	pQuadtree->RemoveEntityFromLeafNode(object);
-}
-
 CGame::~CGame()
 {
 	if (spriteHandler != NULL) {

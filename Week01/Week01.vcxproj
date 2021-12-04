@@ -42,7 +42,7 @@
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="SophiaBody.cpp" />
-    <ClCompile Include="SophiaBullet.cpp" />
+    <ClCompile Include="SophiaBasicBullet.cpp" />
     <ClCompile Include="SophiaCabin.cpp" />
     <ClCompile Include="SophiaGun.cpp" />
     <ClCompile Include="SophiaWheel.cpp" />
@@ -76,7 +76,7 @@
     <ClInclude Include="Sophia.h" />
     <ClInclude Include="resources.h" />
     <ClInclude Include="SophiaBody.h" />
-    <ClInclude Include="SophiaBullet.h" />
+    <ClInclude Include="SophiaBasicBullet.h" />
     <ClInclude Include="SophiaCabin.h" />
     <ClInclude Include="SophiaGun.h" />
     <ClInclude Include="SophiaWheel.h" />

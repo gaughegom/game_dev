@@ -27,7 +27,7 @@ void CJason::Update(DWORD dt)
 {
 	InGravityAffect(this, dt);
 
-	if (CControllerObject::GetInstance()->SelectId() == ControllerObjectID::JASON) {
+	if (CControllerObject::GetInstance()->GetSelectId() == ControllerObjectID::JASON) {
 		ListenKeyEvent();
 	}
 }
@@ -112,6 +112,9 @@ void CJason::OnCollision(CCollider2D* self, LPCOLLISIONEVENT coEvent)
 		if (!this->ground && coEvent->ny == 1) {
 			this->ground = true;
 		}
+	}
+	else if (dynamic_cast<CEnemyEyelet*>(coEvent->object)) {
+		coEvent->object->SetDeleted(true);
 	}
 }
 

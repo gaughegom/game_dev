@@ -61,7 +61,6 @@ public:
 
 	// game object
 	void NewGameObject(LPGAMEOBJECT& newObject);
-	void DeleteGameObject(LPGAMEOBJECT& object);
 
 	// device
 	LPDIRECT3DDEVICE9 GetDirect3dDevice() { return this->d3ddv; }

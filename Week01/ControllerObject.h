@@ -30,7 +30,7 @@ public:
 
 	void SetSophiaAndJason(CSophia* sophia, CJason* jason);
 	void Select(ControllerObjectID id);
-	ControllerObjectID SelectId() { return this->selectedId; }
+	ControllerObjectID GetSelectId() { return this->selectedId; }
 
 	CSophia* GetSophia() { return this->sophia; }
 	CJason* GetJason() { return this->jason; }
