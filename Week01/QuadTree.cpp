@@ -128,8 +128,9 @@ void CQuadTree::Retrieve(std::vector<LPGAMEOBJECT>& container, const SRect& targ
 void CQuadTree::Update(std::vector<LPGAMEOBJECT> updateEntities)
 {
 	for (const auto& entity : updateEntities) {
+		if (entity->IsLive() == false) continue;
 		for (auto colliders : entity->GetColliders()) {
-			if (colliders->GetDynamic() == true) {
+			if (colliders->IsDynamic() == true) {
 				if (!entity->GetSelfNodeQt()->rect.Contain(entity->GetPosition())) {
 					RemoveEntityFromLeafNode(entity);
 

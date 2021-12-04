@@ -21,11 +21,12 @@ public:
 	void SetState(JasonDirectState state);
 	JasonDirectState GetState();
 
-	std::string MappingStateOfAnimation(JasonDirectState state);
+	std::string MappingStateOfAnimation();
 
 	void Stay();
 	void MoveBackward();
 	void MoveForward();
+	void Jump();
 };
 
 #endif // !_JASON_DIRECTION_STATE_H

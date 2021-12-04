@@ -35,7 +35,7 @@ enum class SophiaActionState : int {
 	Up90 = 2,
 };
 
-class CSophia : public CGameObject, public CControllerObject
+class CSophia : public CGameObject
 {
 private:
 	CSophiaWheel* leftWheel;
@@ -69,6 +69,7 @@ public:
 
 	CSophiaWheel* GetLeftWheel() { return this->leftWheel; }
 	CSophiaWheel* GetRightWheel() { return this->rightWheel; }
+
 };
 
 #endif // !_GAMEPLAYER_H

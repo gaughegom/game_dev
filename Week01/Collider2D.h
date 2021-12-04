@@ -63,21 +63,27 @@ public:
 		bool filterX, bool filterY);
 	void PhysicalUpdate(std::vector<LPGAMEOBJECT>* coObjects);
 
+	// dynamic
 	void SetDynamic(bool value) { this->dynamic = value; }
-	bool GetDynamic() { return this->dynamic; }
+	bool IsDynamic() { return this->dynamic; }
 
+	// trigger
 	void SetTrigger(bool value) { this->trigger = value; }
-	bool GetTrigger() { return this->trigger; }
+	bool IsTrigger() { return this->trigger; }
 
+	// object
 	void SetGameObject(LPGAMEOBJECT gameObj) { this->object = gameObj; }
 	LPGAMEOBJECT GetGameObject() { return this->object; }
 
+	// offset
 	void SetOffset(Vector2D offset) { this->offset = offset; }
 	Vector2D GetOffSet() { return this->offset; }
 
+	// boxsize
 	void SetBoxSize(Vector2D size) { this->boxSize = size; }
 	Vector2D GetBoxSize() { return this->boxSize; }
 
+	// bounding box
 	void SetBoundingBox(const SRect& bounding) { this->boundingBox = bounding; }
 	SRect GetBoundingBox();
 	void RenderBoundingBox();

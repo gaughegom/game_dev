@@ -38,9 +38,6 @@
     <Filter Include="Game\Base">
       <UniqueIdentifier>{b4607eff-654f-464b-9a00-06209fd054a8}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Game\Game movement">
-      <UniqueIdentifier>{c1deae0b-8f64-4139-b3ce-5bab24f4db97}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Game\Game objects">
       <UniqueIdentifier>{145fc807-d6bc-4651-af49-4db3e2e59685}</UniqueIdentifier>
     </Filter>
@@ -107,6 +104,12 @@
     <Filter Include="Framework\Collision">
       <UniqueIdentifier>{a01183fa-2caa-4e06-a435-2ef9e489d45b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Game\Enviroment">
+      <UniqueIdentifier>{c1deae0b-8f64-4139-b3ce-5bab24f4db97}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Game objects\Bullet">
+      <UniqueIdentifier>{8d221e89-3451-4498-83b7-5b37f7603e78}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -125,7 +128,7 @@
       <Filter>Game\Game objects\Sophia</Filter>
     </ClCompile>
     <ClCompile Include="SimulationEnviroment.cpp">
-      <Filter>Game\Game movement</Filter>
+      <Filter>Game\Enviroment</Filter>
     </ClCompile>
     <ClCompile Include="Camera.cpp">
       <Filter>Framework\Camera</Filter>
@@ -202,6 +205,9 @@
     <ClCompile Include="Collider2D.cpp">
       <Filter>Framework\Collision</Filter>
     </ClCompile>
+    <ClCompile Include="SophiaBullet.cpp">
+      <Filter>Game\Game objects\Bullet</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Textures.h">
@@ -217,7 +223,7 @@
       <Filter>Game\Game objects\Sophia</Filter>
     </ClInclude>
     <ClInclude Include="SimulationEnvroment.h">
-      <Filter>Game\Game movement</Filter>
+      <Filter>Game\Enviroment</Filter>
     </ClInclude>
     <ClInclude Include="Camera.h">
       <Filter>Framework\Camera</Filter>
@@ -296,6 +302,9 @@
     </ClInclude>
     <ClInclude Include="Collider2D.h">
       <Filter>Framework\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="SophiaBullet.h">
+      <Filter>Game\Game objects\Bullet</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

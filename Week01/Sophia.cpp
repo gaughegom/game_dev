@@ -1,4 +1,7 @@
 #include "Sophia.h"
+#include "Camera.h"
+#include "Jason.h"
+#include "ControllerObject.h"
 
 CSophia::CSophia()
 {
@@ -26,11 +29,13 @@ CSophia::CSophia()
 
 void CSophia::Update(DWORD dt)
 {
-	InGravityAffect(this, dt);
-	this->UpdateColliders();
+	if (this->colliders.at(0)->IsDynamic() == true) {
+		InGravityAffect(this, dt);
+		this->UpdateColliders();
+	}
 
-	if (this->IsSelected()) {
-		this->ListenKeyEvent();
+	if (CControllerObject::GetInstance()->SelectId() == ControllerObjectID::SOPHIA) {
+		ListenKeyEvent();
 	}
 }
 
@@ -78,6 +83,11 @@ void CSophia::ListenKeyEvent()
 	if (input->OnKeyDown(DIK_X) && this->ground) {
 		this->ground = false;
 		this->velocity.y = PLAYER_JUMP_FORCE;
+	}
+
+	// listten key switch controller
+	if (input->OnKeyDown(SWITCH_CONTROLLER_KEYCODE)) {
+		CControllerObject::GetInstance()->Select(ControllerObjectID::JASON);
 	}
 
 	#pragma endregion

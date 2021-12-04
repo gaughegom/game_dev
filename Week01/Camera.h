@@ -7,6 +7,9 @@
 #include "Transform.h"
 
 class CCamera {
+private:
+	static CCamera* __instance;
+
 protected:
 	Vector2D position;
 	Vector2D size;
@@ -30,6 +33,8 @@ public:
 	CGameObject* GetTarget();
 
 	Vector2D TranslateWorldToScreen(Vector2D pos);
+
+	static CCamera* GetInstance();
 };
 
 #endif // !_CAMERA_H

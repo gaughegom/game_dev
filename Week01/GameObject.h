@@ -23,9 +23,10 @@ protected:
 	std::vector<CCollider2D*> colliders;
 
 	int nx;
-	int state; // use for single state object
 	
 	bool ground;
+	bool live = true;
+	bool active = true;
 
 	CQuadTree* selfNode;
 	int selfIndexInNode = -1;
@@ -49,10 +50,6 @@ public:
 	void SetVelocity(Vector2D velocity) { this->velocity = velocity; }
 	Vector2D GetVelocity() { return this->velocity; }
 
-	// state
-	void SetState(int state) { this->state = state; }
-	int GetState() { return this->state; }
-
 	// animation
 	void AddAnimation(std::string key, int animationId);
 	std::unordered_map<std::string, LPANIMATION> GetAnimations() { return this->animations; }
@@ -66,6 +63,14 @@ public:
 	// collider
 	void SetColliders(std::vector<CCollider2D*> colliders) { this->colliders = colliders; }
 	std::vector<CCollider2D*> GetColliders() { return this->colliders; }
+
+	// live
+	void SetLive(bool value) { this->live = value; }
+	bool IsLive() { return this->live; }
+
+	// enable
+	void SetActive(bool value) { this->active = value; }
+	bool IsActive() { return this->active; }
 
 	virtual void Update(DWORD dt) = 0;
 	virtual void Render() = 0;

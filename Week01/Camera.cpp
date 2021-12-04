@@ -1,5 +1,7 @@
 #include "Camera.h"
 
+CCamera* CCamera::__instance = nullptr;
+
 // init camera width and height
 CCamera::CCamera()
 {
@@ -78,4 +80,12 @@ Vector2D CCamera::TranslateWorldToScreen(Vector2D pos)
 	mat *= translate;
 
 	return Vector2D(mat._41, mat._42);
+}
+
+CCamera* CCamera::GetInstance()
+{
+	if (__instance == nullptr) {
+		__instance = new CCamera;
+	}
+	return __instance;
 }

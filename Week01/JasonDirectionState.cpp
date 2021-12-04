@@ -24,9 +24,9 @@ JasonDirectState CJasonDirectionState::GetState()
 	return this->state;
 }
 
-std::string CJasonDirectionState::MappingStateOfAnimation(JasonDirectState state)
+std::string CJasonDirectionState::MappingStateOfAnimation()
 {
-	switch (state)
+	switch (this->state)
 	{
 	case JasonDirectState::LEFTWALK:
 		return "walk";
@@ -37,6 +37,9 @@ std::string CJasonDirectionState::MappingStateOfAnimation(JasonDirectState state
 	case JasonDirectState::STAY:
 		return "stay";
 
+	case JasonDirectState::JUMP:
+		return "stay";
+
 	default:
 		return "stay";
 	}
@@ -45,7 +48,7 @@ std::string CJasonDirectionState::MappingStateOfAnimation(JasonDirectState state
 void CJasonDirectionState::Stay()
 {
 	auto targetAnimations = this->target->GetAnimations();
-	auto key = MappingStateOfAnimation(this->GetState());
+	auto key = MappingStateOfAnimation();
 
 	auto animation = targetAnimations.at(key);
 	animation->SetWait(true);
@@ -55,7 +58,7 @@ void CJasonDirectionState::MoveBackward()
 {
 	auto targetAnimations = this->target->GetAnimations();
 	auto animation = targetAnimations
-		.at(MappingStateOfAnimation(this->GetState()));
+		.at(MappingStateOfAnimation());
 
 	animation->SetReverse(false);
 	animation->SetWait(false);
@@ -65,8 +68,17 @@ void CJasonDirectionState::MoveForward()
 {
 	auto targetAnimations = this->target->GetAnimations();
 	auto animation = targetAnimations
-		.at(MappingStateOfAnimation(this->GetState()));
+		.at(MappingStateOfAnimation());
 
 	animation->SetReverse(true);
 	animation->SetWait(false);
+}
+
+void CJasonDirectionState::Jump()
+{
+	auto targetAnimations = this->target->GetAnimations();
+	auto key = MappingStateOfAnimation();
+
+	auto animation = targetAnimations.at(key);
+	animation->SetWait(true);
 }

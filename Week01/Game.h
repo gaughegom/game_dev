@@ -39,26 +39,31 @@ class CGame {
 	int mapWidth = 0;
 	int mapHeight = 0;
 
+	LPSPRITE map;
 
 public:
-	LPSPRITE map;
-	Vector2D vBackground;
 	void InitDirectX(HWND hWnd);
 	void Draw(Vector2D position, int nx, LPDIRECT3DTEXTURE9 texture, int left, int top, int right, int bottom, int alpha);
 
+	// main game loop
 	void InitGame(HWND hWnd);
 	void UpdateGame(DWORD dt);
 	void RenderGame();
 	void RunGame();
 
+	// resources
 	void LoadResource();
 	void __ParseSection_TEXTURES__(std::string line);
 	void __ParseSection_SPRITES__(std::string line);
 	void __ParseSection_ANIMATIONS__(std::string line);
 	void __ParseSection_MAP__(std::string line);
 	void __ParseSection_OBJECTS__(std::string line);
-	void PushGameObject(LPGAMEOBJECT& newObject);
 
+	// game object
+	void NewGameObject(LPGAMEOBJECT& newObject);
+	void DeleteGameObject(LPGAMEOBJECT& object);
+
+	// device
 	LPDIRECT3DDEVICE9 GetDirect3dDevice() { return this->d3ddv; }
 	LPDIRECT3DSURFACE9 GetBackbuffer() { return backBuffer; }
 	LPD3DXSPRITE GetSpriteHandler() { return this->spriteHandler; }

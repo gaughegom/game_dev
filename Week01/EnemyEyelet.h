@@ -15,6 +15,11 @@ public:
 
 	void Update(DWORD dt);
 	void Render();
+
+	void OnCollision(CCollider2D* self, LPCOLLISIONEVENT coEvent);
+	void OnTrigger(CCollider2D* self, LPCOLLISIONEVENT coEvent);
+
+	~CEnemyEyelet();
 };
 
 #endif // !_ENEMY_EYELET_H

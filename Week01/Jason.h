@@ -4,9 +4,12 @@
 
 #include "ControllerObject.h"
 #include "GameObject.h"
+#include "Camera.h"
+#include "EnemyEyelet.h"
 #include "JasonDirectionState.h"
 #include "InputHandler.h"
 #include "Brick.h"
+#include "Sophia.h"
 
 #define V_JASON_BOX_SIZE	Vector2D(8.0f, 16.0f)
 
@@ -15,10 +18,11 @@ class CJasonDirectionState;
 enum class JasonDirectState : int {
 	STAY = 0,
 	RIGHTWALK = 1,
-	LEFTWALK = -1
+	LEFTWALK = -1,
+	JUMP = 2
 };
 
-class CJason : public CGameObject, public CControllerObject {
+class CJason : public CGameObject{
 private:
 	CJasonDirectionState* directState;
 

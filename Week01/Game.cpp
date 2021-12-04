@@ -22,7 +22,7 @@
 
 CSophia* pSophia;
 CJason* pJason;
-CCamera* pCamera;
+CCamera* pCamera = CCamera::GetInstance();
 CQuadTree* pQuadtree;
 
 std::vector<CGameObject*> pGameObjects;
@@ -48,16 +48,7 @@ class CKeyHander : public CKeyEventHandler
 
 void CKeyHander::OnKeyDown(int keyCode)
 {
-	if (keyCode == DIK_A) {
-		pSophia->AlterSelect();
-		pJason->AlterSelect();
-		if (pSophia->IsSelected()) {
-			pCamera->SetTarget(pSophia);
-		}
-		else if (pJason->IsSelected()) {
-			pCamera->SetTarget(pJason);
-		}
-	}
+	
 }
 
 void CKeyHander::IsKeyDown(int keyCode) {
@@ -181,6 +172,11 @@ void CGame::InitGame(HWND hWnd)
 	#pragma endregion
 
 	this->LoadResource();
+
+	// set controller object
+	auto controller = CControllerObject::GetInstance();
+	controller->SetSophiaAndJason(pSophia, pJason);
+	controller->Select(ControllerObjectID::SOPHIA);
 	
 	// start keyboard
 	#pragma region KEYBOARD
@@ -201,11 +197,15 @@ void CGame::UpdateGame(DWORD dt)
 	pQuadtree->Retrieve(pRenderedObjects, pCamera->GetBoundingBox());
 	
 	for (auto object : pRenderedObjects) {
-		object->PhysicalUpdate(&pRenderedObjects);
+		if (object->IsLive() == true && object->IsActive() == true) {
+			object->PhysicalUpdate(&pRenderedObjects);
+		}
 	}
 	
 	for (auto object : pRenderedObjects) {
-		object->Update(dt);
+		if (object->IsLive() == true && object->IsActive() == true) {
+			object->Update(dt);
+		}
 	}
 }
 
@@ -224,10 +224,13 @@ void CGame::RenderGame()
 
 		this->map->Draw(Vector2D(this->mapWidth / 2, this->mapHeight / 2), 1, 255);
 		for (auto object : pRenderedObjects) {
+			if (!object->IsLive()|| !object->IsActive()) continue;
 			object->Render();
 		}
 
 		for (auto object : pRenderedObjects) {
+			if (!object->IsActive())
+				continue;
 			for (auto co : object->GetColliders()) {
 				co->RenderBoundingBox();
 			}
@@ -278,6 +281,19 @@ void CGame::RunGame()
 	}
 }
 
+void CGame::NewGameObject(LPGAMEOBJECT& newObject)
+{
+	pGameObjects.push_back(newObject);
+	pQuadtree->Insert(newObject);
+}
+
+void CGame::DeleteGameObject(LPGAMEOBJECT& object)
+{
+	pGameObjects.erase(std::remove(pGameObjects.begin(), pGameObjects.end(), object), pGameObjects.end());
+	pRenderedObjects.erase(std::remove(pRenderedObjects.begin(), pRenderedObjects.end(), object), pRenderedObjects.end());
+	pQuadtree->RemoveEntityFromLeafNode(object);
+}
+
 CGame::~CGame()
 {
 	if (spriteHandler != NULL) {
@@ -313,7 +329,6 @@ void CGame::LoadResource()
 	DebugOut(L"[INFO] Start loading scene resouce %s\n", sceneFilePath);
 
 	// start game camera
-	pCamera = new CCamera();
 	pCamera->SetSize(Vector2D(this->mapWidth, this->mapHeight));
 
 	// open scene file path
@@ -492,15 +507,12 @@ void CGame::__ParseSection_MAP__(std::string line)
 				if (strcmp(objectType, "jason") == 0) {
 					newObject = new CJason;
 					pJason = (CJason*) newObject;
-					pJason->Select(true);
 					pCamera->SetTarget(pJason);
 					goto __parse_label;
 				}
 				if (strcmp(objectType, "sophia") == 0) {
 					newObject = new CSophia;
 					pSophia = (CSophia*)newObject;
-					pSophia->Select(false);
-					//pCamera->SetTarget(pSophia);
 					goto __parse_label;
 				}
 				if (strcmp(objectType, "eyelet") == 0) {
@@ -522,7 +534,7 @@ void CGame::__ParseSection_MAP__(std::string line)
 				float height = object["height"].GetFloat();
 
 				newObject->SetPosition(Vector2D(x + width / 2, this->mapHeight - y + height / 2));
-				this->PushGameObject(newObject);
+				this->NewGameObject(newObject);
 			}
 		}
 	}
@@ -536,9 +548,4 @@ void CGame::__ParseSection_OBJECTS__(std::string line)
 {
 }
 
-void CGame::PushGameObject(LPGAMEOBJECT& newObject)
-{
-	pGameObjects.push_back(newObject);
-	pQuadtree->Insert(newObject);
-}
 #pragma endregion

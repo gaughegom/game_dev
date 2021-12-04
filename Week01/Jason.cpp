@@ -9,6 +9,8 @@ CJason::CJason()
 	this->directState->SetState(JasonDirectState::STAY);
 
 	this->SetVelocity(VectorZero());
+	//this->active = false;
+	this->ground = false;
 
 	//
 	this->colliders.clear();
@@ -25,15 +27,14 @@ void CJason::Update(DWORD dt)
 {
 	InGravityAffect(this, dt);
 
-	if (this->IsSelected()) {
-		this->ListenKeyEvent();
+	if (CControllerObject::GetInstance()->SelectId() == ControllerObjectID::JASON) {
+		ListenKeyEvent();
 	}
 }
 
 void CJason::Render()
 {
-	auto key = this->directState->MappingStateOfAnimation(
-		this->directState->GetState());
+	auto key = this->directState->MappingStateOfAnimation();
 		
 	this->animations.at(key)->
 		Render(this->position, -this->nx, 255);
@@ -42,19 +43,6 @@ void CJason::Render()
 void CJason::UpdateColliders()
 {
 
-}
-
-void CJason::OnCollision(CCollider2D* self, LPCOLLISIONEVENT coEvent)
-{
-	if (dynamic_cast<CBrick*>(coEvent->object)) {
-		if (!this->ground && coEvent->ny == 1) {
-			this->ground = true;
-		}
-	}
-}
-
-void CJason::OnTrigger(CCollider2D* self, LPCOLLISIONEVENT coEvent)
-{
 }
 
 void CJason::ListenKeyEvent()
@@ -74,7 +62,15 @@ void CJason::ListenKeyEvent()
 
 	if (input->OnKeyDown(DIK_X) && this->ground) {
 		this->ground = false;
-		this->velocity.y = PLAYER_JUMP_FORCE;
+		this->directState->SetState(JasonDirectState::JUMP);
+	}
+
+	if (input->OnKeyDown(SWITCH_CONTROLLER_KEYCODE)) {
+		auto controller = CControllerObject::GetInstance();
+		if (controller->GetSophia()->GetColliders().at(0)->GetBoundingBox()
+			.Contain(this->colliders.at(0)->GetBoundingBox())) {
+			controller->Select(ControllerObjectID::SOPHIA);
+		}
 	}
 
 	// subcribe direct state
@@ -102,5 +98,23 @@ void CJason::SubcribeDirectionState(JasonDirectState directState)
 		this->SetVelocity(Vector2D(0, this->velocity.y));
 		this->directState->Stay();
 		break;
+
+	case JasonDirectState::JUMP:
+		this->SetVelocity(Vector2D(this->velocity.x, PLAYER_JUMP_FORCE));
+		this->directState->Jump();
+		break;
 	}
+}
+
+void CJason::OnCollision(CCollider2D* self, LPCOLLISIONEVENT coEvent)
+{
+	if (dynamic_cast<CBrick*>(coEvent->object)) {
+		if (!this->ground && coEvent->ny == 1) {
+			this->ground = true;
+		}
+	}
+}
+
+void CJason::OnTrigger(CCollider2D* self, LPCOLLISIONEVENT coEvent)
+{
 }
