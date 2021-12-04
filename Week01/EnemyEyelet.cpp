@@ -32,13 +32,7 @@ void CEnemyEyelet::Render()
 void CEnemyEyelet::OnCollision(CCollider2D* self, LPCOLLISIONEVENT coEvent)
 {
 	if (dynamic_cast<CSophiaBasicBullet*>(coEvent->object)) {
-		float attackDame = coEvent->object->GetDamage();
-		this->hp -= attackDame;
-		if (this->hp <= 0) {
-			this->live = false;
-			this->deleted = true;
-		}
-		coEvent->object->SetDeleted(true);
+		this->TakeBulletDamage(coEvent);
 	}
 }
 

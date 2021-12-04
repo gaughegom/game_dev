@@ -81,6 +81,7 @@ public:
 	bool IsActive() { return this->active; }
 
 	// hp
+	void TakeBulletDamage(LPCOLLISIONEVENT& bulletCollision);
 	void TakeDamage(float damage) { this->hp -= damage; }
 	float GetHp() { return this->hp; }
 

@@ -48,6 +48,16 @@ void CGameObject::AddAnimation(std::string key, int animationId)
 	this->animations.insert(std::make_pair(key, ani));
 }
 
+void CGameObject::TakeBulletDamage(LPCOLLISIONEVENT& bulletCollision)
+{
+	this->hp -= bulletCollision->object->GetDamage();
+	if (this->hp <= 0) {
+		this->live = false;
+		this->deleted = true;
+	}
+	bulletCollision->object->SetDeleted(true);
+}
+
 void CGameObject::PhysicalUpdate(std::vector<LPGAMEOBJECT>* coObjects)
 {
 	for (auto collider : this->colliders) {
