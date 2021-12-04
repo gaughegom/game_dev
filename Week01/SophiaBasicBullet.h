@@ -17,6 +17,8 @@ public:
 	void Render();
 	void OnCollision(CCollider2D* self, LPCOLLISIONEVENT coEvent);
 	void OnTrigger(CCollider2D* self, LPCOLLISIONEVENT coEvent);
+
+	void OnDelete();
 };
 
 #endif // !_SOPHIA_BASIC_BULLET_H

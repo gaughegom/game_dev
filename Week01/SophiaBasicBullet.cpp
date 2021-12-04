@@ -1,5 +1,6 @@
 #include "SophiaBasicBullet.h"
 #include "Brick.h"
+#include "ControllerObject.h"
 
 CSophiaBasicBullet::CSophiaBasicBullet(int direct)
 {
@@ -37,6 +38,9 @@ CSophiaBasicBullet::CSophiaBasicBullet(int direct)
 
 void CSophiaBasicBullet::Update(DWORD dt)
 {
+	if (!CCamera::GetInstance()->GetBoundingBox().Contain(this->colliders.at(0)->GetBoundingBox())) {
+		this->OnDelete();
+	}
 }
 
 void CSophiaBasicBullet::Render()
@@ -55,11 +59,21 @@ void CSophiaBasicBullet::Render()
 
 void CSophiaBasicBullet::OnCollision(CCollider2D* self, LPCOLLISIONEVENT coEvent)
 {
-	if (dynamic_cast<CBrick*>(coEvent->object)) {
-		this->SetDeleted(true);
+	if (dynamic_cast<CBrick*>(coEvent->object) 
+		|| dynamic_cast<CSophiaBasicBullet*>(coEvent->object)) {
+		this->OnDelete();
 	}
 }
 
 void CSophiaBasicBullet::OnTrigger(CCollider2D* self, LPCOLLISIONEVENT coEvent)
 {
+}
+
+void CSophiaBasicBullet::OnDelete()
+{
+	this->deleted = true;
+	auto controller = CControllerObject::GetInstance();
+	if (controller->GetSelectId() == ControllerObjectID::SOPHIA) {
+		controller->GetSophia()->OnDeleteBullet();
+	}
 }

@@ -1,4 +1,6 @@
 #include "GameObject.h"
+#include "ControllerObject.h"
+#include "SophiaBasicBullet.h"
 
 CGameObject::CGameObject()
 {
@@ -55,7 +57,11 @@ void CGameObject::TakeBulletDamage(LPCOLLISIONEVENT& bulletCollision)
 		this->live = false;
 		this->deleted = true;
 	}
-	bulletCollision->object->SetDeleted(true);
+
+	if (dynamic_cast<CSophiaBasicBullet*>(bulletCollision->object)) {
+		auto sophiaBasicBullet = (CSophiaBasicBullet*)bulletCollision->object;
+		sophiaBasicBullet->OnDelete();
+	}
 }
 
 void CGameObject::PhysicalUpdate(std::vector<LPGAMEOBJECT>* coObjects)

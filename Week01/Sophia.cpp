@@ -91,18 +91,21 @@ void CSophia::ListenKeyEvent()
 	}
 
 	// listen key shooting
-	if (input->OnKeyDown(DIK_S)) {
-		int direct;
-		if (this->actionState == SophiaActionState::Idle) {
-			direct = this->nx;
+	if (input->IsKeyDown(DIK_S)) {
+		if (GetTickCount64() - this->prevBulletTime >= this->delayBullet && this->bullets < SOPHIA_MAX_BULLETS) {
+			int direct;
+			if (this->actionState == SophiaActionState::Idle) {
+				direct = this->nx;
+			}
+			else {
+				direct = 0;
+			}
+			LPGAMEOBJECT bullet = new CSophiaBasicBullet(direct);
+			bullet->SetPosition(this->position + this->gun->GetPosition());
+			CGame::GetInstance()->NewGameObject(bullet);
+			this->bullets++;
+			this->prevBulletTime = GetTickCount64();
 		}
-		else {
-			direct = 0;
-		}
-		LPGAMEOBJECT bullet = new CSophiaBasicBullet(direct);
-		Vector2D margin = direct == 0 ? Vector2D(0, 4) : Vector2D(4, 0);
-		bullet->SetPosition(this->position + this->gun->GetPosition() + margin);
-		CGame::GetInstance()->NewGameObject(bullet);
 	}
 
 	#pragma endregion
@@ -184,4 +187,9 @@ void CSophia::OnCollision(CCollider2D* self, LPCOLLISIONEVENT coEvent)
 
 void CSophia::OnTrigger(CCollider2D* self, LPCOLLISIONEVENT coEvent)
 {
+}
+
+void CSophia::OnDeleteBullet()
+{
+	this->bullets--;
 }
