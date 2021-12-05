@@ -25,7 +25,7 @@ bool CQuadTree::HasChildren()
 
 bool CQuadTree::Overlap(LPGAMEOBJECT& entity)
 {
-	bool result = this->rect.Contain(entity->GetPosition());
+	bool result = this->rect.Overlap(entity->GetColliders().at(0)->GetBoundingBox());
 	return result;
 }
 
@@ -35,13 +35,13 @@ void CQuadTree::Insert(LPGAMEOBJECT entity)
 		if (this->nodes[0].get()->Overlap(entity)) {
 			this->nodes[0].get()->Insert(entity);
 		}
-		else if (this->nodes[1].get()->Overlap(entity)) {
+		if (this->nodes[1].get()->Overlap(entity)) {
 			this->nodes[1].get()->Insert(entity);
 		}
-		else if (this->nodes[2].get()->Overlap(entity)) {
+		if (this->nodes[2].get()->Overlap(entity)) {
 			this->nodes[2].get()->Insert(entity);
 		}
-		else if (this->nodes[3].get()->Overlap(entity)) {
+		if (this->nodes[3].get()->Overlap(entity)) {
 			this->nodes[3].get()->Insert(entity);
 		}
 
@@ -61,13 +61,13 @@ void CQuadTree::Insert(LPGAMEOBJECT entity)
 				if (this->nodes[0].get()->Overlap(object)) {
 					this->nodes[0].get()->Insert(object);
 				}
-				else if (this->nodes[1].get()->Overlap(object)) {
+				if (this->nodes[1].get()->Overlap(object)) {
 					this->nodes[1].get()->Insert(object);
 				}
-				else if (this->nodes[2].get()->Overlap(object)) {
+				if (this->nodes[2].get()->Overlap(object)) {
 					this->nodes[2].get()->Insert(object);
 				}
-				else if (this->nodes[3].get()->Overlap(object)) {
+				if (this->nodes[3].get()->Overlap(object)) {
 					this->nodes[3].get()->Insert(object);
 				}
 			}
@@ -131,16 +131,19 @@ void CQuadTree::Update(std::vector<LPGAMEOBJECT>& updateEntities)
 	for (int i = 0; i < updateEntities.size(); i++) {
 		auto entity = updateEntities.at(i);
 
+		// remove from worldObjects
 		if (entity->IsDeleted()) {
 			updateEntities.erase(std::next(updateEntities.begin() + i - 1));
 			RemoveEntityFromLeafNode(entity);
-			continue; // skip after delete
+			continue;
 		}
 
 		if (entity->IsLive() == false) continue;
 		for (auto colliders : entity->GetColliders()) {
 			if (colliders->IsDynamic() == true) {
-				if (!entity->GetSelfNodeQt()->rect.Contain(entity->GetPosition())) {
+				if (!entity->GetSelfNodeQt()->rect
+					.Overlap(entity->GetColliders().at(0)->GetBoundingBox())) 
+				{
 					RemoveEntityFromLeafNode(entity);
 
 					Insert(entity);

@@ -34,7 +34,7 @@ void CControllerObject::SelectSophia()
 	this->jason->SetPosition(this->sophia->GetPosition());
 	this->jason->SetVelocity(Vector2D(0, this->jason->GetVelocity().y));
 	this->jason->SubcribeDirectionState(JasonDirectState::JUMP);
-	this->jason->SetVisible(false);
+	this->jason->SetActive(false);
 }
 
 void CControllerObject::SelectJason()
@@ -45,7 +45,7 @@ void CControllerObject::SelectJason()
 	}
 	auto camera = CCamera::GetInstance();
 	camera->SetTarget(this->jason);
-	this->jason->SetVisible(true);
+	this->jason->SetActive(true);
 	this->jason->SetPosition(this->sophia->GetPosition());
 	this->jason->SetNx(this->sophia->GetNx());
 	this->jason->SubcribeDirectionState(JasonDirectState::JUMP);

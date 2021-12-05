@@ -38,6 +38,7 @@ CSophiaBasicBullet::CSophiaBasicBullet(int direct)
 
 void CSophiaBasicBullet::Update(DWORD dt)
 {
+	// TODO: make deleted bounding box larger
 	if (!CCamera::GetInstance()->GetBoundingBox().Contain(this->colliders.at(0)->GetBoundingBox())) {
 		this->OnDelete();
 	}

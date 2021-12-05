@@ -18,7 +18,7 @@ enum class SceneSection : int {
 	SCENE_SECTION_SPRITES = 2,
 	SCENE_SECTION_ANIMATIONS = 3,
 	SCENE_SECTION_MAP = 4,
-	SCENE_SECTION_TILE = 5,
+	SCENE_SECTION_PLATFORMS = 5,
 	SCENE_SECTION_OBJECTS = 6
 };
 
@@ -58,6 +58,7 @@ public:
 	void __ParseSection_ANIMATIONS__(std::string line);
 	void __ParseSection_MAP__(std::string line);
 	void __ParseSection_OBJECTS__(std::string line);
+	void __ParseSection_PLATFORMS__(std::string line);
 
 	// game object
 	void PrepareGameObject(LPGAMEOBJECT& object, std::vector<std::string> tokens);

@@ -25,8 +25,8 @@ CJason* pJason;
 CCamera* pCamera = CCamera::GetInstance();
 CQuadTree* pQuadtree;
 
-std::vector<CGameObject*> pGameObjects;
-std::vector<CGameObject*> pRenderedObjects;
+std::vector<CGameObject*> worldObjects;
+std::vector<CGameObject*> renderedObjects;
 
 CTextures* g_textures = CTextures::GetInstance();
 CSprites* g_sprites = CSprites::GetInstance();
@@ -192,18 +192,18 @@ void CGame::InitGame(HWND hWnd)
 void CGame::UpdateGame(DWORD dt)
 {
 	pCamera->Update();
-	pQuadtree->Update(pGameObjects);
-	pRenderedObjects.clear();
-	pQuadtree->Retrieve(pRenderedObjects, pCamera->GetBoundingBox());
+	pQuadtree->Update(worldObjects);
+	renderedObjects.clear();
+	pQuadtree->Retrieve(renderedObjects, pCamera->GetBoundingBox());
 	
-	for (auto object : pRenderedObjects) {
-		if (object->IsLive() == true && object->IsVisible() == true) {
-			object->PhysicalUpdate(&pRenderedObjects);
+	for (auto object : renderedObjects) {
+		if (object->IsLive() == true && object->IsActive() == true) {
+			object->PhysicalUpdate(&renderedObjects);
 		}
 	}
 	
-	for (auto object : pRenderedObjects) {
-		if (object->IsLive() == true && object->IsVisible() == true) {
+	for (auto object : renderedObjects) {
+		if (object->IsLive() == true && object->IsActive() == true) {
 			object->Update(dt);
 		}
 	}
@@ -223,14 +223,19 @@ void CGame::RenderGame()
 		spriteHandler->Begin(D3DXSPRITE_ALPHABLEND);
 
 		this->map->Draw(Vector2D(this->mapWidth / 2, this->mapHeight / 2), 1, 255);
-		for (auto object : pRenderedObjects) {
-			if (!object->IsLive()|| !object->IsVisible()) continue;
+		for (auto object : renderedObjects) {
+			if (!object->IsLive() || !object->IsActive()) {
+				continue;
+			}
+
 			object->Render();
 		}
 
-		for (auto object : pRenderedObjects) {
-			if (!object->IsVisible())
+		for (auto object : renderedObjects) {
+			if (!object->IsActive()) {
 				continue;
+			}
+
 			for (auto co : object->GetColliders()) {
 				co->RenderBoundingBox();
 			}
@@ -273,8 +278,8 @@ void CGame::RunGame()
 
 			g_inputHandler->ProcessKeyboard();
 
-			UpdateGame(this->dt);
-			RenderGame();
+			this->UpdateGame(this->dt);
+			this->RenderGame();
 		}
 		else
 			Sleep(tickPerFrame - this->dt);
@@ -283,7 +288,7 @@ void CGame::RunGame()
 
 void CGame::NewGameObject(LPGAMEOBJECT& newObject)
 {
-	pGameObjects.push_back(newObject);
+	worldObjects.push_back(newObject);
 	pQuadtree->Insert(newObject);
 }
 
@@ -348,8 +353,12 @@ void CGame::LoadResource()
 			section = SceneSection::SCENE_SECTION_ANIMATIONS;
 			continue;
 		}
-		if (line == "[TILEMAP]") {
+		if (line == "[MAP]") {
 			section = SceneSection::SCENE_SECTION_MAP;
+			continue;
+		}
+		if (line == "[PLATFORMS]") {
+			section = SceneSection::SCENE_SECTION_PLATFORMS;
 			continue;
 		}
 		if (line == "[OBJECTS]") {
@@ -366,19 +375,22 @@ void CGame::LoadResource()
 		case SceneSection::SCENE_SECTION_UNKNOW:
 			break;
 		case SceneSection::SCENE_SECTION_TEXTURES:
-			__ParseSection_TEXTURES__(line);
+			this->__ParseSection_TEXTURES__(line);
 			break;
 		case SceneSection::SCENE_SECTION_SPRITES:
-			__ParseSection_SPRITES__(line);
+			this->__ParseSection_SPRITES__(line);
 			break;
 		case SceneSection::SCENE_SECTION_ANIMATIONS:
-			__ParseSection_ANIMATIONS__(line);
+			this->__ParseSection_ANIMATIONS__(line);
 			break;
 		case SceneSection::SCENE_SECTION_MAP:
-			__ParseSection_MAP__(line);
+			this->__ParseSection_MAP__(line);
+			break;
+		case SceneSection::SCENE_SECTION_PLATFORMS:
+			this->__ParseSection_PLATFORMS__(line);
 			break;
 		case SceneSection::SCENE_SECTION_OBJECTS:
-			__ParseSection_OBJECTS__(line);
+			this->__ParseSection_OBJECTS__(line);
 			break;	
 		default:
 			break;
@@ -444,90 +456,50 @@ void CGame::__ParseSection_ANIMATIONS__(std::string line)
 void CGame::__ParseSection_MAP__(std::string line)
 {
 	std::vector<std::string> tokens = SplitLine(line);
+	if (tokens.size() < 2) {
+		return;
+	}
 
-	if (tokens.size() < 1 || tokens[0] == "")
-		return; // skip
+	float sectionWidth = atoi(tokens[1].c_str()) * 16;
+	float sectionHeight = atoi(tokens[2].c_str()) * 16;
 
-	std::string mapFilePath = tokens[0];
-	FILE* pf;
-	errno_t err = fopen_s(&pf, mapFilePath.c_str(), "r");
-
-	char readerBuffer[13000]{};
-	rapidjson::FileReadStream is(pf, readerBuffer, sizeof(readerBuffer));
-	rapidjson::Document doc;
-	doc.ParseStream(is);
-	
-	int tileWidth = doc["tilewidth"].GetInt();
-	int tileHeight = doc["tileheight"].GetInt();
-	int sectionWidth = doc["width"].GetInt();
-	int sectionHeight = doc["height"].GetInt();
-	
 	SRect mapBoundary = SRect(
 		0,
-		sectionHeight * tileHeight,
-		sectionWidth * tileWidth,
+		sectionHeight,
+		sectionWidth,
 		0
 	);
 
-	this->mapWidth = mapBoundary.right;
-	this->mapHeight = mapBoundary.top;
-
-	// camera
+	this->mapWidth = sectionWidth;
+	this->mapHeight = sectionHeight;
 	pCamera->SetBoundary(mapBoundary);
 	pQuadtree = new CQuadTree(0, mapBoundary);
 
-	// map texture
-	auto properties = doc["properties"].GetArray();
-	for (auto& prop : properties) {
-		if (strcmp(prop["name"].GetString(), "Image Path") == 0) {
-			std::string imagePath = prop["value"].GetString();
-			// process texId
-			int texId = 10;
-			g_textures->Add(texId, ToWSTR(imagePath).c_str(), D3DCOLOR_XRGB(0, 0, 0));
-			LPDIRECT3DTEXTURE9 texMap = g_textures->Get(texId);
+	std::string mapPath = tokens[0];
+	int texId = 10; // 10 is map texId
+	g_textures->Add(texId, ToWSTR(mapPath).c_str(), D3DCOLOR_XRGB(0, 0, 0));
+	LPDIRECT3DTEXTURE9 texMap = g_textures->Get(texId);
 
-			int sprMapId = 3000;
-			g_sprites->Add(sprMapId, 0, 0, this->mapWidth, this->mapHeight, texMap);
-			this->map = g_sprites->Get(sprMapId);
-		}
+	int sprMap = 3000; // 300 is map sprite id
+	g_sprites->Add(sprMap, 0, 0, this->mapWidth, this->mapHeight, texMap);
+	this->map = g_sprites->Get(sprMap);
+}
+
+// TODO: Fix direction draw of platform -> Oxy of worldgame
+void CGame::__ParseSection_PLATFORMS__(std::string line)
+{
+	std::vector<std::string> tokens = SplitLine(line);
+	if (tokens.size() < 4) {
+		return; // skip
 	}
 
-	// platform
-	auto layers = doc["layers"].GetArray();
-	for (auto& layer : layers) {
-		auto layerType = layer["type"].GetString();
-		auto visible = layer["visible"].GetBool();
-
-		// object group layer
-		if (strcmp(layerType, "objectgroup") == 0 && visible) {
-			auto objects = layer["objects"].GetArray();
-			for (auto& object : objects) {
-				LPGAMEOBJECT newObject = nullptr;
-				auto objectType = object["name"].GetString();
-
-				if (strcmp(objectType, "brick") == 0) {
-					newObject = new CBrick;
-					goto __parse_label;
-				}
-
-				DebugOut(L"[ERROR] Unknowed object: %s\n", objectType);
-				continue;
-
-			__parse_label:
-				float x = object["x"].GetFloat();
-				float y = object["y"].GetFloat();
-				float width = object["width"].GetFloat();
-				float height = object["height"].GetFloat();
-
-				newObject->SetPosition(Vector2D(x + width / 2, this->mapHeight - y + height / 2));
-				this->NewGameObject(newObject);
-			}
-		}
-	}
-
-	if (pf != 0) {
-		fclose(pf);
-	}
+	float x = atoi(tokens[0].c_str()) * 16;
+	float y = (atoi(tokens[1].c_str()) + 1) * 16;
+	float width = atoi(tokens[2].c_str()) * 16;
+	float height = atoi(tokens[3].c_str()) * 16;
+	LPGAMEOBJECT platformObject = new CBrick(Vector2D(width, height));
+	platformObject->SetPosition(Vector2D(x + width / 2, this->mapHeight - y + height / 2));
+	this->NewGameObject(platformObject);
 }
 
 void CGame::__ParseSection_OBJECTS__(std::string line)

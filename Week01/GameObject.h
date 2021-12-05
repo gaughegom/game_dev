@@ -29,7 +29,7 @@ protected:
 
 	bool ground;
 	bool live = true;
-	bool visible = true;
+	bool active = true;
 	bool deleted = false;
 
 	CQuadTree* selfNode;
@@ -76,9 +76,9 @@ public:
 	void SetDeleted(bool value) { this->deleted = value; }
 	bool IsDeleted() { return this->deleted; }
 
-	// visible
-	void SetVisible(bool value) { this->visible = value; }
-	bool IsVisible() { return this->visible; }
+	// active
+	void SetActive(bool value) { this->active = value; }
+	bool IsActive() { return this->active; }
 
 	// hp
 	void TakeBulletDamage(LPCOLLISIONEVENT& bulletCollision);
