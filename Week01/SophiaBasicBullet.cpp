@@ -74,6 +74,6 @@ void CSophiaBasicBullet::OnDelete()
 	this->deleted = true;
 	auto controller = CControllerObject::GetInstance();
 	if (controller->GetSelectId() == ControllerObjectID::SOPHIA) {
-		controller->GetSophia()->OnDeleteBullet();
+		controller->GetSophia()->DecreaseBullet();
 	}
 }

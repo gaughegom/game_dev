@@ -75,8 +75,8 @@ public:
 
 	CSophiaWheel* GetLeftWheel() { return this->leftWheel; }
 	CSophiaWheel* GetRightWheel() { return this->rightWheel; }
-
-	void OnDeleteBullet();
+	
+	void DecreaseBullet();
 };
 
 #endif // !_GAMEPLAYER_H

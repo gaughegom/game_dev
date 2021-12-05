@@ -9,7 +9,7 @@ CJason::CJason()
 	this->directState->SetState(JasonDirectState::STAY);
 
 	this->SetVelocity(VectorZero());
-	//this->active = false;
+	//this->visible = false;
 	this->ground = false;
 
 	//

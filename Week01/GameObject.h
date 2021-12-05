@@ -29,7 +29,7 @@ protected:
 
 	bool ground;
 	bool live = true;
-	bool active = true;
+	bool visible = true;
 	bool deleted = false;
 
 	CQuadTree* selfNode;
@@ -76,9 +76,9 @@ public:
 	void SetDeleted(bool value) { this->deleted = value; }
 	bool IsDeleted() { return this->deleted; }
 
-	// enable
-	void SetActive(bool value) { this->active = value; }
-	bool IsActive() { return this->active; }
+	// visible
+	void SetVisible(bool value) { this->visible = value; }
+	bool IsVisible() { return this->visible; }
 
 	// hp
 	void TakeBulletDamage(LPCOLLISIONEVENT& bulletCollision);
@@ -89,6 +89,7 @@ public:
 	void SetDamage(float damage) { this->damage = damage; }
 	float GetDamage() { return this->damage; }
 
+	// virtual
 	virtual void Update(DWORD dt) = 0;
 	virtual void Render() = 0;
 	virtual void PhysicalUpdate(std::vector<LPGAMEOBJECT>* coObjects);

@@ -60,6 +60,7 @@ public:
 	void __ParseSection_OBJECTS__(std::string line);
 
 	// game object
+	void PrepareGameObject(LPGAMEOBJECT& object, std::vector<std::string> tokens);
 	void NewGameObject(LPGAMEOBJECT& newObject);
 
 	// device

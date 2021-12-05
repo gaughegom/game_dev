@@ -197,13 +197,13 @@ void CGame::UpdateGame(DWORD dt)
 	pQuadtree->Retrieve(pRenderedObjects, pCamera->GetBoundingBox());
 	
 	for (auto object : pRenderedObjects) {
-		if (object->IsLive() == true && object->IsActive() == true) {
+		if (object->IsLive() == true && object->IsVisible() == true) {
 			object->PhysicalUpdate(&pRenderedObjects);
 		}
 	}
 	
 	for (auto object : pRenderedObjects) {
-		if (object->IsLive() == true && object->IsActive() == true) {
+		if (object->IsLive() == true && object->IsVisible() == true) {
 			object->Update(dt);
 		}
 	}
@@ -224,12 +224,12 @@ void CGame::RenderGame()
 
 		this->map->Draw(Vector2D(this->mapWidth / 2, this->mapHeight / 2), 1, 255);
 		for (auto object : pRenderedObjects) {
-			if (!object->IsLive()|| !object->IsActive()) continue;
+			if (!object->IsLive()|| !object->IsVisible()) continue;
 			object->Render();
 		}
 
 		for (auto object : pRenderedObjects) {
-			if (!object->IsActive())
+			if (!object->IsVisible())
 				continue;
 			for (auto co : object->GetColliders()) {
 				co->RenderBoundingBox();
@@ -352,6 +352,10 @@ void CGame::LoadResource()
 			section = SceneSection::SCENE_SECTION_MAP;
 			continue;
 		}
+		if (line == "[OBJECTS]") {
+			section = SceneSection::SCENE_SECTION_OBJECTS;
+			continue;
+		}
 		if (line[0] == '[') {
 			section = SceneSection::SCENE_SECTION_UNKNOW;
 			continue;
@@ -372,6 +376,10 @@ void CGame::LoadResource()
 			break;
 		case SceneSection::SCENE_SECTION_MAP:
 			__ParseSection_MAP__(line);
+			break;
+		case SceneSection::SCENE_SECTION_OBJECTS:
+			__ParseSection_OBJECTS__(line);
+			break;	
 		default:
 			break;
 		}
@@ -497,28 +505,13 @@ void CGame::__ParseSection_MAP__(std::string line)
 				LPGAMEOBJECT newObject = nullptr;
 				auto objectType = object["name"].GetString();
 
-				if (strcmp(objectType, "jason") == 0) {
-					newObject = new CJason;
-					pJason = (CJason*) newObject;
-					pCamera->SetTarget(pJason);
-					goto __parse_label;
-				}
-				if (strcmp(objectType, "sophia") == 0) {
-					newObject = new CSophia;
-					pSophia = (CSophia*)newObject;
-					goto __parse_label;
-				}
-				if (strcmp(objectType, "eyelet") == 0) {
-					newObject = new CEnemyEyelet;
-					goto __parse_label;
-				}
 				if (strcmp(objectType, "brick") == 0) {
 					newObject = new CBrick;
 					goto __parse_label;
 				}
 
 				DebugOut(L"[ERROR] Unknowed object: %s\n", objectType);
-				return;
+				continue;
 
 			__parse_label:
 				float x = object["x"].GetFloat();
@@ -539,6 +532,45 @@ void CGame::__ParseSection_MAP__(std::string line)
 
 void CGame::__ParseSection_OBJECTS__(std::string line)
 {
+	std::vector<std::string> tokens = SplitLine(line);
+	if (tokens.size() < 5) {
+		return;
+	}
+
+	LPGAMEOBJECT newObject = nullptr;
+	std::string objectType = tokens[0].c_str();
+
+	// TODO: big brick
+
+	if (objectType == "jason") {
+		newObject = new CJason;
+		pJason = (CJason*)newObject;
+		PrepareGameObject(newObject, tokens);
+		return;
+	}
+
+	if (objectType == "sophia") {
+		newObject = new CSophia;
+		pSophia = (CSophia*)newObject;
+		PrepareGameObject(newObject, tokens);
+		return;
+	}
+
+	if (objectType == "eyelet") {
+		newObject = new CEnemyEyelet;
+		PrepareGameObject(newObject, tokens);
+		return;
+	}
+}
+
+void CGame::PrepareGameObject(LPGAMEOBJECT& object, std::vector<std::string> tokens)
+{
+	float x = atoi(tokens[1].c_str());
+	float y = atoi(tokens[2].c_str());
+	float width = atoi(tokens[3].c_str());
+	float height = atoi(tokens[4].c_str());
+	object->SetPosition(Vector2D(x + width / 2, this->mapHeight - y + height / 2));
+	this->NewGameObject(object);
 }
 
 #pragma endregion

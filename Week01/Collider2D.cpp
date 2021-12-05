@@ -138,7 +138,7 @@ void CCollider2D::PredictPotentialCollision(std::vector<LPGAMEOBJECT>* coObjects
 		if (coObject->IsLive() == false)
 			continue;
 
-		if (coObject->IsActive() == false)
+		if (coObject->IsVisible() == false)
 			continue;
 
 		for (auto co : coObject->GetColliders())

@@ -189,7 +189,7 @@ void CSophia::OnTrigger(CCollider2D* self, LPCOLLISIONEVENT coEvent)
 {
 }
 
-void CSophia::OnDeleteBullet()
+void CSophia::DecreaseBullet()
 {
 	this->bullets--;
 }

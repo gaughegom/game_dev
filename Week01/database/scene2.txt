@@ -102,27 +102,16 @@
 maps\sectionB.json
 
 [OBJECTS]
-# type		x	y
+# type		x	y	width	height
 # JASON
-obj-jason	1226	432
+jason	1260	112	8	16
 
 # SOPHIA
-obj-sophia	1196	432
-
-# STUKA
-obj-stuka	1076	440
+sophia	1260	112	8	16
 
 # EYELET
-obj-eyelet	1046	440
+eyelet	1150	120	18	15
 
-# DRAP
-obj-drap	1076	470
-
-# GX680
-obj-gx680	1106	470
-
-# OFFSIDE
-obj-laserguard	1176	470
 
 # --- SCENE PORTAL ----
 # type		x	y	w	h	scene_id
