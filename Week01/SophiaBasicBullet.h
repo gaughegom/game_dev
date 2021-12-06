@@ -19,6 +19,8 @@ public:
 	void OnTrigger(CCollider2D* self, LPCOLLISIONEVENT coEvent);
 
 	void OnDelete();
+
+	~CSophiaBasicBullet();
 };
 
 #endif // !_SOPHIA_BASIC_BULLET_H

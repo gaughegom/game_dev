@@ -59,7 +59,7 @@ void CGameObject::TakeBulletDamage(LPCOLLISIONEVENT& bulletCollision)
 	}
 
 	if (dynamic_cast<CSophiaBasicBullet*>(bulletCollision->object)) {
-		auto sophiaBasicBullet = (CSophiaBasicBullet*)bulletCollision->object;
+		auto sophiaBasicBullet = dynamic_cast<CSophiaBasicBullet*>(bulletCollision->object);
 		sophiaBasicBullet->OnDelete();
 	}
 }

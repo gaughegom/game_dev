@@ -41,8 +41,7 @@ void CSophiaBasicBullet::Update(DWORD dt)
 	auto sophia = CControllerObject::GetInstance()->GetSophia();
 	Vector2D sophiaPos = sophia->GetPosition();
 	float distance = PositionsDistance(this->position, sophiaPos);
-	if (distance > 50) {
-		DebugOut(L"distance: %f\n", distance);
+	if (distance > 400) {
 		this->OnDelete();
 	}
 }
@@ -82,5 +81,8 @@ void CSophiaBasicBullet::OnDelete()
 	if (controller->GetSelectId() == ControllerObjectID::SOPHIA) {
 		controller->GetSophia()->DecreaseBullet();
 	}
-	DebugOut(L"bullet OnDelete\n");
+}
+
+CSophiaBasicBullet::~CSophiaBasicBullet()
+{
 }

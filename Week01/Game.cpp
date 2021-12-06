@@ -556,7 +556,7 @@ void CGame::ClearDeletedObject()
 		auto object = worldObjects.at(i);
 		if (object->IsDeleted()) {
 			worldObjects.erase(std::next(worldObjects.begin() + i - 1));
-			//quadtree->RemoveEntityFromLeafNodes(object);
+			quadtree->RemoveEntityFromLeafNodes(object);
 		}
 	}
 }

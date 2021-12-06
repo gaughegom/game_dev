@@ -132,13 +132,6 @@ void CQuadTree::Update(std::vector<LPGAMEOBJECT>& updateEntities)
 	for (int i = 0; i < updateEntities.size(); i++) {
 		auto entity = updateEntities.at(i);
 
-		// remove from worldObjects
-		if (entity->IsDeleted()) {
-			updateEntities.erase(std::next(updateEntities.begin() + i - 1));
-			RemoveEntityFromLeafNodes(entity);
-			continue;
-		}
-
 		if (entity->IsLive() == false) continue;
 		for (auto colliders : entity->GetColliders()) {
 			if (colliders->IsDynamic() == true) {
@@ -164,36 +157,6 @@ void CQuadTree::RemoveEntityFromLeafNodes(LPGAMEOBJECT entity) {
 		entityNode->entities.erase(std::remove(entityNode->entities.begin(), entityNode->entities.end(), entity), entityNode->entities.end());
 	}
 	entity->ClearSelfNodesQt();
-
-	/*auto entityRect = entity->GetSelfNodesQt()->rect;
-	if (this->HasChildren()) {
-		if (this->nodes[0].get()->rect.Overlap(entityRect)) {
-			this->nodes[0].get()->RemoveEntityFromLeafNodes(entity);
-		}
-		if (this->nodes[1].get()->rect.Overlap(entityRect)) {
-			this->nodes[1].get()->RemoveEntityFromLeafNodes(entity);
-		}
-		if (this->nodes[2].get()->rect.Overlap(entityRect)) {
-			this->nodes[2].get()->RemoveEntityFromLeafNodes(entity);
-		}
-		if (this->nodes[3].get()->rect.Overlap(entityRect)) {
-			this->nodes[3].get()->RemoveEntityFromLeafNodes(entity);
-		}
-		return;
-	}
-
-	if (this->rect.Equal(entityRect)) {
-		this->entities[entity->GetSelfIndexInNodeQt()] = this->entities.back();
-		this->entities.pop_back();
-
-		if (entity->GetSelfIndexInNodeQt() < this->entities.size()) {
-			this->entities[entity->GetSelfIndexInNodeQt()]->
-				SetSelfIndexInNodeQt(entity->GetSelfIndexInNodeQt());
-		}
-		entity->SetSelfIndexInNodeQt(-1);
-		entity->SetSelfNodeQt(nullptr);
-	}*/
-
 }
 
 CQuadTree::~CQuadTree()
