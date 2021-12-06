@@ -40,7 +40,7 @@
 
 #pragma region Player
 
-#define PLAYER_MOVING_SPEED			0.2f
+#define PLAYER_MOVING_SPEED			0.15f
 #define PLAYER_JUMP_FORCE			0.29f
 #define GAME_GRAVITY				0.0007f
 #define BULLET_VELOCITY				0.32f

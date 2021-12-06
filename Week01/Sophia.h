@@ -55,7 +55,7 @@ public:
 	// bullet
 	int bullets;
 	DWORD prevBulletTime;
-	DWORD delayBullet = 300;
+	DWORD delayBullet = 200;
 
 	CSophia();
 

@@ -27,6 +27,7 @@ protected:
 	float hp;
 	float damage;
 
+	bool rendering = false;
 	bool ground;
 	bool live = true;
 	bool active = true;
@@ -57,6 +58,10 @@ public:
 	// animation
 	void AddAnimation(std::string key, int animationId);
 	std::unordered_map<std::string, LPANIMATION> GetAnimations() { return this->animations; }
+
+	// rendering
+	void SetRendering(bool value) { this->rendering = value; }
+	bool IsRendering() { return this->rendering; }
 
 	// quadtree node
 	void SetSelfNodeQt(CQuadTree* node) { this->selfNodes.push_back(node); }

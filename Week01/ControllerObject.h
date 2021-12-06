@@ -26,6 +26,8 @@ private:
 	void SelectSophia();
 	void SelectJason();
 public:
+	DWORD delaySwitch = 300;
+	DWORD lastSwitchTime;
 	CControllerObject();
 
 	void SetSophiaAndJason(CSophia* sophia, CJason* jason);

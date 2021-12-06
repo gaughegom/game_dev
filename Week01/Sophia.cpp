@@ -85,9 +85,10 @@ void CSophia::ListenKeyEvent()
 		this->velocity.y = PLAYER_JUMP_FORCE;
 	}
 
-	// listten key switch controller
+	// listen key switch controller
 	if (input->OnKeyDown(SWITCH_CONTROLLER_KEYCODE)) {
-		CControllerObject::GetInstance()->Select(ControllerObjectID::JASON);
+		auto controller = CControllerObject::GetInstance();
+		controller->Select(ControllerObjectID::JASON);
 	}
 
 	// listen key shooting

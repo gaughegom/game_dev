@@ -38,6 +38,7 @@ CSophiaBasicBullet::CSophiaBasicBullet(int direct)
 
 void CSophiaBasicBullet::Update(DWORD dt)
 {
+	// delete when out of distance
 	auto sophia = CControllerObject::GetInstance()->GetSophia();
 	Vector2D sophiaPos = sophia->GetPosition();
 	float distance = PositionsDistance(this->position, sophiaPos);

@@ -195,16 +195,12 @@ maps\sectionB.png	86	33
 
 [OBJECTS]
 # type		x	y	width	height
-# JASON
-jason	1260	112	8	16
-
 # SOPHIA
 sophia	1260	112	8	16
-
+# JASON
+jason	1260	112	8	16
 # EYELET
 eyelet	1150	120	18	15
-
-
 
 # --- SCENE PORTAL ----
 # type		x	y	w	h	scene_id

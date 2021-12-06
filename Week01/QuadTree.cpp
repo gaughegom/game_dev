@@ -122,8 +122,11 @@ void CQuadTree::Retrieve(std::vector<LPGAMEOBJECT>& container, const SRect& targ
 	}
 
 	for (const auto& obj : this->entities) {
-		if (std::find(container.begin(), container.end(), obj) == container.end())
-		container.emplace_back(obj);
+		//if (std::find(container.begin(), container.end(), obj) == container.end())
+		if (!obj->IsRendering()) {
+			container.emplace_back(obj);
+			obj->SetRendering(true);
+		}
 	}
 }
 
@@ -131,7 +134,7 @@ void CQuadTree::Update(std::vector<LPGAMEOBJECT>& updateEntities)
 {
 	for (int i = 0; i < updateEntities.size(); i++) {
 		auto entity = updateEntities.at(i);
-
+		entity->SetRendering(false);
 		if (entity->IsLive() == false) continue;
 		for (auto colliders : entity->GetColliders()) {
 			if (colliders->IsDynamic() == true) {
