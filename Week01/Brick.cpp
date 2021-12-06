@@ -18,6 +18,7 @@ CBrick::CBrick(Vector2D boundingBox)
 	collider->SetGameObject(this);
 	collider->SetOffset(VectorZero());
 	collider->SetBoxSize(boundingBox);
+	collider->SetDynamic(false);
 	this->colliders.push_back(collider);
 }
 

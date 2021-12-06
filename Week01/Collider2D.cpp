@@ -135,10 +135,10 @@ void CCollider2D::PredictPotentialCollision(std::vector<LPGAMEOBJECT>* coObjects
 		if (this->object == coObject)
 			continue;
 
-		if (coObject->IsLive() == false)
+		if (!coObject->IsLive())
 			continue;
 
-		if (coObject->IsActive() == false)
+		if (!coObject->IsActive())
 			continue;
 
 		for (auto co : coObject->GetColliders())
@@ -198,8 +198,11 @@ void CCollider2D::FilterCollision(std::vector<LPCOLLISIONEVENT>& coEvents,
 
 void CCollider2D::PhysicalUpdate(std::vector<LPGAMEOBJECT>* coObjects)
 {
-	// check null or not dynamic
-	if (this->object == nullptr || this->dynamic == false || this->object->IsLive() == false) return;
+	// null, not dynamic, not active
+	if (this->object == nullptr || !this->dynamic
+		|| !this->object->IsActive()) {
+		return;
+	}
 
 	// get delta time
 	auto dt = CGame::GetDeltaTime();

@@ -56,6 +56,7 @@ void CQuadTree::Insert(LPGAMEOBJECT entity)
 		if (!this->HasChildren()) {
 			this->SplitArea();
 		}
+		entity->ClearSelfNodesQt();
 		for (auto& object : this->entities) {
 			if (this->HasChildren()) {
 				if (this->nodes[0].get()->Overlap(object)) {
@@ -134,39 +135,49 @@ void CQuadTree::Update(std::vector<LPGAMEOBJECT>& updateEntities)
 		// remove from worldObjects
 		if (entity->IsDeleted()) {
 			updateEntities.erase(std::next(updateEntities.begin() + i - 1));
-			RemoveEntityFromLeafNode(entity);
+			RemoveEntityFromLeafNodes(entity);
 			continue;
 		}
 
 		if (entity->IsLive() == false) continue;
 		for (auto colliders : entity->GetColliders()) {
 			if (colliders->IsDynamic() == true) {
-				if (!entity->GetSelfNodeQt()->rect
-					.Overlap(entity->GetColliders().at(0)->GetBoundingBox())) 
-				{
-					RemoveEntityFromLeafNode(entity);
 
-					Insert(entity);
+				auto entityNodes = entity->GetSelfNodesQt();
+
+				for (auto entityNode : entityNodes) {
+					if (!entityNode->rect.Overlap(entity->GetColliders().at(0)->GetBoundingBox())) {
+						entityNode->entities.erase(std::remove(entityNode->entities.begin(), entityNode->entities.end(), entity), entityNode->entities.end());
+						entity->ClearSelfNodesQt();
+						Insert(entity);
+					}
 				}
 			}
 		}
 	}
 }
 
-void CQuadTree::RemoveEntityFromLeafNode(LPGAMEOBJECT entity) {
-	auto entityRect = entity->GetSelfNodeQt()->rect;
+void CQuadTree::RemoveEntityFromLeafNodes(LPGAMEOBJECT entity) {
+	auto entityNodes = entity->GetSelfNodesQt();
+
+	for (auto entityNode : entityNodes) {
+		entityNode->entities.erase(std::remove(entityNode->entities.begin(), entityNode->entities.end(), entity), entityNode->entities.end());
+	}
+	entity->ClearSelfNodesQt();
+
+	/*auto entityRect = entity->GetSelfNodesQt()->rect;
 	if (this->HasChildren()) {
-		if (this->nodes[0].get()->rect.Contain(entityRect)) {
-			this->nodes[0].get()->RemoveEntityFromLeafNode(entity);
+		if (this->nodes[0].get()->rect.Overlap(entityRect)) {
+			this->nodes[0].get()->RemoveEntityFromLeafNodes(entity);
 		}
-		else if (this->nodes[1].get()->rect.Contain(entityRect)) {
-			this->nodes[1].get()->RemoveEntityFromLeafNode(entity);
+		if (this->nodes[1].get()->rect.Overlap(entityRect)) {
+			this->nodes[1].get()->RemoveEntityFromLeafNodes(entity);
 		}
-		else if (this->nodes[2].get()->rect.Contain(entityRect)) {
-			this->nodes[2].get()->RemoveEntityFromLeafNode(entity);
+		if (this->nodes[2].get()->rect.Overlap(entityRect)) {
+			this->nodes[2].get()->RemoveEntityFromLeafNodes(entity);
 		}
-		else if (this->nodes[3].get()->rect.Contain(entityRect)) {
-			this->nodes[3].get()->RemoveEntityFromLeafNode(entity);
+		if (this->nodes[3].get()->rect.Overlap(entityRect)) {
+			this->nodes[3].get()->RemoveEntityFromLeafNodes(entity);
 		}
 		return;
 	}
@@ -181,7 +192,7 @@ void CQuadTree::RemoveEntityFromLeafNode(LPGAMEOBJECT entity) {
 		}
 		entity->SetSelfIndexInNodeQt(-1);
 		entity->SetSelfNodeQt(nullptr);
-	}
+	}*/
 
 }
 

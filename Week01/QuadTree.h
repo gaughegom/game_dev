@@ -29,7 +29,7 @@ public:
 	void Retrieve(std::vector<LPGAMEOBJECT>& container, const SRect& targetRect);
 	void Update(std::vector<LPGAMEOBJECT>& updateEntities);
 	
-	void RemoveEntityFromLeafNode(LPGAMEOBJECT entity);
+	void RemoveEntityFromLeafNodes(LPGAMEOBJECT entity);
 
 	~CQuadTree();
 };

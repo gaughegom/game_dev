@@ -38,8 +38,11 @@ CSophiaBasicBullet::CSophiaBasicBullet(int direct)
 
 void CSophiaBasicBullet::Update(DWORD dt)
 {
-	// TODO: make deleted bounding box larger
-	if (!CCamera::GetInstance()->GetBoundingBox().Contain(this->colliders.at(0)->GetBoundingBox())) {
+	auto sophia = CControllerObject::GetInstance()->GetSophia();
+	Vector2D sophiaPos = sophia->GetPosition();
+	float distance = PositionsDistance(this->position, sophiaPos);
+	if (distance > 50) {
+		DebugOut(L"distance: %f\n", distance);
 		this->OnDelete();
 	}
 }
@@ -60,8 +63,10 @@ void CSophiaBasicBullet::Render()
 
 void CSophiaBasicBullet::OnCollision(CCollider2D* self, LPCOLLISIONEVENT coEvent)
 {
-	if (dynamic_cast<CBrick*>(coEvent->object) 
-		|| dynamic_cast<CSophiaBasicBullet*>(coEvent->object)) {
+	if (dynamic_cast<CBrick*>(coEvent->object)) {
+		this->OnDelete();
+	}
+	else if (dynamic_cast<CSophiaBasicBullet*>(coEvent->object)) {
 		this->OnDelete();
 	}
 }
@@ -77,4 +82,5 @@ void CSophiaBasicBullet::OnDelete()
 	if (controller->GetSelectId() == ControllerObjectID::SOPHIA) {
 		controller->GetSophia()->DecreaseBullet();
 	}
+	DebugOut(L"bullet OnDelete\n");
 }

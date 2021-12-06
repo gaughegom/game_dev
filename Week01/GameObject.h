@@ -32,7 +32,7 @@ protected:
 	bool active = true;
 	bool deleted = false;
 
-	CQuadTree* selfNode;
+	std::vector<CQuadTree*> selfNodes;
 	int selfIndexInNode = -1;
 
 	std::unordered_map<std::string, LPANIMATION> animations;
@@ -59,8 +59,9 @@ public:
 	std::unordered_map<std::string, LPANIMATION> GetAnimations() { return this->animations; }
 
 	// quadtree node
-	void SetSelfNodeQt(CQuadTree* node) { this->selfNode = node; }
-	CQuadTree* GetSelfNodeQt() { return this->selfNode; }
+	void SetSelfNodeQt(CQuadTree* node) { this->selfNodes.push_back(node); }
+	void ClearSelfNodesQt() { this->selfNodes.clear(); }
+	std::vector<CQuadTree*> GetSelfNodesQt() { return this->selfNodes; }
 	void SetSelfIndexInNodeQt(int index) { this->selfIndexInNode = index; }
 	int GetSelfIndexInNodeQt() { return this->selfIndexInNode; }
 

@@ -53,4 +53,7 @@
 #define KEYBOARD_BUFFER_SIZE		1024
 #pragma endregion
 
+#define TILESET_WIDTH		16
+#define TILESET_HEIGHT		16
+
 #endif // !_RESOURCES_H

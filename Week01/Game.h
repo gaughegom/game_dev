@@ -63,6 +63,8 @@ public:
 	// game object
 	void PrepareGameObject(LPGAMEOBJECT& object, std::vector<std::string> tokens);
 	void NewGameObject(LPGAMEOBJECT& newObject);
+	void ClearDeletedObject();
+	std::vector<LPGAMEOBJECT> GetRenderedObjects();
 
 	// device
 	LPDIRECT3DDEVICE9 GetDirect3dDevice() { return this->d3ddv; }

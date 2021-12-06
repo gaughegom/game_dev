@@ -20,10 +20,10 @@
 #include "rapidjson/include/rapidjson/stringbuffer.h"
 #include "rapidjson/include/rapidjson/filereadstream.h"
 
-CSophia* pSophia;
-CJason* pJason;
-CCamera* pCamera = CCamera::GetInstance();
-CQuadTree* pQuadtree;
+CSophia* sophia;
+CJason* jason;
+CCamera* camera = CCamera::GetInstance();
+CQuadTree* quadtree;
 
 std::vector<CGameObject*> worldObjects;
 std::vector<CGameObject*> renderedObjects;
@@ -122,7 +122,7 @@ void CGame::InitDirectX(HWND hWnd)
 void CGame::Draw(Vector2D position, int nx, LPDIRECT3DTEXTURE9 texture, int left, int top, int right, int bottom, int alpha)
 {
 
-	Vector2D cameraPos = pCamera->GetPosition();
+	Vector2D cameraPos = camera->GetPosition();
 
 	Vector3D p(0, 0, 0);
 	RECT r;
@@ -175,7 +175,7 @@ void CGame::InitGame(HWND hWnd)
 
 	// set controller object
 	auto controller = CControllerObject::GetInstance();
-	controller->SetSophiaAndJason(pSophia, pJason);
+	controller->SetSophiaAndJason(sophia, jason);
 	controller->Select(ControllerObjectID::SOPHIA);
 	
 	// start keyboard
@@ -191,19 +191,19 @@ void CGame::InitGame(HWND hWnd)
 
 void CGame::UpdateGame(DWORD dt)
 {
-	pCamera->Update();
-	pQuadtree->Update(worldObjects);
+	camera->Update();
+	quadtree->Update(worldObjects);
 	renderedObjects.clear();
-	pQuadtree->Retrieve(renderedObjects, pCamera->GetBoundingBox());
+	quadtree->Retrieve(renderedObjects, camera->GetBoundingBox());
 	
-	for (auto object : renderedObjects) {
-		if (object->IsLive() == true && object->IsActive() == true) {
-			object->PhysicalUpdate(&renderedObjects);
+	for (auto object : worldObjects) {
+		if (object->IsActive() == true) {
+			object->PhysicalUpdate(&worldObjects);
 		}
 	}
-	
-	for (auto object : renderedObjects) {
-		if (object->IsLive() == true && object->IsActive() == true) {
+
+	for (auto object : worldObjects) {
+		if (object->IsActive() == true) {
 			object->Update(dt);
 		}
 	}
@@ -280,16 +280,11 @@ void CGame::RunGame()
 
 			this->UpdateGame(this->dt);
 			this->RenderGame();
+			this->ClearDeletedObject();
 		}
 		else
 			Sleep(tickPerFrame - this->dt);
 	}
-}
-
-void CGame::NewGameObject(LPGAMEOBJECT& newObject)
-{
-	worldObjects.push_back(newObject);
-	pQuadtree->Insert(newObject);
 }
 
 CGame::~CGame()
@@ -327,7 +322,7 @@ void CGame::LoadResource()
 	DebugOut(L"[INFO] Start loading scene resouce %s\n", sceneFilePath);
 
 	// start game camera
-	pCamera->SetSize(Vector2D(this->mapWidth, this->mapHeight));
+	camera->SetSize(Vector2D(this->mapWidth, this->mapHeight));
 
 	// open scene file path
 	ifstream fs;
@@ -460,8 +455,8 @@ void CGame::__ParseSection_MAP__(std::string line)
 		return;
 	}
 
-	float sectionWidth = atoi(tokens[1].c_str()) * 16;
-	float sectionHeight = atoi(tokens[2].c_str()) * 16;
+	float sectionWidth = atoi(tokens[1].c_str()) * TILESET_WIDTH;
+	float sectionHeight = atoi(tokens[2].c_str()) * TILESET_HEIGHT;
 
 	SRect mapBoundary = SRect(
 		0,
@@ -472,8 +467,8 @@ void CGame::__ParseSection_MAP__(std::string line)
 
 	this->mapWidth = sectionWidth;
 	this->mapHeight = sectionHeight;
-	pCamera->SetBoundary(mapBoundary);
-	pQuadtree = new CQuadTree(0, mapBoundary);
+	camera->SetBoundary(mapBoundary);
+	quadtree = new CQuadTree(0, mapBoundary);
 
 	std::string mapPath = tokens[0];
 	int texId = 10; // 10 is map texId
@@ -485,7 +480,6 @@ void CGame::__ParseSection_MAP__(std::string line)
 	this->map = g_sprites->Get(sprMap);
 }
 
-// TODO: Fix direction draw of platform -> Oxy of worldgame
 void CGame::__ParseSection_PLATFORMS__(std::string line)
 {
 	std::vector<std::string> tokens = SplitLine(line);
@@ -493,10 +487,10 @@ void CGame::__ParseSection_PLATFORMS__(std::string line)
 		return; // skip
 	}
 
-	float x = atoi(tokens[0].c_str()) * 16;
-	float y = (atoi(tokens[1].c_str()) + 1) * 16;
-	float width = atoi(tokens[2].c_str()) * 16;
-	float height = atoi(tokens[3].c_str()) * 16;
+	float x = atoi(tokens[0].c_str()) * TILESET_WIDTH;
+	float y = (atoi(tokens[1].c_str()) + 1) * TILESET_HEIGHT;
+	float width = atoi(tokens[2].c_str()) * TILESET_WIDTH;
+	float height = atoi(tokens[3].c_str()) * TILESET_HEIGHT;
 	LPGAMEOBJECT platformObject = new CBrick(Vector2D(width, height));
 	platformObject->SetPosition(Vector2D(x + width / 2, this->mapHeight - y + height / 2));
 	this->NewGameObject(platformObject);
@@ -516,14 +510,14 @@ void CGame::__ParseSection_OBJECTS__(std::string line)
 
 	if (objectType == "jason") {
 		newObject = new CJason;
-		pJason = (CJason*)newObject;
+		jason = (CJason*)newObject;
 		PrepareGameObject(newObject, tokens);
 		return;
 	}
 
 	if (objectType == "sophia") {
 		newObject = new CSophia;
-		pSophia = (CSophia*)newObject;
+		sophia = (CSophia*)newObject;
 		PrepareGameObject(newObject, tokens);
 		return;
 	}
@@ -543,6 +537,28 @@ void CGame::PrepareGameObject(LPGAMEOBJECT& object, std::vector<std::string> tok
 	float height = atoi(tokens[4].c_str());
 	object->SetPosition(Vector2D(x + width / 2, this->mapHeight - y + height / 2));
 	this->NewGameObject(object);
+}
+
+void CGame::NewGameObject(LPGAMEOBJECT& newObject)
+{
+	worldObjects.push_back(newObject);
+	quadtree->Insert(newObject);
+}
+
+std::vector<LPGAMEOBJECT> CGame::GetRenderedObjects()
+{
+	return renderedObjects;
+}
+
+void CGame::ClearDeletedObject()
+{
+	for (int i = 0; i < worldObjects.size(); i++) {
+		auto object = worldObjects.at(i);
+		if (object->IsDeleted()) {
+			worldObjects.erase(std::next(worldObjects.begin() + i - 1));
+			//quadtree->RemoveEntityFromLeafNodes(object);
+		}
+	}
 }
 
 #pragma endregion

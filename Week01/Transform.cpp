@@ -5,12 +5,9 @@ SRect::SRect()
 	this->left = this->top = this->right = this->bottom = 0;
 }
 
-SRect::SRect(float _left, float _top, float _right, float _bottom)
+SRect::SRect(float left, float top, float right, float bottom)
+	: left(left), top(top), right(right), bottom(bottom)
 {
-	this->left = _left;
-	this->top = _top;
-	this->right = _right;
-	this->bottom = _bottom;
 }
 
 bool SRect::Equal(const SRect& rect)
@@ -50,6 +47,26 @@ void SRect::Empty()
 	this->left = this->top = this->right = this->left = 0;
 }
 
+SRect SRect::operator+(const SRect& other) const
+{
+	return SRect(
+		left + other.left,
+		top + other.top,
+		right + other.right,
+		bottom + other.bottom
+	);
+}
+
+SRect SRect::operator*(const int& value) const
+{
+	return SRect(
+		this->left * value,
+		this->top * value,
+		this->right * value,
+		this->bottom * value
+	);
+}
+
 Vector2D VectorInfinity()
 {
 	return Vector2D(999999.0f, 999999.0f);
@@ -63,4 +80,10 @@ Vector2D VectorZero()
 Vector2D NormalizeVector()
 {
 	return Vector2D(1.0f, 1.0f);
+}
+
+float PositionsDistance(Vector2D vectorA, Vector2D vectorB)
+{
+	float result = sqrt(pow(vectorA.x - vectorB.x, 2) + pow(vectorA.y - vectorB.y, 2));
+	return result;
 }
