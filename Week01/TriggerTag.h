@@ -12,7 +12,7 @@ struct STriggerTag {
 
 	// default
 	STriggerTag(LPGAMEOBJECT target) {
-		this->start = 300;
+		this->start = GetTickCount64();
 		this->target = target;
 	}
 

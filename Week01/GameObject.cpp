@@ -90,7 +90,7 @@ void CGameObject::FilterTriggerTag()
 {
 	this->triggerTags.erase(
 		std::remove_if(this->triggerTags.begin(), this->triggerTags.end(), [&](STriggerTag const& tag) {
-			return (GetTickCount64() - tag.start > 300);
+			return (GetTickCount64() - tag.start > 500); // Time period out of 500 will be remove
 			}),
 		this->triggerTags.end());
 }

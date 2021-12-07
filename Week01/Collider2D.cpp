@@ -4,7 +4,7 @@
 #include "Jason.h"
 #include "Sophia.h"
 
-#define MARGIN		0.4f
+#define MARGIN		0.2f
 
 void CCollider2D::SweptAABB(SRect movingRect, SRect staticRect, 
 	float dx, float dy, float& nx, float& ny, float& dt)
