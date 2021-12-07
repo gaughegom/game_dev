@@ -72,6 +72,8 @@ public:
 	void OnCollision(CCollider2D* self, LPCOLLISIONEVENT coEvent);
 	void OnTrigger(CCollider2D* self, LPCOLLISIONEVENT coEvent);
 
+	void OnCollisionWithEnemy(LPCOLLISIONEVENT coEvent);
+
 	SophiaDirectState GetDirectState() { return this->directState; }
 	SophiaActionState GetActionState() { return this->actionState; }
 

@@ -9,6 +9,9 @@ CSophia::CSophia()
 	this->directState = SophiaDirectState::Stay;
 	this->actionState = SophiaActionState::Idle;
 
+	this->hp = 100;
+	this->damage = 10;
+
 	this->leftWheel = new CSophiaWheel(this);
 	this->rightWheel = new CSophiaWheel(this);
 	this->body = new CSophiaBody(this);
@@ -29,6 +32,8 @@ CSophia::CSophia()
 
 void CSophia::Update(DWORD dt)
 {
+	DebugOut(L"sophia hp: %f\n", this->hp);
+
 	if (this->colliders.at(0)->IsDynamic() == true) {
 		InGravityAffect(this, dt);
 		this->UpdateColliders();
@@ -103,7 +108,8 @@ void CSophia::ListenKeyEvent()
 				direct = 0;
 			}
 			LPGAMEOBJECT bullet = new CSophiaBullet(direct);
-			bullet->SetPosition(this->position + this->gun->GetPosition());
+			Vector2D bulletPosition = Vector2D(this->position.x, this->position.y + this->cabin->GetPosition().y);
+			bullet->SetPosition(bulletPosition);
 			CGame::GetInstance()->NewGameObject(bullet);
 			this->bullets++;
 			this->prevBulletTime = GetTickCount64();
@@ -186,10 +192,29 @@ void CSophia::OnCollision(CCollider2D* self, LPCOLLISIONEVENT coEvent)
 			this->ground = true;
 		}
 	}
+	else {
+		this->OnCollisionWithEnemy(coEvent);
+	}
 }
 
 void CSophia::OnTrigger(CCollider2D* self, LPCOLLISIONEVENT coEvent)
 {
+}
+
+
+void CSophia::OnCollisionWithEnemy(LPCOLLISIONEVENT coEvent)
+{
+	bool isSuffered = false;
+	if (dynamic_cast<CEnemyEyelet*>(coEvent->object)) isSuffered = true;
+	// TODO: add more enemies later
+	// TODO: make enemy go throw player, player take damage
+
+	if (isSuffered) {
+		this->hp -= coEvent->object->GetDamage();
+		STriggerTag tag = STriggerTag(coEvent->object);
+		this->SetTriggerTag(coEvent->object);
+		coEvent->object->SetTriggerTag(this);
+	}
 }
 
 void CSophia::DecreaseBullet()

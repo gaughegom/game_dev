@@ -110,6 +110,12 @@
     <Filter Include="Game\Game objects\Bullet">
       <UniqueIdentifier>{8d221e89-3451-4498-83b7-5b37f7603e78}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Game\Game objects\Enemies\Ballot">
+      <UniqueIdentifier>{17c37eed-7b93-400b-9419-adc6f03be509}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Framework\TriggerTag">
+      <UniqueIdentifier>{d80ea173-6df2-48ff-8371-e0168a6fb49b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -208,6 +214,12 @@
     <ClCompile Include="SophiaBullet.cpp">
       <Filter>Game\Game objects\Bullet</Filter>
     </ClCompile>
+    <ClCompile Include="EnemyBallot.cpp">
+      <Filter>Game\Game objects\Enemies\Ballot</Filter>
+    </ClCompile>
+    <ClCompile Include="TriggerTag.cpp">
+      <Filter>Framework\TriggerTag</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Textures.h">
@@ -305,6 +317,12 @@
     </ClInclude>
     <ClInclude Include="SophiaBullet.h">
       <Filter>Game\Game objects\Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyBallot.h">
+      <Filter>Game\Game objects\Enemies\Ballot</Filter>
+    </ClInclude>
+    <ClInclude Include="TriggerTag.h">
+      <Filter>Framework\TriggerTag</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

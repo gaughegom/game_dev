@@ -4,7 +4,7 @@
 #include "Jason.h"
 #include "Sophia.h"
 
-#define MARGIN		0.2f
+#define MARGIN		0.4f
 
 void CCollider2D::SweptAABB(SRect movingRect, SRect staticRect, 
 	float dx, float dy, float& nx, float& ny, float& dt)
@@ -144,6 +144,16 @@ void CCollider2D::PredictPotentialCollision(std::vector<LPGAMEOBJECT>* coObjects
 			continue;
 
 		if (!coObject->IsActive())
+			continue;
+
+		// make trigger tag
+		bool activeTrigger = false;
+		for (auto &triggerObject : this->object->GetTriggerTag()) {
+			LPGAMEOBJECT tagTarget = triggerObject.target;
+			if (tagTarget == coObject)
+				activeTrigger = true;
+		}
+		if (activeTrigger)
 			continue;
 
 		for (auto co : coObject->GetColliders())
@@ -441,6 +451,6 @@ void CCollider2D::RenderBoundingBox()
 	rect.right = this->boxSize.x;
 	rect.bottom = this->boxSize.y;
 
-	int alpha = 0;
+	int alpha = 50;
 	CGame::GetInstance()->Draw(positionCollider, -1, bbox, rect.left, rect.top, rect.right, rect.bottom, alpha);
 }

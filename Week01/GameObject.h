@@ -9,7 +9,9 @@
 #include "QuadTree.h"
 #include "Sprites.h"
 #include "SimulationEnvroment.h"
+#include "TriggerTag.h"
 
+struct STriggerTag;
 struct SCollisionEvent;
 typedef SCollisionEvent* LPCOLLISIONEVENT;
 class CQuadTree;
@@ -29,13 +31,17 @@ protected:
 
 	bool rendering = false;
 	bool ground;
-	bool live = true;
+	bool live = true; // TODO: use with dynamic and hp
 	bool active = true;
 	bool deleted = false;
+	bool invicible = false;
+
+	std::vector<STriggerTag> triggerTag;
 
 	std::vector<CQuadTree*> selfNodes;
 	int selfIndexInNode = -1;
 
+	std::unordered_map<std::string, LPSPRITE> sprites;
 	std::unordered_map<std::string, LPANIMATION> animations;
 
 public:
@@ -55,7 +61,11 @@ public:
 	void SetVelocity(Vector2D velocity) { this->velocity = velocity; }
 	Vector2D GetVelocity() { return this->velocity; }
 
-	// animation
+	// sprites
+	void AddSprite(std::string key, int spriteId);
+	std::unordered_map<std::string, LPSPRITE> GetSprites() { return this->sprites; }
+
+	// animations
 	void AddAnimation(std::string key, int animationId);
 	std::unordered_map<std::string, LPANIMATION> GetAnimations() { return this->animations; }
 
@@ -87,13 +97,22 @@ public:
 	bool IsActive() { return this->active; }
 
 	// hp
-	void TakeBulletDamage(LPCOLLISIONEVENT& bulletCollision);
-	void TakeDamage(float damage) { this->hp -= damage; }
+	void TakeDamage(LPCOLLISIONEVENT& bulletCollision);
+	void SetHp(float hp) { this->hp = hp; }
 	float GetHp() { return this->hp; }
 
 	// damage
 	void SetDamage(float damage) { this->damage = damage; }
 	float GetDamage() { return this->damage; }
+
+	// invisible
+	void SetInvisible(bool value) { this->invicible = true; }
+	bool GetInvisible() { return this->invicible; }
+
+	// invisible with
+	void SetTriggerTag(STriggerTag tag) { this->triggerTag.push_back(tag); }
+	void ClearTriggerTag() { this->triggerTag.clear(); }
+	std::vector<STriggerTag> GetTriggerTag() { return this->triggerTag; }
 
 	// virtual
 	virtual void Update(DWORD dt) = 0;

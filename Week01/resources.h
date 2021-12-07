@@ -17,8 +17,8 @@
 
 #define WINDOW_CLASS_NAME			L"Blaster master"
 #define WINDOW_TITLE				L"Blaster master"
-#define WINDOW_SCREEN_WIDTH			240
-#define WINDOW_SCREEN_HEIGHT		180
+#define WINDOW_SCREEN_WIDTH			320
+#define WINDOW_SCREEN_HEIGHT		280
 #define MAX_FRAME_RATE				60
 
 #define BACKGROUND_COLOR			D3DCOLOR_XRGB(0, 0, 0)
@@ -54,7 +54,11 @@
 #define KEYBOARD_BUFFER_SIZE		1024
 #pragma endregion
 
+#pragma region Tileset
+
 #define TILESET_WIDTH		16
 #define TILESET_HEIGHT		16
+
+#pragma endregion
 
 #endif // !_RESOURCES_H

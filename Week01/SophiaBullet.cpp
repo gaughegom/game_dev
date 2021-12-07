@@ -34,7 +34,6 @@ CSophiaBullet::CSophiaBullet(int direct)
 			this->nx = 1;
 		}
 	}
-
 	this->colliders.push_back(collider);
 	this->SetColliders(this->colliders);
 }

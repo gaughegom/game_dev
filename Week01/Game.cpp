@@ -14,6 +14,7 @@
 #include "EnemyGX-680.h"
 #include "EnemyOffside.h"
 #include "EnemyStuka.h"
+#include "EnemyBallot.h"
 
 #include "rapidjson/include/rapidjson/document.h"
 #include "rapidjson/include/rapidjson/writer.h"
@@ -506,27 +507,22 @@ void CGame::__ParseSection_OBJECTS__(std::string line)
 	LPGAMEOBJECT newObject = nullptr;
 	std::string objectType = tokens[0].c_str();
 
-	// TODO: big brick
-
 	if (objectType == "jason") {
 		newObject = new CJason;
 		jason = (CJason*)newObject;
-		PrepareGameObject(newObject, tokens);
-		return;
 	}
-
-	if (objectType == "sophia") {
+	else if (objectType == "sophia") {
 		newObject = new CSophia;
 		sophia = (CSophia*)newObject;
-		PrepareGameObject(newObject, tokens);
+	}
+	else if (objectType == "eyelet") newObject = new CEnemyEyelet;
+	else if (objectType == "ballot") newObject = new CEnemyBallot;
+	else {
+		DebugOut(L"[ERROR] Unknowed object type: %s\n", objectType); // catch undefined object
 		return;
 	}
 
-	if (objectType == "eyelet") {
-		newObject = new CEnemyEyelet;
-		PrepareGameObject(newObject, tokens);
-		return;
-	}
+	PrepareGameObject(newObject, tokens);
 }
 
 void CGame::PrepareGameObject(LPGAMEOBJECT& object, std::vector<std::string> tokens)

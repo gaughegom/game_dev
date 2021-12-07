@@ -2,6 +2,7 @@
 #include "ControllerObject.h"
 #include "SophiaBullet.h"
 
+
 CGameObject::CGameObject()
 {
 	this->position.x = this->position.y = 0;
@@ -44,22 +45,28 @@ int CGameObject::GetNx()
 	return this->nx;
 }
 
+void CGameObject::AddSprite(std::string key, int spriteId)
+{
+	auto sprite = CSprites::GetInstance()->Get(spriteId);
+	this->sprites.insert(std::make_pair(key, sprite));
+}
+
 void CGameObject::AddAnimation(std::string key, int animationId)
 {
 	LPANIMATION ani = CAnimations::GetInstance()->Get(animationId);
 	this->animations.insert(std::make_pair(key, ani));
 }
 
-void CGameObject::TakeBulletDamage(LPCOLLISIONEVENT& bulletCollision)
+void CGameObject::TakeDamage(LPCOLLISIONEVENT& coEvent)
 {
-	this->hp -= bulletCollision->object->GetDamage();
+	this->hp -= coEvent->object->GetDamage();
 	if (this->hp <= 0) {
 		this->live = false;
 		this->deleted = true;
 	}
 
-	if (dynamic_cast<CSophiaBullet*>(bulletCollision->object)) {
-		auto sophiaBasicBullet = dynamic_cast<CSophiaBullet*>(bulletCollision->object);
+	if (dynamic_cast<CSophiaBullet*>(coEvent->object)) {
+		auto sophiaBasicBullet = dynamic_cast<CSophiaBullet*>(coEvent->object);
 		sophiaBasicBullet->OnDelete();
 	}
 }

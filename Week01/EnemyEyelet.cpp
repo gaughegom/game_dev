@@ -7,6 +7,7 @@ CEnemyEyelet::CEnemyEyelet()
 	this->AddAnimation("default", 220); // eyelet animation id
 
 	this->hp = 10;
+	this->damage = 10;
 
 	//
 	this->colliders.clear();
@@ -21,7 +22,7 @@ CEnemyEyelet::CEnemyEyelet()
 
 void CEnemyEyelet::Update(DWORD dt)
 {
-
+	InGravityAffect(this, dt);
 }
 
 void CEnemyEyelet::Render()
@@ -32,14 +33,10 @@ void CEnemyEyelet::Render()
 void CEnemyEyelet::OnCollision(CCollider2D* self, LPCOLLISIONEVENT coEvent)
 {
 	if (dynamic_cast<CSophiaBullet*>(coEvent->object)) {
-		this->TakeBulletDamage(coEvent);
+		this->TakeDamage(coEvent);
 	}
 }
 
 void CEnemyEyelet::OnTrigger(CCollider2D* self, LPCOLLISIONEVENT coEvent)
-{
-}
-
-CEnemyEyelet::~CEnemyEyelet()
 {
 }
