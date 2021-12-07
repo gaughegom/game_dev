@@ -1,6 +1,6 @@
 #include "EnemyEyelet.h"
 #include "Sophia.h"
-#include "SophiaBasicBullet.h"
+#include "SophiaBullet.h"
 
 CEnemyEyelet::CEnemyEyelet()
 {
@@ -31,7 +31,7 @@ void CEnemyEyelet::Render()
 
 void CEnemyEyelet::OnCollision(CCollider2D* self, LPCOLLISIONEVENT coEvent)
 {
-	if (dynamic_cast<CSophiaBasicBullet*>(coEvent->object)) {
+	if (dynamic_cast<CSophiaBullet*>(coEvent->object)) {
 		this->TakeBulletDamage(coEvent);
 	}
 }

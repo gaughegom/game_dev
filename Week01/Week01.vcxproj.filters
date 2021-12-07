@@ -205,7 +205,7 @@
     <ClCompile Include="Collider2D.cpp">
       <Filter>Framework\Collision</Filter>
     </ClCompile>
-    <ClCompile Include="SophiaBasicBullet.cpp">
+    <ClCompile Include="SophiaBullet.cpp">
       <Filter>Game\Game objects\Bullet</Filter>
     </ClCompile>
   </ItemGroup>
@@ -303,7 +303,7 @@
     <ClInclude Include="Collider2D.h">
       <Filter>Framework\Collision</Filter>
     </ClInclude>
-    <ClInclude Include="SophiaBasicBullet.h">
+    <ClInclude Include="SophiaBullet.h">
       <Filter>Game\Game objects\Bullet</Filter>
     </ClInclude>
   </ItemGroup>

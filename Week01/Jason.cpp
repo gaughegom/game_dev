@@ -60,7 +60,7 @@ void CJason::ListenKeyEvent()
 		this->directState->SetState(JasonDirectState::STAY);
 	}
 
-	if (input->OnKeyDown(DIK_X) && this->ground) {
+	if (input->OnKeyDown(JUMP_KEYCODE) && this->ground) {
 		this->ground = false;
 		this->directState->SetState(JasonDirectState::JUMP);
 	}
@@ -69,6 +69,7 @@ void CJason::ListenKeyEvent()
 		auto controller = CControllerObject::GetInstance();
 		if (controller->GetSophia()->GetColliders().at(0)->GetBoundingBox()
 			.Contain(this->colliders.at(0)->GetBoundingBox())) {
+			controller->GetSophia()->SetActionState(SophiaActionState::OpenIn);
 			controller->Select(ControllerObjectID::SOPHIA);
 		}
 	}

@@ -29,15 +29,15 @@ int CSophiaGun::MappingGunSpriteState(SophiaActionState actionState)
 	{
 	case SophiaActionState::Idle:
 		this->SetPosition(Vector2D(8.0f * this->self->GetNx(), 9.0f));
-		return 8; // gun_00
+		return 10; // gun_00
 		break;
 	case SophiaActionState::Tile45:
 		this->SetPosition(Vector2D(8.0f * this->self->GetNx(), 21.0f));
-		return 9; // gun_45
+		return 11; // gun_45
 		break;
 	case SophiaActionState::Up90:
 		this->SetPosition(Vector2D(3.0f * this->self->GetNx(), 24.0f));
-		return 10; // gun_90
+		return 12; // gun_90
 		break;
 	default:
 		break;

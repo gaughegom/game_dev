@@ -5,7 +5,9 @@
 #include "Sophia.h"
 #include "Jason.h"
 
-#define SWITCH_CONTROLLER_KEYCODE	DIK_A
+#define SWITCH_CONTROLLER_KEYCODE	DIK_LSHIFT
+#define JUMP_KEYCODE				DIK_SPACE
+#define SHOTTING_KEYCODE			DIK_D
 
 enum class ControllerObjectID : int {
 	SOPHIA = 0,
@@ -27,7 +29,7 @@ private:
 	void SelectJason();
 public:
 	DWORD delaySwitch = 300;
-	DWORD lastSwitchTime;
+	DWORD lastSwitchTime; // fix auto select jason
 	CControllerObject();
 
 	void SetSophiaAndJason(CSophia* sophia, CJason* jason);

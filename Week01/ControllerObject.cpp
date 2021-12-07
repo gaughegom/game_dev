@@ -36,10 +36,11 @@ void CControllerObject::SelectSophia()
 	auto camera = CCamera::GetInstance();
 	camera->SetTarget(this->sophia);
 	//
-	this->jason->SetPosition(this->sophia->GetPosition());
 	this->jason->SetVelocity(Vector2D(0, this->jason->GetVelocity().y));
 	this->jason->SubcribeDirectionState(JasonDirectState::JUMP);
 	this->jason->SetActive(false);
+	this->jason->SetPosition(this->sophia->GetPosition());
+	this->sophia->SetActionState(SophiaActionState::Idle);
 
 	this->selectedId = ControllerObjectID::SOPHIA;
 	this->lastSwitchTime = GetTickCount64();
@@ -63,7 +64,8 @@ void CControllerObject::SelectJason()
 	this->jason->SetPosition(this->sophia->GetPosition());
 	this->jason->SetNx(this->sophia->GetNx());
 	this->jason->SubcribeDirectionState(JasonDirectState::JUMP);
-	
+	this->sophia->SetActionState(SophiaActionState::Idle);
+
 	this->selectedId = ControllerObjectID::JASON;
 	this->lastSwitchTime = GetTickCount64();
 }

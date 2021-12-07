@@ -109,8 +109,13 @@ LPCOLLISIONEVENT CCollider2D::SweptAABBEx(CCollider2D* coOther)
 	staticRect = coOther->GetBoundingBox();
 
 	auto coObject = coOther->GetGameObject();
-	float sdx = coObject->GetVelocity().x * CGame::GetDeltaTime();
-	float sdy = coObject->GetVelocity().y * CGame::GetDeltaTime();
+	DWORD deltaTime = CGame::GetDeltaTime();
+	float sdx = coObject->GetVelocity().x * deltaTime;
+	float sdy = coObject->GetVelocity().y * deltaTime;
+
+	Vector2D selfVelocity = this->object->GetVelocity();
+	this->dx = selfVelocity.x * deltaTime;
+	this->dy = selfVelocity.y * deltaTime;
 
 	float rdx = this->dx - sdx;
 	float rdy = this->dy - sdy;
@@ -205,13 +210,13 @@ void CCollider2D::PhysicalUpdate(std::vector<LPGAMEOBJECT>* coObjects)
 	}
 
 	// get delta time
-	auto dt = CGame::GetDeltaTime();
-	// get object position, velocity
-	auto position = this->object->GetPosition();
-	auto velocity = this->object->GetVelocity();
+	auto deltaTime = CGame::GetDeltaTime();
+	// get object selfPosition, selfVelocity
+	auto selfPosition = this->object->GetPosition();
+	auto selfVelocity = this->object->GetVelocity();
 
-	this->dx = velocity.x * dt;
-	this->dy = velocity.y * dt;
+	this->dx = selfVelocity.x * deltaTime;
+	this->dy = selfVelocity.y * deltaTime;
 
 	this->coEvents.clear();
 	this->coEventX = nullptr;
@@ -221,9 +226,8 @@ void CCollider2D::PhysicalUpdate(std::vector<LPGAMEOBJECT>* coObjects)
 
 	if (this->coEvents.size() == 0)
 	{
-		position.x += dx;
-		position.y += dy;
-		this->object->SetPosition(position);
+		selfPosition.x += dx;
+		selfPosition.y += dy;
 	}
 	else
 	{
@@ -234,21 +238,18 @@ void CCollider2D::PhysicalUpdate(std::vector<LPGAMEOBJECT>* coObjects)
 			// collision y first
 			if (this->coEventY->t < this->coEventX->t)
 			{
-				if (!this->trigger)
+				if (this->trigger == false)
 				{
-					position.y += this->coEventY->t * dy + this->coEventY->ny * MARGIN;
-					this->object->SetPosition(position);
+					selfPosition.y += this->coEventY->t * this->dy + this->coEventY->ny * MARGIN;
 
-					if (this->coEventY->ny != 0) {
-						velocity.y = 0;
-					}
-					this->object->SetVelocity(velocity);
+					selfVelocity.y = 0;
+					this->object->SetVelocity(selfVelocity);
 				}
 				else {
-					position.y += dy;
+					selfPosition.y += this->dy;
 				}
 
-				this->object->SetPosition(position);
+				this->object->SetPosition(selfPosition);
 
 				if (this->coEventY->ny != 0) {
 					if (this->trigger == false) {
@@ -274,8 +275,12 @@ void CCollider2D::PhysicalUpdate(std::vector<LPGAMEOBJECT>* coObjects)
 
 				if (colX_other != nullptr)
 				{
-					if (this->trigger == false)
-						position.x += colX_other->t * dx + colX_other->nx * MARGIN;
+					if (this->trigger == false) {
+						selfPosition.x += colX_other->t * this->dx + colX_other->nx * MARGIN;
+					}
+
+					selfVelocity.x = 0;
+					this->object->SetVelocity(selfVelocity);
 
 					if (this->trigger == false) {
 						this->object->OnCollision(this, colX_other);
@@ -286,7 +291,7 @@ void CCollider2D::PhysicalUpdate(std::vector<LPGAMEOBJECT>* coObjects)
 				}
 				else
 				{
-					position.x += dx;
+					selfPosition.x += this->dx;
 				}
 			}
 			// collision on X first
@@ -294,14 +299,16 @@ void CCollider2D::PhysicalUpdate(std::vector<LPGAMEOBJECT>* coObjects)
 			{
 				if (this->trigger == false)
 				{
-					position.x += this->coEventX->t * dx + this->coEventX->nx * MARGIN;
-					this->object->SetPosition(position);
+					selfPosition.x += this->coEventX->t * this->dx + this->coEventX->nx * MARGIN;
 
-					if (this->coEventX->nx != 0) {
-						velocity.x = 0;
-					}
-					this->object->SetVelocity(velocity);
+					selfVelocity.x = 0;
+					this->object->SetVelocity(selfVelocity);
 				}
+				else {
+					selfPosition.x += this->dx;
+				}
+
+				this->object->SetPosition(selfPosition);
 
 				if (this->coEventX->nx != 0) {
 					if (this->trigger == false) {
@@ -328,8 +335,11 @@ void CCollider2D::PhysicalUpdate(std::vector<LPGAMEOBJECT>* coObjects)
 				if (colY_other != nullptr)
 				{
 					if (this->trigger == false) {
-						position.y += colY_other->t * dy + colY_other->ny * MARGIN;
+						selfPosition.y += colY_other->t * this->dy + colY_other->ny * MARGIN;
 					}
+
+					selfVelocity.x = 0;
+					object->SetVelocity(selfVelocity);
 
 					if (this->trigger == false) {
 						this->object->OnCollision(this, colY_other);
@@ -340,7 +350,7 @@ void CCollider2D::PhysicalUpdate(std::vector<LPGAMEOBJECT>* coObjects)
 				}
 				else
 				{
-					position.y += dy;
+					selfPosition.y += this->dy;
 				}
 			}
 		}
@@ -350,20 +360,16 @@ void CCollider2D::PhysicalUpdate(std::vector<LPGAMEOBJECT>* coObjects)
 			{
 				if (this->trigger == false)
 				{
-					position.x += this->coEventX->t * dx + this->coEventX->nx * MARGIN;
-					position.y += dy;
-					this->object->SetPosition(position);
+					selfPosition.x += this->coEventX->t * this->dx + this->coEventX->nx * MARGIN;
+					selfPosition.y += this->dy;
 
-					if (this->coEventX->nx != 0) {
-						velocity.x = 0;
-					}
-					this->object->SetVelocity(velocity);
-
+					selfVelocity.x = 0;
+					this->object->SetVelocity(selfVelocity);
 					this->object->OnCollision(this, this->coEventX);
 				}
 				else {
-					position.x += dx;
-					position.y += dy;
+					selfPosition.x += this->dx;
+					selfPosition.y += this->dy;
 					this->object->OnTrigger(this, this->coEventX);
 				}
 			}
@@ -373,33 +379,30 @@ void CCollider2D::PhysicalUpdate(std::vector<LPGAMEOBJECT>* coObjects)
 				{
 					if (this->trigger == false)
 					{
-						position.x += dx;
-						position.y += this->coEventY->t * dy + this->coEventY->ny * MARGIN;
-						this->object->SetPosition(position);
+						selfPosition.x += this->dx;
+						selfPosition.y += this->coEventY->t * this->dy + this->coEventY->ny * MARGIN;
 
-						if (this->coEventY->ny != 0) {
-							velocity.y = 0;
-						}
-						this->object->SetVelocity(velocity);
-						
+						selfVelocity.y = 0;
+						this->object->SetVelocity(selfVelocity);
 						this->object->OnCollision(this, this->coEventY);
 					}
 					else {
-						position.x += dx;
-						position.y += dy;
+						selfPosition.x += this->dx;
+						selfPosition.y += this->dy;
 						this->object->OnTrigger(this, this->coEventY);
 					}
 				}
 				// both colX & colY are NULL 
 				else
 				{
-					position.x += dx;
-					position.y += dy;
+					selfPosition.x += this->dx;
+					selfPosition.y += this->dy;
 				}
 			}
 		}
 	}
-	this->object->SetPosition(position);
+
+	this->object->SetPosition(selfPosition);
 
 	for (UINT i = 0; i < this->coEvents.size(); i++) {
 		if (this->coEvents.at(i)->collider->IsTrigger()) {
@@ -438,5 +441,6 @@ void CCollider2D::RenderBoundingBox()
 	rect.right = this->boxSize.x;
 	rect.bottom = this->boxSize.y;
 
-	CGame::GetInstance()->Draw(positionCollider, -1, bbox, rect.left, rect.top, rect.right, rect.bottom, 40);
+	int alpha = 0;
+	CGame::GetInstance()->Draw(positionCollider, -1, bbox, rect.left, rect.top, rect.right, rect.bottom, alpha);
 }

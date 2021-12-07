@@ -34,6 +34,8 @@ enum class SophiaActionState : int {
 	Idle = 0,
 	Tile45 = 1,
 	Up90 = 2,
+	OpenIn = 3,
+	OpenOut = 4
 };
 
 class CSophia : public CGameObject
@@ -64,7 +66,7 @@ public:
 	void ListenKeyEvent();
 
 	void SubcribeDirectState(SophiaDirectState directState);
-	void SubcribeActionState(SophiaActionState actionState);
+	void SetActionState(SophiaActionState actionState);
 
 	void UpdateColliders();
 	void OnCollision(CCollider2D* self, LPCOLLISIONEVENT coEvent);

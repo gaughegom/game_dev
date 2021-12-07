@@ -1,8 +1,8 @@
-#include "SophiaBasicBullet.h"
+#include "SophiaBullet.h"
 #include "Brick.h"
 #include "ControllerObject.h"
 
-CSophiaBasicBullet::CSophiaBasicBullet(int direct)
+CSophiaBullet::CSophiaBullet(int direct)
 {
 	this->damage = 10;
 
@@ -14,20 +14,23 @@ CSophiaBasicBullet::CSophiaBasicBullet(int direct)
 	collider->SetOffset(VectorZero());
 	collider->SetDynamic(true);
 	
-	// boxsize, velocity
+	// boxsize, velocity, sprite
+	auto sprites = CSprites::GetInstance();
 	if (direct == 0) {
 		collider->SetBoxSize(V_BULLET_BOXSIZE_VERTICAL);
-		this->velocity = Vector2D(0, BULLET_VELOCITY);
+		this->velocity = Vector2D(0, SOPHIA_BASICBULLET_VELOCITY);
+		this->sprite = sprites->Get(14); // 14: bullet vertical
 		this->nx = 1;
 	}
 	else {
 		collider->SetBoxSize(V_BULLET_BOXSIZE_HORIZON);
+		this->sprite = sprites->Get(13); // 13: bullet horizon
 		if (direct == 1) {
-			this->velocity = Vector2D(BULLET_VELOCITY, 0);
+			this->velocity = Vector2D(SOPHIA_BASICBULLET_VELOCITY, 0);
 			this->nx = -1;
 		}
 		else if (direct == -1) {
-			this->velocity = Vector2D(-BULLET_VELOCITY, 0);
+			this->velocity = Vector2D(-SOPHIA_BASICBULLET_VELOCITY, 0);
 			this->nx = 1;
 		}
 	}
@@ -36,7 +39,7 @@ CSophiaBasicBullet::CSophiaBasicBullet(int direct)
 	this->SetColliders(this->colliders);
 }
 
-void CSophiaBasicBullet::Update(DWORD dt)
+void CSophiaBullet::Update(DWORD dt)
 {
 	// delete when out of distance
 	auto sophia = CControllerObject::GetInstance()->GetSophia();
@@ -47,35 +50,26 @@ void CSophiaBasicBullet::Update(DWORD dt)
 	}
 }
 
-void CSophiaBasicBullet::Render()
+void CSophiaBullet::Render()
 {
-	auto sprites = CSprites::GetInstance();
-	CSprite* sprite;
-	if (this->velocity.y > 0) {
-		sprite = sprites->Get(12); // 12: bullet up
-	}
-	else {
-		sprite = sprites->Get(11); // 11: horizon
-	}
-
-	sprite->Draw(this->position, this->nx, 255);
+	this->sprite->Draw(this->position, this->nx, 255);
 }
 
-void CSophiaBasicBullet::OnCollision(CCollider2D* self, LPCOLLISIONEVENT coEvent)
+void CSophiaBullet::OnCollision(CCollider2D* self, LPCOLLISIONEVENT coEvent)
 {
 	if (dynamic_cast<CBrick*>(coEvent->object)) {
 		this->OnDelete();
 	}
-	else if (dynamic_cast<CSophiaBasicBullet*>(coEvent->object)) {
+	else if (dynamic_cast<CSophiaBullet*>(coEvent->object)) {
 		this->OnDelete();
 	}
 }
 
-void CSophiaBasicBullet::OnTrigger(CCollider2D* self, LPCOLLISIONEVENT coEvent)
+void CSophiaBullet::OnTrigger(CCollider2D* self, LPCOLLISIONEVENT coEvent)
 {
 }
 
-void CSophiaBasicBullet::OnDelete()
+void CSophiaBullet::OnDelete()
 {
 	this->deleted = true;
 	auto controller = CControllerObject::GetInstance();
@@ -84,6 +78,6 @@ void CSophiaBasicBullet::OnDelete()
 	}
 }
 
-CSophiaBasicBullet::~CSophiaBasicBullet()
+CSophiaBullet::~CSophiaBullet()
 {
 }

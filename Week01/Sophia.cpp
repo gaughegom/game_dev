@@ -2,7 +2,7 @@
 #include "Camera.h"
 #include "Jason.h"
 #include "ControllerObject.h"
-#include "SophiaBasicBullet.h"
+#include "SophiaBullet.h"
 
 CSophia::CSophia()
 {
@@ -80,7 +80,7 @@ void CSophia::ListenKeyEvent()
 	}
 
 	// listen key W for jumping
-	if (input->OnKeyDown(DIK_X) && this->ground) {
+	if (input->OnKeyDown(JUMP_KEYCODE) && this->ground) {
 		this->ground = false;
 		this->velocity.y = PLAYER_JUMP_FORCE;
 	}
@@ -88,11 +88,12 @@ void CSophia::ListenKeyEvent()
 	// listen key switch controller
 	if (input->OnKeyDown(SWITCH_CONTROLLER_KEYCODE)) {
 		auto controller = CControllerObject::GetInstance();
+		this->actionState = SophiaActionState::OpenOut;
 		controller->Select(ControllerObjectID::JASON);
 	}
 
 	// listen key shooting
-	if (input->IsKeyDown(DIK_S)) {
+	if (input->IsKeyDown(SHOTTING_KEYCODE)) {
 		if (GetTickCount64() - this->prevBulletTime >= this->delayBullet && this->bullets < SOPHIA_MAX_BULLETS) {
 			int direct;
 			if (this->actionState == SophiaActionState::Idle) {
@@ -101,7 +102,7 @@ void CSophia::ListenKeyEvent()
 			else {
 				direct = 0;
 			}
-			LPGAMEOBJECT bullet = new CSophiaBasicBullet(direct);
+			LPGAMEOBJECT bullet = new CSophiaBullet(direct);
 			bullet->SetPosition(this->position + this->gun->GetPosition());
 			CGame::GetInstance()->NewGameObject(bullet);
 			this->bullets++;
@@ -172,8 +173,9 @@ void CSophia::SubcribeDirectState(SophiaDirectState directState)
 	
 }
 
-void CSophia::SubcribeActionState(SophiaActionState actionState)
+void CSophia::SetActionState(SophiaActionState actionState)
 {
+	this->actionState = actionState;
 }
 
 void CSophia::OnCollision(CCollider2D* self, LPCOLLISIONEVENT coEvent)
