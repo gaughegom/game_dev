@@ -86,6 +86,15 @@ void CGameObject::OnTrigger(CCollider2D* selfCollider, LPCOLLISIONEVENT collsion
 {
 }
 
+void CGameObject::FilterTriggerTag()
+{
+	this->triggerTags.erase(
+		std::remove_if(this->triggerTags.begin(), this->triggerTags.end(), [&](STriggerTag const& tag) {
+			return (GetTickCount64() - tag.start > 300);
+			}),
+		this->triggerTags.end());
+}
+
 CGameObject::~CGameObject()
 {
 	this->animations.clear();

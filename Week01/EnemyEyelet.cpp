@@ -22,7 +22,6 @@ CEnemyEyelet::CEnemyEyelet()
 
 void CEnemyEyelet::Update(DWORD dt)
 {
-	InGravityAffect(this, dt);
 }
 
 void CEnemyEyelet::Render()

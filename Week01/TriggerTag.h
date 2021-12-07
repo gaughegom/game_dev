@@ -7,17 +7,17 @@
 class CGameObject;
 typedef CGameObject* LPGAMEOBJECT;
 struct STriggerTag {
-	DWORD expires;
+	DWORD start;
 	LPGAMEOBJECT target;
 
 	// default
 	STriggerTag(LPGAMEOBJECT target) {
-		this->expires = 300;
+		this->start = 300;
 		this->target = target;
 	}
 
-	STriggerTag(DWORD expires, LPGAMEOBJECT target) {
-		this->expires = expires;
+	STriggerTag(DWORD start, LPGAMEOBJECT target) {
+		this->start = start;
 		this->target = target;
 	}
 };

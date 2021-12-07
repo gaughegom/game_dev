@@ -212,8 +212,8 @@ void CSophia::OnCollisionWithEnemy(LPCOLLISIONEVENT coEvent)
 	if (isSuffered) {
 		this->hp -= coEvent->object->GetDamage();
 		STriggerTag tag = STriggerTag(coEvent->object);
-		this->SetTriggerTag(coEvent->object);
-		coEvent->object->SetTriggerTag(this);
+		this->AddTriggerTag(coEvent->object);
+		coEvent->object->AddTriggerTag(this);
 	}
 }
 

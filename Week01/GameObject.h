@@ -36,7 +36,7 @@ protected:
 	bool deleted = false;
 	bool invicible = false;
 
-	std::vector<STriggerTag> triggerTag;
+	std::vector<STriggerTag> triggerTags;
 
 	std::vector<CQuadTree*> selfNodes;
 	int selfIndexInNode = -1;
@@ -74,7 +74,7 @@ public:
 	bool IsRendering() { return this->rendering; }
 
 	// quadtree node
-	void SetSelfNodeQt(CQuadTree* node) { this->selfNodes.push_back(node); }
+	void AddSelfNodeQt(CQuadTree* node) { this->selfNodes.push_back(node); }
 	void ClearSelfNodesQt() { this->selfNodes.clear(); }
 	std::vector<CQuadTree*> GetSelfNodesQt() { return this->selfNodes; }
 	void SetSelfIndexInNodeQt(int index) { this->selfIndexInNode = index; }
@@ -110,9 +110,9 @@ public:
 	bool GetInvisible() { return this->invicible; }
 
 	// invisible with
-	void SetTriggerTag(STriggerTag tag) { this->triggerTag.push_back(tag); }
-	void ClearTriggerTag() { this->triggerTag.clear(); }
-	std::vector<STriggerTag> GetTriggerTag() { return this->triggerTag; }
+	void AddTriggerTag(STriggerTag tag) { this->triggerTags.push_back(tag); }
+	void ClearTriggerTag() { this->triggerTags.clear(); }
+	std::vector<STriggerTag> GetTriggerTag() { return this->triggerTags; }
 
 	// virtual
 	virtual void Update(DWORD dt) = 0;
@@ -120,6 +120,8 @@ public:
 	virtual void PhysicalUpdate(std::vector<LPGAMEOBJECT>* coObjects);
 	virtual void OnCollision(CCollider2D* self, LPCOLLISIONEVENT coEvent);
 	virtual void OnTrigger(CCollider2D* self, LPCOLLISIONEVENT coEvent);
+
+	virtual void FilterTriggerTag();
 
 	~CGameObject();
 };

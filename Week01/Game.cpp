@@ -199,6 +199,7 @@ void CGame::UpdateGame(DWORD dt)
 	
 	for (auto object : worldObjects) {
 		if (object->IsActive() == true) {
+			object->FilterTriggerTag();
 			object->PhysicalUpdate(&worldObjects);
 		}
 	}
@@ -553,6 +554,7 @@ void CGame::ClearDeletedObject()
 		if (object->IsDeleted()) {
 			worldObjects.erase(std::next(worldObjects.begin() + i - 1));
 			quadtree->RemoveEntityFromLeafNodes(object);
+			continue;
 		}
 	}
 }

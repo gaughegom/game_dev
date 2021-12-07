@@ -48,7 +48,7 @@ void CQuadTree::Insert(LPGAMEOBJECT entity)
 	}
 
 	this->entities.emplace_back(entity);
-	entity->SetSelfNodeQt(this);
+	entity->AddSelfNodeQt(this);
 	entity->SetSelfIndexInNodeQt(this->entities.size() - 1);
 
 	if (this->entities.size() > MAX_NODE_ENTITES && this->level < MAX_NODE_LEVEL) {
