@@ -22,6 +22,7 @@ CEnemyEyelet::CEnemyEyelet()
 
 void CEnemyEyelet::Update(DWORD dt)
 {
+	// TODO: move sin
 }
 
 void CEnemyEyelet::Render()

@@ -140,13 +140,13 @@ void CCollider2D::PredictPotentialCollision(std::vector<LPGAMEOBJECT>* coObjects
 		if (this->object == coObject)
 			continue;
 
-		if (!coObject->IsLive())
+		if (coObject->IsLive() == false)
 			continue;
 
-		if (!coObject->IsActive())
+		if (coObject->IsActive() == false)
 			continue;
 
-		// make trigger tag
+		// check trigger tag
 		bool activeTrigger = false;
 		for (auto &triggerObject : this->object->GetTriggerTag()) {
 			LPGAMEOBJECT tagTarget = triggerObject.target;
@@ -451,6 +451,6 @@ void CCollider2D::RenderBoundingBox()
 	rect.right = this->boxSize.x;
 	rect.bottom = this->boxSize.y;
 
-	int alpha = 50;
+	int alpha = 40;
 	CGame::GetInstance()->Draw(positionCollider, -1, bbox, rect.left, rect.top, rect.right, rect.bottom, alpha);
 }

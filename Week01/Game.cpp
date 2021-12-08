@@ -197,14 +197,14 @@ void CGame::UpdateGame(DWORD dt)
 	renderedObjects.clear();
 	quadtree->Retrieve(renderedObjects, camera->GetBoundingBox());
 	
-	for (auto object : worldObjects) {
+	for (auto object : renderedObjects) {
 		if (object->IsActive() == true) {
 			object->FilterTriggerTag();
-			object->PhysicalUpdate(&worldObjects);
+			object->PhysicalUpdate(&renderedObjects);
 		}
 	}
 
-	for (auto object : worldObjects) {
+	for (auto object : renderedObjects) {
 		if (object->IsActive() == true) {
 			object->Update(dt);
 		}
@@ -551,7 +551,7 @@ void CGame::ClearDeletedObject()
 {
 	for (int i = 0; i < worldObjects.size(); i++) {
 		auto object = worldObjects.at(i);
-		if (object->IsDeleted()) {
+		if (object->IsLive() == false) {
 			worldObjects.erase(std::next(worldObjects.begin() + i - 1));
 			quadtree->RemoveEntityFromLeafNodes(object);
 			continue;

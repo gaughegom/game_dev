@@ -12,15 +12,12 @@ CSophia::CSophia()
 	this->hp = 100;
 	this->damage = 10;
 
-	this->leftWheel = new CSophiaWheel(this);
-	this->rightWheel = new CSophiaWheel(this);
-	this->body = new CSophiaBody(this);
-	this->cabin = new CSophiaCabin(this);
-	this->gun = new CSophiaGun(this);
-	this->leftWheel->AddAnimation(C_A_DEFAULT_KEY, 0); // 0: left wheel
-	this->rightWheel->AddAnimation(C_A_DEFAULT_KEY, 1); // 1: right wheel
+	InitParts();
+	InitCollider();
+}
 
-	//
+void CSophia::InitCollider()
+{
 	auto collider = new CCollider2D;
 	collider->SetGameObject(this);
 	collider->SetOffset(SOPHIA_OFFSET_IDLE);
@@ -28,6 +25,17 @@ CSophia::CSophia()
 	collider->SetDynamic(true);
 	this->colliders.push_back(collider);
 	this->SetColliders(colliders);
+}
+
+void CSophia::InitParts()
+{
+	this->leftWheel = new CSophiaWheel(this);
+	this->rightWheel = new CSophiaWheel(this);
+	this->body = new CSophiaBody(this);
+	this->cabin = new CSophiaCabin(this);
+	this->gun = new CSophiaGun(this);
+	this->leftWheel->AddAnimation(C_A_DEFAULT_KEY, 0); // 0: left wheel
+	this->rightWheel->AddAnimation(C_A_DEFAULT_KEY, 1); // 1: right wheel
 }
 
 void CSophia::Update(DWORD dt)
@@ -85,7 +93,7 @@ void CSophia::ListenKeyEvent()
 	}
 
 	// listen key W for jumping
-	if (input->OnKeyDown(JUMP_KEYCODE) && this->ground) {
+	if (input->OnKeyDown(JUMP_KEYCODE) && this->velocity.y < 0) {
 		this->ground = false;
 		this->velocity.y = PLAYER_JUMP_FORCE;
 	}
@@ -208,7 +216,6 @@ void CSophia::OnCollisionWithEnemy(LPCOLLISIONEVENT coEvent)
 	if (dynamic_cast<CEnemyEyelet*>(coEvent->object)) isSuffered = true;
 	// TODO: add more enemies later
 	// TODO: make enemy go throw player, player take damage
-
 	if (isSuffered) {
 		this->hp -= coEvent->object->GetDamage();
 		STriggerTag tag = STriggerTag(coEvent->object);

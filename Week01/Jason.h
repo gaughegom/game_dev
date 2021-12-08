@@ -26,8 +26,10 @@ class CJason : public CGameObject{
 private:
 	CJasonDirectionState* directState;
 
+	void InitCollider();
 public:
 	CJason();
+
 	
 	void Update(DWORD dt);
 	void Render();
@@ -35,6 +37,8 @@ public:
 	void UpdateColliders();
 	void OnCollision(CCollider2D* self, LPCOLLISIONEVENT coEvent);
 	void OnTrigger(CCollider2D* self, LPCOLLISIONEVENT coEvent);
+
+	void OnCollisionWithEnemy(LPCOLLISIONEVENT coEvent);
 
 	void ListenKeyEvent();
 

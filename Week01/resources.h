@@ -40,11 +40,11 @@
 
 #pragma region Player
 
-#define PLAYER_MOVING_SPEED			0.15f
-#define PLAYER_JUMP_FORCE			0.29f
+#define PLAYER_MOVING_SPEED			0.1f
+#define PLAYER_JUMP_FORCE			0.28f
 #define GAME_GRAVITY				0.0007f
 
-#define SOPHIA_BASICBULLET_VELOCITY				0.32f
+#define SOPHIA_BASICBULLET_VELOCITY				0.16f
 
 #pragma endregion
 

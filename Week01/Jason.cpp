@@ -15,6 +15,11 @@ CJason::CJason()
 	this->ground = false;
 
 	//
+	InitCollider();
+}
+
+void CJason::InitCollider()
+{
 	this->colliders.clear();
 	auto collider = new CCollider2D;
 	collider->SetGameObject(this);
@@ -116,11 +121,27 @@ void CJason::OnCollision(CCollider2D* self, LPCOLLISIONEVENT coEvent)
 			this->ground = true;
 		}
 	}
-	else if (dynamic_cast<CEnemyEyelet*>(coEvent->object)) {
-		coEvent->object->SetDeleted(true);
+	else {
+		this->OnCollisionWithEnemy(coEvent);
 	}
+
 }
 
 void CJason::OnTrigger(CCollider2D* self, LPCOLLISIONEVENT coEvent)
 {
+}
+
+void CJason::OnCollisionWithEnemy(LPCOLLISIONEVENT coEvent)
+{
+	bool isSuffered = false;
+	if (dynamic_cast<CEnemyEyelet*>(coEvent->object)) isSuffered = true;
+	// TODO: add more enemies later
+	// TODO: make enemy go throw player, player take damage
+
+	if (isSuffered) {
+		this->hp -= coEvent->object->GetDamage();
+		STriggerTag tag = STriggerTag(coEvent->object);
+		this->AddTriggerTag(coEvent->object);
+		coEvent->object->AddTriggerTag(this);
+	}
 }

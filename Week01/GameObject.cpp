@@ -60,15 +60,6 @@ void CGameObject::AddAnimation(std::string key, int animationId)
 void CGameObject::TakeDamage(LPCOLLISIONEVENT& coEvent)
 {
 	this->hp -= coEvent->object->GetDamage();
-	if (this->hp <= 0) {
-		this->live = false;
-		this->deleted = true;
-	}
-
-	if (dynamic_cast<CSophiaBullet*>(coEvent->object)) {
-		auto sophiaBasicBullet = dynamic_cast<CSophiaBullet*>(coEvent->object);
-		sophiaBasicBullet->OnDelete();
-	}
 }
 
 void CGameObject::PhysicalUpdate(std::vector<LPGAMEOBJECT>* coObjects)

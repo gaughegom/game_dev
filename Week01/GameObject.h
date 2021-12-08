@@ -26,14 +26,12 @@ protected:
 
 	int nx;
 
-	float hp;
+	float hp = 10; // default hp
 	float damage;
 
 	bool rendering = false;
 	bool ground;
-	bool live = true; // TODO: use with dynamic and hp
 	bool active = true;
-	bool deleted = false;
 	bool invicible = false;
 
 	std::vector<STriggerTag> triggerTags;
@@ -84,14 +82,6 @@ public:
 	void SetColliders(std::vector<CCollider2D*> colliders) { this->colliders = colliders; }
 	std::vector<CCollider2D*> GetColliders() { return this->colliders; }
 
-	// live
-	void SetLive(bool value) { this->live = value; }
-	bool IsLive() { return this->live; }
-
-	// delete
-	void SetDeleted(bool value) { this->deleted = value; }
-	bool IsDeleted() { return this->deleted; }
-
 	// active
 	void SetActive(bool value) { this->active = value; }
 	bool IsActive() { return this->active; }
@@ -100,6 +90,7 @@ public:
 	void TakeDamage(LPCOLLISIONEVENT& bulletCollision);
 	void SetHp(float hp) { this->hp = hp; }
 	float GetHp() { return this->hp; }
+	bool IsLive() { return this->hp > 0; }
 
 	// damage
 	void SetDamage(float damage) { this->damage = damage; }
@@ -107,7 +98,7 @@ public:
 
 	// invisible
 	void SetInvisible(bool value) { this->invicible = true; }
-	bool GetInvisible() { return this->invicible; }
+	bool IsInvisible() { return this->invicible; }
 
 	// invisible with
 	void AddTriggerTag(STriggerTag tag) { this->triggerTags.push_back(tag); }

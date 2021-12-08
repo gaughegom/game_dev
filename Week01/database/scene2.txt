@@ -40,10 +40,10 @@
 # sophia bullet
 13	91	21	22	6	0
 14 	117	20	6	22	0
-# sophia bullet collision
-15	140	101	7	8	0
-16	149	97	16	13	0
-17	166	97	16	16	0
+# destroyed object
+150	140	101	7	8	0
+151	149	97	16	13	0
+152	166	97	16	16	0
 # === ENEMIES === 	// 200 -> ...
 # === DRAP ===	// 200 -> 209
 200	128	274	18	18	1
@@ -219,7 +219,7 @@ sophia	1260	112	8	16
 # JASON
 jason	1260	112	8	16
 # EYELET
-eyelet	1150	120	18	15
+eyelet	1100	120	18	15
 # BALLOT
 ballot	1102	34	18	18
 

@@ -41,10 +41,15 @@ CSophiaBullet::CSophiaBullet(int direct)
 void CSophiaBullet::Update(DWORD dt)
 {
 	// delete when out of distance
-	auto sophia = CControllerObject::GetInstance()->GetSophia();
+	/*auto sophia = CControllerObject::GetInstance()->GetSophia();
 	Vector2D sophiaPos = sophia->GetPosition();
 	float distance = PositionsDistance(this->position, sophiaPos);
-	if (distance > 400) {
+	if (distance > 150) {
+		this->OnDelete();
+	}*/
+	// delete when out of camera
+	auto camera = CCamera::GetInstance();
+	if (!camera->GetBoundingBox().Contain(this->colliders.at(0)->GetBoundingBox())) {
 		this->OnDelete();
 	}
 }
@@ -56,12 +61,7 @@ void CSophiaBullet::Render()
 
 void CSophiaBullet::OnCollision(CCollider2D* self, LPCOLLISIONEVENT coEvent)
 {
-	if (dynamic_cast<CBrick*>(coEvent->object)) {
-		this->OnDelete();
-	}
-	else if (dynamic_cast<CSophiaBullet*>(coEvent->object)) {
-		this->OnDelete();
-	}
+	this->OnDelete();
 }
 
 void CSophiaBullet::OnTrigger(CCollider2D* self, LPCOLLISIONEVENT coEvent)
@@ -70,10 +70,10 @@ void CSophiaBullet::OnTrigger(CCollider2D* self, LPCOLLISIONEVENT coEvent)
 
 void CSophiaBullet::OnDelete()
 {
-	this->deleted = true;
+	this->hp = 0;	// auto destroy bullet when collision
 	auto controller = CControllerObject::GetInstance();
 	if (controller->GetSelectId() == ControllerObjectID::SOPHIA) {
-		controller->GetSophia()->DecreaseBullet();
+		controller->GetSophia()->DecreaseBullet();	// decrease bullet of sophia
 	}
 }
 
