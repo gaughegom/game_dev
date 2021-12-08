@@ -31,6 +31,8 @@ public:
 	
 	void RemoveEntityFromLeafNodes(LPGAMEOBJECT entity);
 
+	SRect GetBoundingBox() { return this->rect; }
+
 	~CQuadTree();
 };
 

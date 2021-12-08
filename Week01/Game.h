@@ -63,7 +63,7 @@ public:
 	// game object
 	void PrepareGameObject(LPGAMEOBJECT& object, std::vector<std::string> tokens);
 	void NewGameObject(LPGAMEOBJECT& newObject);
-	void ClearDeletedObject();
+	void CleanGameObject();
 	std::vector<LPGAMEOBJECT> GetRenderedObjects();
 
 	// device

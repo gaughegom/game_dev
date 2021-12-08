@@ -46,6 +46,8 @@
 
 #define SOPHIA_BASICBULLET_VELOCITY				0.16f
 
+#define	TIME_SUFFERING_AFFECT		300
+
 #pragma endregion
 
 #pragma region Keyboard
@@ -60,5 +62,7 @@
 #define TILESET_HEIGHT		16
 
 #pragma endregion
+
+#define PI			atan(1)*4
 
 #endif // !_RESOURCES_H

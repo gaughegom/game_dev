@@ -40,8 +40,6 @@ void CSophia::InitParts()
 
 void CSophia::Update(DWORD dt)
 {
-	DebugOut(L"sophia hp: %f\n", this->hp);
-
 	if (this->colliders.at(0)->IsDynamic() == true) {
 		InGravityAffect(this, dt);
 		this->UpdateColliders();

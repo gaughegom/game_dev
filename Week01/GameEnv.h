@@ -1,6 +1,6 @@
 #pragma once
-#ifndef _SIMULATION_ENVIROMENT_H
-#define _SIMULATION_ENVIROMENT_H
+#ifndef _GAME_ENV_H
+#define _GAME_ENV_H
 
 #include "resources.h"
 #include <math.h>
@@ -9,5 +9,6 @@
 class CGameObject;
 
 void InGravityAffect(CGameObject* self, DWORD dt);
+void InSinWave(CGameObject* self, DWORD dt, float amplitude);
 
-#endif // !_SIMULATION_ENVIROMENT_H
+#endif // !_GAME_ENV_H

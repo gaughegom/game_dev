@@ -60,6 +60,7 @@ void CGameObject::AddAnimation(std::string key, int animationId)
 void CGameObject::TakeDamage(LPCOLLISIONEVENT& coEvent)
 {
 	this->hp -= coEvent->object->GetDamage();
+	this->SetSuffering(true);
 }
 
 void CGameObject::PhysicalUpdate(std::vector<LPGAMEOBJECT>* coObjects)

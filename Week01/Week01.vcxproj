@@ -31,7 +31,7 @@
     <ClCompile Include="EnemyEyelet.cpp" />
     <ClCompile Include="EnemyOffside.cpp" />
     <ClCompile Include="EnemyStuka.cpp" />
-    <ClCompile Include="SimulationEnviroment.cpp" />
+    <ClCompile Include="GameEnv.cpp" />
     <ClCompile Include="EnemyGX-680.cpp" />
     <ClCompile Include="InputHandler.cpp" />
     <ClCompile Include="Jason.cpp" />
@@ -68,7 +68,7 @@
     <ClInclude Include="EnemyOffside.h" />
     <ClInclude Include="EnemyStuka.h" />
     <ClInclude Include="Game.h" />
-    <ClInclude Include="SimulationEnvroment.h" />
+    <ClInclude Include="GameEnv.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="EnemyGX-680.h" />
     <ClInclude Include="InputHandler.h" />

@@ -8,7 +8,7 @@
 #include "Game.h"
 #include "QuadTree.h"
 #include "Sprites.h"
-#include "SimulationEnvroment.h"
+#include "GameEnv.h"
 #include "TriggerTag.h"
 
 struct STriggerTag;
@@ -33,6 +33,7 @@ protected:
 	bool ground;
 	bool active = true;
 	bool invicible = false;
+	bool suffering = false;
 
 	std::vector<STriggerTag> triggerTags;
 
@@ -43,6 +44,9 @@ protected:
 	std::unordered_map<std::string, LPANIMATION> animations;
 
 public:
+	float duration;
+	DWORD sufferingStart;
+
 	CGameObject();
 
 	// position
@@ -104,6 +108,10 @@ public:
 	void AddTriggerTag(STriggerTag tag) { this->triggerTags.push_back(tag); }
 	void ClearTriggerTag() { this->triggerTags.clear(); }
 	std::vector<STriggerTag> GetTriggerTag() { return this->triggerTags; }
+
+	// suffering
+	void SetSuffering(bool value) { this->suffering = value; this->sufferingStart = GetTickCount64(); }
+	bool IsSuffering() { return this->suffering; }
 
 	// virtual
 	virtual void Update(DWORD dt) = 0;

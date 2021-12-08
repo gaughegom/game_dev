@@ -150,7 +150,9 @@ void CGame::Draw(Vector2D position, int nx, LPDIRECT3DTEXTURE9 texture, int left
 
 	spriteHandler->SetTransform(&matrix);
 
-	spriteHandler->Draw(texture, &r, &center, &p, D3DCOLOR_ARGB(alpha, 255, 255, 255));
+	D3DCOLOR defaultRGB = D3DCOLOR_ARGB(alpha, 255, 255, 255);
+
+	spriteHandler->Draw(texture, &r, &center, &p, defaultRGB);
 }
 
 #pragma endregion
@@ -197,14 +199,14 @@ void CGame::UpdateGame(DWORD dt)
 	renderedObjects.clear();
 	quadtree->Retrieve(renderedObjects, camera->GetBoundingBox());
 	
-	for (auto object : renderedObjects) {
+	for (auto object : worldObjects) {
 		if (object->IsActive() == true) {
 			object->FilterTriggerTag();
-			object->PhysicalUpdate(&renderedObjects);
+			object->PhysicalUpdate(&worldObjects);
 		}
 	}
 
-	for (auto object : renderedObjects) {
+	for (auto object : worldObjects) {
 		if (object->IsActive() == true) {
 			object->Update(dt);
 		}
@@ -282,7 +284,7 @@ void CGame::RunGame()
 
 			this->UpdateGame(this->dt);
 			this->RenderGame();
-			this->ClearDeletedObject();
+			this->CleanGameObject();
 		}
 		else
 			Sleep(tickPerFrame - this->dt);
@@ -547,11 +549,20 @@ std::vector<LPGAMEOBJECT> CGame::GetRenderedObjects()
 	return renderedObjects;
 }
 
-void CGame::ClearDeletedObject()
+void CGame::CleanGameObject()
 {
 	for (int i = 0; i < worldObjects.size(); i++) {
 		auto object = worldObjects.at(i);
+
+		bool removed = false;
 		if (object->IsLive() == false) {
+			removed = true; // remove when hp lower than 0
+		}
+		else if (!quadtree->GetBoundingBox().Contain(object->GetColliders().at(0)->GetBoundingBox())) {
+			removed = true; // remove when out of quadtree
+		}
+
+		if (removed) {
 			worldObjects.erase(std::next(worldObjects.begin() + i - 1));
 			quadtree->RemoveEntityFromLeafNodes(object);
 			continue;

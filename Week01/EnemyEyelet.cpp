@@ -1,6 +1,7 @@
 #include "EnemyEyelet.h"
 #include "Sophia.h"
 #include "SophiaBullet.h"
+#include <math.h>
 
 CEnemyEyelet::CEnemyEyelet()
 {
@@ -16,13 +17,15 @@ CEnemyEyelet::CEnemyEyelet()
 	collider->SetOffset(VectorZero());
 	collider->SetBoxSize(Vector2D(18.0f, 15.0f));
 	collider->SetDynamic(true);
+	collider->SetTrigger(true);
 	this->colliders.push_back(collider);
 	this->SetColliders(colliders);
 }
 
 void CEnemyEyelet::Update(DWORD dt)
 {
-	// TODO: move sin
+	this->velocity.x = this->nx * PLAYER_MOVING_SPEED;
+	InSinWave(this, dt, 2.0f);
 }
 
 void CEnemyEyelet::Render()
@@ -39,4 +42,7 @@ void CEnemyEyelet::OnCollision(CCollider2D* self, LPCOLLISIONEVENT coEvent)
 
 void CEnemyEyelet::OnTrigger(CCollider2D* self, LPCOLLISIONEVENT coEvent)
 {
+	if (dynamic_cast<CSophia*>(coEvent->object)) {
+		DebugOut(L"collision with sophia\n");
+	}
 }
