@@ -18,7 +18,7 @@ public:
 	void Update(DWORD dt);
 	void Render();
 
-	int MappingGunSpriteState(SophiaActionState actionState);
+	std::string MappingGunSpriteState(SophiaActionState actionState);
 };
 
 #endif // !_SOPHIA_GUN_H

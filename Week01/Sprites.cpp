@@ -8,13 +8,13 @@ CSprites* CSprites::GetInstance()
 	return __instance;
 }
 
-void CSprites::Add(int id, int left, int top, int width, int height, LPDIRECT3DTEXTURE9 tex)
+void CSprites::Add(std::string id, int left, int top, int width, int height, LPDIRECT3DTEXTURE9 tex)
 {
 	LPSPRITE s = new CSprite(id, left, top, width, height, tex);
-	this->sprites[id] = s;
+	this->sprites.insert(std::make_pair(id, s));
 }
 
-LPSPRITE CSprites::Get(int id)
+LPSPRITE CSprites::Get(std::string id)
 {
-	return this->sprites[id];
+	return this->sprites.at(id);
 }

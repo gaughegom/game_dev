@@ -167,7 +167,7 @@ void CGame::InitGame(HWND hWnd)
 	// For only test
 	g_textures->Add(10, SOPHIA_JASON_TEXTURE_PATH, D3DCOLOR_XRGB(0, 0, 0));
 	LPDIRECT3DTEXTURE9 texTestDebug = g_textures->Get(10);
-	g_sprites->Add(2000, 0, 0, 1, 1, texTestDebug);
+	g_sprites->Add("sprDebugPoint", 0, 0, 1, 1, texTestDebug);
 
 	g_textures->Add(20, L"textures//bbox.png", D3DCOLOR_XRGB(0, 0, 0));
 
@@ -414,10 +414,10 @@ void CGame::__ParseSection_TEXTURES__(std::string line)
 void CGame::__ParseSection_SPRITES__(std::string line)
 {
 	std::vector<std::string> tokens = SplitLine(line);
-	if (tokens.size() < 6)
+	if (tokens.size() < 3)
 		return; // skip
 
-	int id = atoi(tokens[0].c_str());
+	std::string id = tokens[0].c_str();
 	int left = atoi(tokens[1].c_str());
 	int top = atoi(tokens[2].c_str());
 	int width = atoi(tokens[3].c_str());
@@ -439,9 +439,9 @@ void CGame::__ParseSection_ANIMATIONS__(std::string line)
 	if (tokens.size() < 3)
 		return; // skip
 	LPANIMATION lpAni = new CAnimation();
-	int id = atoi(tokens[0].c_str());
+	std::string id = tokens[0].c_str();
 	for (int i = 1; i < tokens.size(); i += 2) {
-		int spriteId = atoi(tokens[i].c_str());
+		std::string spriteId = tokens[i].c_str();
 		int frameTime = atoi(tokens[i + 1].c_str());
 		lpAni->Add(spriteId, frameTime);
 	}
@@ -476,7 +476,7 @@ void CGame::__ParseSection_MAP__(std::string line)
 	g_textures->Add(texId, ToWSTR(mapPath).c_str(), D3DCOLOR_XRGB(0, 0, 0));
 	LPDIRECT3DTEXTURE9 texMap = g_textures->Get(texId);
 
-	int sprMap = 3000; // 300 is map sprite id
+	std::string sprMap = "sprMap"; // 300 is map sprite id
 	g_sprites->Add(sprMap, 0, 0, this->mapWidth, this->mapHeight, texMap);
 	this->map = g_sprites->Get(sprMap);
 }

@@ -450,10 +450,11 @@ void CCollider2D::PhysicalOverlapHandler(std::vector<LPGAMEOBJECT>* coObjects)
 	if (this->trigger == true) return;
 
 	std::vector<CGameObject*> overlappedObjects;
+	auto bbSelf = this->GetBoundingBox();
 
 	for (auto coObject : *coObjects)
 	{
-		if (coObject == object) continue;
+		if (coObject == this->object) continue;
 		if (coObject->IsActive() == false) continue;
 		if (coObject->GetColliders().size() == 0) continue;
 
@@ -461,8 +462,6 @@ void CCollider2D::PhysicalOverlapHandler(std::vector<LPGAMEOBJECT>* coObjects)
 		if (coOther->trigger == true) continue;
 
 		auto bbOther = coOther->GetBoundingBox();
-		auto bbSelf = GetBoundingBox();
-
 		if (bbSelf.Overlap(bbOther) && dynamic_cast<CBrick*>(coObject))
 			overlappedObjects.emplace_back(coObject);
 	}
@@ -470,44 +469,40 @@ void CCollider2D::PhysicalOverlapHandler(std::vector<LPGAMEOBJECT>* coObjects)
 	for (auto coObject : overlappedObjects)
 	{
 		auto bbOther = coObject->GetColliders().at(0)->GetBoundingBox();
-		auto bbSelf = GetBoundingBox();
 
 		if (bbSelf.Overlap(bbOther) == false) continue;
-
 		float deltaX = 0, deltaY = 0;
 
 		if (bbSelf.left < bbOther.right && bbSelf.left > bbOther.left)
 		{
 			deltaX += bbOther.right - bbSelf.left + MARGIN_COLLISION;
 		}
-
 		if (bbSelf.right > bbOther.left && bbSelf.right < bbOther.right)
 		{
 			deltaX += -1 * (bbSelf.right - bbOther.left + MARGIN_COLLISION);
 		}
-
 		if (bbSelf.bottom < bbOther.top && bbSelf.bottom > bbOther.bottom)
 		{
 			deltaY += bbOther.top - bbSelf.bottom + MARGIN_COLLISION;
 		}
-
 		if (bbSelf.top > bbOther.bottom && bbSelf.top < bbOther.top)
 		{
 			deltaY += -1 * (bbSelf.top - bbOther.bottom + MARGIN_COLLISION);
 		}
-
 		if (deltaX != 0 && deltaY != 0)
 		{
 			if (abs(deltaX) <= abs(deltaY))
 			{
 				deltaY = 0;
 			}
-			else deltaX = 0;
+			else {
+				deltaX = 0;
+			}
 		}
 
-		auto newPos = object->GetPosition();
-		newPos += Vector2D(deltaX, deltaY);
-		object->SetPosition(newPos);
+		auto position = this->object->GetPosition();
+		position += Vector2D(deltaX, deltaY);
+		this->object->SetPosition(position);
 	}
 }
 

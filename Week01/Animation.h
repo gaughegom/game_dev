@@ -17,7 +17,7 @@ class CAnimation
 public:
 	CAnimation();
 	CAnimation(int defaultTime) { this->defaultTime = defaultTime; lastFrameTime = -1; currentFrame = -1; }
-	void Add(int spriteId, DWORD time = 0);
+	void Add(std::string spriteId, DWORD time = 0);
 	void Render(Vector2D position, int nx, D3DCOLOR color);
 
 	void SetWait(bool value);

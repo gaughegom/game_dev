@@ -4,7 +4,7 @@ CAnimation::CAnimation()
 {
 }
 
-void CAnimation::Add(int spriteId, DWORD time)
+void CAnimation::Add(std::string spriteId, DWORD time)
 {
 	int t = time;
 	if (time == 0) t = this->defaultTime;

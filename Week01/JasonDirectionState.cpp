@@ -29,19 +29,19 @@ std::string CJasonDirectionState::MappingStateOfAnimation()
 	switch (this->state)
 	{
 	case JasonDirectState::LEFTWALK:
-		return "walk";
+		return ANIMATION_JASON_WALK_ID;
 
 	case JasonDirectState::RIGHTWALK:
-		return "walk";
+		return ANIMATION_JASON_WALK_ID;
 
 	case JasonDirectState::STAY:
-		return "stay";
+		return ANIMATION_JASON_STAY_ID;
 
 	case JasonDirectState::JUMP:
-		return "stay";
+		return ANIMATION_JASON_STAY_ID;
 
 	default:
-		return "stay";
+		return ANIMATION_JASON_STAY_ID;
 	}
 }
 

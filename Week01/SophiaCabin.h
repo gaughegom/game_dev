@@ -17,7 +17,7 @@ public:
 	void Update(DWORD dt);
 	void Render();
 
-	int MappingCabinSpriteState(SophiaActionState actionState);
+	std::string MappingCabinSpriteState(SophiaActionState actionState);
 };
 
 #endif // !_SOPHIA_CABIN_H

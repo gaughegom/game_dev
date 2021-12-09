@@ -7,7 +7,7 @@
 
 class CSprite
 {
-	int id;				// Sprite ID in the sprite database
+	std::string id;				// Sprite ID in the sprite database
 
 	int left;
 	int top;
@@ -16,7 +16,7 @@ class CSprite
 
 	LPDIRECT3DTEXTURE9 texture;
 public:
-	CSprite(int id, int left, int top, int width, int height, LPDIRECT3DTEXTURE9 tex);
+	CSprite(std::string id, int left, int top, int width, int height, LPDIRECT3DTEXTURE9 tex);
 
 	void Draw(Vector2D position, int nx, D3DCOLOR color);
 };

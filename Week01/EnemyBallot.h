@@ -4,10 +4,6 @@
 
 #include "GameObject.h"
 
-#define	V_BALLOT_BOXSIZE			Vector2D(18, 18)
-#define BALLOT_DEFAULT_ANIMATION	"default"
-#define BALLOT_DEFAULT_SPRITE_IDLE	"idle"
-
 class CEnemyBallot : public CGameObject {
 private:
 

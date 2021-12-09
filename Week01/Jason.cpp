@@ -2,8 +2,8 @@
 
 CJason::CJason()
 {	
-	this->AddAnimation("stay", 30);
-	this->AddAnimation("walk", 31);
+	this->AddAnimation(ANIMATION_JASON_STAY_ID, "aniJIdle");
+	this->AddAnimation(ANIMATION_JASON_WALK_ID, "aniJWalk");
 
 	this->directState = new CJasonDirectionState(this);
 	this->directState->SetState(JasonDirectState::STAY);
@@ -32,7 +32,7 @@ void CJason::Update(DWORD dt)
 
 void CJason::Render()
 {
-	auto key = this->directState->MappingStateOfAnimation();
+	std::string key = this->directState->MappingStateOfAnimation();
 		
 	this->animations.at(key)->
 		Render(this->position, -this->nx, DRAW_COLOR_DEFAULT);

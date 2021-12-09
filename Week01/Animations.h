@@ -8,11 +8,11 @@ class CAnimations
 {
 	static CAnimations* __instance;
 
-	std::unordered_map<int, LPANIMATION> animations;
+	std::unordered_map<std::string, LPANIMATION> animations;
 
 public:
-	void Add(int id, LPANIMATION ani);
-	LPANIMATION Get(int id);
+	void Add(std::string id, LPANIMATION ani);
+	LPANIMATION Get(std::string id);
 
 	static CAnimations* GetInstance();
 };

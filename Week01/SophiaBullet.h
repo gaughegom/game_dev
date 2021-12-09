@@ -4,12 +4,7 @@
 
 #include "GameObject.h"	
 
-#define V_BULLET_BOXSIZE_HORIZON	Vector2D(22, 6)
-#define	V_BULLET_BOXSIZE_VERTICAL	Vector2D(6, 22)
-
 class CSophiaBullet : public CGameObject {
-private:
-	LPSPRITE sprite;
 
 public:
 	CSophiaBullet(int direct); // 0: vertical, -1: left, 1: right

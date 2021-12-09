@@ -12,6 +12,8 @@
 #include "Sophia.h"
 
 #define V_JASON_BOX_SIZE	Vector2D(8.0f, 16.0f)
+#define ANIMATION_JASON_STAY_ID	"stay"
+#define ANIMATION_JASON_WALK_ID	"walk"
 
 class CJasonDirectionState;
 

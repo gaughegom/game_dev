@@ -26,8 +26,8 @@ void CSophia::InitParts()
 	this->body = new CSophiaBody(this);
 	this->cabin = new CSophiaCabin(this);
 	this->gun = new CSophiaGun(this);
-	this->leftWheel->AddAnimation(C_A_DEFAULT_KEY, 0); // 0: left wheel
-	this->rightWheel->AddAnimation(C_A_DEFAULT_KEY, 1); // 1: right wheel
+	this->leftWheel->AddAnimation(ANIMATION_SOPHIA_WHEEL_DEFAULT_ID, "aniSLeftWheel"); // 0: left wheel
+	this->rightWheel->AddAnimation(ANIMATION_SOPHIA_WHEEL_DEFAULT_ID, "aniSRightWheel"); // 1: right wheel
 }
 
 void CSophia::Update(DWORD dt)

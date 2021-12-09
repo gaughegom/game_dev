@@ -45,13 +45,13 @@ int CGameObject::GetNx()
 	return this->nx;
 }
 
-void CGameObject::AddSprite(std::string key, int spriteId)
+void CGameObject::AddSprite(std::string key, std::string spriteId)
 {
 	auto sprite = CSprites::GetInstance()->Get(spriteId);
 	this->sprites.insert(std::make_pair(key, sprite));
 }
 
-void CGameObject::AddAnimation(std::string key, int animationId)
+void CGameObject::AddAnimation(std::string key, std::string animationId)
 {
 	LPANIMATION ani = CAnimations::GetInstance()->Get(animationId);
 	this->animations.insert(std::make_pair(key, ani));

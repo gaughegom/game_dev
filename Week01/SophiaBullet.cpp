@@ -2,6 +2,11 @@
 #include "Brick.h"
 #include "ControllerObject.h"
 
+#define V_BULLET_BOXSIZE_HORIZON	Vector2D(22, 6)
+#define	V_BULLET_BOXSIZE_VERTICAL	Vector2D(6, 22)
+
+#define SPR_DEFAULT_ID	"df"
+
 CSophiaBullet::CSophiaBullet(int direct)
 {
 	this->damage = 10;
@@ -19,12 +24,12 @@ CSophiaBullet::CSophiaBullet(int direct)
 	if (direct == 0) {
 		collider->SetBoxSize(V_BULLET_BOXSIZE_VERTICAL);
 		this->velocity = Vector2D(0, SOPHIA_BASICBULLET_VELOCITY);
-		this->sprite = sprites->Get(14); // 14: bullet vertical
+		this->AddSprite(SPR_DEFAULT_ID, "sprSBullet01");
 		this->nx = 1;
 	}
 	else {
 		collider->SetBoxSize(V_BULLET_BOXSIZE_HORIZON);
-		this->sprite = sprites->Get(13); // 13: bullet horizon
+		this->AddSprite(SPR_DEFAULT_ID, "sprSBullet00");
 		if (direct == 1) {
 			this->velocity = Vector2D(SOPHIA_BASICBULLET_VELOCITY, 0);
 			this->nx = -1;
@@ -56,7 +61,8 @@ void CSophiaBullet::Update(DWORD dt)
 
 void CSophiaBullet::Render()
 {
-	this->sprite->Draw(this->position, this->nx, DRAW_COLOR_DEFAULT);
+	auto sprite = this->sprites.at(SPR_DEFAULT_ID);
+	sprite->Draw(this->position, this->nx, DRAW_COLOR_DEFAULT);
 }
 
 void CSophiaBullet::OnCollision(CCollider2D* self, LPCOLLISIONEVENT coEvent)

@@ -4,9 +4,12 @@
 #define V_POSITION_TILE45	Vector2D(0.0f, 6.0f)
 #define V_POSITION_UP90		Vector2D(0.0f, 7.0f)
 
+#define SPR_SOPHIA_BODY_ID	"df"
+
 CSophiaBody::CSophiaBody(CSophia* target)
 {
 	this->self = target;
+	this->AddSprite(SPR_SOPHIA_BODY_ID, "sprSBody00");
 }
 
 void CSophiaBody::Update(DWORD dt)
@@ -15,7 +18,7 @@ void CSophiaBody::Update(DWORD dt)
 
 void CSophiaBody::Render()
 {
-	auto sprite = CSprites::GetInstance()->Get(4); // 4: self body
+	auto sprite = this->sprites.at(SPR_SOPHIA_BODY_ID);
 
 	// handle animation action state
 	this->HandleAnimationActionState(this->self->GetActionState());

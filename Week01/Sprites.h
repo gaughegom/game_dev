@@ -12,11 +12,11 @@ class CSprites
 {
 	static CSprites* __instance;
 
-	std::unordered_map<int, LPSPRITE> sprites;
+	std::unordered_map<std::string, LPSPRITE> sprites;
 
 public:
-	void Add(int id, int left, int top, int width, int height, LPDIRECT3DTEXTURE9 tex);
-	LPSPRITE Get(int id);
+	void Add(std::string id, int left, int top, int width, int height, LPDIRECT3DTEXTURE9 tex);
+	LPSPRITE Get(std::string id);
 
 	static CSprites* GetInstance();
 };

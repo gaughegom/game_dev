@@ -2,6 +2,7 @@
 #ifndef _GAMEOBJECT_H
 #define _GAMEOBJECT_H
 
+#include <math.h>
 #include "resources.h"
 #include "Animations.h"
 #include "Collider2D.h"
@@ -64,11 +65,11 @@ public:
 	Vector2D GetVelocity() { return this->velocity; }
 
 	// sprites
-	void AddSprite(std::string key, int spriteId);
+	void AddSprite(std::string key, std::string spriteId);
 	std::unordered_map<std::string, LPSPRITE> GetSprites() { return this->sprites; }
 
 	// animations
-	void AddAnimation(std::string key, int animationId);
+	void AddAnimation(std::string key, std::string animationId);
 	std::unordered_map<std::string, LPANIMATION> GetAnimations() { return this->animations; }
 
 	// rendering

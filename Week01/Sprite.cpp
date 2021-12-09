@@ -1,6 +1,6 @@
 #include "Sprite.h"
 
-CSprite::CSprite(int id, int left, int top, int width, int height, LPDIRECT3DTEXTURE9 tex)
+CSprite::CSprite(std::string id, int left, int top, int width, int height, LPDIRECT3DTEXTURE9 tex)
 {
 	this->id = id;
 	this->left = left;

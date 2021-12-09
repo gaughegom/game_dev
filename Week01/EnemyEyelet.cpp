@@ -1,11 +1,13 @@
 #include "EnemyEyelet.h"
 #include "Sophia.h"
 #include "SophiaBullet.h"
-#include <math.h>
+
+
+#define ANIMATION_DEFAULT_ID	"df"
 
 CEnemyEyelet::CEnemyEyelet()
 {
-	this->AddAnimation("default", 220); // eyelet animation id
+	this->AddAnimation(ANIMATION_DEFAULT_ID, "aniEEyelet");
 
 	this->hp = 10;
 	this->damage = 10;
@@ -31,7 +33,7 @@ void CEnemyEyelet::Update(DWORD dt)
 
 void CEnemyEyelet::Render()
 {
-	animations.at("default")->Render(this->position, 1, DRAW_COLOR_DEFAULT);
+	animations.at(ANIMATION_DEFAULT_ID)->Render(this->position, 1, DRAW_COLOR_DEFAULT);
 }
 
 void CEnemyEyelet::OnCollision(CCollider2D* self, LPCOLLISIONEVENT coEvent)

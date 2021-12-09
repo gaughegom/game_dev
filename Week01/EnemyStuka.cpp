@@ -2,9 +2,11 @@
 #include "ControllerObject.h"
 #include "SophiaBullet.h"
 
+#define ANIMATION_DEFAULT_ID	"df"
+
 CEnemyStuka::CEnemyStuka()
 {
-	this->AddAnimation("default", 210); // 210: stuka animation id
+	this->AddAnimation(ANIMATION_DEFAULT_ID, "aniEStuka");
 	this->hp = 10;
 	this->damage = 10;
 
@@ -32,7 +34,7 @@ void CEnemyStuka::Update(DWORD dt)
 
 void CEnemyStuka::Render()
 {
-	animations.at("default")->Render(this->position, 1, DRAW_COLOR_DEFAULT);
+	animations.at(ANIMATION_DEFAULT_ID)->Render(this->position, 1, DRAW_COLOR_DEFAULT);
 }
 
 void CEnemyStuka::OnCollision(CCollider2D* self, LPCOLLISIONEVENT coEvent)
