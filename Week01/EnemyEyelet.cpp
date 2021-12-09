@@ -21,9 +21,7 @@ CEnemyEyelet::CEnemyEyelet()
 
 void CEnemyEyelet::Update(DWORD dt)
 {
-	if (PositionsDistance(CControllerObject::GetInstance()->GetPlayer()->GetPosition(), this->position) < ENEMY_ACTIVE_DISTANCE) {
-		this->active = true;
-	}
+	this->ScheduleActiveByDistance();
 
 	if (this->active) {
 		this->velocity.x = this->nx * ENEMY_VELOCITY_NORMAL;

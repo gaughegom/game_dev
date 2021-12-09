@@ -113,6 +113,8 @@ public:
 	void SetSuffering(bool value) { this->suffering = value; this->sufferingStart = GetTickCount64(); }
 	bool IsSuffering() { return this->suffering; }
 
+	void ScheduleActiveByDistance();
+
 	// virtual
 	virtual void Update(DWORD dt) = 0;
 	virtual void Render() = 0;

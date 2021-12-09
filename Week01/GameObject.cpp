@@ -63,6 +63,20 @@ void CGameObject::TakeDamage(LPGAMEOBJECT& object)
 	this->SetSuffering(true);
 }
 
+void CGameObject::ScheduleActiveByDistance()
+{
+	if (this->active == false) {
+		Vector2D playerPosition = CControllerObject::GetInstance()->GetPlayer()->GetPosition();
+		float distance = PositionsDistance(playerPosition, this->position);
+		if (this->nx == 1 && distance < ENEMY_ACTIVE_DISTANCE) {
+			this->active = true;
+		}
+		else if (this->nx == -1 && distance > ENEMY_ACTIVE_DISTANCE && playerPosition.x < this->position.x) {
+			this->active = true;
+		}
+	}
+}
+
 void CGameObject::PhysicalUpdate(std::vector<LPGAMEOBJECT>* coObjects)
 {
 	for (auto collider : this->colliders) {
