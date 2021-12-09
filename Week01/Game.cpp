@@ -20,6 +20,7 @@
 #include "rapidjson/include/rapidjson/writer.h"
 #include "rapidjson/include/rapidjson/stringbuffer.h"
 #include "rapidjson/include/rapidjson/filereadstream.h"
+#include "SophiaBullet.h"
 
 CSophia* sophia;
 CJason* jason;
@@ -197,14 +198,14 @@ void CGame::UpdateGame(DWORD dt)
 	renderedObjects.clear();
 	quadtree->Retrieve(renderedObjects, camera->GetBoundingBox());
 	
-	for (auto object : renderedObjects) {
+	for (auto object : worldObjects) {
 		if (object->IsActive() == true) {
 			object->FilterTriggerTag();
-			object->PhysicalUpdate(&renderedObjects);
+			object->PhysicalUpdate(&worldObjects);
 		}
 	}
 
-	for (auto object : renderedObjects) {
+	for (auto object : worldObjects) {
 		object->Update(dt);
 	}
 }

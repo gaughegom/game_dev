@@ -16,7 +16,7 @@
 #define SOPHIA_BOX_TILE45			Vector2D(23.0f, 29.0f)
 #define SOPHIA_BOX_UP90				Vector2D(24.0f, 32.0f)
 
-#define SOPHIA_MAX_BULLETS			5
+#define SOPHIA_MAX_BULLETS			3
 
 class CSophiaCabin;
 class CSophiaWheel;
@@ -59,7 +59,7 @@ public:
 	// bullet
 	int bullets;
 	DWORD prevBulletTime;
-	DWORD delayBullet = 380;
+	DWORD delayBullet = 180;
 
 	CSophia();
 

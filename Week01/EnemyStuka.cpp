@@ -45,7 +45,7 @@ void CEnemyStuka::OnTrigger(CCollider2D* self, LPCOLLISIONEVENT coEvent)
 		LPGAMEOBJECT thisObject = dynamic_cast<LPGAMEOBJECT>(this);
 		coEvent->object->TakeDamage(thisObject);
 	}
-	if (dynamic_cast<CSophiaBullet*>(coEvent->object)) {
+	else if (dynamic_cast<CSophiaBullet*>(coEvent->object)) {
 		this->TakeDamage(coEvent->object);
 	}
 }

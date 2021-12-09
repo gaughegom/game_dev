@@ -4,7 +4,7 @@
 #include "Jason.h"
 #include "Sophia.h"
 
-#define MARGIN		0.2f
+#define MARGIN_COLLISION		0.2f
 
 CCollider2D::CCollider2D()
 {
@@ -133,9 +133,9 @@ LPCOLLISIONEVENT CCollider2D::SweptAABBEx(CCollider2D* coOther)
 	float rdx = this->dx - sdx;
 	float rdy = this->dy - sdy;
 
-	movingRect = GetBoundingBox();
+	movingRect = this->GetBoundingBox();
 
-	SweptAABB(
+	this->SweptAABB(
 		movingRect, staticRect,
 		rdx, rdy, nx, ny, t);
 
@@ -171,7 +171,7 @@ void CCollider2D::PredictPotentialCollision(std::vector<LPGAMEOBJECT>* coObjects
 
 		for (auto co : coObject->GetColliders())
 		{
-			LPCOLLISIONEVENT e = SweptAABBEx(co);
+			LPCOLLISIONEVENT e = this->SweptAABBEx(co);
 
 			if (e->t > 0 && e->t <= 1.0f) {
 				coEvents.push_back(e);
@@ -232,6 +232,8 @@ void CCollider2D::PhysicalUpdate(std::vector<LPGAMEOBJECT>* coObjects)
 		return;
 	}
 
+	this->PhysicalOverlapHandler(coObjects);
+
 	// get delta time
 	auto deltaTime = CGame::GetDeltaTime();
 	// get object selfPosition, selfVelocity
@@ -263,7 +265,7 @@ void CCollider2D::PhysicalUpdate(std::vector<LPGAMEOBJECT>* coObjects)
 			{
 				if (this->trigger == false)
 				{
-					selfPosition.y += this->coEventY->t * this->dy + this->coEventY->ny * MARGIN;
+					selfPosition.y += this->coEventY->t * this->dy + this->coEventY->ny * MARGIN_COLLISION;
 
 					selfVelocity.y = 0;
 					this->object->SetVelocity(selfVelocity);
@@ -299,7 +301,7 @@ void CCollider2D::PhysicalUpdate(std::vector<LPGAMEOBJECT>* coObjects)
 				if (colX_other != nullptr)
 				{
 					if (this->trigger == false) {
-						selfPosition.x += colX_other->t * this->dx + colX_other->nx * MARGIN;
+						selfPosition.x += colX_other->t * this->dx + colX_other->nx * MARGIN_COLLISION;
 					}
 
 					selfVelocity.x = 0;
@@ -322,7 +324,7 @@ void CCollider2D::PhysicalUpdate(std::vector<LPGAMEOBJECT>* coObjects)
 			{
 				if (this->trigger == false)
 				{
-					selfPosition.x += this->coEventX->t * this->dx + this->coEventX->nx * MARGIN;
+					selfPosition.x += this->coEventX->t * this->dx + this->coEventX->nx * MARGIN_COLLISION;
 
 					selfVelocity.x = 0;
 					this->object->SetVelocity(selfVelocity);
@@ -358,7 +360,7 @@ void CCollider2D::PhysicalUpdate(std::vector<LPGAMEOBJECT>* coObjects)
 				if (colY_other != nullptr)
 				{
 					if (this->trigger == false) {
-						selfPosition.y += colY_other->t * this->dy + colY_other->ny * MARGIN;
+						selfPosition.y += colY_other->t * this->dy + colY_other->ny * MARGIN_COLLISION;
 					}
 
 					selfVelocity.x = 0;
@@ -383,7 +385,7 @@ void CCollider2D::PhysicalUpdate(std::vector<LPGAMEOBJECT>* coObjects)
 			{
 				if (this->trigger == false)
 				{
-					selfPosition.x += this->coEventX->t * this->dx + this->coEventX->nx * MARGIN;
+					selfPosition.x += this->coEventX->t * this->dx + this->coEventX->nx * MARGIN_COLLISION;
 					selfPosition.y += this->dy;
 
 					selfVelocity.x = 0;
@@ -403,7 +405,7 @@ void CCollider2D::PhysicalUpdate(std::vector<LPGAMEOBJECT>* coObjects)
 					if (this->trigger == false)
 					{
 						selfPosition.x += this->dx;
-						selfPosition.y += this->coEventY->t * this->dy + this->coEventY->ny * MARGIN;
+						selfPosition.y += this->coEventY->t * this->dy + this->coEventY->ny * MARGIN_COLLISION;
 
 						selfVelocity.y = 0;
 						this->object->SetVelocity(selfVelocity);
@@ -440,6 +442,72 @@ void CCollider2D::PhysicalUpdate(std::vector<LPGAMEOBJECT>* coObjects)
 
 	for (UINT i = 0; i < this->coEvents.size(); i++) {
 		delete this->coEvents.at(i);
+	}
+}
+
+void CCollider2D::PhysicalOverlapHandler(std::vector<LPGAMEOBJECT>* coObjects)
+{
+	if (this->trigger == true) return;
+
+	std::vector<CGameObject*> overlappedObjects;
+
+	for (auto coObject : *coObjects)
+	{
+		if (coObject == object) continue;
+		if (coObject->IsActive() == false) continue;
+		if (coObject->GetColliders().size() == 0) continue;
+
+		auto coOther = coObject->GetColliders().at(0);
+		if (coOther->trigger == true) continue;
+
+		auto bbOther = coOther->GetBoundingBox();
+		auto bbSelf = GetBoundingBox();
+
+		if (bbSelf.Overlap(bbOther) && dynamic_cast<CBrick*>(coObject))
+			overlappedObjects.emplace_back(coObject);
+	}
+
+	for (auto coObject : overlappedObjects)
+	{
+		auto bbOther = coObject->GetColliders().at(0)->GetBoundingBox();
+		auto bbSelf = GetBoundingBox();
+
+		if (bbSelf.Overlap(bbOther) == false) continue;
+
+		float deltaX = 0, deltaY = 0;
+
+		if (bbSelf.left < bbOther.right && bbSelf.left > bbOther.left)
+		{
+			deltaX += bbOther.right - bbSelf.left + MARGIN_COLLISION;
+		}
+
+		if (bbSelf.right > bbOther.left && bbSelf.right < bbOther.right)
+		{
+			deltaX += -1 * (bbSelf.right - bbOther.left + MARGIN_COLLISION);
+		}
+
+		if (bbSelf.bottom < bbOther.top && bbSelf.bottom > bbOther.bottom)
+		{
+			deltaY += bbOther.top - bbSelf.bottom + MARGIN_COLLISION;
+		}
+
+		if (bbSelf.top > bbOther.bottom && bbSelf.top < bbOther.top)
+		{
+			deltaY += -1 * (bbSelf.top - bbOther.bottom + MARGIN_COLLISION);
+		}
+
+		if (deltaX != 0 && deltaY != 0)
+		{
+			if (abs(deltaX) <= abs(deltaY))
+			{
+				deltaY = 0;
+			}
+			else deltaX = 0;
+		}
+
+		auto newPos = object->GetPosition();
+		newPos += Vector2D(deltaX, deltaY);
+		object->SetPosition(newPos);
 	}
 }
 

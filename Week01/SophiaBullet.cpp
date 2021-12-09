@@ -44,7 +44,7 @@ void CSophiaBullet::Update(DWORD dt)
 	/*auto sophia = CControllerObject::GetInstance()->GetSophia();
 	Vector2D sophiaPos = sophia->GetPosition();
 	float distance = PositionsDistance(this->position, sophiaPos);
-	if (distance > 150) {
+	if (distance > 300) {
 		this->OnDelete();
 	}*/
 	// delete when out of camera

@@ -65,6 +65,7 @@ public:
 		LPCOLLISIONEVENT& colX, LPCOLLISIONEVENT& colY,
 		bool filterX, bool filterY);
 	void PhysicalUpdate(std::vector<LPGAMEOBJECT>* coObjects);
+	void PhysicalOverlapHandler(std::vector<LPGAMEOBJECT>* coObjects);
 
 	// dynamic
 	void SetDynamic(bool value) { this->dynamic = value; }
