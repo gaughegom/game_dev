@@ -199,14 +199,14 @@ void CGame::UpdateGame(DWORD dt)
 	renderedObjects.clear();
 	quadtree->Retrieve(renderedObjects, camera->GetBoundingBox());
 	
-	for (auto object : worldObjects) {
+	for (auto object : renderedObjects) {
 		if (object->IsActive() == true) {
 			object->FilterTriggerTag();
-			object->PhysicalUpdate(&worldObjects);
+			object->PhysicalUpdate(&renderedObjects);
 		}
 	}
 
-	for (auto object : worldObjects) {
+	for (auto object : renderedObjects) {
 		object->Update(dt);
 	}
 }

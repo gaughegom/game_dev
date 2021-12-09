@@ -15,17 +15,8 @@ CJason::CJason()
 	this->ground = false;
 
 	//
-	InitCollider();
-}
-
-void CJason::InitCollider()
-{
 	this->colliders.clear();
-	auto collider = new CCollider2D;
-	collider->SetGameObject(this);
-	collider->SetOffset(VectorZero());
-	collider->SetBoxSize(V_JASON_BOX_SIZE);
-	collider->SetDynamic(true);
+	auto collider = new CCollider2D(this, true, false, VectorZero(), V_JASON_BOX_SIZE);
 	this->colliders.push_back(collider);
 	this->SetColliders(colliders);
 }

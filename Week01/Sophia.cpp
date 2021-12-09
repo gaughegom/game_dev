@@ -14,16 +14,7 @@ CSophia::CSophia()
 	this->damage = 10;
 
 	InitParts();
-	InitCollider();
-}
-
-void CSophia::InitCollider()
-{
-	auto collider = new CCollider2D;
-	collider->SetGameObject(this);
-	collider->SetOffset(SOPHIA_OFFSET_IDLE);
-	collider->SetBoxSize(SOPHIA_BOX_IDLE);
-	collider->SetDynamic(true);
+	auto collider = new CCollider2D(this, true, false, SOPHIA_OFFSET_IDLE, SOPHIA_BOX_IDLE);
 	this->colliders.push_back(collider);
 	this->SetColliders(colliders);
 }

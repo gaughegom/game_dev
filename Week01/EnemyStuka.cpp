@@ -12,12 +12,7 @@ CEnemyStuka::CEnemyStuka()
 
 	//
 	this->colliders.clear();
-	auto collider = new CCollider2D;
-	collider->SetGameObject(this);
-	collider->SetOffset(VectorZero());
-	collider->SetBoxSize(V_STUKA_BOXSIZE);
-	collider->SetDynamic(true);
-	collider->SetTrigger(true);
+	auto collider = new CCollider2D(this, true, true, VectorZero(), V_STUKA_BOXSIZE);
 	this->colliders.push_back(collider);
 	this->SetColliders(this->colliders);
 

@@ -220,6 +220,11 @@ jason	-1	1260	112	8	16
 eyelet	1	1100	130	18	15
 ballot	1	1102	34	18	18
 stuka	1	900	128	18	18
+stuka	1	736	192	18	18
+eyelet	1	512	273	18	15
+stuka	1	500	270	18	18
+stuka	1	128	286	18	18
+ballot	1	464	414	18	18
 
 # --- SCENE PORTAL ----
 # type		x	y	w	h	scene_id

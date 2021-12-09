@@ -14,12 +14,7 @@ CEnemyEyelet::CEnemyEyelet()
 
 	//
 	this->colliders.clear();
-	auto collider = new CCollider2D;
-	collider->SetGameObject(this);
-	collider->SetOffset(VectorZero());
-	collider->SetBoxSize(V_EYELET_BOXSIZE);
-	collider->SetDynamic(true);
-	collider->SetTrigger(true);
+	auto collider = new CCollider2D(this, true, true, VectorZero(), V_EYELET_BOXSIZE);
 	this->colliders.push_back(collider);
 	this->SetColliders(colliders);
 }
@@ -32,7 +27,7 @@ void CEnemyEyelet::Update(DWORD dt)
 
 	if (this->active) {
 		this->velocity.x = this->nx * ENEMY_VELOCITY_NORMAL;
-		InSinWave(this, dt, 2.0f);
+		InSinWave(this, dt, 1.0f);
 	}
 }
 

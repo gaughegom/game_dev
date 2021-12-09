@@ -51,7 +51,6 @@ private:
 	SophiaActionState actionState;
 
 	void InitParts();
-	void InitCollider();
 
 public:
 	// state

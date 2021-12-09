@@ -26,7 +26,6 @@ class CJason : public CGameObject{
 private:
 	CJasonDirectionState* directState;
 
-	void InitCollider();
 public:
 	CJason();
 

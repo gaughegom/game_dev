@@ -6,7 +6,20 @@
 
 #define MARGIN		0.2f
 
-void CCollider2D::SweptAABB(SRect movingRect, SRect staticRect, 
+CCollider2D::CCollider2D()
+{
+}
+
+CCollider2D::CCollider2D(LPGAMEOBJECT object, bool dynamic, bool trigger, Vector2D offset, Vector2D boxSize)
+{
+	this->object = object;
+	this->dynamic = dynamic;
+	this->trigger = trigger;
+	this->offset = offset;
+	this->boxSize = boxSize;
+}
+
+void CCollider2D::SweptAABB(SRect movingRect, SRect staticRect,
 	float dx, float dy, float& nx, float& ny, float& dt)
 {
 	float dxEntry, dxExit, txEntry, txExit;
