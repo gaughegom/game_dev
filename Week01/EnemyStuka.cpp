@@ -32,7 +32,7 @@ void CEnemyStuka::Update(DWORD dt)
 
 void CEnemyStuka::Render()
 {
-	animations.at("default")->Render(this->position, 1, 255);
+	animations.at("default")->Render(this->position, 1, DRAW_COLOR_DEFAULT);
 }
 
 void CEnemyStuka::OnCollision(CCollider2D* self, LPCOLLISIONEVENT coEvent)

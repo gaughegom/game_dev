@@ -17,5 +17,5 @@ void CEnemyDrap::Render()
 	// render
 	auto animation = this->animations.at("default");
 	animation->SetWait(false);
-	animation->Render(this->position, 1, 255);
+	animation->Render(this->position, 1, DRAW_COLOR_DEFAULT);
 }

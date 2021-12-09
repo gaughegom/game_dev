@@ -43,7 +43,7 @@ class CGame {
 
 public:
 	void InitDirectX(HWND hWnd);
-	void Draw(Vector2D position, int nx, LPDIRECT3DTEXTURE9 texture, int left, int top, int right, int bottom, int alpha);
+	void Draw(Vector2D position, int nx, LPDIRECT3DTEXTURE9 texture, int left, int top, int right, int bottom, D3DCOLOR color);
 
 	// main game loop
 	void InitGame(HWND hWnd);

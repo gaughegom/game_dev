@@ -12,5 +12,5 @@ void CEnemyGX680::Update(DWORD dt)
 
 void CEnemyGX680::Render()
 {
-	animations.at("default")->Render(this->position, 1, 255);
+	animations.at("default")->Render(this->position, 1, DRAW_COLOR_DEFAULT);
 }

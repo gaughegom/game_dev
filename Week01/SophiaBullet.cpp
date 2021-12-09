@@ -56,7 +56,7 @@ void CSophiaBullet::Update(DWORD dt)
 
 void CSophiaBullet::Render()
 {
-	this->sprite->Draw(this->position, this->nx, 255);
+	this->sprite->Draw(this->position, this->nx, DRAW_COLOR_DEFAULT);
 }
 
 void CSophiaBullet::OnCollision(CCollider2D* self, LPCOLLISIONEVENT coEvent)

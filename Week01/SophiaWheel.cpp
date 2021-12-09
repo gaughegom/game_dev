@@ -19,7 +19,7 @@ void CSophiaWheel::Render()
 	animation->Render(
 		this->position + this->self->GetPosition(), 
 		-this->self->GetNx(),
-		255);
+		DRAW_COLOR_DEFAULT);
 }
 
 // set prop in animation of wheel by target state

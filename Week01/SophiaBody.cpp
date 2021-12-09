@@ -20,7 +20,7 @@ void CSophiaBody::Render()
 	// handle animation action state
 	this->HandleAnimationActionState(this->self->GetActionState());
 
-	sprite->Draw(this->position + this->self->GetPosition(), -1, 255);
+	sprite->Draw(this->position + this->self->GetPosition(), -1, DRAW_COLOR_DEFAULT);
 }
 
 void CSophiaBody::HandleAnimationActionState(SophiaActionState actionState)

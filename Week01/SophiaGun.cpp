@@ -20,7 +20,7 @@ void CSophiaGun::Render()
 	sprites->Get(spriteId)->Draw(
 		this->position + this->self->GetPosition(), 
 		-this->self->GetNx(),
-		255);
+		DRAW_COLOR_DEFAULT);
 }
 
 int CSophiaGun::MappingGunSpriteState(SophiaActionState actionState)

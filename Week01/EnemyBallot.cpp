@@ -30,10 +30,10 @@ void CEnemyBallot::Render()
 {
 	auto sophia = CControllerObject::GetInstance()->GetSophia();
 	if (abs(this->position.x - sophia->GetPosition().x) < 60) {
-		this->animations.at(BALLOT_DEFAULT_ANIMATION)->Render(this->position, this->nx, 255);
+		this->animations.at(BALLOT_DEFAULT_ANIMATION)->Render(this->position, this->nx, DRAW_COLOR_DEFAULT);
 	}
 	else {
-		this->sprites.at(BALLOT_DEFAULT_SPRITE_IDLE)->Draw(this->position, this->nx, 255);
+		this->sprites.at(BALLOT_DEFAULT_SPRITE_IDLE)->Draw(this->position, this->nx, DRAW_COLOR_DEFAULT);
 	}
 }
 

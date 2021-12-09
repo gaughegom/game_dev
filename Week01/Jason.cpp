@@ -35,7 +35,7 @@ void CJason::Render()
 	auto key = this->directState->MappingStateOfAnimation();
 		
 	this->animations.at(key)->
-		Render(this->position, -this->nx, 255);
+		Render(this->position, -this->nx, DRAW_COLOR_DEFAULT);
 }
 
 void CJason::UpdateColliders()

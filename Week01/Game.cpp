@@ -120,7 +120,7 @@ void CGame::InitDirectX(HWND hWnd)
 /*
 	Utility function to wrap LPD3DXSPRITE::Draw
 */
-void CGame::Draw(Vector2D position, int nx, LPDIRECT3DTEXTURE9 texture, int left, int top, int right, int bottom, int alpha)
+void CGame::Draw(Vector2D position, int nx, LPDIRECT3DTEXTURE9 texture, int left, int top, int right, int bottom, D3DCOLOR color)
 {
 
 	Vector2D cameraPos = camera->GetPosition();
@@ -150,9 +150,7 @@ void CGame::Draw(Vector2D position, int nx, LPDIRECT3DTEXTURE9 texture, int left
 
 	spriteHandler->SetTransform(&matrix);
 
-	D3DCOLOR defaultRGB = D3DCOLOR_ARGB(alpha, 255, 255, 255);
-
-	spriteHandler->Draw(texture, &r, &center, &p, defaultRGB);
+	spriteHandler->Draw(texture, &r, &center, &p, color);
 }
 
 #pragma endregion
@@ -224,7 +222,7 @@ void CGame::RenderGame()
 
 		spriteHandler->Begin(D3DXSPRITE_ALPHABLEND);
 
-		this->map->Draw(Vector2D(this->mapWidth / 2, this->mapHeight / 2), 1, 255);
+		this->map->Draw(Vector2D(this->mapWidth / 2, this->mapHeight / 2), 1, DRAW_COLOR_DEFAULT);
 		for (auto object : renderedObjects) {
 			if (!object->IsLive() || !object->IsActive()) {
 				continue;
