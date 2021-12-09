@@ -64,5 +64,7 @@
 #pragma endregion
 
 #define PI			atan(1)*4
+#define ENEMY_VELOCITY_NORMAL		0.06f
+#define ENEMY_ACTIVE_DISTANCE		130
 
 #endif // !_RESOURCES_H

@@ -57,9 +57,9 @@ void CGameObject::AddAnimation(std::string key, int animationId)
 	this->animations.insert(std::make_pair(key, ani));
 }
 
-void CGameObject::TakeDamage(LPCOLLISIONEVENT& coEvent)
+void CGameObject::TakeDamage(LPGAMEOBJECT& object)
 {
-	this->hp -= coEvent->object->GetDamage();
+	this->hp -= object->GetDamage();
 	this->SetSuffering(true);
 }
 
@@ -82,7 +82,7 @@ void CGameObject::FilterTriggerTag()
 {
 	this->triggerTags.erase(
 		std::remove_if(this->triggerTags.begin(), this->triggerTags.end(), [&](STriggerTag const& tag) {
-			return (GetTickCount64() - tag.start > 500); // Time period out of 500 will be remove
+			return (GetTickCount64() - tag.start > 1200); // Time period out of 500 will be remove
 			}),
 		this->triggerTags.end());
 }

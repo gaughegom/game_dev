@@ -6,6 +6,7 @@
 
 #define C_EYELET			0
 #define C_EYELET_REVERSE	1
+#define	V_EYELET_BOXSIZE	Vector2D(18, 15)
 
 class CEnemyEyelet : public CGameObject {
 private:

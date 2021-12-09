@@ -22,6 +22,7 @@ private:
 	static CControllerObject* __instance;
 
 	ControllerObjectID selectedId;
+	CGameObject* player;
 	CSophia* sophia;
 	CJason* jason;
 
@@ -35,6 +36,7 @@ public:
 	void SetSophiaAndJason(CSophia* sophia, CJason* jason);
 	void Select(ControllerObjectID id);
 	ControllerObjectID GetSelectId() { return this->selectedId; }
+	CGameObject* GetPlayer() { return this->player; }
 
 	CSophia* GetSophia() { return this->sophia; }
 	CJason* GetJason() { return this->jason; }

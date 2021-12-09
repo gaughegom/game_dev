@@ -3,6 +3,7 @@
 #include "Jason.h"
 #include "ControllerObject.h"
 #include "SophiaBullet.h"
+#include "EnemyStuka.h"
 
 CSophia::CSophia()
 {
@@ -40,6 +41,8 @@ void CSophia::InitParts()
 
 void CSophia::Update(DWORD dt)
 {
+	DebugOut(L"sophia hp: %f\n", this->hp);
+
 	if (this->colliders.at(0)->IsDynamic() == true) {
 		InGravityAffect(this, dt);
 		this->UpdateColliders();
@@ -205,17 +208,20 @@ void CSophia::OnCollision(CCollider2D* self, LPCOLLISIONEVENT coEvent)
 
 void CSophia::OnTrigger(CCollider2D* self, LPCOLLISIONEVENT coEvent)
 {
+
 }
 
 
 void CSophia::OnCollisionWithEnemy(LPCOLLISIONEVENT coEvent)
 {
 	bool isSuffered = false;
-	if (dynamic_cast<CEnemyEyelet*>(coEvent->object)) isSuffered = true;
+	
+	// TODO: check collision with enemy not trigger
+
 	// TODO: add more enemies later
-	// TODO: make enemy go throw player, player take damage
 	if (isSuffered) {
 		this->hp -= coEvent->object->GetDamage();
+		DebugOut(L"sophia hp: %f\n", this->hp);
 		STriggerTag tag = STriggerTag(coEvent->object);
 		this->AddTriggerTag(coEvent->object);
 		coEvent->object->AddTriggerTag(this);

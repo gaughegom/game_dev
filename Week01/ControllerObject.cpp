@@ -43,6 +43,7 @@ void CControllerObject::SelectSophia()
 	this->sophia->SetActionState(SophiaActionState::Idle);
 
 	this->selectedId = ControllerObjectID::SOPHIA;
+	this->player = this->sophia;
 	this->lastSwitchTime = GetTickCount64();
 }
 
@@ -67,6 +68,7 @@ void CControllerObject::SelectJason()
 	this->sophia->SetActionState(SophiaActionState::Idle);
 
 	this->selectedId = ControllerObjectID::JASON;
+	this->player = this->jason;
 	this->lastSwitchTime = GetTickCount64();
 }
 

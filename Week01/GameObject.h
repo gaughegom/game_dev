@@ -91,7 +91,7 @@ public:
 	bool IsActive() { return this->active; }
 
 	// hp
-	void TakeDamage(LPCOLLISIONEVENT& bulletCollision);
+	void TakeDamage(LPGAMEOBJECT& object);
 	void SetHp(float hp) { this->hp = hp; }
 	float GetHp() { return this->hp; }
 	bool IsLive() { return this->hp > 0; }

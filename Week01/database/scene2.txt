@@ -55,8 +55,6 @@
 210	74	386	18	18	1
 211	94	386	18	18	1
 212	114	386	18	18	1
-213	134	386	18	18	1
-214	154	386	18	18	1
 
 # === EYELET === // 220 -> 229
 220	128	31	18	15	1
@@ -102,7 +100,7 @@
 200	200	150	201	150	202	150	203	150
 
 # === STUKA ===
-210	210	150	211	150	212	150	213	150	214	150
+210	210	150	211	150	212	150
 
 # === EYELET ===
 220	220	100	221	100	222	100	223	100
@@ -213,15 +211,15 @@ maps\sectionB.png	86	33
 57	22	2	2
 
 [OBJECTS]
-# type		x	y	width	height
+# type	nx	x	y	width	height
 # SOPHIA
-sophia	1260	112	8	16
+sophia	-1	1260	112	8	16
 # JASON
-jason	1260	112	8	16
-# EYELET
-eyelet	1100	120	18	15
-# BALLOT
-ballot	1102	34	18	18
+jason	-1	1260	112	8	16
+# === Enemies===
+eyelet	1	1100	130	18	15
+ballot	1	1102	34	18	18
+stuka	1	900	128	18	18
 
 # --- SCENE PORTAL ----
 # type		x	y	w	h	scene_id

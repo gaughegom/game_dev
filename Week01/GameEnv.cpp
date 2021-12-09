@@ -3,15 +3,18 @@
 
 void InGravityAffect(CGameObject* self, DWORD dt)
 {
-	//if (static_cast<CJason*>(self)) {
-	//	DebugOut(L"dynamic: %d\n", self->GetColliders().at(0)->IsDynamic());
-	//}
-
 	if (self->GetColliders().at(0)->IsDynamic()) {
 		Vector2D velocity = self->GetVelocity();
 		velocity.y += -GAME_GRAVITY * dt;
 		self->SetVelocity(velocity);
 	}
+}
+
+void InHorizontalMove(CGameObject* self, DWORD dt)
+{
+	Vector2D position = self->GetPosition();
+	position.x += self->GetVelocity().x * dt;
+	self->SetPosition(position);
 }
 
 void InSinWave(CGameObject* self, DWORD dt, float amplitude)

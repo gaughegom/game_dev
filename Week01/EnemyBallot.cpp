@@ -40,7 +40,7 @@ void CEnemyBallot::Render()
 void CEnemyBallot::OnCollision(CCollider2D* self, LPCOLLISIONEVENT coEvent)
 {
 	if (dynamic_cast<CSophiaBullet*>(coEvent->object)) {
-		this->TakeDamage(coEvent);
+		this->TakeDamage(coEvent->object);
 	}
 }
 

@@ -10,12 +10,14 @@ CEnemyEyelet::CEnemyEyelet()
 	this->hp = 10;
 	this->damage = 10;
 
+	this->active = false;
+
 	//
 	this->colliders.clear();
 	auto collider = new CCollider2D;
 	collider->SetGameObject(this);
 	collider->SetOffset(VectorZero());
-	collider->SetBoxSize(Vector2D(18.0f, 15.0f));
+	collider->SetBoxSize(V_EYELET_BOXSIZE);
 	collider->SetDynamic(true);
 	collider->SetTrigger(true);
 	this->colliders.push_back(collider);
@@ -24,8 +26,14 @@ CEnemyEyelet::CEnemyEyelet()
 
 void CEnemyEyelet::Update(DWORD dt)
 {
-	this->velocity.x = this->nx * PLAYER_MOVING_SPEED;
-	InSinWave(this, dt, 2.0f);
+	if (PositionsDistance(CControllerObject::GetInstance()->GetPlayer()->GetPosition(), this->position) < ENEMY_ACTIVE_DISTANCE) {
+		this->active = true;
+	}
+
+	if (this->active) {
+		this->velocity.x = this->nx * ENEMY_VELOCITY_NORMAL;
+		InSinWave(this, dt, 2.0f);
+	}
 }
 
 void CEnemyEyelet::Render()
@@ -35,14 +43,18 @@ void CEnemyEyelet::Render()
 
 void CEnemyEyelet::OnCollision(CCollider2D* self, LPCOLLISIONEVENT coEvent)
 {
-	if (dynamic_cast<CSophiaBullet*>(coEvent->object)) {
-		this->TakeDamage(coEvent);
-	}
+	
 }
 
 void CEnemyEyelet::OnTrigger(CCollider2D* self, LPCOLLISIONEVENT coEvent)
 {
-	if (dynamic_cast<CSophia*>(coEvent->object)) {
-		DebugOut(L"collision with sophia\n");
+	LPGAMEOBJECT player = CControllerObject::GetInstance()->GetPlayer();
+	if ((dynamic_cast<CSophia*>(coEvent->object) || dynamic_cast<CJason*>(coEvent->object)) 
+		&& player == coEvent->object) {
+		LPGAMEOBJECT thisObject = dynamic_cast<LPGAMEOBJECT>(this);
+		coEvent->object->TakeDamage(thisObject);
+	}
+	else if (dynamic_cast<CSophiaBullet*>(coEvent->object)) {
+		this->TakeDamage(coEvent->object);
 	}
 }

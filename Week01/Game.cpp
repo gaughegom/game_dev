@@ -207,9 +207,7 @@ void CGame::UpdateGame(DWORD dt)
 	}
 
 	for (auto object : worldObjects) {
-		if (object->IsActive() == true) {
-			object->Update(dt);
-		}
+		object->Update(dt);
 	}
 }
 
@@ -520,6 +518,7 @@ void CGame::__ParseSection_OBJECTS__(std::string line)
 	}
 	else if (objectType == "eyelet") newObject = new CEnemyEyelet;
 	else if (objectType == "ballot") newObject = new CEnemyBallot;
+	else if (objectType == "stuka") newObject = new CEnemyStuka;
 	else {
 		DebugOut(L"[ERROR] Unknowed object type: %s\n", objectType); // catch undefined object
 		return;
@@ -530,11 +529,13 @@ void CGame::__ParseSection_OBJECTS__(std::string line)
 
 void CGame::PrepareGameObject(LPGAMEOBJECT& object, std::vector<std::string> tokens)
 {
-	float x = atoi(tokens[1].c_str());
-	float y = atoi(tokens[2].c_str());
-	float width = atoi(tokens[3].c_str());
-	float height = atoi(tokens[4].c_str());
+	int nx = atoi(tokens[1].c_str());
+	float x = atoi(tokens[2].c_str());
+	float y = atoi(tokens[3].c_str());
+	float width = atoi(tokens[4].c_str());
+	float height = atoi(tokens[5].c_str());
 	object->SetPosition(Vector2D(x + width / 2, this->mapHeight - y + height / 2));
+	object->SetNx(nx);
 	this->NewGameObject(object);
 }
 
