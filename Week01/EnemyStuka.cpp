@@ -49,5 +49,7 @@ void CEnemyStuka::OnTrigger(CCollider2D* self, LPCOLLISIONEVENT coEvent)
 	}
 	else if (dynamic_cast<CSophiaBullet*>(coEvent->object)) {
 		this->TakeDamage(coEvent->object);
+		auto bullet = (CSophiaBullet*)coEvent->object;
+		bullet->OnDelete();
 	}
 }

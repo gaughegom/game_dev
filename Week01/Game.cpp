@@ -15,11 +15,6 @@
 #include "EnemyOffside.h"
 #include "EnemyStuka.h"
 #include "EnemyBallot.h"
-
-#include "rapidjson/include/rapidjson/document.h"
-#include "rapidjson/include/rapidjson/writer.h"
-#include "rapidjson/include/rapidjson/stringbuffer.h"
-#include "rapidjson/include/rapidjson/filereadstream.h"
 #include "SophiaBullet.h"
 
 CSophia* sophia;

@@ -10,7 +10,6 @@ CAnimations* CAnimations::GetInstance()
 
 void CAnimations::Add(std::string id, LPANIMATION ani)
 {
-	//this->animations[id] = ani;
 	this->animations.insert(std::make_pair(id, ani));
 }
 

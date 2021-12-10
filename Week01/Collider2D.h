@@ -53,6 +53,7 @@ protected:
 
 public:
 	CCollider2D();
+	CCollider2D(LPGAMEOBJECT object, bool dynamic, bool trigger);
 	CCollider2D(LPGAMEOBJECT object, bool dynamic, bool trigger, Vector2D offset, Vector2D boxSize);
 
 	static void SweptAABB(SRect movingRect, SRect staticRect,

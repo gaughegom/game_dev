@@ -14,10 +14,8 @@ CSophiaBullet::CSophiaBullet(int direct)
 	/*
 		collider of bullet
 	*/
-	auto collider = new CCollider2D;
-	collider->SetGameObject(this);
+	auto collider = new CCollider2D(this, true, false);
 	collider->SetOffset(VectorZero());
-	collider->SetDynamic(true);
 	
 	// boxsize, velocity, sprite
 	auto sprites = CSprites::GetInstance();
@@ -67,7 +65,11 @@ void CSophiaBullet::Render()
 
 void CSophiaBullet::OnCollision(CCollider2D* self, LPCOLLISIONEVENT coEvent)
 {
-	this->OnDelete();
+	if (dynamic_cast<CSophia*>(coEvent->object)
+		|| dynamic_cast<CBrick*>(coEvent->object)
+		|| dynamic_cast<CSophiaBullet*>(coEvent->object)) {
+		this->OnDelete();
+	}
 }
 
 void CSophiaBullet::OnTrigger(CCollider2D* self, LPCOLLISIONEVENT coEvent)

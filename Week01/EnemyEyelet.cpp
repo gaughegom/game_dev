@@ -33,7 +33,8 @@ void CEnemyEyelet::Update(DWORD dt)
 
 void CEnemyEyelet::Render()
 {
-	animations.at(ANIMATION_DEFAULT_ID)->Render(this->position, 1, DRAW_COLOR_DEFAULT);
+	auto color = this->GetRenderColor();
+	animations.at(ANIMATION_DEFAULT_ID)->Render(this->position, 1, color);
 }
 
 void CEnemyEyelet::OnCollision(CCollider2D* self, LPCOLLISIONEVENT coEvent)
@@ -51,5 +52,7 @@ void CEnemyEyelet::OnTrigger(CCollider2D* self, LPCOLLISIONEVENT coEvent)
 	}
 	else if (dynamic_cast<CSophiaBullet*>(coEvent->object)) {
 		this->TakeDamage(coEvent->object);
+		auto bullet = (CSophiaBullet*)coEvent->object;
+		bullet->OnDelete();
 	}
 }

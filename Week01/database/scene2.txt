@@ -28,6 +28,7 @@ sprSWheel03	30	21	8	8	0
 sprSBody00	3	12	8	8	0
 # cabin part 	// 5 -> 7
 sprSCabin00	39	3	16	8	0
+sprSCabin01	56	3	16	8	0
 sprSCabin45	73	3	16	16	0
 sprSCabin90	56	3	16	8	0
 #cabin in/out
@@ -218,12 +219,12 @@ jason	-1	1260	112	8	16
 # === Enemies===
 eyelet	1	1100	130	18	15
 ballot	1	1102	34	18	18
-stuka	1	900	128	18	18
+stuka	1	900	136	18	18
 eyelet	-1	1136	161	18	15
-stuka	1	736	192	18	18
+stuka	1	736	200	18	18
 eyelet	1	512	273	18	15
-stuka	1	500	270	18	18
-stuka	1	128	286	18	18
+stuka	1	500	278	18	18
+stuka	1	128	294	18	18
 ballot	1	464	414	18	18
 
 # --- SCENE PORTAL ----

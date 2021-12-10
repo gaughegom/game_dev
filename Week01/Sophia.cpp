@@ -11,7 +11,7 @@ CSophia::CSophia()
 	this->actionState = SophiaActionState::Idle;
 
 	this->hp = 100;
-	this->damage = 10;
+	this->damage = 0;
 
 	InitParts();
 	auto collider = new CCollider2D(this, true, false, SOPHIA_OFFSET_IDLE, SOPHIA_BOX_IDLE);
@@ -32,8 +32,6 @@ void CSophia::InitParts()
 
 void CSophia::Update(DWORD dt)
 {
-	DebugOut(L"sophia hp: %f\n", this->hp);
-
 	if (this->colliders.at(0)->IsDynamic() == true) {
 		InGravityAffect(this, dt);
 		this->UpdateColliders();
@@ -121,6 +119,8 @@ void CSophia::ListenKeyEvent()
 
 void CSophia::UpdateColliders()
 {
+	DebugOut(L"sophia hp: %f\n", this->hp);
+
 	auto collider = this->colliders.at(0);
 	this->colliders.clear();
 	switch (this->actionState)
@@ -150,6 +150,7 @@ void CSophia::UpdateColliders()
 
 void CSophia::Render()
 {
+	auto color = this->GetRenderColor();
 	this->leftWheel->Render();
 	this->rightWheel->Render();
 	this->body->Render();
@@ -210,6 +211,8 @@ void CSophia::OnCollisionWithEnemy(LPCOLLISIONEVENT coEvent)
 	// TODO: check collision with enemy not trigger
 
 	// TODO: add more enemies later
+
+	// TODO: add trigger in enemy
 	if (isSuffered) {
 		this->hp -= coEvent->object->GetDamage();
 		DebugOut(L"sophia hp: %f\n", this->hp);

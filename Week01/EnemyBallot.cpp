@@ -32,12 +32,13 @@ void CEnemyBallot::Update(DWORD dt)
 
 void CEnemyBallot::Render()
 {
+	auto color = this->GetRenderColor();
 	auto player = CControllerObject::GetInstance()->GetPlayer();
 	if (abs(this->position.x - player->GetPosition().x) < 60) {
-		this->animations.at(ANIMATION_DEFAULT_ID)->Render(this->position, this->nx, DRAW_COLOR_DEFAULT);
+		this->animations.at(ANIMATION_DEFAULT_ID)->Render(this->position, this->nx, color);
 	}
 	else {
-		this->sprites.at(SPR_IDLE_ID)->Draw(this->position, this->nx, DRAW_COLOR_DEFAULT);
+		this->sprites.at(SPR_IDLE_ID)->Draw(this->position, this->nx, color);
 	}
 }
 
@@ -49,6 +50,8 @@ void CEnemyBallot::OnCollision(CCollider2D* self, LPCOLLISIONEVENT coEvent)
 	}
 	else if (dynamic_cast<CSophiaBullet*>(coEvent->object)) {
 		this->TakeDamage(coEvent->object);
+		auto bullet = (CSophiaBullet*)coEvent->object;
+		bullet->OnDelete();
 	}
 }
 

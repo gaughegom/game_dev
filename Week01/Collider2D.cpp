@@ -5,9 +5,17 @@
 #include "Sophia.h"
 
 #define MARGIN_COLLISION		0.2f
+#define ALPHA_DRAW_COLLIDER		40
 
 CCollider2D::CCollider2D()
 {
+}
+
+CCollider2D::CCollider2D(LPGAMEOBJECT object, bool dynamic, bool trigger)
+{
+	this->object = object;
+	this->dynamic = dynamic;
+	this->trigger = trigger;
 }
 
 CCollider2D::CCollider2D(LPGAMEOBJECT object, bool dynamic, bool trigger, Vector2D offset, Vector2D boxSize)
@@ -527,6 +535,6 @@ void CCollider2D::RenderBoundingBox()
 	rect.right = this->boxSize.x;
 	rect.bottom = this->boxSize.y;
 
-	D3DCOLOR color = D3DCOLOR_ARGB(40, 255, 255, 255);
+	D3DCOLOR color = D3DCOLOR_ARGB(ALPHA_DRAW_COLLIDER, 255, 255, 255);
 	CGame::GetInstance()->Draw(positionCollider, -1, bbox, rect.left, rect.top, rect.right, rect.bottom, color);
 }

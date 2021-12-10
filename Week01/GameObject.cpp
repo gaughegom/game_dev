@@ -77,6 +77,28 @@ void CGameObject::ScheduleActiveByDistance()
 	}
 }
 
+D3DCOLOR CGameObject::GetRenderColor()
+{
+	if (this->suffering == false || this->sufferingDuration == 0) {
+		this->suffering = false;
+		this->sufferingDuration = 0;
+		return DRAW_COLOR_DEFAULT;
+	}
+	else {
+		this->sufferingDuration += 1; // TODO: make the same duration of triggerTag
+		if (this->sufferingDuration > 8) {
+			this->sufferingDuration = 0;
+			return DRAW_COLOR_DEFAULT;
+		}
+		if (this->sufferingDuration % 2 == 0) {
+			return DRAW_COLOR_DEFAULT;
+		}
+		else {
+			return D3DCOLOR_ARGB(255, 0, 0, 0);
+		}
+	}
+}
+
 void CGameObject::PhysicalUpdate(std::vector<LPGAMEOBJECT>* coObjects)
 {
 	for (auto collider : this->colliders) {

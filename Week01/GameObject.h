@@ -36,6 +36,8 @@ protected:
 	bool invicible = false;
 	bool suffering = false;
 
+	DWORD sufferingDuration;
+	
 	std::vector<STriggerTag> triggerTags;
 
 	std::vector<CQuadTree*> selfNodes;
@@ -46,7 +48,6 @@ protected:
 
 public:
 	float duration;
-	DWORD sufferingStart;
 
 	CGameObject();
 
@@ -111,10 +112,11 @@ public:
 	std::vector<STriggerTag> GetTriggerTag() { return this->triggerTags; }
 
 	// suffering
-	void SetSuffering(bool value) { this->suffering = value; this->sufferingStart = GetTickCount64(); }
+	void SetSuffering(bool value) { this->suffering = value; this->sufferingDuration = 1; }
 	bool IsSuffering() { return this->suffering; }
 
 	void ScheduleActiveByDistance();
+	D3DCOLOR GetRenderColor();
 
 	// virtual
 	virtual void Update(DWORD dt) = 0;
