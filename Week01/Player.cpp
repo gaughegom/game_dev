@@ -18,12 +18,12 @@ void CPlayer::AddPlayerCharacter(LPGAMEOBJECT character)
 	}
 }
 
-void CPlayer::Select(PlayerCharacterId id)
+void CPlayer::SelectPlayer(LPGAMEOBJECT player)
 {
-	if (id == PlayerCharacterId::SOPHIA) {
+	if (dynamic_cast<CSophia*>(player)) {
 		SelectSophia();
 	}
-	else if (id == PlayerCharacterId::JASON) {
+	else if (dynamic_cast<CJason*>(player)) {
 		SelectJason();
 	}
 }

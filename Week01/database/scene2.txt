@@ -1,7 +1,6 @@
 [MAP]
 # path	 width	height
 maps\sectionB.png	86	33
-
 [PLATFORMS]
 # x	y	col-number	row-number
 # brick	(16,16) calc follow tilemap
@@ -93,9 +92,9 @@ maps\sectionB.png	86	33
 36	28	4	2
 56	24	4	2
 57	22	2	2
-
 [OBJECTS]
-# === Enemies===
+#name	nx	x	y	width	height
+# - Enemy -
 eyelet	1	1100	130	18	15
 ballot	1	1102	34	18	18
 stuka	1	900	136	18	18
@@ -105,3 +104,7 @@ eyelet	1	512	273	18	15
 stuka	1	500	278	18	18
 stuka	1	128	294	18	18
 ballot	1	464	414	18	18
+[PLAYER]
+#name
+sophia
+jason

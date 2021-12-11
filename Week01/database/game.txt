@@ -111,7 +111,7 @@ aniEOffside	sprEOffside00	100	sprEOffside01	100	sprEOffside02	100	sprEOffside03	
 # === BALLOT ===
 aniEBallot	sprEBallot00	100	sprEBallot01	100	sprEBallot02	100
 
-[PLAYERS]
+[CHARACTERS]
 #type	nx	x	y	width	height
 sophia	-1	1260	432	8	16
 jason	1	1260	432	8	12

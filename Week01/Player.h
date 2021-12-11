@@ -36,7 +36,7 @@ public:
 
 	void AddPlayerCharacter(LPGAMEOBJECT character);
 
-	void Select(PlayerCharacterId id);
+	void SelectPlayer(LPGAMEOBJECT player);
 	PlayerCharacterId GetSelectId() { return this->selectedId; }
 	CGameObject* GetPlayer() { return this->player; }
 

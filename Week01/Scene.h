@@ -18,10 +18,12 @@ private:
 	LPSPRITE map;
 	SRect mapBoundary;
 	std::vector<LPGAMEOBJECT> sceneObjects;
+	std::vector<LPGAMEOBJECT> players;	// element 0 is selected player
 	
 	void __ParseSection_MAP__(std::string line);
 	void __ParseSection_PLATFORMS__(std::string line);
 	void __ParseSection_OBJECTS__(std::string line);
+	void __ParseSection_PLAYERS__(std::string line);
 
 public:
 	CScene(int id, LPCWSTR filePath);
@@ -39,6 +41,9 @@ public:
 
 	void SetMapBoundary(SRect rect) { this->mapBoundary = rect; }
 	SRect GetMapBoundary() { return this->mapBoundary; }
+
+	void AddPlayersCharacter(std::vector<LPGAMEOBJECT> players) { this->players = players; }
+	std::vector<LPGAMEOBJECT> GetScenePlayers() { return this->players; }
 
 	int GetSceneId() { return this->id; }
 	LPCWSTR GetFilePath() { return this->filePath; }

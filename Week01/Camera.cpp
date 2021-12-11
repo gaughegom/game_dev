@@ -1,4 +1,5 @@
 #include "Camera.h"
+#include "Player.h"
 
 CCamera* CCamera::__instance = nullptr;
 

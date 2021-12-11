@@ -159,7 +159,8 @@ void CGame::InitGame(HWND hWnd)
 {
 	this->InitDirectX(hWnd);
 
-	#pragma region TEXTURES FOR TEST ONLY
+	// TODO: This is only for test
+	#pragma region Texture bbox
 
 	g_textures->Add("bbox", L"textures//bbox.png", D3DCOLOR_XRGB(0, 0, 0));
 
@@ -167,36 +168,17 @@ void CGame::InitGame(HWND hWnd)
 
 	this->LoadResource();
 
-	// init playerInstance
+	#pragma region Player instance
+	
 	auto playerInstance = CPlayer::GetInstance();
 	playerInstance->AddPlayerCharacter(sophia);
 	playerInstance->AddPlayerCharacter(jason);
-	playerInstance->Select(PlayerCharacterId::SOPHIA);
 
-	// TODO: Load current map method
-
-	this->map = this->scenes.at(this->currentScene)->GetMapSrite();
-	worldObjects = this->scenes.at(this->currentScene)->GetSceneObjects();
-	worldObjects.push_back(sophia);
-	worldObjects.push_back(jason);
-
-	quadtree = new CQuadTree(0, this->scenes.at(this->currentScene)->GetMapBoundary());
-	for (auto obj : worldObjects) {
-		quadtree->Insert(obj);
-	}
-
-	quadtree->Insert(sophia);
-	quadtree->Insert(jason);
-
-	camera->SetBoundary(this->scenes.at(this->currentScene)->GetMapBoundary());
-	camera->SetTarget(sophia);
-	this->mapWidth = this->scenes.at(this->currentScene)->GetMapBoundary().right;
-	this->mapHeight = this->scenes.at(this->currentScene)->GetMapBoundary().top;
-
-	//
+	#pragma endregion
 	
-	// start keyboard
-	#pragma region KEYBOARD
+	this->PlayScene();
+
+	#pragma region Start keyboard
 	
 	this->keyHandler = new CKeyHander();
 	g_inputHandler->SetHandleWindow(this->hWnd);
@@ -204,6 +186,32 @@ void CGame::InitGame(HWND hWnd)
 	g_inputHandler->InitKeyboard();
 
 	#pragma endregion
+}
+
+void CGame::PlayScene()
+{
+	DebugOut(L"[INFO] playing scene %d\n", this->currentScene);
+
+	CPlayer::GetInstance()->SelectPlayer(this->scenes.at(this->currentScene)->GetScenePlayers().at(0));
+
+	SRect sceneBoundary = this->scenes.at(this->currentScene)->GetMapBoundary();
+	this->map = this->scenes.at(this->currentScene)->GetMapSrite();
+	this->mapWidth = sceneBoundary.right;
+	this->mapHeight = sceneBoundary.top;
+
+	camera->SetBoundary(sceneBoundary);
+	quadtree = new CQuadTree(0, sceneBoundary);
+
+	std::vector<LPGAMEOBJECT> sceneObjects = this->scenes.at(this->currentScene)->GetSceneObjects();
+	std::vector<LPGAMEOBJECT> scenePlayers = this->scenes.at(this->currentScene)->GetScenePlayers();
+	for (const auto& object : sceneObjects) {
+		worldObjects.push_back(object);
+		quadtree->Insert(object);
+	}
+	for (const auto& object : scenePlayers) {
+		worldObjects.push_back(object);
+		quadtree->Insert(object);
+	}
 }
 
 void CGame::UpdateGame(DWORD dt)
@@ -365,8 +373,8 @@ void CGame::LoadResource()
 			section = SceneSection::SCENE_SECTION_ANIMATIONS;
 			continue;
 		}
-		if (line == "[PLAYERS]") {
-			section = SceneSection::SCENE_SECTION_PLAYERS;
+		if (line == "[CHARACTERS]") {
+			section = SceneSection::SCENE_SECTION_CHARACTERS;
 			continue;
 		}
 		if (line == "[SCENES]") {
@@ -391,8 +399,8 @@ void CGame::LoadResource()
 		case SceneSection::SCENE_SECTION_ANIMATIONS:
 			this->__ParseSection_ANIMATIONS__(line);
 			break;
-		case SceneSection::SCENE_SECTION_PLAYERS:
-			this->__ParseSection_PLAYERS__(line);
+		case SceneSection::SCENE_SECTION_CHARACTERS:
+			this->__ParseSection_CHARACTERS__(line);
 			break;
 		case SceneSection::LOAD_SCENE:
 			this->__LoadSceneResource__(line);
@@ -478,7 +486,7 @@ void CGame::__ParseSection_ANIMATIONS__(std::string line)
 	g_animations->Add(id, lpAni);
 }
 
-void CGame::__ParseSection_PLAYERS__(std::string line)
+void CGame::__ParseSection_CHARACTERS__(std::string line)
 {
 	std::vector<std::string> tokens = SplitLine(line);
 	if (tokens.size() < 6)
@@ -501,7 +509,7 @@ void CGame::__ParseSection_PLAYERS__(std::string line)
 		DebugOut(L"[ERROR] Unknow player name: %s\n", playerName);
 		return;
 	}
-		
+
 	// prepare player
 	int nx = atoi(tokens[1].c_str());
 	float x = atoi(tokens[2].c_str());

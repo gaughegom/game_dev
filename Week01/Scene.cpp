@@ -6,6 +6,7 @@
 #include "EnemyBallot.h"
 #include "EnemyEyelet.h"
 #include "EnemyStuka.h"
+#include "Player.h"
 
 #define MAX_FILE_LINE		2048
 
@@ -50,7 +51,6 @@ void CScene::__ParseSection_PLATFORMS__(std::string line)
 	this->sceneObjects.push_back(platformObject);
 }
 
-// TODO: Parse player another method 
 void CScene::__ParseSection_OBJECTS__(std::string line)
 {
 	std::vector<std::string> tokens = SplitLine(line);
@@ -77,6 +77,21 @@ void CScene::__ParseSection_OBJECTS__(std::string line)
 	object->SetNx(nx);
 
 	this->sceneObjects.push_back(object);
+}
+
+void CScene::__ParseSection_PLAYERS__(std::string line)
+{
+	std::vector<std::string> tokens = SplitLine(line);
+	if (tokens.size() < 1)
+		return;
+	
+	std::string name = tokens[0].c_str();
+	if (name == "sophia") {
+		this->players.push_back(CPlayer::GetInstance()->GetSophia());
+	}
+	else if (name == "jason") {
+		this->players.push_back(CPlayer::GetInstance()->GetJason());
+	}
 }
 
 #pragma endregion
@@ -120,6 +135,10 @@ void CScene::LoadScene()
 			section = SceneSection::SCENE_SECTION_OBJECTS;
 			continue;
 		}
+		if (line == "[PLAYER]") {
+			section = SceneSection::SCENE_SECTION_PLAYERS;
+			continue;
+		}
 
 		switch (section)
 		{
@@ -133,6 +152,9 @@ void CScene::LoadScene()
 			break;
 		case SceneSection::SCENE_SECTION_OBJECTS:
 			this->__ParseSection_OBJECTS__(line);
+			break;
+		case SceneSection::SCENE_SECTION_PLAYERS:
+			this->__ParseSection_PLAYERS__(line);
 			break;
 		default:
 			break;

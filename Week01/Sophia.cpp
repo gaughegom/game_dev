@@ -87,11 +87,11 @@ void CSophia::ListenKeyEvent()
 		this->velocity.y = PLAYER_JUMP_FORCE;
 	}
 
-	// listen key switch controller
+	// listen key switch playerControll
 	if (input->OnKeyDown(SWITCH_CONTROLLER_KEYCODE)) {
-		auto controller = CPlayer::GetInstance();
+		auto playerControll = CPlayer::GetInstance();
 		this->actionState = SophiaActionState::OpenOut;
-		controller->Select(PlayerCharacterId::JASON);
+		playerControll->SelectPlayer(playerControll->GetJason());
 	}
 
 	// listen key shooting
@@ -118,8 +118,6 @@ void CSophia::ListenKeyEvent()
 
 void CSophia::UpdateColliders()
 {
-	DebugOut(L"sophia hp: %f\n", this->hp);
-
 	auto collider = this->colliders.at(0);
 	this->colliders.clear();
 	switch (this->actionState)

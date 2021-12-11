@@ -23,8 +23,9 @@ enum class SceneSection : int {
 	SCENE_SECTION_MAP = 4,
 	SCENE_SECTION_PLATFORMS = 5,
 	SCENE_SECTION_OBJECTS = 6,
-	SCENE_SECTION_PLAYERS = 7,
-	LOAD_SCENE = 8
+	SCENE_SECTION_CHARACTERS = 7,
+	SCENE_SECTION_PLAYERS = 8,
+	LOAD_SCENE = 9
 };
 
 class CGame {
@@ -62,12 +63,14 @@ public:
 	void RenderGame();
 	void RunGame();
 
+	void PlayScene();
+
 	// resources
 	void LoadResource();
 	void __ParseSection_TEXTURES__(std::string line);
 	void __ParseSection_SPRITES__(std::string line);
 	void __ParseSection_ANIMATIONS__(std::string line);
-	void __ParseSection_PLAYERS__(std::string line);
+	void __ParseSection_CHARACTERS__(std::string line);
 	void __LoadSceneResource__(std::string line);
 
 	// game object
