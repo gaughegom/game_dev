@@ -13,6 +13,7 @@ class CAnimations
 public:
 	void Add(std::string id, LPANIMATION ani);
 	LPANIMATION Get(std::string id);
+	void Clear();
 
 	static CAnimations* GetInstance();
 };

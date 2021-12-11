@@ -1,6 +1,6 @@
 #include "EnemyBallot.h"
 #include "SophiaBullet.h"
-#include "ControllerObject.h"
+#include "Player.h"
 
 #define	V_BALLOT_BOXSIZE			Vector2D(18, 18)
 #define ANIMATION_DEFAULT_ID	"default"
@@ -33,7 +33,7 @@ void CEnemyBallot::Update(DWORD dt)
 void CEnemyBallot::Render()
 {
 	auto color = this->GetRenderColor();
-	auto player = CControllerObject::GetInstance()->GetPlayer();
+	auto player = CPlayer::GetInstance()->GetPlayer();
 	if (abs(this->position.x - player->GetPosition().x) < 60) {
 		this->animations.at(ANIMATION_DEFAULT_ID)->Render(this->position, this->nx, color);
 	}

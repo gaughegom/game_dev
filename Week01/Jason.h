@@ -2,7 +2,7 @@
 #ifndef _JASON_H
 #define _JASON_H
 
-#include "ControllerObject.h"
+#include "Player.h"
 #include "GameObject.h"
 #include "Camera.h"
 #include "EnemyEyelet.h"

@@ -1,6 +1,6 @@
 #include "SophiaBullet.h"
 #include "Brick.h"
-#include "ControllerObject.h"
+#include "Player.h"
 
 #define V_BULLET_BOXSIZE_HORIZON	Vector2D(22, 6)
 #define	V_BULLET_BOXSIZE_VERTICAL	Vector2D(6, 22)
@@ -44,7 +44,7 @@ CSophiaBullet::CSophiaBullet(int direct)
 void CSophiaBullet::Update(DWORD dt)
 {
 	// delete when out of distance
-	/*auto sophia = CControllerObject::GetInstance()->GetSophia();
+	/*auto sophia = CPlayer::GetInstance()->GetSophia();
 	Vector2D sophiaPos = sophia->GetPosition();
 	float distance = PositionsDistance(this->position, sophiaPos);
 	if (distance > 300) {
@@ -79,8 +79,8 @@ void CSophiaBullet::OnTrigger(CCollider2D* self, LPCOLLISIONEVENT coEvent)
 void CSophiaBullet::OnDelete()
 {
 	this->hp = 0;	// auto destroy bullet when collision
-	auto controller = CControllerObject::GetInstance();
-	if (controller->GetSelectId() == ControllerObjectID::SOPHIA) {
+	auto controller = CPlayer::GetInstance();
+	if (controller->GetSelectId() == PlayerCharacterId::SOPHIA) {
 		controller->GetSophia()->DecreaseBullet();	// decrease bullet of sophia
 	}
 }

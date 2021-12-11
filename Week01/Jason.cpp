@@ -25,7 +25,7 @@ void CJason::Update(DWORD dt)
 {
 	InGravityAffect(this, dt);
 
-	if (CControllerObject::GetInstance()->GetSelectId() == ControllerObjectID::JASON) {
+	if (CPlayer::GetInstance()->GetSelectId() == PlayerCharacterId::JASON) {
 		ListenKeyEvent();
 	}
 }
@@ -64,11 +64,11 @@ void CJason::ListenKeyEvent()
 	}
 
 	if (input->OnKeyDown(SWITCH_CONTROLLER_KEYCODE)) {
-		auto controller = CControllerObject::GetInstance();
+		auto controller = CPlayer::GetInstance();
 		if (controller->GetSophia()->GetColliders().at(0)->GetBoundingBox()
 			.Contain(this->colliders.at(0)->GetBoundingBox())) {
 			controller->GetSophia()->SetActionState(SophiaActionState::OpenIn);
-			controller->Select(ControllerObjectID::SOPHIA);
+			controller->Select(PlayerCharacterId::SOPHIA);
 		}
 	}
 

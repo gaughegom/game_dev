@@ -1,5 +1,5 @@
 #include "GameObject.h"
-#include "ControllerObject.h"
+#include "Player.h"
 #include "SophiaBullet.h"
 
 
@@ -66,7 +66,7 @@ void CGameObject::TakeDamage(LPGAMEOBJECT& object)
 void CGameObject::ScheduleActiveByDistance()
 {
 	if (this->active == false) {
-		Vector2D playerPosition = CControllerObject::GetInstance()->GetPlayer()->GetPosition();
+		Vector2D playerPosition = CPlayer::GetInstance()->GetPlayer()->GetPosition();
 		float distance = PositionsDistance(playerPosition, this->position);
 		if (this->nx == 1 && distance < ENEMY_ACTIVE_DISTANCE) {
 			this->active = true;

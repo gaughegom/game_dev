@@ -9,19 +9,19 @@
 #define JUMP_KEYCODE				DIK_SPACE
 #define SHOTTING_KEYCODE			DIK_D
 
-enum class ControllerObjectID : int {
+enum class PlayerCharacterId : int {
 	SOPHIA = 0,
 	JASON = 1,
 };
 
 class CSophia;
 class CJason;
-class CControllerObject
+class CPlayer
 {
 private:
-	static CControllerObject* __instance;
+	static CPlayer* __instance;
 
-	ControllerObjectID selectedId;
+	PlayerCharacterId selectedId;
 	CGameObject* player;
 	CSophia* sophia;
 	CJason* jason;
@@ -31,19 +31,21 @@ private:
 public:
 	DWORD delaySwitch = 300;
 	DWORD lastSwitchTime; // fix auto select jason
-	CControllerObject();
 
-	void SetSophiaAndJason(CSophia* sophia, CJason* jason);
-	void Select(ControllerObjectID id);
-	ControllerObjectID GetSelectId() { return this->selectedId; }
+	CPlayer();
+
+	void AddPlayerCharacter(LPGAMEOBJECT character);
+
+	void Select(PlayerCharacterId id);
+	PlayerCharacterId GetSelectId() { return this->selectedId; }
 	CGameObject* GetPlayer() { return this->player; }
 
 	CSophia* GetSophia() { return this->sophia; }
 	CJason* GetJason() { return this->jason; }
 
-	static CControllerObject* GetInstance();
+	static CPlayer* GetInstance();
 
-	~CControllerObject();
+	~CPlayer();
 };
 
 #endif // !_CONTROLLER_OBJECT_H

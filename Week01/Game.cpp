@@ -17,6 +17,8 @@
 #include "EnemyBallot.h"
 #include "SophiaBullet.h"
 
+#define MAX_SCENE_LINE	2048
+
 CSophia* sophia;
 CJason* jason;
 CCamera* camera = CCamera::GetInstance();
@@ -87,8 +89,8 @@ void CGame::InitDirectX(HWND hWnd)
 	d3dpp.BackBufferHeight = r.bottom + 1;
 	d3dpp.BackBufferWidth = r.right + 1;
 
-	mapWidth = d3dpp.BackBufferWidth;
-	mapHeight = d3dpp.BackBufferHeight;
+	this->camWidth = d3dpp.BackBufferWidth;
+	this->camHeight = d3dpp.BackBufferHeight;
 
 	d3d->CreateDevice(
 		D3DADAPTER_DEFAULT,
@@ -110,7 +112,7 @@ void CGame::InitDirectX(HWND hWnd)
 	D3DXCreateSprite(d3ddv, &spriteHandler);
 
 	DebugOut(L"[INFO] InitGame done;\n");
-	DebugOut(L"[INFO] Screen: %d, %d\n", mapWidth, mapHeight);
+	DebugOut(L"[INFO] Screen: %d, %d\n", this->camWidth, this->camHeight);
 }
 
 /*
@@ -158,22 +160,40 @@ void CGame::InitGame(HWND hWnd)
 	this->InitDirectX(hWnd);
 
 	#pragma region TEXTURES FOR TEST ONLY
-	
-	// For only test
-	g_textures->Add(10, SOPHIA_JASON_TEXTURE_PATH, D3DCOLOR_XRGB(0, 0, 0));
-	LPDIRECT3DTEXTURE9 texTestDebug = g_textures->Get(10);
-	g_sprites->Add("sprDebugPoint", 0, 0, 1, 1, texTestDebug);
 
-	g_textures->Add(20, L"textures//bbox.png", D3DCOLOR_XRGB(0, 0, 0));
+	g_textures->Add("bbox", L"textures//bbox.png", D3DCOLOR_XRGB(0, 0, 0));
 
 	#pragma endregion
 
 	this->LoadResource();
 
-	// set controller object
-	auto controller = CControllerObject::GetInstance();
-	controller->SetSophiaAndJason(sophia, jason);
-	controller->Select(ControllerObjectID::SOPHIA);
+	// init playerInstance
+	auto playerInstance = CPlayer::GetInstance();
+	playerInstance->AddPlayerCharacter(sophia);
+	playerInstance->AddPlayerCharacter(jason);
+	playerInstance->Select(PlayerCharacterId::SOPHIA);
+
+	// TODO: Load current map method
+
+	this->map = this->scenes.at(this->currentScene)->GetMapSrite();
+	worldObjects = this->scenes.at(this->currentScene)->GetSceneObjects();
+	worldObjects.push_back(sophia);
+	worldObjects.push_back(jason);
+
+	quadtree = new CQuadTree(0, this->scenes.at(this->currentScene)->GetMapBoundary());
+	for (auto obj : worldObjects) {
+		quadtree->Insert(obj);
+	}
+
+	quadtree->Insert(sophia);
+	quadtree->Insert(jason);
+
+	camera->SetBoundary(this->scenes.at(this->currentScene)->GetMapBoundary());
+	camera->SetTarget(sophia);
+	this->mapWidth = this->scenes.at(this->currentScene)->GetMapBoundary().right;
+	this->mapHeight = this->scenes.at(this->currentScene)->GetMapBoundary().top;
+
+	//
 	
 	// start keyboard
 	#pragma region KEYBOARD
@@ -192,7 +212,7 @@ void CGame::UpdateGame(DWORD dt)
 	quadtree->Update(worldObjects);
 	renderedObjects.clear();
 	quadtree->Retrieve(renderedObjects, camera->GetBoundingBox());
-	
+
 	for (auto object : worldObjects) {
 		if (object->IsActive() == true) {
 			object->FilterTriggerTag();
@@ -227,6 +247,7 @@ void CGame::RenderGame()
 			object->Render();
 		}
 
+		// render collider
 		for (auto object : renderedObjects) {
 			if (!object->IsActive()) {
 				continue;
@@ -314,15 +335,15 @@ CGame* CGame::GetInstance()
 
 void CGame::LoadResource()
 {
-	LPCWSTR sceneFilePath = SCENE2_PATH;
-	DebugOut(L"[INFO] Start loading scene resouce %s\n", sceneFilePath);
+	LPCWSTR resourcePath = GAME_RESOURCE_PATH;
+	DebugOut(L"[INFO] Start loading game resouce %s\n", resourcePath);
 
 	// start game camera
-	camera->SetSize(Vector2D(this->mapWidth, this->mapHeight));
+	camera->SetSize(Vector2D(this->camWidth, this->camHeight));
 
 	// open scene file path
-	ifstream fs;
-	fs.open(sceneFilePath);
+	std::ifstream fs;
+	fs.open(resourcePath);
 
 	SceneSection section = SceneSection::SCENE_SECTION_UNKNOW;
 	char str[2048];
@@ -344,16 +365,12 @@ void CGame::LoadResource()
 			section = SceneSection::SCENE_SECTION_ANIMATIONS;
 			continue;
 		}
-		if (line == "[MAP]") {
-			section = SceneSection::SCENE_SECTION_MAP;
+		if (line == "[PLAYERS]") {
+			section = SceneSection::SCENE_SECTION_PLAYERS;
 			continue;
 		}
-		if (line == "[PLATFORMS]") {
-			section = SceneSection::SCENE_SECTION_PLATFORMS;
-			continue;
-		}
-		if (line == "[OBJECTS]") {
-			section = SceneSection::SCENE_SECTION_OBJECTS;
+		if (line == "[SCENES]") {
+			section = SceneSection::LOAD_SCENE;
 			continue;
 		}
 		if (line[0] == '[') {
@@ -374,21 +391,38 @@ void CGame::LoadResource()
 		case SceneSection::SCENE_SECTION_ANIMATIONS:
 			this->__ParseSection_ANIMATIONS__(line);
 			break;
-		case SceneSection::SCENE_SECTION_MAP:
-			this->__ParseSection_MAP__(line);
+		case SceneSection::SCENE_SECTION_PLAYERS:
+			this->__ParseSection_PLAYERS__(line);
 			break;
-		case SceneSection::SCENE_SECTION_PLATFORMS:
-			this->__ParseSection_PLATFORMS__(line);
+		case SceneSection::LOAD_SCENE:
+			this->__LoadSceneResource__(line);
 			break;
-		case SceneSection::SCENE_SECTION_OBJECTS:
-			this->__ParseSection_OBJECTS__(line);
-			break;	
 		default:
 			break;
 		}
 	}
 	fs.close();
-	DebugOut(L"[INFO] Load scene resource done\n");
+	DebugOut(L"[INFO] Load game resource done\n");
+}
+
+void CGame::__LoadSceneResource__(std::string line)
+{
+	std::vector<std::string> tokens = SplitLine(line);
+	if (tokens.size() < 2)
+		return;
+
+	int sceneId = atoi(tokens[0].c_str());
+	std::wstring scenePath = ToLPCWSTR(tokens[1]);
+	
+	DebugOut(L"[INFO] Start loading scene resource %s\n", scenePath.c_str());	// notify start
+
+
+	LPSCENE scene = new CScene(sceneId, scenePath.c_str());
+	scene->LoadScene();
+
+	this->scenes.insert(std::make_pair(sceneId, scene));
+
+	DebugOut(L"[INFO] Load scene resource %s done\n", scenePath);	// notify done
 }
 
 void CGame::__ParseSection_TEXTURES__(std::string line)
@@ -397,8 +431,8 @@ void CGame::__ParseSection_TEXTURES__(std::string line)
 	if (tokens.size() < 5)
 		return;
 
-	int texId = atoi(tokens[0].c_str());
-	wstring texPath = ToWSTR(tokens[1]);
+	std::string texId = (tokens[0].c_str());
+	std::wstring texPath = ToWSTR(tokens[1]);
 	int R = atoi(tokens[2].c_str());
 	int G = atoi(tokens[3].c_str());
 	int B = atoi(tokens[4].c_str());
@@ -417,7 +451,7 @@ void CGame::__ParseSection_SPRITES__(std::string line)
 	int top = atoi(tokens[2].c_str());
 	int width = atoi(tokens[3].c_str());
 	int height = atoi(tokens[4].c_str());
-	int texId = atoi(tokens[5].c_str());
+	std::string texId = (tokens[5].c_str());
 
 	LPDIRECT3DTEXTURE9 texOfThis = g_textures->Get(texId);
 	if (texOfThis == nullptr) {
@@ -444,93 +478,38 @@ void CGame::__ParseSection_ANIMATIONS__(std::string line)
 	g_animations->Add(id, lpAni);
 }
 
-void CGame::__ParseSection_MAP__(std::string line)
+void CGame::__ParseSection_PLAYERS__(std::string line)
 {
 	std::vector<std::string> tokens = SplitLine(line);
-	if (tokens.size() < 2) {
+	if (tokens.size() < 6)
 		return;
+
+	LPGAMEOBJECT player = nullptr;
+	std::string playerName = tokens[0].c_str();
+
+	if (playerName == "sophia") {
+		player = new CSophia;
+		sophia = (CSophia*)player;
+		CPlayer::GetInstance()->AddPlayerCharacter(sophia);
 	}
-
-	float sectionWidth = atoi(tokens[1].c_str()) * TILESET_WIDTH;
-	float sectionHeight = atoi(tokens[2].c_str()) * TILESET_HEIGHT;
-
-	SRect mapBoundary = SRect(
-		0,
-		sectionHeight,
-		sectionWidth,
-		0
-	);
-
-	this->mapWidth = sectionWidth;
-	this->mapHeight = sectionHeight;
-	camera->SetBoundary(mapBoundary);
-	quadtree = new CQuadTree(0, mapBoundary);
-
-	std::string mapPath = tokens[0];
-	int texId = 10; // 10 is map texId
-	g_textures->Add(texId, ToWSTR(mapPath).c_str(), D3DCOLOR_XRGB(0, 0, 0));
-	LPDIRECT3DTEXTURE9 texMap = g_textures->Get(texId);
-
-	std::string sprMap = "sprMap"; // 300 is map sprite id
-	g_sprites->Add(sprMap, 0, 0, this->mapWidth, this->mapHeight, texMap);
-	this->map = g_sprites->Get(sprMap);
-}
-
-void CGame::__ParseSection_PLATFORMS__(std::string line)
-{
-	std::vector<std::string> tokens = SplitLine(line);
-	if (tokens.size() < 4) {
-		return; // skip
+	else if (playerName == "jason") {
+		player = new CJason;
+		jason = (CJason*)player;
+		CPlayer::GetInstance()->AddPlayerCharacter(jason);
 	}
-
-	float x = atoi(tokens[0].c_str()) * TILESET_WIDTH;
-	float y = (atoi(tokens[1].c_str()) + 1) * TILESET_HEIGHT;
-	float width = atoi(tokens[2].c_str()) * TILESET_WIDTH;
-	float height = atoi(tokens[3].c_str()) * TILESET_HEIGHT;
-	LPGAMEOBJECT platformObject = new CBrick(Vector2D(width, height));
-	platformObject->SetPosition(Vector2D(x + width / 2, this->mapHeight - y + height / 2));
-	this->NewGameObject(platformObject);
-}
-
-void CGame::__ParseSection_OBJECTS__(std::string line)
-{
-	std::vector<std::string> tokens = SplitLine(line);
-	if (tokens.size() < 5) {
-		return;
-	}
-
-	LPGAMEOBJECT newObject = nullptr;
-	std::string objectType = tokens[0].c_str();
-
-	if (objectType == "jason") {
-		newObject = new CJason;
-		jason = (CJason*)newObject;
-	}
-	else if (objectType == "sophia") {
-		newObject = new CSophia;
-		sophia = (CSophia*)newObject;
-	}
-	else if (objectType == "eyelet") newObject = new CEnemyEyelet;
-	else if (objectType == "ballot") newObject = new CEnemyBallot;
-	else if (objectType == "stuka") newObject = new CEnemyStuka;
 	else {
-		DebugOut(L"[ERROR] Unknowed object type: %s\n", objectType); // catch undefined object
+		DebugOut(L"[ERROR] Unknow player name: %s\n", playerName);
 		return;
 	}
-
-	PrepareGameObject(newObject, tokens);
-}
-
-void CGame::PrepareGameObject(LPGAMEOBJECT& object, std::vector<std::string> tokens)
-{
+		
+	// prepare player
 	int nx = atoi(tokens[1].c_str());
 	float x = atoi(tokens[2].c_str());
 	float y = atoi(tokens[3].c_str());
 	float width = atoi(tokens[4].c_str());
 	float height = atoi(tokens[5].c_str());
-	object->SetPosition(Vector2D(x + width / 2, this->mapHeight - y + height / 2));
-	object->SetNx(nx);
-	this->NewGameObject(object);
+	player->SetPosition(Vector2D(x, y));
+	player->SetNx(nx);
 }
 
 void CGame::NewGameObject(LPGAMEOBJECT& newObject)

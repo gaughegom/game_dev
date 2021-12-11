@@ -1,0 +1,121 @@
+# id	file_path	transparent_color_r	g	b
+[TEXTURES]
+# texPlayer
+0	textures\player.png	41	255	4
+# texEnemies
+1	textures\enemies.png	41	255	4
+
+# id			left	top	width	height	texture_id
+[SPRITES]
+# ==== SMALL JASON ===	// 50 -> 100
+# idle		// 50 - 100				
+sprJWalk02	21	30	8	16	0
+# walk					
+sprJWalk00	3	30	8	16	0
+sprJWalk01	21	31	8	16	0
+sprJWalk03	30	31	8	16	0
+
+# ==== SOPHIA ===	// 0 -> 50
+# wheel part 	// 0 -> 3
+sprSWheel00	3	21	8	8	0
+sprSWheel01	12	21	8	8	0
+sprSWheel02	21	21	8	8	0
+sprSWheel03	30	21	8	8	0
+# body part 	//4
+sprSBody00	3	12	8	8	0
+# cabin part 	// 5 -> 7
+sprSCabin00	39	3	16	8	0
+sprSCabin01	56	3	16	8	0
+sprSCabin45	73	3	16	16	0
+sprSCabin90	56	3	16	8	0
+#cabin in/out
+sprSCabinIn	125	3	16	16	0
+sprSCabinOut	142	3	16	16	0
+# gun part
+sprSGun00	12	5	7	4	0
+sprSGun45	21	3	8	8	0
+sprSGun90	32	3	4	7	0
+# sophia bullet
+sprSBullet00	91	21	22	6	0
+sprSBullet01	117	20	6	22	0
+# destroyed object
+sprDestroy00	140	101	7	8	0
+sprDestroy01	149	97	16	13	0
+sprDestroy02	166	97	16	16	0
+# === ENEMIES === 	// 200 -> ...
+# === DRAP ===	// 200 -> 209
+sprEDrap00	128	274	18	18	1
+sprEDrap01	148	276	18	16	1
+sprEDrap02	188	276	18	16	1
+sprEDrap03	168	274	18	18	1
+
+# === STUKA === // 210 -> 219
+sprEStuka00	74	386	18	18	1
+sprEStuka01	94	386	18	18	1
+sprEStuka02	114	386	18	18	1
+
+# === EYELET === // 220 -> 229
+sprEEyelet00	128	31	18	15	1
+sprEEyelet01	148	28	18	18	1
+sprEEyelet02	168	31	18	15	1
+sprEEyelet03	188	36	18	10	1
+
+# === GX680 === // 230 -> 239
+sprEGx68000	128	296	18	16	1
+sprEGx68001	148	295	18	17	1
+
+# === OFFSIDE === // 240 -> 249
+sprEOffside00	24	56	18	18	1
+sprEOffside01	46	56	18	18	1
+sprEOffside02	186	56	18	18	1
+sprEOffside03	202	56	18	18	1
+
+# === BALLOT ===
+# first idle
+sprEBallot00	100	737	18	18	1
+sprEBallot01	79	737	18	18	1
+sprEBallot02	58	737	18	18	1
+
+# ani_id		sprite1_id	time1	sprite2_id	time2	...
+[ANIMATIONS]
+
+# ==== JASON =========
+# idle
+aniJIdle	sprJWalk02	100
+# walk
+aniJWalk	sprJWalk00	100	sprJWalk01	100	sprJWalk02	100	sprJWalk03	100
+
+# ==== SOPHIA ========
+# wheel
+aniSLeftWheel	sprSWheel00	100	sprSWheel01	100	sprSWheel02	100	sprSWheel03	100
+aniSRightWheel	sprSWheel03	100	sprSWheel00	100	sprSWheel01	100	sprSWheel02	100
+
+# destroyed collision
+aniDestroy	sprDestroy00	200	sprDestroy01	200	sprDestroy02	200
+
+# === DRAP ===
+aniEDrap	sprEDrap00	150	sprEDrap01	150	sprEDrap02	150	sprEDrap03	150
+
+# === STUKA ===
+aniEStuka	sprEStuka00	150	sprEStuka01	150	sprEStuka02	150
+
+# === EYELET ===
+aniEEyelet	sprEEyelet00	100	sprEEyelet01	100	sprEEyelet03	100
+
+# === GX680 ===
+aniEGX680	sprEGx68000	100	sprEGx68001	100
+
+# === OFFSIDE ====
+aniEOffside	sprEOffside00	100	sprEOffside01	100	sprEOffside02	100	sprEOffside03	100
+
+# === BALLOT ===
+aniEBallot	sprEBallot00	100	sprEBallot01	100	sprEBallot02	100
+
+[PLAYERS]
+#type	nx	x	y	width	height
+sophia	-1	1260	432	8	16
+jason	1	1260	432	8	12
+
+[SCENES]
+#id	path
+0	database\scene2.txt

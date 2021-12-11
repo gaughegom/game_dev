@@ -44,7 +44,7 @@ void CEnemyEyelet::OnCollision(CCollider2D* self, LPCOLLISIONEVENT coEvent)
 
 void CEnemyEyelet::OnTrigger(CCollider2D* self, LPCOLLISIONEVENT coEvent)
 {
-	LPGAMEOBJECT player = CControllerObject::GetInstance()->GetPlayer();
+	LPGAMEOBJECT player = CPlayer::GetInstance()->GetPlayer();
 	if ((dynamic_cast<CSophia*>(coEvent->object) || dynamic_cast<CJason*>(coEvent->object)) 
 		&& player == coEvent->object) {
 		LPGAMEOBJECT thisObject = dynamic_cast<LPGAMEOBJECT>(this);

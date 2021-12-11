@@ -528,7 +528,7 @@ SRect CCollider2D::GetBoundingBox()
 void CCollider2D::RenderBoundingBox()
 {
 	Vector2D positionCollider = this->object->GetPosition() + this->offset;
-	LPDIRECT3DTEXTURE9 bbox = CTextures::GetInstance()->Get(20); // texId 20: bbox for render collider
+	LPDIRECT3DTEXTURE9 bbox = CTextures::GetInstance()->Get("bbox"); // texId 20: bbox for render collider
 	SRect rect;
 	rect.left = 0;
 	rect.top = 0;

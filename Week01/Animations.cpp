@@ -17,3 +17,12 @@ LPANIMATION CAnimations::Get(std::string id)
 {
 	return this->animations.at(id);
 }
+
+void CAnimations::Clear()
+{
+	for (auto x : this->animations) {
+		LPANIMATION ani = x.second;
+		delete ani;
+	}
+	this->animations.clear();
+}

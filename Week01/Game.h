@@ -4,6 +4,7 @@
 
 #include <fstream>
 #include "resources.h"
+#include "Scene.h"
 
 class CSprite;
 typedef CSprite* LPSPRITE;
@@ -11,6 +12,8 @@ class CKeyEventHandler;
 typedef CKeyEventHandler* LPKEYEVENTHANDLER;
 class CGameObject;
 typedef CGameObject* LPGAMEOBJECT;
+class CScene;
+typedef CScene* LPSCENE;
 
 enum class SceneSection : int {
 	SCENE_SECTION_UNKNOW = 0,
@@ -19,7 +22,9 @@ enum class SceneSection : int {
 	SCENE_SECTION_ANIMATIONS = 3,
 	SCENE_SECTION_MAP = 4,
 	SCENE_SECTION_PLATFORMS = 5,
-	SCENE_SECTION_OBJECTS = 6
+	SCENE_SECTION_OBJECTS = 6,
+	SCENE_SECTION_PLAYERS = 7,
+	LOAD_SCENE = 8
 };
 
 class CGame {
@@ -36,8 +41,14 @@ class CGame {
 
 	LPKEYEVENTHANDLER keyHandler;
 
-	int mapWidth = 0;
-	int mapHeight = 0;
+	std::unordered_map<int, LPSCENE> scenes;
+	int currentScene = 0;	// default scene 0
+
+
+	float camWidth = 0;
+	float camHeight = 0;
+	float mapWidth = 0;
+	float mapHeight = 0;
 
 	LPSPRITE map;
 
@@ -56,12 +67,10 @@ public:
 	void __ParseSection_TEXTURES__(std::string line);
 	void __ParseSection_SPRITES__(std::string line);
 	void __ParseSection_ANIMATIONS__(std::string line);
-	void __ParseSection_MAP__(std::string line);
-	void __ParseSection_OBJECTS__(std::string line);
-	void __ParseSection_PLATFORMS__(std::string line);
+	void __ParseSection_PLAYERS__(std::string line);
+	void __LoadSceneResource__(std::string line);
 
 	// game object
-	void PrepareGameObject(LPGAMEOBJECT& object, std::vector<std::string> tokens);
 	void NewGameObject(LPGAMEOBJECT& newObject);
 	void CleanGameObject();
 	std::vector<LPGAMEOBJECT> GetRenderedObjects();

@@ -1,28 +1,34 @@
-#include "ControllerObject.h"
+#include "Player.h"
 
-CControllerObject* CControllerObject::__instance = nullptr;
+CPlayer* CPlayer::__instance = nullptr;
 
-CControllerObject::CControllerObject()
+CPlayer::CPlayer()
 {
 }
 
-void CControllerObject::SetSophiaAndJason(CSophia* sophia, CJason* jason)
+void CPlayer::AddPlayerCharacter(LPGAMEOBJECT character)
 {
-	this->sophia = sophia;
-	this->jason = jason;
+	if (character == nullptr) return;
+
+	if (dynamic_cast<CSophia*>(character)) {
+		this->sophia = (CSophia*)character;
+	}
+	else if (dynamic_cast<CJason*>(character)) {
+		this->jason = (CJason*)character;
+	}
 }
 
-void CControllerObject::Select(ControllerObjectID id)
+void CPlayer::Select(PlayerCharacterId id)
 {
-	if (id == ControllerObjectID::SOPHIA) {
+	if (id == PlayerCharacterId::SOPHIA) {
 		SelectSophia();
 	}
-	else if (id == ControllerObjectID::JASON) {
+	else if (id == PlayerCharacterId::JASON) {
 		SelectJason();
 	}
 }
 
-void CControllerObject::SelectSophia()
+void CPlayer::SelectSophia()
 {
 	if (GetTickCount64() - lastSwitchTime < delaySwitch) {
 		return;
@@ -42,12 +48,12 @@ void CControllerObject::SelectSophia()
 	this->jason->SetPosition(this->sophia->GetPosition());
 	this->sophia->SetActionState(SophiaActionState::Idle);
 
-	this->selectedId = ControllerObjectID::SOPHIA;
+	this->selectedId = PlayerCharacterId::SOPHIA;
 	this->player = this->sophia;
 	this->lastSwitchTime = GetTickCount64();
 }
 
-void CControllerObject::SelectJason()
+void CPlayer::SelectJason()
 {
 	if (GetTickCount64() - lastSwitchTime < delaySwitch) {
 		return;
@@ -67,19 +73,19 @@ void CControllerObject::SelectJason()
 	this->jason->SubcribeDirectionState(JasonDirectState::JUMP);
 	this->sophia->SetActionState(SophiaActionState::Idle);
 
-	this->selectedId = ControllerObjectID::JASON;
+	this->selectedId = PlayerCharacterId::JASON;
 	this->player = this->jason;
 	this->lastSwitchTime = GetTickCount64();
 }
 
-CControllerObject* CControllerObject::GetInstance()
+CPlayer* CPlayer::GetInstance()
 {
 	if (__instance == nullptr) {
-		__instance = new CControllerObject;
+		__instance = new CPlayer;
 	}
 	return __instance;
 }
 
-CControllerObject::~CControllerObject()
+CPlayer::~CPlayer()
 {
 }

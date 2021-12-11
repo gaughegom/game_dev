@@ -17,6 +17,7 @@ class CSprites
 public:
 	void Add(std::string id, int left, int top, int width, int height, LPDIRECT3DTEXTURE9 tex);
 	LPSPRITE Get(std::string id);
+	void Clear();
 
 	static CSprites* GetInstance();
 };

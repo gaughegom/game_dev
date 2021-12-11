@@ -18,3 +18,12 @@ LPSPRITE CSprites::Get(std::string id)
 {
 	return this->sprites.at(id);
 }
+
+void CSprites::Clear()
+{
+	for (auto x : this->sprites) {
+		LPSPRITE lps = x.second;
+		delete lps;
+	}
+	this->sprites.clear();
+}

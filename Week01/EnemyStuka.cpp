@@ -1,5 +1,5 @@
 #include "EnemyStuka.h"
-#include "ControllerObject.h"
+#include "Player.h"
 #include "SophiaBullet.h"
 
 #define ANIMATION_DEFAULT_ID	"df"
@@ -22,7 +22,7 @@ CEnemyStuka::CEnemyStuka()
 
 void CEnemyStuka::Update(DWORD dt)
 {
-	if (PositionsDistance(CControllerObject::GetInstance()->GetPlayer()->GetPosition(), this->position) < ENEMY_ACTIVE_DISTANCE) {
+	if (PositionsDistance(CPlayer::GetInstance()->GetPlayer()->GetPosition(), this->position) < ENEMY_ACTIVE_DISTANCE) {
 		this->active = true;
 	}
 

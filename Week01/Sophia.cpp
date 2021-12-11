@@ -1,7 +1,6 @@
 #include "Sophia.h"
 #include "Camera.h"
 #include "Jason.h"
-#include "ControllerObject.h"
 #include "SophiaBullet.h"
 #include "EnemyStuka.h"
 
@@ -37,7 +36,7 @@ void CSophia::Update(DWORD dt)
 		this->UpdateColliders();
 	}
 
-	if (CControllerObject::GetInstance()->GetSelectId() == ControllerObjectID::SOPHIA) {
+	if (CPlayer::GetInstance()->GetSelectId() == PlayerCharacterId::SOPHIA) {
 		ListenKeyEvent();
 	}
 }
@@ -90,9 +89,9 @@ void CSophia::ListenKeyEvent()
 
 	// listen key switch controller
 	if (input->OnKeyDown(SWITCH_CONTROLLER_KEYCODE)) {
-		auto controller = CControllerObject::GetInstance();
+		auto controller = CPlayer::GetInstance();
 		this->actionState = SophiaActionState::OpenOut;
-		controller->Select(ControllerObjectID::JASON);
+		controller->Select(PlayerCharacterId::JASON);
 	}
 
 	// listen key shooting

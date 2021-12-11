@@ -25,9 +25,10 @@
 
 #pragma endregion
 
-#pragma region Scence path
+#pragma region File path
 
-#define SCENE2_PATH					 L"database\\scene2.txt"
+#define GAME_RESOURCE_PATH			L"database\\game.txt"
+#define SCENE2_PATH					L"database\\scene2.txt"
 
 #pragma endregion
 

@@ -3,7 +3,7 @@
 #define _GAMEPLAYER_H
 
 #include "GameObject.h"
-#include "ControllerObject.h"
+#include "Player.h"
 #include "InputHandler.h"
 #include "SophiaWheel.h"
 #include "SophiaBody.h"

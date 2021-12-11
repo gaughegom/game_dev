@@ -19,7 +19,7 @@ CTextures* CTextures::GetInstance()
 	return __instance;
 }
 
-void CTextures::Add(int id, LPCWSTR filePath, D3DCOLOR transparentColor)
+void CTextures::Add(std::string id, LPCWSTR filePath, D3DCOLOR transparentColor)
 {
 	D3DXIMAGE_INFO info;
 	HRESULT result = D3DXGetImageInfoFromFile(filePath, &info);
@@ -53,13 +53,21 @@ void CTextures::Add(int id, LPCWSTR filePath, D3DCOLOR transparentColor)
 		OutputDebugString(L"[ERROR] CreateTextureFromFile failed\n");
 		return;
 	}
+	this->textures.insert(std::make_pair(id, texture));
 
-	textures[id] = texture;
-
-	DebugOut(L"[INFO] Texture loaded Ok: id=%d, %s \n", id, filePath);
+	DebugOut(L"[INFO] Texture loaded Ok: %s \n", filePath);
 }
 
-LPDIRECT3DTEXTURE9 CTextures::Get(unsigned int i)
+LPDIRECT3DTEXTURE9 CTextures::Get(std::string id)
 {
-	return textures[i];
+	return this->textures.at(id);
+}
+
+void CTextures::Clear()
+{
+	for (auto x : this->textures) {
+		LPDIRECT3DTEXTURE9 tex = x.second;
+		delete tex;
+	}
+	this->textures.clear();
 }
