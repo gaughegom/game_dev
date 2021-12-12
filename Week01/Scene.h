@@ -6,27 +6,27 @@
 
 class CSprite;
 typedef CSprite* LPSPRITE;
-class CKeyEventHandler;
-typedef CKeyEventHandler* LPKEYEVENTHANDLER;
 class CGameObject;
 typedef CGameObject* LPGAMEOBJECT;
+class CGate;
 class CGame;
 class CScene {
 private:
-	int id;
 	LPCWSTR filePath;
 	LPSPRITE map;
 	SRect mapBoundary;
 	std::vector<LPGAMEOBJECT> sceneObjects;
 	std::vector<LPGAMEOBJECT> players;	// element 0 is selected player
-	
+	std::vector<CGate*> gates;
+
 	void __ParseSection_MAP__(std::string line);
 	void __ParseSection_PLATFORMS__(std::string line);
 	void __ParseSection_OBJECTS__(std::string line);
 	void __ParseSection_PLAYERS__(std::string line);
+	void __ParseSection_GATES__(std::string line);
 
 public:
-	CScene(int id, LPCWSTR filePath);
+	CScene(LPCWSTR filePath);
 	
 	void LoadScene();
 	void UnloadScene();
@@ -45,7 +45,9 @@ public:
 	void AddPlayersCharacter(std::vector<LPGAMEOBJECT> players) { this->players = players; }
 	std::vector<LPGAMEOBJECT> GetScenePlayers() { return this->players; }
 
-	int GetSceneId() { return this->id; }
+	std::vector<CGate*> GetGates() { return this->gates; }
+	Vector2D GetPositionOfGate(int id);
+
 	LPCWSTR GetFilePath() { return this->filePath; }
 
 };

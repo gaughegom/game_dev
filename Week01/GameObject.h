@@ -108,7 +108,6 @@ public:
 
 	// invisible with
 	void AddTriggerTag(STriggerTag tag) { this->triggerTags.push_back(tag); }
-	void ClearTriggerTag() { this->triggerTags.clear(); }
 	std::vector<STriggerTag> GetTriggerTag() { return this->triggerTags; }
 
 	// suffering
@@ -125,7 +124,7 @@ public:
 	virtual void OnCollision(CCollider2D* self, LPCOLLISIONEVENT coEvent);
 	virtual void OnTrigger(CCollider2D* self, LPCOLLISIONEVENT coEvent);
 
-	virtual void FilterTriggerTag();
+	virtual void CleanTriggerTag();
 
 	~CGameObject();
 };

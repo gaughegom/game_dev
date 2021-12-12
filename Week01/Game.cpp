@@ -190,6 +190,8 @@ void CGame::InitGame(HWND hWnd)
 
 void CGame::PlayScene()
 {
+	worldObjects.clear();
+	renderedObjects.clear();
 	DebugOut(L"[INFO] playing scene %d\n", this->currentScene);
 
 	CPlayer::GetInstance()->SelectPlayer(this->scenes.at(this->currentScene)->GetScenePlayers().at(0));
@@ -204,14 +206,25 @@ void CGame::PlayScene()
 
 	std::vector<LPGAMEOBJECT> sceneObjects = this->scenes.at(this->currentScene)->GetSceneObjects();
 	std::vector<LPGAMEOBJECT> scenePlayers = this->scenes.at(this->currentScene)->GetScenePlayers();
-	for (const auto& object : sceneObjects) {
-		worldObjects.push_back(object);
-		quadtree->Insert(object);
-	}
 	for (const auto& object : scenePlayers) {
 		worldObjects.push_back(object);
 		quadtree->Insert(object);
 	}
+	for (const auto& object : sceneObjects) {
+		worldObjects.push_back(object);
+		quadtree->Insert(object);
+	}
+}
+
+void CGame::SwicthScene(int id)
+{
+	int prevScene = this->currentScene;
+	this->reset = true;
+	this->currentScene = id;
+	this->PlayScene();
+
+	auto player = CPlayer::GetInstance()->GetPlayer();
+	player->SetPosition(this->scenes.at(this->currentScene)->GetPositionOfGate(prevScene));
 }
 
 void CGame::UpdateGame(DWORD dt)
@@ -222,8 +235,11 @@ void CGame::UpdateGame(DWORD dt)
 	quadtree->Retrieve(renderedObjects, camera->GetBoundingBox());
 
 	for (auto object : worldObjects) {
+		if (reset)
+			return;
+
 		if (object->IsActive() == true) {
-			object->FilterTriggerTag();
+			object->CleanTriggerTag();
 			object->PhysicalUpdate(&worldObjects);
 		}
 	}
@@ -306,6 +322,9 @@ void CGame::RunGame()
 			this->UpdateGame(this->dt);
 			this->RenderGame();
 			this->CleanGameObject();
+			if (reset) {
+				reset = false;
+			}
 		}
 		else
 			Sleep(tickPerFrame - this->dt);
@@ -420,17 +439,16 @@ void CGame::__LoadSceneResource__(std::string line)
 		return;
 
 	int sceneId = atoi(tokens[0].c_str());
-	std::wstring scenePath = ToLPCWSTR(tokens[1]);
-	
-	DebugOut(L"[INFO] Start loading scene resource %s\n", scenePath.c_str());	// notify start
+	LPCWSTR scenePath = ToLPCWSTR(tokens[1]);
 
+	DebugOut(L"[INFO] Start loading scene %s\n", scenePath);
 
-	LPSCENE scene = new CScene(sceneId, scenePath.c_str());
-	scene->LoadScene();
+	LPSCENE newScene = nullptr;
+	newScene = new CScene(scenePath);
+	newScene->LoadScene();
 
-	this->scenes.insert(std::make_pair(sceneId, scene));
-
-	DebugOut(L"[INFO] Load scene resource %s done\n", scenePath);	// notify done
+	this->scenes.insert(std::make_pair(sceneId, newScene));
+	DebugOut(L"[INFO] Loading scene %s done\n", scenePath);
 }
 
 void CGame::__ParseSection_TEXTURES__(std::string line)

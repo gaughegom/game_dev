@@ -108,3 +108,7 @@ ballot	1	464	414	18	18
 #name
 sophia
 jason
+[GATES]
+#way	x	y	col	row	next
+in	83	8	3	2	0
+out	83	24	3	2	2

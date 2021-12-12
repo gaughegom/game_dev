@@ -2,24 +2,11 @@
 
 #define BRICK_BOX_SIZE		Vector2D(16.0f, 16.0f)
 
-// WARN: do not use this anymore
-//CBrick::CBrick()
-//{
-//	auto collider = new CCollider2D;
-//	collider->SetGameObject(this);
-//	collider->SetOffset(VectorZero());
-//	collider->SetBoxSize(BRICK_BOX_SIZE);
-//	this->colliders.push_back(collider);
-//}
-
 CBrick::CBrick(Vector2D boundingBox)
 {
-	auto collider = new CCollider2D;
-	collider->SetGameObject(this);
-	collider->SetOffset(VectorZero());
-	collider->SetBoxSize(boundingBox);
-	collider->SetDynamic(false);
+	auto collider = new CCollider2D(this, false, false, VectorZero(), boundingBox);
 	this->colliders.push_back(collider);
+	this->SetColliders(this->colliders);
 }
 
 void CBrick::Update(DWORD dt)

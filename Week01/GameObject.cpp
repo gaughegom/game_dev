@@ -114,7 +114,7 @@ void CGameObject::OnTrigger(CCollider2D* selfCollider, LPCOLLISIONEVENT collsion
 {
 }
 
-void CGameObject::FilterTriggerTag()
+void CGameObject::CleanTriggerTag()
 {
 	this->triggerTags.erase(
 		std::remove_if(this->triggerTags.begin(), this->triggerTags.end(), [&](STriggerTag const& tag) {

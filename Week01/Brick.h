@@ -8,7 +8,7 @@
 
 class CBrick : public CGameObject {
 public:
-	CBrick(); // TODO: not used anymore
+	CBrick(); // WARM: not used anymore
 	CBrick(Vector2D boundingBox);
 
 	void Update(DWORD dt);

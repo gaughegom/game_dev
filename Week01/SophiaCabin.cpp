@@ -46,7 +46,7 @@ std::string CSophiaCabin::MappingCabinSpriteState(SophiaActionState actionState)
 
 	case SophiaActionState::Up90:
 		this->SetPosition(Vector2D(-3.5f * this->self->GetNx(), 14.0f));
-		return SPR_SOPHIA_CABIN_90;
+		return SPR_SOPHIA_CABIN_45;
 
 	case SophiaActionState::OpenIn:
 		this->SetPosition(Vector2D(-3.5f * this->self->GetNx(), 9.0f));

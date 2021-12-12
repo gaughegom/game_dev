@@ -7,6 +7,7 @@
 #include "EnemyEyelet.h"
 #include "EnemyStuka.h"
 #include "Player.h"
+#include "Gate.h"
 
 #define MAX_FILE_LINE		2048
 
@@ -94,17 +95,36 @@ void CScene::__ParseSection_PLAYERS__(std::string line)
 	}
 }
 
+void CScene::__ParseSection_GATES__(std::string line)
+{
+	std::vector<std::string> tokens = SplitLine(line);
+	if (tokens.size() < 5)
+		return;
+
+	std::string way = tokens[0].c_str();
+	float x = atoi(tokens[1].c_str()) * TILESET_WIDTH;
+	float y = (atoi(tokens[2].c_str()) + 1) * TILESET_HEIGHT;
+	float width = atoi(tokens[3].c_str()) * TILESET_WIDTH;
+	float height = atoi(tokens[4].c_str()) * TILESET_HEIGHT;
+	int nextScene = atoi(tokens[5].c_str());
+
+	CGate* gate = new CGate(Vector2D(width, height), nextScene);
+
+	gate->SetPosition(Vector2D(x + width / 2, this->mapBoundary.top - y + height / 2));
+	this->sceneObjects.push_back(gate);
+	this->gates.push_back(gate);
+}
+
 #pragma endregion
 
-CScene::CScene(int id, LPCWSTR filePath)
+CScene::CScene(LPCWSTR filePath)
 {
-	this->id = id;
 	this->filePath = filePath;
 }
 
 void CScene::LoadScene()
 {
-	DebugOut(L"[INFO] Start loading scene %s\n", this->filePath);
+	DebugOut(L"[INFO] Start parsing scene %s\n", this->filePath);
 
 	if (this->filePath == nullptr) {
 		DebugOut(L"[ERROR] Filepath is nullptr\n");
@@ -139,6 +159,10 @@ void CScene::LoadScene()
 			section = SceneSection::SCENE_SECTION_PLAYERS;
 			continue;
 		}
+		if (line == "[GATES]") {
+			section = SceneSection::SCENE_SECTION_GATES;
+			continue;
+		}
 
 		switch (section)
 		{
@@ -156,15 +180,27 @@ void CScene::LoadScene()
 		case SceneSection::SCENE_SECTION_PLAYERS:
 			this->__ParseSection_PLAYERS__(line);
 			break;
+		case SceneSection::SCENE_SECTION_GATES:
+			this->__ParseSection_GATES__(line);
+			break;
 		default:
 			break;
 		}
 	}
 
 	fs.close();
-	DebugOut(L"[INFO] Load scene %s done\n", this->filePath);
+	DebugOut(L"[INFO] Parse section scene %s done\n", this->filePath);
 }
 
 void CScene::UnloadScene()
 {
+}
+
+Vector2D CScene::GetPositionOfGate(int id)
+{
+	for (auto gate : this->gates) {
+		if (gate->GetNextScene() == id)
+			return gate->GetPosition();
+	}
+	return VectorZero();
 }

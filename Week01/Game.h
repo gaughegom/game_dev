@@ -12,6 +12,7 @@ class CKeyEventHandler;
 typedef CKeyEventHandler* LPKEYEVENTHANDLER;
 class CGameObject;
 typedef CGameObject* LPGAMEOBJECT;
+class CGate;
 class CScene;
 typedef CScene* LPSCENE;
 
@@ -25,7 +26,8 @@ enum class SceneSection : int {
 	SCENE_SECTION_OBJECTS = 6,
 	SCENE_SECTION_CHARACTERS = 7,
 	SCENE_SECTION_PLAYERS = 8,
-	LOAD_SCENE = 9
+	SCENE_SECTION_GATES = 9,
+	LOAD_SCENE = 10
 };
 
 class CGame {
@@ -52,6 +54,7 @@ class CGame {
 	float mapHeight = 0;
 
 	LPSPRITE map;
+	bool reset = false;
 
 public:
 	void InitDirectX(HWND hWnd);
@@ -78,13 +81,13 @@ public:
 	void CleanGameObject();
 	std::vector<LPGAMEOBJECT> GetRenderedObjects();
 
+	// scene
+	void SwicthScene(int id);
+
 	// device
 	LPDIRECT3DDEVICE9 GetDirect3dDevice() { return this->d3ddv; }
 	LPDIRECT3DSURFACE9 GetBackbuffer() { return backBuffer; }
 	LPD3DXSPRITE GetSpriteHandler() { return this->spriteHandler; }
-
-	int GetMapWidth() { return this->mapWidth; }
-	int GetMapHeight() { return this->mapHeight; }
 
 	LPKEYEVENTHANDLER GetKeyHandler() { return this->keyHandler; }
 

@@ -119,6 +119,9 @@
     <Filter Include="Framework\Player">
       <UniqueIdentifier>{3d495df0-1ee0-4ebd-bb4b-7be349c822ef}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Game\Game objects\Gate">
+      <UniqueIdentifier>{b128c53d-f46b-481b-8b12-13b41c1aa110}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -226,6 +229,9 @@
     <ClCompile Include="Scene.cpp">
       <Filter>Framework\Scene</Filter>
     </ClCompile>
+    <ClCompile Include="Gate.cpp">
+      <Filter>Game\Game objects\Gate</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Textures.h">
@@ -332,6 +338,9 @@
     </ClInclude>
     <ClInclude Include="Scene.h">
       <Filter>Framework\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Gate.h">
+      <Filter>Game\Game objects\Gate</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
