@@ -82,7 +82,7 @@ public:
 	std::vector<LPGAMEOBJECT> GetRenderedObjects();
 
 	// scene
-	void SwicthScene(int id);
+	void SwitchScene(int id);
 
 	// device
 	LPDIRECT3DDEVICE9 GetDirect3dDevice() { return this->d3ddv; }

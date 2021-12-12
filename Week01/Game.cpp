@@ -216,7 +216,7 @@ void CGame::PlayScene()
 	}
 }
 
-void CGame::SwicthScene(int id)
+void CGame::SwitchScene(int id)
 {
 	int prevScene = this->currentScene;
 	this->reset = true;

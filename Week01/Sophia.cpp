@@ -194,8 +194,7 @@ void CSophia::OnCollision(CCollider2D* self, LPCOLLISIONEVENT coEvent)
 	else if (dynamic_cast<CGate*>(coEvent->object)) {
 		CGate* coGate = (CGate*)coEvent->object;
 		DebugOut(L"next to another scene %d\n", coGate->GetNextScene());
-		// TODO: switch to PlayScene scene 1
-		CGame::GetInstance()->SwicthScene(coGate->GetNextScene());
+		CGame::GetInstance()->SwitchScene(coGate->GetNextScene());
 	}
 	else {
 		this->OnCollisionWithEnemy(coEvent);
