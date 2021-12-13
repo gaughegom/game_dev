@@ -1,6 +1,8 @@
 [MAP]
 # path	 width	height
 maps\sectionA.png	16	29
+[PLAYER]
+#name
 [PLATFORMS]
 # x	y	col-number	row-number
 # brick	(16,16) calc follow tilemap
@@ -34,11 +36,6 @@ maps\sectionA.png	16	29
 [OBJECTS]
 #name	nx	x	y	width	height
 # - Enemy -
-
-[PLAYER]
-#name
-sophia
-jason
 [GATES]
 #way	x	y	col	row	next
 out	0	24	3	2	1

@@ -16,7 +16,6 @@ private:
 	LPSPRITE map;
 	SRect mapBoundary;
 	std::vector<LPGAMEOBJECT> sceneObjects;
-	std::vector<LPGAMEOBJECT> players;	// element 0 is selected player
 	std::vector<CGate*> gates;
 
 	void __ParseSection_MAP__(std::string line);
@@ -41,9 +40,6 @@ public:
 
 	void SetMapBoundary(SRect rect) { this->mapBoundary = rect; }
 	SRect GetMapBoundary() { return this->mapBoundary; }
-
-	void AddPlayersCharacter(std::vector<LPGAMEOBJECT> players) { this->players = players; }
-	std::vector<LPGAMEOBJECT> GetScenePlayers() { return this->players; }
 
 	std::vector<CGate*> GetGates() { return this->gates; }
 	Vector2D GetPositionOfGate(int id);

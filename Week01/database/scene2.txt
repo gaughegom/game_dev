@@ -104,10 +104,6 @@ eyelet	1	512	273	18	15
 stuka	1	500	278	18	18
 stuka	1	128	294	18	18
 ballot	1	464	414	18	18
-[PLAYER]
-#name
-sophia
-jason
 [GATES]
 #way	x	y	col	row	next
 in	83	8	3	2	0

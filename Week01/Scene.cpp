@@ -88,10 +88,10 @@ void CScene::__ParseSection_PLAYERS__(std::string line)
 	
 	std::string name = tokens[0].c_str();
 	if (name == "sophia") {
-		this->players.push_back(CPlayer::GetInstance()->GetSophia());
+		this->sceneObjects.push_back(CPlayer::GetInstance()->GetSophia());
 	}
 	else if (name == "jason") {
-		this->players.push_back(CPlayer::GetInstance()->GetJason());
+		this->sceneObjects.push_back(CPlayer::GetInstance()->GetJason());
 	}
 }
 

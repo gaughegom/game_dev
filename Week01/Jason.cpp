@@ -1,4 +1,5 @@
 #include "Jason.h"
+#include "Gate.h"
 
 CJason::CJason()
 {	
@@ -23,6 +24,11 @@ CJason::CJason()
 
 void CJason::Update(DWORD dt)
 {
+	if (this->active == false) {
+		this->position = CPlayer::GetInstance()->GetSophia()->GetPosition();
+		return;
+	}
+
 	InGravityAffect(this, dt);
 
 	if (CPlayer::GetInstance()->GetSelectId() == PlayerCharacterId::JASON) {
@@ -58,7 +64,7 @@ void CJason::ListenKeyEvent()
 		this->directState->SetState(JasonDirectState::STAY);
 	}
 
-	if (input->OnKeyDown(JUMP_KEYCODE) && this->ground) {
+	if (input->OnKeyDown(JUMP_KEYCODE) && this->velocity.y < 0) {
 		this->ground = false;
 		this->directState->SetState(JasonDirectState::JUMP);
 	}
@@ -111,6 +117,11 @@ void CJason::OnCollision(CCollider2D* self, LPCOLLISIONEVENT coEvent)
 		if (!this->ground && coEvent->ny == 1) {
 			this->ground = true;
 		}
+	}
+	else if (dynamic_cast<CGate*>(coEvent->object)) {
+		CGate* coGate = (CGate*)coEvent->object;
+		DebugOut(L"next to another scene %d\n", coGate->GetNextScene());
+		CGame::GetInstance()->SwitchScene(coGate->GetNextScene());
 	}
 	else {
 		this->OnCollisionWithEnemy(coEvent);

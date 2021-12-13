@@ -38,7 +38,11 @@ public:
 
 	void SelectPlayer(LPGAMEOBJECT player);
 	PlayerCharacterId GetSelectId() { return this->selectedId; }
-	CGameObject* GetPlayer() { return this->player; }
+	CGameObject* GetPlayer() { 
+		if (this->player == nullptr)
+			return nullptr;
+		return this->player;
+	}
 
 	CSophia* GetSophia() { return this->sophia; }
 	CJason* GetJason() { return this->jason; }

@@ -50,7 +50,7 @@ void CSophiaBullet::Update(DWORD dt)
 	if (distance > 300) {
 		this->OnDelete();
 	}*/
-	// delete when out of camera
+	// delete when out of g_camera
 	auto camera = CCamera::GetInstance();
 	if (!camera->GetBoundingBox().Contain(this->colliders.at(0)->GetBoundingBox())) {
 		this->OnDelete();

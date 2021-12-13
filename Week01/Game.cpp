@@ -21,7 +21,7 @@
 
 CSophia* sophia;
 CJason* jason;
-CCamera* camera = CCamera::GetInstance();
+CCamera* g_camera = CCamera::GetInstance();
 CQuadTree* quadtree;
 
 std::vector<CGameObject*> worldObjects;
@@ -31,6 +31,7 @@ CTextures* g_textures = CTextures::GetInstance();
 CSprites* g_sprites = CSprites::GetInstance();
 CAnimations* g_animations = CAnimations::GetInstance();
 CInputHandler* g_inputHandler = CInputHandler::GetInstance();
+CPlayer* g_player = CPlayer::GetInstance();
 
 CGame* CGame::__instance = nullptr;
 DWORD CGame::dt = 0;
@@ -120,8 +121,8 @@ void CGame::InitDirectX(HWND hWnd)
 */
 void CGame::Draw(Vector2D position, int nx, LPDIRECT3DTEXTURE9 texture, int left, int top, int right, int bottom, D3DCOLOR color)
 {
-
-	Vector2D cameraPos = camera->GetPosition();
+	// TODO: Make z index of object
+	Vector2D cameraPos = g_camera->GetPosition();
 
 	Vector3D p(0, 0, 0);
 	RECT r;
@@ -175,7 +176,7 @@ void CGame::InitGame(HWND hWnd)
 	playerInstance->AddPlayerCharacter(jason);
 
 	#pragma endregion
-	
+
 	this->PlayScene();
 
 	#pragma region Start keyboard
@@ -194,45 +195,66 @@ void CGame::PlayScene()
 	renderedObjects.clear();
 	DebugOut(L"[INFO] playing scene %d\n", this->currentScene);
 
-	CPlayer::GetInstance()->SelectPlayer(this->scenes.at(this->currentScene)->GetScenePlayers().at(0));
+	if (g_player->GetPlayer() == nullptr) {
+		g_player->SelectPlayer(g_player->GetSophia());
+	}
 
 	SRect sceneBoundary = this->scenes.at(this->currentScene)->GetMapBoundary();
 	this->map = this->scenes.at(this->currentScene)->GetMapSrite();
 	this->mapWidth = sceneBoundary.right;
 	this->mapHeight = sceneBoundary.top;
 
-	camera->SetBoundary(sceneBoundary);
+	g_camera->SetBoundary(sceneBoundary);
 	quadtree = new CQuadTree(0, sceneBoundary);
 
 	std::vector<LPGAMEOBJECT> sceneObjects = this->scenes.at(this->currentScene)->GetSceneObjects();
-	std::vector<LPGAMEOBJECT> scenePlayers = this->scenes.at(this->currentScene)->GetScenePlayers();
-	for (const auto& object : scenePlayers) {
-		worldObjects.push_back(object);
-		quadtree->Insert(object);
+
+	for (auto& object : sceneObjects) {
+		this->NewGameObject(object);
 	}
-	for (const auto& object : sceneObjects) {
-		worldObjects.push_back(object);
-		quadtree->Insert(object);
+
+	// add player to world
+	if (dynamic_cast<CSophia*>(CPlayer::GetInstance()->GetPlayer())) {
+		LPGAMEOBJECT playerSophia = g_player->GetSophia();
+		this->NewGameObject(playerSophia);
+
+		// check jason 
+		LPGAMEOBJECT playerJason = g_player->GetJason();
+		std::vector<LPGAMEOBJECT>::iterator itJason = std::find(worldObjects.begin(), worldObjects.end(), playerJason);
+		if (itJason == worldObjects.end()) {
+			this->NewGameObject(playerJason);
+		}
+	}
+	else if (dynamic_cast<CJason*>(CPlayer::GetInstance()->GetPlayer())) {
+		LPGAMEOBJECT playerJason = g_player->GetJason();
+		this->NewGameObject(playerJason);
 	}
 }
 
 void CGame::SwitchScene(int id)
 {
 	int prevScene = this->currentScene;
+	std::vector<LPGAMEOBJECT> preWorldObject = worldObjects;
 	this->reset = true;
 	this->currentScene = id;
+
 	this->PlayScene();
 
-	auto player = CPlayer::GetInstance()->GetPlayer();
-	player->SetPosition(this->scenes.at(this->currentScene)->GetPositionOfGate(prevScene));
+	auto player = g_player->GetPlayer();
+	Vector2D playerPosition = this->scenes.at(this->currentScene)->GetPositionOfGate(prevScene) - Vector2D(0, 16);
+	player->SetPosition(playerPosition);
+
+	preWorldObject.erase(std::remove(preWorldObject.begin(), preWorldObject.end(), player), preWorldObject.end());
+	this->scenes.at(prevScene)->SetSceneObjects(preWorldObject);
+	
 }
 
 void CGame::UpdateGame(DWORD dt)
 {
-	camera->Update();
+	g_camera->Update();
 	quadtree->Update(worldObjects);
 	renderedObjects.clear();
-	quadtree->Retrieve(renderedObjects, camera->GetBoundingBox());
+	quadtree->Retrieve(renderedObjects, g_camera->GetBoundingBox());
 
 	for (auto object : worldObjects) {
 		if (reset)
@@ -365,8 +387,8 @@ void CGame::LoadResource()
 	LPCWSTR resourcePath = GAME_RESOURCE_PATH;
 	DebugOut(L"[INFO] Start loading game resouce %s\n", resourcePath);
 
-	// start game camera
-	camera->SetSize(Vector2D(this->camWidth, this->camHeight));
+	// start game g_camera
+	g_camera->SetSize(Vector2D(this->camWidth, this->camHeight));
 
 	// open scene file path
 	std::ifstream fs;
@@ -516,12 +538,12 @@ void CGame::__ParseSection_CHARACTERS__(std::string line)
 	if (playerName == "sophia") {
 		player = new CSophia;
 		sophia = (CSophia*)player;
-		CPlayer::GetInstance()->AddPlayerCharacter(sophia);
+		g_player->AddPlayerCharacter(sophia);
 	}
 	else if (playerName == "jason") {
 		player = new CJason;
 		jason = (CJason*)player;
-		CPlayer::GetInstance()->AddPlayerCharacter(jason);
+		g_player->AddPlayerCharacter(jason);
 	}
 	else {
 		DebugOut(L"[ERROR] Unknow player name: %s\n", playerName);
@@ -558,11 +580,17 @@ void CGame::CleanGameObject()
 		if (object->IsLive() == false) {
 			removed = true; // remove when hp lower than 0
 		}
-		else if (!quadtree->GetBoundingBox().Contain(object->GetColliders().at(0)->GetBoundingBox())) {
+		else if (!quadtree->GetBoundingBox().Contain(object->GetPosition())) {
+			if (dynamic_cast<CJason*>(object) || dynamic_cast<CSophia*>(object))
+				continue;	// skip if this is player
 			removed = true; // remove when out of quadtree
 		}
 
 		if (removed) {
+			if (dynamic_cast<CSophiaBullet*>(object)) {
+				CSophiaBullet* bullet = (CSophiaBullet*)object;
+				bullet->OnDelete();
+			}
 			worldObjects.erase(std::next(worldObjects.begin() + i - 1));
 			quadtree->RemoveEntityFromLeafNodes(object);
 			continue;

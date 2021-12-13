@@ -3,18 +3,18 @@
 
 CCamera* CCamera::__instance = nullptr;
 
-// init camera width and height
+// init g_camera width and height
 CCamera::CCamera()
 {
 }
 
-// set camera position
+// set g_camera position
 void CCamera::SetPosition(Vector2D posotion)
 {
 	this->position = position;
 }
 
-// set new size of camera
+// set new size of g_camera
 void CCamera::SetSize(Vector2D size)
 {
 	this->size = size;

@@ -86,7 +86,7 @@ D3DCOLOR CGameObject::GetRenderColor()
 	}
 	else {
 		this->sufferingDuration += 1; // TODO: make the same duration of triggerTag
-		if (this->sufferingDuration > 8) {
+		if (this->sufferingDuration > 10) {
 			this->sufferingDuration = 0;
 			return DRAW_COLOR_DEFAULT;
 		}
@@ -94,7 +94,7 @@ D3DCOLOR CGameObject::GetRenderColor()
 			return DRAW_COLOR_DEFAULT;
 		}
 		else {
-			return D3DCOLOR_ARGB(255, 0, 0, 0);
+			return D3DCOLOR_ARGB(255, 255, 100, 100);
 		}
 	}
 }
