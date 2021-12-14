@@ -1,6 +1,6 @@
 [MAP]
-# path	 width	height
-maps\sectionA.png	16	29
+# path	 width	height	type
+maps\sectionA.png	16	29	outdoor
 [PLAYER]
 #name
 [PLATFORMS]

@@ -1,6 +1,6 @@
 [MAP]
-# path	 width	height
-maps\sectionC.png	16	14
+# path	 width	height	type
+maps\sectionC.png	16	14	outdoor
 [PLATFORMS]
 # x	y	col-number	row-number
 # brick	(16,16) calc follow tilemap

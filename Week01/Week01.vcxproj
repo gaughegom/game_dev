@@ -22,10 +22,12 @@
     <ClCompile Include="Animation.cpp" />
     <ClCompile Include="AnimationFrame.cpp" />
     <ClCompile Include="Animations.cpp" />
+    <ClCompile Include="BigJason.cpp" />
     <ClCompile Include="Brick.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Collider2D.cpp" />
     <ClCompile Include="Gate.cpp" />
+    <ClCompile Include="JasonDirectionState.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="EnemyBallot.cpp" />
     <ClCompile Include="EnemyDrap.cpp" />
@@ -36,7 +38,6 @@
     <ClCompile Include="EnemyGX-680.cpp" />
     <ClCompile Include="InputHandler.cpp" />
     <ClCompile Include="Jason.cpp" />
-    <ClCompile Include="JasonDirectionState.cpp" />
     <ClCompile Include="KeyEventHandler.cpp" />
     <ClCompile Include="QuadTree.cpp" />
     <ClCompile Include="Scene.cpp" />
@@ -60,10 +61,12 @@
     <ClInclude Include="Animation.h" />
     <ClInclude Include="AnimationFrame.h" />
     <ClInclude Include="Animations.h" />
+    <ClInclude Include="BigJason.h" />
     <ClInclude Include="Brick.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Collider2D.h" />
     <ClInclude Include="Gate.h" />
+    <ClInclude Include="JasonDirectionState.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="EnemyBallot.h" />
     <ClInclude Include="EnemyDrap.h" />
@@ -76,7 +79,6 @@
     <ClInclude Include="EnemyGX-680.h" />
     <ClInclude Include="InputHandler.h" />
     <ClInclude Include="Jason.h" />
-    <ClInclude Include="JasonDirectionState.h" />
     <ClInclude Include="KeyEventHandler.h" />
     <ClInclude Include="QuadTree.h" />
     <ClInclude Include="Scene.h" />

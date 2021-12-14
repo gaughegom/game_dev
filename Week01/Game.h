@@ -66,7 +66,6 @@ public:
 	void RenderGame();
 	void RunGame();
 
-	void PlayScene();
 
 	// resources
 	void LoadResource();
@@ -82,7 +81,9 @@ public:
 	std::vector<LPGAMEOBJECT> GetRenderedObjects();
 
 	// scene
+	void PlayScene();
 	void SwitchScene(int id);
+	void MappingPlayerScene();
 
 	// device
 	LPDIRECT3DDEVICE9 GetDirect3dDevice() { return this->d3ddv; }

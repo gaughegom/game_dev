@@ -4,6 +4,11 @@
 
 #include "Game.h"
 
+enum class SceneMapType : int {
+	OUTDOOR	= 0,
+	INDOOR	= 1
+};
+
 class CSprite;
 typedef CSprite* LPSPRITE;
 class CGameObject;
@@ -14,6 +19,7 @@ class CScene {
 private:
 	LPCWSTR filePath;
 	LPSPRITE map;
+	SceneMapType mapType;
 	SRect mapBoundary;
 	std::vector<LPGAMEOBJECT> sceneObjects;
 	std::vector<CGate*> gates;
@@ -40,6 +46,7 @@ public:
 
 	void SetMapBoundary(SRect rect) { this->mapBoundary = rect; }
 	SRect GetMapBoundary() { return this->mapBoundary; }
+	SceneMapType GetMapType() { return this->mapType; }
 
 	std::vector<CGate*> GetGates() { return this->gates; }
 	Vector2D GetPositionOfGate(int id);

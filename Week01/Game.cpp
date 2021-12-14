@@ -8,6 +8,7 @@
 
 #include "Sophia.h"
 #include "Jason.h"
+#include "BigJason.h"
 #include "Brick.h"
 #include "EnemyDrap.h"
 #include "EnemyEyelet.h"
@@ -21,6 +22,7 @@
 
 CSophia* sophia;
 CJason* jason;
+CBigJason* bigJason;
 CCamera* g_camera = CCamera::GetInstance();
 CQuadTree* quadtree;
 
@@ -207,28 +209,79 @@ void CGame::PlayScene()
 	g_camera->SetBoundary(sceneBoundary);
 	quadtree = new CQuadTree(0, sceneBoundary);
 
+	// loading sceneObject to worldObjects
 	std::vector<LPGAMEOBJECT> sceneObjects = this->scenes.at(this->currentScene)->GetSceneObjects();
-
 	for (auto& object : sceneObjects) {
 		this->NewGameObject(object);
 	}
 
-	// add player to world
-	if (dynamic_cast<CSophia*>(CPlayer::GetInstance()->GetPlayer())) {
-		LPGAMEOBJECT playerSophia = g_player->GetSophia();
-		this->NewGameObject(playerSophia);
+	// select player
+	this->MappingPlayerScene();
+}
 
-		// check jason 
-		LPGAMEOBJECT playerJason = g_player->GetJason();
-		std::vector<LPGAMEOBJECT>::iterator itJason = std::find(worldObjects.begin(), worldObjects.end(), playerJason);
-		if (itJason == worldObjects.end()) {
-			this->NewGameObject(playerJason);
+void CGame::MappingPlayerScene()
+{
+	// TODO: check scene when add BigJason
+	LPGAMEOBJECT player = g_player->GetPlayer();
+	LPGAMEOBJECT playerSophia = g_player->GetSophia();
+	LPGAMEOBJECT playerJason = g_player->GetJason();
+	LPGAMEOBJECT playerBigJason = g_player->GetBigJason();
+	bool sophiaExist = false;
+	bool jasonExist = false;
+	bool bigJasonExist = false;
+
+	// check player already in worldObjects
+	for (int i = worldObjects.size() - 1; i > worldObjects.size() - 3; i--) {
+		if (worldObjects.at(i) == playerSophia) {
+			sophiaExist = true;
+			continue;
+		}
+		else if (worldObjects.at(i) == playerJason) {
+			jasonExist = true;
+			continue;
+		}
+		else if (worldObjects.at(i) == playerBigJason) {
+			bigJasonExist = true;
+			continue;
 		}
 	}
-	else if (dynamic_cast<CJason*>(CPlayer::GetInstance()->GetPlayer())) {
-		LPGAMEOBJECT playerJason = g_player->GetJason();
-		this->NewGameObject(playerJason);
+
+	// add player to worldObjects
+	if (this->scenes.at(this->currentScene)->GetMapType() == SceneMapType::OUTDOOR) {
+		if (dynamic_cast<CSophia*>(CPlayer::GetInstance()->GetPlayer())) {
+			if (sophiaExist == false) {
+				this->NewGameObject(playerSophia);
+			}
+
+			if (jasonExist == false) {
+				this->NewGameObject(playerJason);
+			}
+		}
+		else if (dynamic_cast<CJason*>(CPlayer::GetInstance()->GetPlayer())) {
+			if (jasonExist == false) {
+				this->NewGameObject(playerJason);
+			}
+		}
+
+		if (player == playerBigJason) {
+			if (playerJason->IsActive()) {
+				g_player->SelectPlayer(playerJason);
+			}
+			else {
+				g_player->SelectPlayer(playerSophia);
+			}
+		}
 	}
+	else if (this->scenes.at(this->currentScene)->GetMapType() == SceneMapType::INDOOR) {
+		if (bigJasonExist == false) {
+			this->NewGameObject(playerBigJason);
+		}
+
+		if (player == playerJason || player == playerSophia) {
+			g_player->SelectPlayer(playerBigJason);
+		}
+	}
+
 }
 
 void CGame::SwitchScene(int id)
@@ -244,9 +297,7 @@ void CGame::SwitchScene(int id)
 	Vector2D playerPosition = this->scenes.at(this->currentScene)->GetPositionOfGate(prevScene) - Vector2D(0, 16);
 	player->SetPosition(playerPosition);
 
-	preWorldObject.erase(std::remove(preWorldObject.begin(), preWorldObject.end(), player), preWorldObject.end());
 	this->scenes.at(prevScene)->SetSceneObjects(preWorldObject);
-	
 }
 
 void CGame::UpdateGame(DWORD dt)
@@ -544,6 +595,12 @@ void CGame::__ParseSection_CHARACTERS__(std::string line)
 		player = new CJason;
 		jason = (CJason*)player;
 		g_player->AddPlayerCharacter(jason);
+	}
+	else if (playerName == "bJason") {
+		player = new CBigJason;
+		bigJason = (CBigJason*)player;
+		// TODO: Add bigjason to playerInstance
+		g_player->AddPlayerCharacter(bigJason);
 	}
 	else {
 		DebugOut(L"[ERROR] Unknow player name: %s\n", playerName);

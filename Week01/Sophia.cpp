@@ -206,7 +206,6 @@ void CSophia::OnTrigger(CCollider2D* self, LPCOLLISIONEVENT coEvent)
 
 }
 
-
 void CSophia::OnCollisionWithEnemy(LPCOLLISIONEVENT coEvent)
 {
 	bool isSuffered = false;

@@ -41,9 +41,6 @@
     <Filter Include="Game\Game objects\Base">
       <UniqueIdentifier>{635c6bf1-dd07-4f83-9edc-483c171038e6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Game\Game objects\Sophia">
-      <UniqueIdentifier>{970a2267-9c06-411d-add0-550f9651acbc}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Game\Game objects\Enemies">
       <UniqueIdentifier>{1000ea67-8118-4f8a-8421-6b43b6bf7d56}</UniqueIdentifier>
     </Filter>
@@ -70,27 +67,6 @@
     </Filter>
     <Filter Include="Game\Game objects\Enemies\Offside">
       <UniqueIdentifier>{8b524ba3-3e50-466c-be7b-373b8552afcd}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Game\Game objects\Jason">
-      <UniqueIdentifier>{8e747e62-5174-4e06-8ebd-c2858108be33}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Game\Game objects\Jason\State">
-      <UniqueIdentifier>{d66ed72c-e488-4303-a84e-e65a30745cb9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Game\Game objects\Sophia\Parts">
-      <UniqueIdentifier>{906345ed-91e6-4720-b0e7-c628e6e5e4e0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Game\Game objects\Sophia\Parts\Wheel">
-      <UniqueIdentifier>{3af5c48c-cea7-41cb-8d2b-cc69e724611e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Game\Game objects\Sophia\Parts\Body">
-      <UniqueIdentifier>{b36e2552-0859-49fc-862b-e839b3f8349b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Game\Game objects\Sophia\Parts\Cabin">
-      <UniqueIdentifier>{b570774f-78a9-414a-9aa1-6543722693a2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Game\Game objects\Sophia\Parts\Gun">
-      <UniqueIdentifier>{5629d4c7-0134-4126-bd29-ba98ae1d768a}</UniqueIdentifier>
     </Filter>
     <Filter Include="Framework\Util">
       <UniqueIdentifier>{b48ec041-8e0d-4b7b-9ad1-1bd84e4704ae}</UniqueIdentifier>
@@ -122,6 +98,36 @@
     <Filter Include="Game\Game objects\Gate">
       <UniqueIdentifier>{b128c53d-f46b-481b-8b12-13b41c1aa110}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Game\Game objects\Player">
+      <UniqueIdentifier>{ff51a7ad-7f7a-41b7-bc5f-1c5b9792ab90}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Game objects\Player\Jason">
+      <UniqueIdentifier>{8e747e62-5174-4e06-8ebd-c2858108be33}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Game objects\Player\Jason\State">
+      <UniqueIdentifier>{d66ed72c-e488-4303-a84e-e65a30745cb9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Game objects\Player\Sophia">
+      <UniqueIdentifier>{970a2267-9c06-411d-add0-550f9651acbc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Game objects\Player\Sophia\Parts">
+      <UniqueIdentifier>{906345ed-91e6-4720-b0e7-c628e6e5e4e0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Game objects\Player\Sophia\Parts\Wheel">
+      <UniqueIdentifier>{3af5c48c-cea7-41cb-8d2b-cc69e724611e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Game objects\Player\Sophia\Parts\Body">
+      <UniqueIdentifier>{b36e2552-0859-49fc-862b-e839b3f8349b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Game objects\Player\Sophia\Parts\Cabin">
+      <UniqueIdentifier>{b570774f-78a9-414a-9aa1-6543722693a2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Game objects\Player\Sophia\Parts\Gun">
+      <UniqueIdentifier>{5629d4c7-0134-4126-bd29-ba98ae1d768a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Game objects\Player\Big Jason">
+      <UniqueIdentifier>{e68a540c-e137-414d-b7ec-472ff032da97}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -137,7 +143,7 @@
       <Filter>Game\Game objects\Base</Filter>
     </ClCompile>
     <ClCompile Include="Sophia.cpp">
-      <Filter>Game\Game objects\Sophia</Filter>
+      <Filter>Game\Game objects\Player\Sophia</Filter>
     </ClCompile>
     <ClCompile Include="GameEnv.cpp">
       <Filter>Game\Enviroment</Filter>
@@ -164,10 +170,7 @@
       <Filter>Framework\Keyboard Handler</Filter>
     </ClCompile>
     <ClCompile Include="Jason.cpp">
-      <Filter>Game\Game objects\Jason</Filter>
-    </ClCompile>
-    <ClCompile Include="JasonDirectionState.cpp">
-      <Filter>Game\Game objects\Jason\State</Filter>
+      <Filter>Game\Game objects\Player\Jason</Filter>
     </ClCompile>
     <ClCompile Include="InputHandler.cpp">
       <Filter>Framework\Keyboard Handler</Filter>
@@ -194,16 +197,16 @@
       <Filter>Game\Base</Filter>
     </ClCompile>
     <ClCompile Include="SophiaWheel.cpp">
-      <Filter>Game\Game objects\Sophia\Parts\Wheel</Filter>
+      <Filter>Game\Game objects\Player\Sophia\Parts\Wheel</Filter>
     </ClCompile>
     <ClCompile Include="SophiaBody.cpp">
-      <Filter>Game\Game objects\Sophia\Parts\Body</Filter>
+      <Filter>Game\Game objects\Player\Sophia\Parts\Body</Filter>
     </ClCompile>
     <ClCompile Include="SophiaCabin.cpp">
-      <Filter>Game\Game objects\Sophia\Parts\Cabin</Filter>
+      <Filter>Game\Game objects\Player\Sophia\Parts\Cabin</Filter>
     </ClCompile>
     <ClCompile Include="SophiaGun.cpp">
-      <Filter>Game\Game objects\Sophia\Parts\Gun</Filter>
+      <Filter>Game\Game objects\Player\Sophia\Parts\Gun</Filter>
     </ClCompile>
     <ClCompile Include="QuadTree.cpp">
       <Filter>Framework\QuadTree</Filter>
@@ -232,6 +235,12 @@
     <ClCompile Include="Gate.cpp">
       <Filter>Game\Game objects\Gate</Filter>
     </ClCompile>
+    <ClCompile Include="BigJason.cpp">
+      <Filter>Game\Game objects\Player\Big Jason</Filter>
+    </ClCompile>
+    <ClCompile Include="JasonDirectionState.cpp">
+      <Filter>Game\Game objects\Player\Jason\State</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Textures.h">
@@ -244,7 +253,7 @@
       <Filter>Game\Game objects\Base</Filter>
     </ClInclude>
     <ClInclude Include="Sophia.h">
-      <Filter>Game\Game objects\Sophia</Filter>
+      <Filter>Game\Game objects\Player\Sophia</Filter>
     </ClInclude>
     <ClInclude Include="GameEnv.h">
       <Filter>Game\Enviroment</Filter>
@@ -271,10 +280,7 @@
       <Filter>Framework\Keyboard Handler</Filter>
     </ClInclude>
     <ClInclude Include="Jason.h">
-      <Filter>Game\Game objects\Jason</Filter>
-    </ClInclude>
-    <ClInclude Include="JasonDirectionState.h">
-      <Filter>Game\Game objects\Jason\State</Filter>
+      <Filter>Game\Game objects\Player\Jason</Filter>
     </ClInclude>
     <ClInclude Include="InputHandler.h">
       <Filter>Framework\Keyboard Handler</Filter>
@@ -301,16 +307,16 @@
       <Filter>Game\Base</Filter>
     </ClInclude>
     <ClInclude Include="SophiaWheel.h">
-      <Filter>Game\Game objects\Sophia\Parts\Wheel</Filter>
+      <Filter>Game\Game objects\Player\Sophia\Parts\Wheel</Filter>
     </ClInclude>
     <ClInclude Include="SophiaBody.h">
-      <Filter>Game\Game objects\Sophia\Parts\Body</Filter>
+      <Filter>Game\Game objects\Player\Sophia\Parts\Body</Filter>
     </ClInclude>
     <ClInclude Include="SophiaCabin.h">
-      <Filter>Game\Game objects\Sophia\Parts\Cabin</Filter>
+      <Filter>Game\Game objects\Player\Sophia\Parts\Cabin</Filter>
     </ClInclude>
     <ClInclude Include="SophiaGun.h">
-      <Filter>Game\Game objects\Sophia\Parts\Gun</Filter>
+      <Filter>Game\Game objects\Player\Sophia\Parts\Gun</Filter>
     </ClInclude>
     <ClInclude Include="QuadTree.h">
       <Filter>Framework\QuadTree</Filter>
@@ -341,6 +347,12 @@
     </ClInclude>
     <ClInclude Include="Gate.h">
       <Filter>Game\Game objects\Gate</Filter>
+    </ClInclude>
+    <ClInclude Include="BigJason.h">
+      <Filter>Game\Game objects\Player\Big Jason</Filter>
+    </ClInclude>
+    <ClInclude Include="JasonDirectionState.h">
+      <Filter>Game\Game objects\Player\Jason\State</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

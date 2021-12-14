@@ -45,7 +45,7 @@ std::string CJasonDirectionState::MappingStateOfAnimation()
 	}
 }
 
-void CJasonDirectionState::Stay()
+void CJasonDirectionState::Staying()
 {
 	auto targetAnimations = this->target->GetAnimations();
 	auto key = MappingStateOfAnimation();
@@ -54,7 +54,7 @@ void CJasonDirectionState::Stay()
 	animation->SetWait(true);
 }
 
-void CJasonDirectionState::MoveBackward()
+void CJasonDirectionState::LeftWalking()
 {
 	auto targetAnimations = this->target->GetAnimations();
 	auto animation = targetAnimations
@@ -64,7 +64,7 @@ void CJasonDirectionState::MoveBackward()
 	animation->SetWait(false);
 }
 
-void CJasonDirectionState::MoveForward()
+void CJasonDirectionState::RightWalking()
 {
 	auto targetAnimations = this->target->GetAnimations();
 	auto animation = targetAnimations
@@ -74,7 +74,7 @@ void CJasonDirectionState::MoveForward()
 	animation->SetWait(false);
 }
 
-void CJasonDirectionState::Jump()
+void CJasonDirectionState::Jumping()
 {
 	auto targetAnimations = this->target->GetAnimations();
 	auto key = MappingStateOfAnimation();

@@ -90,23 +90,23 @@ void CJason::SubcribeDirectionState(JasonDirectState directState)
 	case JasonDirectState::RIGHTWALK:
 		this->SetVelocity(Vector2D(PLAYER_MOVING_SPEED, this->velocity.y));
 		this->nx = 1;
-		this->directState->MoveForward();
+		this->directState->RightWalking();
 		break;
 
 	case JasonDirectState::LEFTWALK:
 		this->SetVelocity(Vector2D(-PLAYER_MOVING_SPEED, this->velocity.y));
 		this->nx = -1;
-		this->directState->MoveBackward();
+		this->directState->LeftWalking();
 		break;
 
 	case JasonDirectState::STAY:
 		this->SetVelocity(Vector2D(0, this->velocity.y));
-		this->directState->Stay();
+		this->directState->Staying();
 		break;
 
 	case JasonDirectState::JUMP:
 		this->SetVelocity(Vector2D(this->velocity.x, PLAYER_JUMP_FORCE));
-		this->directState->Jump();
+		this->directState->Jumping();
 		break;
 	}
 }

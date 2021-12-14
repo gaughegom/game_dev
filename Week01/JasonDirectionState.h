@@ -23,10 +23,10 @@ public:
 
 	std::string MappingStateOfAnimation();
 
-	void Stay();
-	void MoveBackward();
-	void MoveForward();
-	void Jump();
+	void Staying();
+	void LeftWalking();
+	void RightWalking();
+	void Jumping();
 };
 
 #endif // !_JASON_DIRECTION_STATE_H

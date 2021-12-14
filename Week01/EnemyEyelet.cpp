@@ -34,7 +34,7 @@ void CEnemyEyelet::Update(DWORD dt)
 void CEnemyEyelet::Render()
 {
 	auto color = this->GetRenderColor();
-	animations.at(ANIMATION_DEFAULT_ID)->Render(this->position, 1, color);
+	animations.at(ANIMATION_DEFAULT_ID)->Render(this->position, this->nx, color);
 }
 
 void CEnemyEyelet::OnCollision(CCollider2D* self, LPCOLLISIONEVENT coEvent)

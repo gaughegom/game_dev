@@ -16,15 +16,21 @@ void CPlayer::AddPlayerCharacter(LPGAMEOBJECT character)
 	else if (dynamic_cast<CJason*>(character)) {
 		this->jason = (CJason*)character;
 	}
+	else if (dynamic_cast<CBigJason*>(character)) {
+		this->bigJason = (CBigJason*)character;
+	}
 }
 
 void CPlayer::SelectPlayer(LPGAMEOBJECT player)
 {
 	if (dynamic_cast<CSophia*>(player)) {
-		SelectSophia();
+		this->SelectSophia();
 	}
 	else if (dynamic_cast<CJason*>(player)) {
-		SelectJason();
+		this->SelectJason();
+	}
+	else if (dynamic_cast<CBigJason*>(player)) {
+		this->SelectBigJason();
 	}
 }
 
@@ -76,6 +82,15 @@ void CPlayer::SelectJason()
 	this->selectedId = PlayerCharacterId::JASON;
 	this->player = this->jason;
 	this->lastSwitchTime = GetTickCount64();
+}
+
+void CPlayer::SelectBigJason()
+{
+	auto camera = CCamera::GetInstance();
+	camera->SetTarget(this->bigJason);
+
+	this->selectedId = PlayerCharacterId::BIGJASON;
+	this->player = this->bigJason;
 }
 
 CPlayer* CPlayer::GetInstance()

@@ -23,11 +23,19 @@ void CScene::__ParseSection_MAP__(std::string line)
 	std::string sceneMapPath = tokens[0].c_str();
 	float sceneWidth = atoi(tokens[1].c_str()) * TILESET_WIDTH;
 	float sceneHeight = atoi(tokens[2].c_str()) * TILESET_HEIGHT;
+	std::string sceneMapType = tokens[3].c_str();
 
 	// set mapBoundary
 	this->mapBoundary = SRect(0, sceneHeight, sceneWidth, 0);
 	std::string texMapId = sceneMapPath;
 	std::string sprMapId = sceneMapPath;
+
+	if (sceneMapType == "outdoor") {
+		this->mapType = SceneMapType::OUTDOOR;
+	}
+	else if (sceneMapType == "indoor") {
+		this->mapType = SceneMapType::INDOOR;
+	}
 
 	// add to textures, sprites
 	CTextures::GetInstance()->Add(texMapId, ToWSTR(sceneMapPath).c_str(), D3DCOLOR_XRGB(0, 0, 0));

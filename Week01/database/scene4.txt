@@ -1,0 +1,17 @@
+[MAP]
+# path	 width	height	type
+maps\sectionD.png	16	114	indoor
+[PLATFORMS]
+# x	y	col-number	row-number
+# brick	(16,16) calc follow tilemap
+0	113	2	114
+14	113	2	114
+2	1	12	2
+6	17	8	4
+2	25	8	4
+[OBJECTS]
+#name	nx	x	y	width	height
+# - Enemy -
+[GATES]
+#way	x	y	col	row	next
+in	7	4	1	1	2
