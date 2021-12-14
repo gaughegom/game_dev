@@ -170,15 +170,6 @@ void CGame::InitGame(HWND hWnd)
 	#pragma endregion
 
 	this->LoadResource();
-
-	#pragma region Player instance
-	
-	auto playerInstance = CPlayer::GetInstance();
-	playerInstance->AddPlayerCharacter(sophia);
-	playerInstance->AddPlayerCharacter(jason);
-
-	#pragma endregion
-
 	this->PlayScene();
 
 	#pragma region Start keyboard
