@@ -10,6 +10,7 @@
 #define MAX_NEOWORM			2
 #define DELAY_NEOWORM		700
 
+#define ACTIVE_DISTANCE_X	10
 
 CEnemyInterrupt::CEnemyInterrupt()
 {
@@ -29,7 +30,7 @@ CEnemyInterrupt::CEnemyInterrupt()
 void CEnemyInterrupt::Update(DWORD dt)
 {
 	LPGAMEOBJECT player = CPlayer::GetInstance()->GetPlayer();
-	if (abs(this->position.x - player->GetPosition().x) <= 10 
+	if (abs(this->position.x - player->GetPosition().x) <= ACTIVE_DISTANCE_X 
 		&& this->position.y > player->GetPosition().y
 		&& (GetTickCount64() - this->prevTimeNeoworm) > DELAY_NEOWORM
 		&& this->existNeoworm < MAX_NEOWORM) {
@@ -48,7 +49,7 @@ void CEnemyInterrupt::Render()
 	D3DCOLOR color = this->GetRenderColor();
 	LPGAMEOBJECT player = CPlayer::GetInstance()->GetPlayer();
 
-	if (abs(this->position.x - player->GetPosition().x) <= 10 && this->position.y > player->GetPosition().y) {
+	if (abs(this->position.x - player->GetPosition().x) <= ACTIVE_DISTANCE_X && this->position.y > player->GetPosition().y) {
 		this->animations.at(ANIMATION_ID)->Render(this->position, this->nx, color);
 	}
 	else {
@@ -58,7 +59,16 @@ void CEnemyInterrupt::Render()
 
 void CEnemyInterrupt::OnCollision(CCollider2D* self, LPCOLLISIONEVENT coEvent)
 {
-	if (dynamic_cast<CSophiaBullet*>(coEvent->object)) {
+	if (dynamic_cast<CSophia*>(coEvent->object)) {
+		LPGAMEOBJECT thisObj = (LPGAMEOBJECT)this;
+		coEvent->object->TakeDamage(thisObj);
+		this->TakeDamage(coEvent->object);
+
+		STriggerTag tag = STriggerTag(coEvent->object);
+		coEvent->object->AddTriggerTag(this);
+		this->AddTriggerTag(coEvent->object);
+	}
+	else if (dynamic_cast<CSophiaBullet*>(coEvent->object)) {
 		this->TakeDamage(coEvent->object);
 		auto bullet = (CSophiaBullet*)coEvent->object;
 		bullet->OnDelete();

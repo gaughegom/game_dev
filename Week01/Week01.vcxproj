@@ -26,6 +26,7 @@
     <ClCompile Include="Brick.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Collider2D.cpp" />
+    <ClCompile Include="EnemyBallcarry.cpp" />
     <ClCompile Include="EnemyInterrupt.cpp" />
     <ClCompile Include="EnemyNeoWorm.cpp" />
     <ClCompile Include="Gate.cpp" />
@@ -67,6 +68,7 @@
     <ClInclude Include="Brick.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Collider2D.h" />
+    <ClInclude Include="EnemyBallcarry.h" />
     <ClInclude Include="EnemyInterrupt.h" />
     <ClInclude Include="EnemyNeoWorm.h" />
     <ClInclude Include="Gate.h" />

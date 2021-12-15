@@ -5,6 +5,7 @@
 #include "EnemyStuka.h"
 #include "Gate.h"
 #include "EnemyInterrupt.h"
+#include "EnemyNeoWorm.h"
 
 CSophia::CSophia()
 {
@@ -33,6 +34,7 @@ void CSophia::InitParts()
 
 void CSophia::Update(DWORD dt)
 {
+	DebugOut(L"sophia hp %f\n", this->hp);
 	if (this->colliders.at(0)->IsDynamic() == true) {
 		InGravityAffect(this, dt);
 		this->UpdateColliders();
@@ -206,15 +208,12 @@ void CSophia::OnCollisionWithEnemy(LPCOLLISIONEVENT coEvent)
 	bool isSuffered = false;
 	
 	// TODO: check collision with enemy not trigger
-	if (dynamic_cast<CEnemyInterrupt*>(coEvent->object)) {
-		isSuffered = true;
-	}
 
 	// TODO: add more enemies later
 
 	// TODO: add trigger in enemy
 	if (isSuffered) {
-		this->hp -= coEvent->object->GetDamage();
+		this->TakeDamage(coEvent->object);
 		STriggerTag tag = STriggerTag(coEvent->object);
 		this->AddTriggerTag(coEvent->object);
 		coEvent->object->AddTriggerTag(this);

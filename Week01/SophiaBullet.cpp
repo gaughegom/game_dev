@@ -5,7 +5,9 @@
 #define V_BULLET_BOXSIZE_HORIZON	Vector2D(22, 6)
 #define	V_BULLET_BOXSIZE_VERTICAL	Vector2D(6, 22)
 
-#define SPR_DEFAULT_ID	"df"
+#define SPRITE_DEFAULT_ID		"df"
+#define SPRITE_DESTROY_ID		"destroy"
+#define ANIMATION_DESTROY_ID	"destroy"
 
 CSophiaBullet::CSophiaBullet(int direct)
 {
@@ -14,20 +16,22 @@ CSophiaBullet::CSophiaBullet(int direct)
 	/*
 		collider of bullet
 	*/
-	auto collider = new CCollider2D(this, true, false);
+	CCollider2D* collider = new CCollider2D(this, true, false);
 	collider->SetOffset(VectorZero());
 	
 	// boxsize, velocity, sprite
-	auto sprites = CSprites::GetInstance();
+	this->AddAnimation(ANIMATION_DESTROY_ID, "aniSmallDestroy");
+	CSprites* sprites = CSprites::GetInstance();
+	this->AddSprite(SPRITE_DESTROY_ID, "sprDestroy02");
 	if (direct == 0) {
 		collider->SetBoxSize(V_BULLET_BOXSIZE_VERTICAL);
 		this->velocity = Vector2D(0, SOPHIA_BASICBULLET_VELOCITY);
-		this->AddSprite(SPR_DEFAULT_ID, "sprSBullet01");
+		this->AddSprite(SPRITE_DEFAULT_ID, "sprSBullet01");
 		this->nx = 1;
 	}
 	else {
 		collider->SetBoxSize(V_BULLET_BOXSIZE_HORIZON);
-		this->AddSprite(SPR_DEFAULT_ID, "sprSBullet00");
+		this->AddSprite(SPRITE_DEFAULT_ID, "sprSBullet00");
 		if (direct == 1) {
 			this->velocity = Vector2D(SOPHIA_BASICBULLET_VELOCITY, 0);
 			this->nx = -1;
@@ -59,7 +63,7 @@ void CSophiaBullet::Update(DWORD dt)
 
 void CSophiaBullet::Render()
 {
-	auto sprite = this->sprites.at(SPR_DEFAULT_ID);
+	LPSPRITE sprite = this->sprites.at(SPRITE_DEFAULT_ID);
 	sprite->Draw(this->position, this->nx, DRAW_COLOR_DEFAULT);
 }
 

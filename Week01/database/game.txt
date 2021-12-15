@@ -44,7 +44,7 @@ sprSGun90	32	3	4	7	0
 # sophia bullet
 sprSBullet00	91	21	22	6	0
 sprSBullet01	117	20	6	22	0
-# destroyed object
+# small destroy
 sprDestroy00	140	101	7	8	0
 sprDestroy01	149	97	16	13	0
 sprDestroy02	166	97	16	16	0
@@ -96,7 +96,7 @@ aniBJDownward	sprBJDownward00	100	sprBJDownward01	100	sprBJDownward02	100
 aniSLeftWheel	sprSWheel00	100	sprSWheel01	100	sprSWheel02	100	sprSWheel03	100
 aniSRightWheel	sprSWheel03	100	sprSWheel00	100	sprSWheel01	100	sprSWheel02	100
 # destroyed collision
-aniDestroy	sprDestroy00	200	sprDestroy01	200	sprDestroy02	200
+aniSmallDestroy	sprDestroy02	600	sprDestroy01	600	sprDestroy00	600
 # - DRAP -
 aniEDrap	sprEDrap00	150	sprEDrap01	150	sprEDrap02	150	sprEDrap03	150
 # - STUKA -

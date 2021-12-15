@@ -328,7 +328,7 @@ void CGame::RenderGame()
 
 		this->map->Draw(Vector2D(this->mapWidth / 2, this->mapHeight / 2), 1, DRAW_COLOR_DEFAULT);
 		for (auto object : renderedObjects) {
-			if (!object->IsLive() || !object->IsActive()) {
+			if (!object->IsActive()) {
 				continue;
 			}
 

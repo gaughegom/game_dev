@@ -134,6 +134,9 @@
     <Filter Include="Game\Game objects\Enemies\Neo worm">
       <UniqueIdentifier>{6ef2be72-9c1b-4c38-8c76-6d50814ea061}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Game\Game objects\Enemies\Ballcarry">
+      <UniqueIdentifier>{d480c70f-a15b-4b21-9a40-c9b1c214b9f6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -253,6 +256,9 @@
     <ClCompile Include="EnemyNeoWorm.cpp">
       <Filter>Game\Game objects\Enemies\Neo worm</Filter>
     </ClCompile>
+    <ClCompile Include="EnemyBallcarry.cpp">
+      <Filter>Game\Game objects\Enemies\Ballcarry</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Textures.h">
@@ -371,6 +377,9 @@
     </ClInclude>
     <ClInclude Include="EnemyNeoWorm.h">
       <Filter>Game\Game objects\Enemies\Neo worm</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyBallcarry.h">
+      <Filter>Game\Game objects\Enemies\Ballcarry</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
