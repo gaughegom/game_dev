@@ -11,6 +11,7 @@ void CSophiaWheel::Update(DWORD dt)
 
 void CSophiaWheel::Render()
 {
+	D3DCOLOR color = self->GetSophiaPartRenderColor();
 	auto animation = this->animations.at(ANIMATION_SOPHIA_WHEEL_DEFAULT_ID);
 
 	this->HandleAnimationDirectState();
@@ -19,7 +20,7 @@ void CSophiaWheel::Render()
 	animation->Render(
 		this->position + this->self->GetPosition(), 
 		-this->self->GetNx(),
-		DRAW_COLOR_DEFAULT);
+		color);
 }
 
 // set prop in animation of wheel by target state

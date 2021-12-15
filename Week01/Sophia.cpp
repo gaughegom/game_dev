@@ -143,7 +143,7 @@ void CSophia::UpdateColliders()
 
 void CSophia::Render()
 {
-	auto color = this->GetRenderColor();
+	this->renderColor = this->GetRenderColor();
 	this->leftWheel->Render();
 	this->rightWheel->Render();
 	this->body->Render();
@@ -215,7 +215,6 @@ void CSophia::OnCollisionWithEnemy(LPCOLLISIONEVENT coEvent)
 	// TODO: add trigger in enemy
 	if (isSuffered) {
 		this->hp -= coEvent->object->GetDamage();
-		DebugOut(L"sophia hp: %f\n", this->hp);
 		STriggerTag tag = STriggerTag(coEvent->object);
 		this->AddTriggerTag(coEvent->object);
 		coEvent->object->AddTriggerTag(this);

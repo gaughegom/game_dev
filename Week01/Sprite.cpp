@@ -10,7 +10,7 @@ CSprite::CSprite(std::string id, int left, int top, int width, int height, LPDIR
 	this->texture = tex;
 }
 
-void CSprite::Draw(Vector2D position, int nx, D3DCOLOR color)
+void CSprite::Draw(Vector2D position, int nx, D3DCOLOR color, int layer)
 {
 	CGame* game = CGame::GetInstance();
 	game->Draw(
@@ -21,5 +21,6 @@ void CSprite::Draw(Vector2D position, int nx, D3DCOLOR color)
 		this->top, 
 		this->left + this->width, 
 		this->top + this->height,
-		color);
+		color,
+		layer);
 }

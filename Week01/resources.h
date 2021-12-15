@@ -22,6 +22,11 @@
 #define MAX_FRAME_RATE				60
 
 #define BACKGROUND_COLOR			D3DCOLOR_XRGB(0, 0, 0)
+#define	BACKGROUND_LAYER_0			0
+#define	BACKGROUND_LAYER_1			1
+#define BACKGROUND_LAYER_2			2
+#define BACKGROUND_LAYER_3			3
+#define BACKGROUND_LAYER_4			4
 
 #pragma endregion
 

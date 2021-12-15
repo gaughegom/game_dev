@@ -94,7 +94,7 @@ D3DCOLOR CGameObject::GetRenderColor()
 			return DRAW_COLOR_DEFAULT;
 		}
 		else {
-			return D3DCOLOR_ARGB(255, 255, 100, 100);
+			return D3DCOLOR_ARGB(255, 125, 125, 125);
 		}
 	}
 }

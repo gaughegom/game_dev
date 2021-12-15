@@ -18,12 +18,13 @@ void CSophiaBody::Update(DWORD dt)
 
 void CSophiaBody::Render()
 {
+	D3DCOLOR color = self->GetSophiaPartRenderColor();
 	auto sprite = this->sprites.at(SPR_SOPHIA_BODY_ID);
 
 	// handle animation action state
 	this->HandleAnimationActionState(this->self->GetActionState());
 
-	sprite->Draw(this->position + this->self->GetPosition(), -1, DRAW_COLOR_DEFAULT);
+	sprite->Draw(this->position + this->self->GetPosition(), -1, color);
 }
 
 void CSophiaBody::HandleAnimationActionState(SophiaActionState actionState)

@@ -22,14 +22,16 @@ void CSophiaCabin::Update(DWORD dt)
 
 void CSophiaCabin::Render()
 {
+	D3DCOLOR color = self->GetSophiaPartRenderColor();
+
 	// get sprite of self cabin
 	std::string spriteId = this->MappingCabinSpriteState(this->self->GetActionState());
 	auto sprite = this->sprites.at(spriteId);
 
-sprite->Draw(
+	sprite->Draw(
 		this->position + this->self->GetPosition(), 
 		-this->self->GetNx(),
-		DRAW_COLOR_DEFAULT);
+		color);
 }
 
 std::string CSophiaCabin::MappingCabinSpriteState(SophiaActionState actionState)

@@ -47,6 +47,8 @@ private:
 	CSophiaCabin* cabin;
 	CSophiaGun* gun;
 
+	D3DCOLOR renderColor = DRAW_COLOR_DEFAULT;
+
 	SophiaDirectState directState;
 	SophiaActionState actionState;
 
@@ -64,8 +66,9 @@ public:
 
 	void Update(DWORD dt);
 	void Render();
-	void ListenKeyEvent();
 
+	D3DCOLOR GetSophiaPartRenderColor() { return this->renderColor; }
+	void ListenKeyEvent();
 	void SubcribeDirectState(SophiaDirectState directState);
 	void SetActionState(SophiaActionState actionState);
 

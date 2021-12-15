@@ -22,12 +22,13 @@ void CSophiaGun::Update(DWORD dt)
 
 void CSophiaGun::Render()
 {
+	D3DCOLOR color = self->GetSophiaPartRenderColor();
 	std::string spriteId = this->MappingGunSpriteState(this->self->GetActionState());
 	
 	this->sprites.at(spriteId)->Draw(
 		this->position + this->self->GetPosition(), 
 		-this->self->GetNx(),
-		DRAW_COLOR_DEFAULT);
+		color);
 }
 
 std::string CSophiaGun::MappingGunSpriteState(SophiaActionState actionState)
