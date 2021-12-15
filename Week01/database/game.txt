@@ -76,6 +76,12 @@ sprEOffside03	202	56	18	18	1
 sprEBallot00	100	737	18	18	1
 sprEBallot01	79	737	18	18	1
 sprEBallot02	58	737	18	18	1
+# - INTERRUPT -
+sprEInterrupt00	71	1486	22	18	1
+sprEInterrupt01	96	1489	22	15	1
+# - NEOWORM -
+sprENeoworm00	42	1265	17	10	1
+sprENeoworm01	60	1265	18	10	1
 # ani_id		sprite1_id	time1	sprite2_id	time2	...
 [ANIMATIONS]
 # - JASON -
@@ -103,6 +109,10 @@ aniEGX680	sprEGx68000	100	sprEGx68001	100
 aniEOffside	sprEOffside00	100	sprEOffside01	100	sprEOffside02	100	sprEOffside03	100
 # - BALLOT -
 aniEBallot	sprEBallot00	100	sprEBallot01	100	sprEBallot02	100
+# - INTERRUPT -
+aniEInterrupt	sprEInterrupt00	100	sprEInterrupt01	100
+# - NEOWORM -
+aniENeoworm	sprENeoworm00	100	sprENeoworm01	100
 [CHARACTERS]
 #type	nx	x	y	width	height
 sophia	1	32	336	8	16

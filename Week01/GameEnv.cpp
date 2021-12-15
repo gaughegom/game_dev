@@ -26,3 +26,10 @@ void InSinWave(CGameObject* self, DWORD dt, float amplitude)
 	position.y += amplitude * sin(self->duration * PI / 180);
 	self->SetPosition(position);
 }
+
+int RandomDirect()
+{
+	int randNx = rand() % 2;
+	if (randNx == 0) randNx = -1;
+	return randNx;
+}

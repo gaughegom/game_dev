@@ -4,6 +4,7 @@
 #include "SophiaBullet.h"
 #include "EnemyStuka.h"
 #include "Gate.h"
+#include "EnemyInterrupt.h"
 
 CSophia::CSophia()
 {
@@ -119,31 +120,25 @@ void CSophia::ListenKeyEvent()
 
 void CSophia::UpdateColliders()
 {
-	auto collider = this->colliders.at(0);
-	this->colliders.clear();
 	switch (this->actionState)
 	{
 	case SophiaActionState::Idle:
-		collider->SetOffset(SOPHIA_OFFSET_IDLE);
-		collider->SetBoxSize(SOPHIA_BOX_IDLE);
+		this->colliders.at(0)->SetOffset(SOPHIA_OFFSET_IDLE);
+		this->colliders.at(0)->SetBoxSize(SOPHIA_BOX_IDLE);
 		break;
 	case SophiaActionState::Tile45:
-		collider->SetOffset(Vector2D(-0.5f * this->nx, 10.5f));
-		collider->SetBoxSize(SOPHIA_BOX_TILE45);
+		this->colliders.at(0)->SetOffset(Vector2D(-0.5f * this->nx, 10.5f));
+		this->colliders.at(0)->SetBoxSize(SOPHIA_BOX_TILE45);
 		break;
 	case SophiaActionState::Up90:
-		collider->SetOffset(Vector2D(-3.0f * this->nx, 12.0f));
-		collider->SetBoxSize(SOPHIA_BOX_UP90);
+		this->colliders.at(0)->SetOffset(Vector2D(-3.0f * this->nx, 12.0f));
+		this->colliders.at(0)->SetBoxSize(SOPHIA_BOX_UP90);
 		break;
 	default:
-		collider->SetOffset(SOPHIA_OFFSET_IDLE);
-		collider->SetBoxSize(SOPHIA_BOX_IDLE);
+		this->colliders.at(0)->SetOffset(SOPHIA_OFFSET_IDLE);
+		this->colliders.at(0)->SetBoxSize(SOPHIA_BOX_IDLE);
 		break;
 	}
-
-	collider->SetDynamic(true);
-	this->colliders.push_back(collider);
-	this->SetColliders(colliders);
 }
 
 void CSophia::Render()
@@ -211,6 +206,9 @@ void CSophia::OnCollisionWithEnemy(LPCOLLISIONEVENT coEvent)
 	bool isSuffered = false;
 	
 	// TODO: check collision with enemy not trigger
+	if (dynamic_cast<CEnemyInterrupt*>(coEvent->object)) {
+		isSuffered = true;
+	}
 
 	// TODO: add more enemies later
 

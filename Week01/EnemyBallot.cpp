@@ -17,11 +17,7 @@ CEnemyBallot::CEnemyBallot()
 
 	// collider
 	this->colliders.clear();
-	auto collider = new CCollider2D;
-	collider->SetGameObject(this);
-	collider->SetOffset(VectorZero());
-	collider->SetBoxSize(V_BALLOT_BOXSIZE);
-	collider->SetDynamic(true);
+	auto collider = new CCollider2D(this, true, false, VectorZero(), V_BALLOT_BOXSIZE);
 	this->colliders.push_back(collider);
 	this->SetColliders(this->colliders);
 }

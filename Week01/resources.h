@@ -17,7 +17,7 @@
 
 #define WINDOW_CLASS_NAME			L"Blaster master"
 #define WINDOW_TITLE				L"Blaster master"
-#define WINDOW_SCREEN_WIDTH			320
+#define WINDOW_SCREEN_WIDTH			244
 #define WINDOW_SCREEN_HEIGHT		280
 #define MAX_FRAME_RATE				60
 

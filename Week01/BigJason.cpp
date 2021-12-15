@@ -1,5 +1,6 @@
 #include "BigJason.h"
 #include "Player.h"
+#include "Gate.h"
 
 #define BOXSIZE_HORIZON				Vector2D(24.0f, 32.0f)
 #define BOXSIZE_VERTICAL			Vector2D(20.0f, 32.0f)
@@ -44,6 +45,8 @@ void CBigJason::Update(DWORD dt)
 	if (CPlayer::GetInstance()->GetSelectId() == PlayerCharacterId::BIGJASON) {
 		this->ListenKeyEvent();
 	}
+
+	this->UpdateColliders();
 }
 
 void CBigJason::Render()
@@ -84,6 +87,23 @@ void CBigJason::ListenKeyEvent()
 
 void CBigJason::UpdateColliders()
 {
+	auto collider = this->colliders.at(0);
+
+	switch (this->directState)
+	{
+	case BigJasonDirectState::LEFTWALK:
+	case BigJasonDirectState::RIGHTWALK:
+		this->colliders.at(0)->SetBoxSize(BOXSIZE_HORIZON);
+		break;
+
+	case BigJasonDirectState::DOWNWALK:
+	case BigJasonDirectState::UPWALK:
+		this->colliders.at(0)->SetBoxSize(BOXSIZE_VERTICAL);
+		break;
+
+	default:
+		break;
+	}
 }
 
 std::string CBigJason::MappingStateOfAnimation()
@@ -145,8 +165,31 @@ void CBigJason::SubcribeDirectState(BigJasonDirectState newState)
 
 void CBigJason::OnCollision(CCollider2D* self, LPCOLLISIONEVENT coEvent)
 {
+	if (dynamic_cast<CGate*>(coEvent->object)) {
+		CGate* coGate = (CGate*)coEvent->object;
+		DebugOut(L"next to another scene %d\n", coGate->GetNextScene());
+		CGame::GetInstance()->SwitchScene(coGate->GetNextScene());
+	}
+	else {
+		this->OnCollisionWithEnemy(coEvent);
+	}
 }
 
 void CBigJason::OnTrigger(CCollider2D* self, LPCOLLISIONEVENT coEvent)
 {
+}
+
+void CBigJason::OnCollisionWithEnemy(LPCOLLISIONEVENT coEvent)
+{
+	bool isSuffered = false;
+	if (dynamic_cast<CEnemyEyelet*>(coEvent->object)) isSuffered = true;
+	// TODO: add more enemies later
+	// TODO: make enemy go throw player, player take damage
+
+	if (isSuffered) {
+		this->hp -= coEvent->object->GetDamage();
+		STriggerTag tag = STriggerTag(coEvent->object);
+		this->AddTriggerTag(coEvent->object);
+		coEvent->object->AddTriggerTag(this);
+	}
 }

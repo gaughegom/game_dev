@@ -36,6 +36,9 @@ maps\sectionA.png	16	29	outdoor
 [OBJECTS]
 #name	nx	x	y	width	height
 # - Enemy -
+interrupt	1	128	128	22	15
+interrupt	1	160	192	22	15
+interrupt	1	128	256	22	15
 [GATES]
 #way	x	y	col	row	next
 out	0	24	3	2	1
