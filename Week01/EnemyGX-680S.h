@@ -1,16 +1,14 @@
 #pragma once
-#ifndef _ENEMY_GX680_H
-#define _ENEMY_GX680_H
+#ifndef _ENEMY_GX680S_H
+#define _ENEMY_GX680S_H
 
 #include "GameObject.h"
 
-#define C_GX680			0
-
-class CEnemyGX680 : public CGameObject {
+class CEnemyGX680S : public CGameObject {
 private:
 
 public:
-	CEnemyGX680();
+	CEnemyGX680S();
 
 	void Update(DWORD dt);
 	void Render();
@@ -18,4 +16,4 @@ public:
 	void OnCollision(CCollider2D* self, LPCOLLISIONEVENT coEvent);
 };
 
-#endif // !_ENEMY_GX-680_H
+#endif // !_ENEMY_GX680S_H

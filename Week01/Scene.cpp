@@ -4,9 +4,12 @@
 
 #include "Brick.h"
 #include "EnemyBallot.h"
+#include "EnemyBallcarry.h"
 #include "EnemyEyelet.h"
-#include "EnemyStuka.h"
+#include "EnemyGX-680.h"
+#include "EnemyGX-680S.h"
 #include "EnemyInterrupt.h"
+#include "EnemyStuka.h"
 #include "Player.h"
 #include "Gate.h"
 
@@ -74,6 +77,9 @@ void CScene::__ParseSection_OBJECTS__(std::string line)
 	else if (type == "ballot") object = new CEnemyBallot;
 	else if (type == "stuka") object = new CEnemyStuka;
 	else if (type == "interrupt") object = new CEnemyInterrupt;
+	else if (type == "ballcarry") object = new CEnemyBallcarry;
+	else if (type == "gx680") object = new CEnemyGX680;
+	else if (type == "gx680s") object = new CEnemyGX680S;
 	else {
 		DebugOut(L"[ERROR] Unknowed object type: %s\n", type); // catch undefined object
 		return;

@@ -1,6 +1,9 @@
 #include "BigJason.h"
 #include "Player.h"
 #include "Gate.h"
+#include "BigJasonBullet.h"
+#include "EnemyGX-680.h"
+#include "EnemyGX-680S.h"
 
 #define BOXSIZE_HORIZON				Vector2D(24.0f, 32.0f)
 #define BOXSIZE_VERTICAL			Vector2D(20.0f, 32.0f)
@@ -41,6 +44,7 @@ CBigJason::CBigJason()
 void CBigJason::Update(DWORD dt)
 {
 	// TODO: update collider
+	DebugOut(L"big jason hp: %f\n", this->hp);
 
 	if (CPlayer::GetInstance()->GetSelectId() == PlayerCharacterId::BIGJASON) {
 		this->ListenKeyEvent();
@@ -82,6 +86,10 @@ void CBigJason::ListenKeyEvent()
 	}
 	else {
 		this->SubcribeDirectState(BigJasonDirectState::STAY);
+	}
+
+	if (input->OnKeyDown(SHOTTING_KEYCODE)) {
+		this->Shooting();
 	}
 }
 
@@ -179,15 +187,64 @@ void CBigJason::OnTrigger(CCollider2D* self, LPCOLLISIONEVENT coEvent)
 {
 }
 
+void CBigJason::Shooting()
+{
+	CGame* game = CGame::GetInstance();
+	LPGAMEOBJECT newBullet = nullptr;
+	switch (this->directState)
+	{
+	case BigJasonDirectState::LEFTWALK:
+		newBullet = new CBigJasonBullet(BigJasonBulletDirection::LEFT);
+		break;
+
+	case BigJasonDirectState::RIGHTWALK:
+		newBullet = new CBigJasonBullet(BigJasonBulletDirection::RIGHT);
+		break;
+
+	case BigJasonDirectState::UPWALK:
+		newBullet = new CBigJasonBullet(BigJasonBulletDirection::UP);
+		break;
+
+	case BigJasonDirectState::DOWNWALK:
+		newBullet = new CBigJasonBullet(BigJasonBulletDirection::DOWN);
+		break;
+
+	case BigJasonDirectState::STAY:
+		if (this->currentSpriteState == SPRITE_STAY_HORIZON_ID) {
+			switch (this->nx)
+			{
+			case 1:
+				newBullet = new CBigJasonBullet(BigJasonBulletDirection::RIGHT);
+				break;
+			case -1:
+				newBullet = new CBigJasonBullet(BigJasonBulletDirection::LEFT);
+				break;
+			default:
+				break;
+			}
+		}
+		else if (this->currentSpriteState == SPRITE_STAY_UP_ID) {
+			newBullet = new CBigJasonBullet(BigJasonBulletDirection::UP);
+		}
+		else if (this->currentSpriteState == SPRITE_STAY_DOWN_ID) {
+			newBullet = new CBigJasonBullet(BigJasonBulletDirection::DOWN);
+		}
+
+	default:
+		break;
+	}
+
+	newBullet->SetPosition(this->position);
+	game->NewGameObject(newBullet);
+	DebugOut(L"add bullet in world\n");
+}
+
 void CBigJason::OnCollisionWithEnemy(LPCOLLISIONEVENT coEvent)
 {
-	bool isSuffered = false;
-	if (dynamic_cast<CEnemyEyelet*>(coEvent->object)) isSuffered = true;
-	// TODO: add more enemies later
-	// TODO: make enemy go throw player, player take damage
+	if (dynamic_cast<CEnemyGX680*>(coEvent->object)
+		|| dynamic_cast<CEnemyGX680S*>(coEvent->object)) {
+		this->TakeDamage(coEvent->object);
 
-	if (isSuffered) {
-		this->hp -= coEvent->object->GetDamage();
 		STriggerTag tag = STriggerTag(coEvent->object);
 		this->AddTriggerTag(coEvent->object);
 		coEvent->object->AddTriggerTag(this);

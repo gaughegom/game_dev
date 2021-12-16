@@ -45,7 +45,7 @@ class CGame {
 	LPKEYEVENTHANDLER keyHandler;
 
 	std::unordered_map<int, LPSCENE> scenes;
-	int currentScene = 0;	// default scene 0
+	int currentScene = 3;	// default scene 0
 
 
 	float camWidth = 0;

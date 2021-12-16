@@ -2,6 +2,7 @@
 [TEXTURES]
 0	textures\player.png	41	255	4
 1	textures\enemies.png	41	255	4
+2	textures\items.png	0	0	0
 # id	left	top	width	height	texture_id
 [SPRITES]
 # - SMALL JASON -	// 50 -> 100
@@ -21,6 +22,9 @@ sprBJUpward02	260	36	20	31	0
 sprBJDownward00	210	3	20	31	0
 sprBJDownward01	235	3	20	32	0
 sprBJDownward02	260	3	20	31	0
+# - Big Jason bullet -
+sprBJBullet00	234	107	8	6	0
+sprBJBullet01	244	106	6	8	0
 # - SOPHIA -	// 0 -> 50
 # wheel part 	// 0 -> 3
 sprSWheel00	3	21	8	8	0
@@ -48,25 +52,29 @@ sprSBullet01	117	20	6	22	0
 sprDestroy00	140	101	7	8	0
 sprDestroy01	149	97	16	13	0
 sprDestroy02	166	97	16	16	0
-# - ENEMIES - 	// 200 -> ...
-# - DRAP -	// 200 -> 209
+# - ENEMIES -
+# - DRAP -
 sprEDrap00	128	274	18	18	1
 sprEDrap01	148	276	18	16	1
 sprEDrap02	188	276	18	16	1
 sprEDrap03	168	274	18	18	1
-# - STUKA - // 210 -> 219
+# - STUKA -
 sprEStuka00	74	386	18	18	1
 sprEStuka01	94	386	18	18	1
 sprEStuka02	114	386	18	18	1
-# - EYELET - // 220 -> 229
+# - EYELET -
 sprEEyelet00	128	31	18	15	1
 sprEEyelet01	148	28	18	18	1
 sprEEyelet02	168	31	18	15	1
 sprEEyelet03	188	36	18	10	1
-# - GX680 - // 230 -> 239
+# - GX680 - 
 sprEGx68000	128	296	18	16	1
 sprEGx68001	148	295	18	17	1
-# - OFFSIDE - // 240 -> 249
+# - GX680S -
+sprEGX680S00	80	1149	18	17	1
+sprEGX680S01	100	1150	18	16	1
+sprEGX680S02	128	1150	18	17	1
+# - OFFSIDE - 
 sprEOffside00	24	56	18	18	1
 sprEOffside01	46	56	18	18	1
 sprEOffside02	186	56	18	18	1
@@ -82,6 +90,13 @@ sprEInterrupt01	96	1489	22	15	1
 # - NEOWORM -
 sprENeoworm00	42	1265	17	10	1
 sprENeoworm01	60	1265	18	10	1
+# - BALLCARRY -
+sprEBallcarry00	102	652	16	16	1
+sprEBallcarry01	81	651	18	17	1
+sprEBallcarry02	60	653	18	15	1
+sprEBallcarry03	42	650	16	18	1
+# - BOOM -
+sprBallbomb	258	12	10	10	2
 # ani_id		sprite1_id	time1	sprite2_id	time2	...
 [ANIMATIONS]
 # - JASON -
@@ -105,6 +120,7 @@ aniEStuka	sprEStuka00	150	sprEStuka01	150	sprEStuka02	150
 aniEEyelet	sprEEyelet00	100	sprEEyelet01	100	sprEEyelet03	100
 # - GX680 -
 aniEGX680	sprEGx68000	100	sprEGx68001	100
+aniEGX680S	sprEGX680S00	200	sprEGX680S01	200	sprEGX680S02	200
 # - OFFSIDE -=
 aniEOffside	sprEOffside00	100	sprEOffside01	100	sprEOffside02	100	sprEOffside03	100
 # - BALLOT -
@@ -113,6 +129,8 @@ aniEBallot	sprEBallot00	100	sprEBallot01	100	sprEBallot02	100
 aniEInterrupt	sprEInterrupt00	100	sprEInterrupt01	100
 # - NEOWORM -
 aniENeoworm	sprENeoworm00	100	sprENeoworm01	100
+# - BALLCARRY -
+aniEBallcarry	sprEBallcarry01	200	sprEBallcarry03	200
 [CHARACTERS]
 #type	nx	x	y	width	height
 sophia	1	32	336	8	16

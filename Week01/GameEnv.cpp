@@ -17,7 +17,7 @@ void InHorizontalMove(CGameObject* self, DWORD dt)
 	self->SetPosition(position);
 }
 
-void InSinWave(CGameObject* self, DWORD dt, float amplitude)
+void InSinWaveXAsix(CGameObject* self, DWORD dt, float amplitude)
 {
 	self->duration += 0.2f * dt;
 	if (self->duration > 360)
@@ -27,9 +27,24 @@ void InSinWave(CGameObject* self, DWORD dt, float amplitude)
 	self->SetPosition(position);
 }
 
+void InSinWaveYAsix(CGameObject* self, DWORD dt, float amplitude)
+{
+	self->duration += 0.2f * dt;
+	if (self->duration > 360)
+		self->duration = 0;	//reset omega
+	Vector2D position = self->GetPosition();
+	position.x += amplitude * sin(self->duration * PI / 180);
+	self->SetPosition(position);
+}
+
 int RandomDirect()
 {
 	int randNx = rand() % 2;
 	if (randNx == 0) randNx = -1;
 	return randNx;
+}
+
+int Random(int begin, int end)
+{
+	return (rand() % (end - begin + 1) + begin);
 }

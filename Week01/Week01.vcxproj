@@ -23,10 +23,13 @@
     <ClCompile Include="AnimationFrame.cpp" />
     <ClCompile Include="Animations.cpp" />
     <ClCompile Include="BigJason.cpp" />
+    <ClCompile Include="BigJasonBullet.cpp" />
     <ClCompile Include="Brick.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Collider2D.cpp" />
+    <ClCompile Include="EnemyBallbomb.cpp" />
     <ClCompile Include="EnemyBallcarry.cpp" />
+    <ClCompile Include="EnemyGX-680S.cpp" />
     <ClCompile Include="EnemyInterrupt.cpp" />
     <ClCompile Include="EnemyNeoWorm.cpp" />
     <ClCompile Include="Gate.cpp" />
@@ -65,10 +68,13 @@
     <ClInclude Include="AnimationFrame.h" />
     <ClInclude Include="Animations.h" />
     <ClInclude Include="BigJason.h" />
+    <ClInclude Include="BigJasonBullet.h" />
     <ClInclude Include="Brick.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Collider2D.h" />
+    <ClInclude Include="EnemyBallbomb.h" />
     <ClInclude Include="EnemyBallcarry.h" />
+    <ClInclude Include="EnemyGX-680S.h" />
     <ClInclude Include="EnemyInterrupt.h" />
     <ClInclude Include="EnemyNeoWorm.h" />
     <ClInclude Include="Gate.h" />

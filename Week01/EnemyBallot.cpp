@@ -1,5 +1,4 @@
 #include "EnemyBallot.h"
-#include "SophiaBullet.h"
 #include "Player.h"
 
 #define	V_BALLOT_BOXSIZE			Vector2D(18, 18)
@@ -43,11 +42,7 @@ void CEnemyBallot::OnCollision(CCollider2D* self, LPCOLLISIONEVENT coEvent)
 	if (dynamic_cast<CSophia*>(coEvent->object)) {
 		LPGAMEOBJECT thisObject = dynamic_cast<LPGAMEOBJECT>(this);
 		coEvent->object->TakeDamage(thisObject);
-	}
-	else if (dynamic_cast<CSophiaBullet*>(coEvent->object)) {
 		this->TakeDamage(coEvent->object);
-		auto bullet = (CSophiaBullet*)coEvent->object;
-		bullet->OnDelete();
 	}
 }
 

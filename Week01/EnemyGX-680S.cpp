@@ -1,4 +1,4 @@
-#include "EnemyGX-680.h"
+#include "EnemyGX-680S.h"
 #include "Player.h"
 
 #define ANIMATION_DEFAULT_ID		"df"
@@ -7,22 +7,22 @@
 
 #define OWN_VELOCITY				0.02f
 
-CEnemyGX680::CEnemyGX680()
+CEnemyGX680S::CEnemyGX680S()
 {
-	this->AddAnimation(ANIMATION_DEFAULT_ID, "aniEGX680");
+	this->AddAnimation(ANIMATION_DEFAULT_ID, "aniEGX680S");
 
 	this->active = false;
 	this->velocity = VectorZero();
 	this->damage = 10;
-	this->hp = 20;
-	
+	this->hp = 40;
+
 	//
 	CCollider2D* collider = new CCollider2D(this, true, false, VectorZero(), V_BOXSIZE);
 	this->colliders.push_back(collider);
 	this->SetColliders(this->colliders);
 }
 
-void CEnemyGX680::Update(DWORD dt)
+void CEnemyGX680S::Update(DWORD dt)
 {
 	LPGAMEOBJECT player = CPlayer::GetInstance()->GetPlayer();
 	// detected player
@@ -41,12 +41,12 @@ void CEnemyGX680::Update(DWORD dt)
 	}
 }
 
-void CEnemyGX680::Render()
+void CEnemyGX680S::Render()
 {
 	D3DCOLOR color = this->GetRenderColor();
 	animations.at(ANIMATION_DEFAULT_ID)->Render(this->position, 1, color);
 }
 
-void CEnemyGX680::OnCollision(CCollider2D* self, LPCOLLISIONEVENT coEvent)
+void CEnemyGX680S::OnCollision(CCollider2D* self, LPCOLLISIONEVENT coEvent)
 {
 }

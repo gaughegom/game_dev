@@ -104,6 +104,14 @@ eyelet	1	512	273	18	15
 stuka	1	500	278	18	18
 stuka	1	128	294	18	18
 ballot	1	464	414	18	18
+ballcarry	1	464	464	18	18
+stuka	-1	720	412	18	18
+ballcarry	1	752	464	18	18
+ballot	1	752	350	18	18
+stuka	-1	1152	400	18	18
+stuka	-1	1248	400	18	18
+eyelet	1	1280	432	18	15
+eyelet	1	960	432	18	15
 [GATES]
 #way	x	y	col	row	next
 in	83	8	3	2	0

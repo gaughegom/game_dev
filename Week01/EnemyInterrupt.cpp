@@ -1,6 +1,5 @@
 #include "EnemyInterrupt.h"
 #include "Player.h"
-#include "SophiaBullet.h"
 #include "EnemyNeoWorm.h"
 
 #define V_BOXSIZE			Vector2D(22.0f, 18.0f)
@@ -22,7 +21,7 @@ CEnemyInterrupt::CEnemyInterrupt()
 
 	//
 	this->colliders.clear();
-	auto collider = new CCollider2D(this, true, false, VectorZero(), V_BOXSIZE);
+	CCollider2D* collider = new CCollider2D(this, true, false, VectorZero(), V_BOXSIZE);
 	this->colliders.push_back(collider);
 	this->SetColliders(this->colliders);
 }
@@ -67,11 +66,6 @@ void CEnemyInterrupt::OnCollision(CCollider2D* self, LPCOLLISIONEVENT coEvent)
 		STriggerTag tag = STriggerTag(coEvent->object);
 		coEvent->object->AddTriggerTag(this);
 		this->AddTriggerTag(coEvent->object);
-	}
-	else if (dynamic_cast<CSophiaBullet*>(coEvent->object)) {
-		this->TakeDamage(coEvent->object);
-		auto bullet = (CSophiaBullet*)coEvent->object;
-		bullet->OnDelete();
 	}
 }
 

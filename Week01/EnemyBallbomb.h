@@ -1,17 +1,15 @@
 #pragma once
-#ifndef _ENEMY_BALLCARRY_H
-#define _ENEMY_BALLCARRY_H
+#ifndef _ENEMY_BALLBOMB_H
+#define _ENEMY_BALLBOMB_H
 
 #include "GameObject.h"
 
-class CEnemyBallcarry : public CGameObject {
+class CEnemyBallbomb : public CGameObject {
 private:
-	bool activeAttack = false;
-	DWORD timeAttack;
-	bool activeMove = false;
+	DWORD bornTime = GetTickCount64();
 
 public:
-	CEnemyBallcarry();
+	CEnemyBallbomb();
 
 	void Update(DWORD dt);
 	void Render();
@@ -20,4 +18,4 @@ public:
 	void OnTrigger(CCollider2D* self, LPCOLLISIONEVENT coEvent);
 };
 
-#endif // !_ENEMY_BALLCARRY_H
+#endif // !_ENEMY_BALLBOMB_H

@@ -308,8 +308,8 @@ void CGame::UpdateGame(DWORD dt)
 		}
 	}
 
-	for (auto object : worldObjects) {
-		object->Update(dt);
+	for (int i = 0; i < worldObjects.size(); i++) {
+		worldObjects.at(i)->Update(dt);
 	}
 }
 

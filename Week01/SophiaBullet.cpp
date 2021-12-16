@@ -1,6 +1,10 @@
 #include "SophiaBullet.h"
 #include "Brick.h"
 #include "Player.h"
+#include "EnemyBallcarry.h"
+#include "EnemyInterrupt.h"
+#include "EnemyStuka.h"
+#include "EnemyBallot.h"
 
 #define V_BULLET_BOXSIZE_HORIZON	Vector2D(22, 6)
 #define	V_BULLET_BOXSIZE_VERTICAL	Vector2D(6, 22)
@@ -72,6 +76,15 @@ void CSophiaBullet::OnCollision(CCollider2D* self, LPCOLLISIONEVENT coEvent)
 	if (dynamic_cast<CSophia*>(coEvent->object)
 		|| dynamic_cast<CBrick*>(coEvent->object)
 		|| dynamic_cast<CSophiaBullet*>(coEvent->object)) {
+		this->OnDelete();
+	}
+	else if (dynamic_cast<CEnemyBallcarry*>(coEvent->object)
+		|| dynamic_cast<CEnemyInterrupt*>(coEvent->object)
+		|| dynamic_cast<CEnemyEyelet*>(coEvent->object)
+		|| dynamic_cast<CEnemyStuka*>(coEvent->object)
+		|| dynamic_cast<CEnemyBallot*>(coEvent->object)) {
+		LPGAMEOBJECT thisObj = (LPGAMEOBJECT)this;
+		coEvent->object->TakeDamage(thisObj);
 		this->OnDelete();
 	}
 }

@@ -1,9 +1,8 @@
 #include "EnemyEyelet.h"
 #include "Sophia.h"
-#include "SophiaBullet.h"
-
 
 #define ANIMATION_DEFAULT_ID	"df"
+#define DETACTED_PLAYER_DISTANCE	160.0f
 
 CEnemyEyelet::CEnemyEyelet()
 {
@@ -23,11 +22,11 @@ CEnemyEyelet::CEnemyEyelet()
 
 void CEnemyEyelet::Update(DWORD dt)
 {
-	this->ScheduleActiveByDistance();
+	this->ScheduleActiveByDistance(DETACTED_PLAYER_DISTANCE);
 
 	if (this->active) {
 		this->velocity.x = this->nx * ENEMY_VELOCITY_NORMAL;
-		InSinWave(this, dt, 1.0f);
+		InSinWaveXAsix(this, dt, 1.0f);
 	}
 }
 
@@ -49,10 +48,6 @@ void CEnemyEyelet::OnTrigger(CCollider2D* self, LPCOLLISIONEVENT coEvent)
 		&& player == coEvent->object) {
 		LPGAMEOBJECT thisObject = dynamic_cast<LPGAMEOBJECT>(this);
 		coEvent->object->TakeDamage(thisObject);
-	}
-	else if (dynamic_cast<CSophiaBullet*>(coEvent->object)) {
 		this->TakeDamage(coEvent->object);
-		auto bullet = (CSophiaBullet*)coEvent->object;
-		bullet->OnDelete();
 	}
 }

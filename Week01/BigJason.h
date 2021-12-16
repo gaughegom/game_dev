@@ -28,7 +28,7 @@ public:
 	void SubcribeDirectState(BigJasonDirectState newState);
 	std::string MappingStateOfAnimation();
 
-	// TODO: shoting method
+	void Shooting();
 	void OnCollisionWithEnemy(LPCOLLISIONEVENT coEvent);
 
 	void OnCollision(CCollider2D* self, LPCOLLISIONEVENT coEvent);

@@ -114,7 +114,7 @@ public:
 	void SetSuffering(bool value) { this->suffering = value; this->sufferingDuration = 1; }
 	bool IsSuffering() { return this->suffering; }
 
-	void ScheduleActiveByDistance();
+	void ScheduleActiveByDistance(float activeDistance);
 	D3DCOLOR GetRenderColor();
 
 	// virtual

@@ -259,6 +259,15 @@
     <ClCompile Include="EnemyBallcarry.cpp">
       <Filter>Game\Game objects\Enemies\Ballcarry</Filter>
     </ClCompile>
+    <ClCompile Include="EnemyBallbomb.cpp">
+      <Filter>Game\Game objects\Enemies\Ballcarry</Filter>
+    </ClCompile>
+    <ClCompile Include="BigJasonBullet.cpp">
+      <Filter>Game\Game objects\Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyGX-680S.cpp">
+      <Filter>Game\Game objects\Enemies\GX-680S</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Textures.h">
@@ -380,6 +389,15 @@
     </ClInclude>
     <ClInclude Include="EnemyBallcarry.h">
       <Filter>Game\Game objects\Enemies\Ballcarry</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyBallbomb.h">
+      <Filter>Game\Game objects\Enemies\Ballcarry</Filter>
+    </ClInclude>
+    <ClInclude Include="BigJasonBullet.h">
+      <Filter>Game\Game objects\Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyGX-680S.h">
+      <Filter>Game\Game objects\Enemies\GX-680S</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

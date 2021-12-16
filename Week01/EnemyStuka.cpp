@@ -1,8 +1,8 @@
 #include "EnemyStuka.h"
 #include "Player.h"
-#include "SophiaBullet.h"
 
 #define ANIMATION_DEFAULT_ID	"df"
+#define DETACTED_PLAYER_DISTANCE	130.0f
 
 CEnemyStuka::CEnemyStuka()
 {
@@ -22,9 +22,7 @@ CEnemyStuka::CEnemyStuka()
 
 void CEnemyStuka::Update(DWORD dt)
 {
-	if (PositionsDistance(CPlayer::GetInstance()->GetPlayer()->GetPosition(), this->position) < ENEMY_ACTIVE_DISTANCE) {
-		this->active = true;
-	}
+	this->ScheduleActiveByDistance(DETACTED_PLAYER_DISTANCE);
 
 	if (this->active) {
 		this->velocity.x = this->nx * ENEMY_VELOCITY_NORMAL;
@@ -46,10 +44,6 @@ void CEnemyStuka::OnTrigger(CCollider2D* self, LPCOLLISIONEVENT coEvent)
 	if (dynamic_cast<CSophia*>(coEvent->object)) {
 		LPGAMEOBJECT thisObject = dynamic_cast<LPGAMEOBJECT>(this);
 		coEvent->object->TakeDamage(thisObject);
-	}
-	else if (dynamic_cast<CSophiaBullet*>(coEvent->object)) {
 		this->TakeDamage(coEvent->object);
-		auto bullet = (CSophiaBullet*)coEvent->object;
-		bullet->OnDelete();
 	}
 }

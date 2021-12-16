@@ -63,15 +63,15 @@ void CGameObject::TakeDamage(LPGAMEOBJECT& object)
 	this->SetSuffering(true);
 }
 
-void CGameObject::ScheduleActiveByDistance()
+void CGameObject::ScheduleActiveByDistance(float activeDistance)
 {
 	if (this->active == false) {
 		Vector2D playerPosition = CPlayer::GetInstance()->GetPlayer()->GetPosition();
 		float distance = PositionsDistance(playerPosition, this->position);
-		if (this->nx == 1 && distance < ENEMY_ACTIVE_DISTANCE) {
+		if (this->nx == 1 && distance < activeDistance && playerPosition.x > this->position.x) {
 			this->active = true;
 		}
-		else if (this->nx == -1 && distance > ENEMY_ACTIVE_DISTANCE && playerPosition.x < this->position.x) {
+		else if (this->nx == -1 && distance > activeDistance && playerPosition.x < this->position.x) {
 			this->active = true;
 		}
 	}
