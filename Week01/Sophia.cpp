@@ -6,6 +6,7 @@
 #include "Gate.h"
 #include "EnemyInterrupt.h"
 #include "EnemyNeoWorm.h"
+#include "ItemHealth.h"
 
 CSophia::CSophia()
 {
@@ -34,6 +35,9 @@ void CSophia::InitParts()
 
 void CSophia::Update(DWORD dt)
 {
+
+	DebugOut(L"sophia hp: %f\n", this->hp);
+
 	if (this->colliders.at(0)->IsDynamic() == true) {
 		InGravityAffect(this, dt);
 		this->UpdateColliders();
@@ -191,6 +195,12 @@ void CSophia::OnCollision(CCollider2D* self, LPCOLLISIONEVENT coEvent)
 		CGate* coGate = (CGate*)coEvent->object;
 		DebugOut(L"next to another scene %d\n", coGate->GetNextScene());
 		CGame::GetInstance()->SwitchScene(coGate->GetNextScene());
+	}
+	else if (dynamic_cast<CItemHealth*>(coEvent->object)) {
+		CItemHealth* item = (CItemHealth*)coEvent->object;
+		LPGAMEOBJECT thisObj = (LPGAMEOBJECT)this;
+		this->hp += item->GetRecoverHealth();
+		item->SetUsed();
 	}
 	else {
 		this->OnCollisionWithEnemy(coEvent);

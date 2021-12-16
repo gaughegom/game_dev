@@ -72,6 +72,8 @@ public:
 	void SubcribeDirectState(SophiaDirectState directState);
 	void SetActionState(SophiaActionState actionState);
 
+	void RecoverHealth(float recover) { this->hp += recover; }
+
 	void UpdateColliders();
 	void OnCollision(CCollider2D* self, LPCOLLISIONEVENT coEvent);
 	void OnTrigger(CCollider2D* self, LPCOLLISIONEVENT coEvent);

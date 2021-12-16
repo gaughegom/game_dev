@@ -1,6 +1,8 @@
 #include "GameObject.h"
 #include "Player.h"
 #include "SophiaBullet.h"
+#include "EnemyStuka.h"
+#include "ItemHealth.h"
 
 
 CGameObject::CGameObject()
@@ -61,6 +63,13 @@ void CGameObject::TakeDamage(LPGAMEOBJECT& object)
 {
 	this->hp -= object->GetDamage();
 	this->SetSuffering(true);
+
+	if (this->hp <= 0 && (dynamic_cast<CEnemyEyelet*>(this) || dynamic_cast<CEnemyStuka*>(this))) {
+		LPGAMEOBJECT item = nullptr;
+		item = new CItemHealth;
+		item->SetPosition(this->position);
+		CGame::GetInstance()->NewGameObject(item);
+	}
 }
 
 void CGameObject::ScheduleActiveByDistance(float activeDistance)

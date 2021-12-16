@@ -1,6 +1,8 @@
 [MAP]
 # path	 width	height	type
 maps\sectionD.png	16	114	indoor
+[FOREMAP]
+maps\sectionDFore.png	16	114
 [PLATFORMS]
 # x	y	col-number	row-number
 # brick	(16,16) calc follow tilemap

@@ -1,5 +1,7 @@
 #include "EnemyBallbomb.h"
 #include "Brick.h"
+#include "Sophia.h"
+#include "SophiaBullet.h"
 
 #define SPRITE_DEFAULT_ID	"df"
 #define V_BOXSIZE			Vector2D(10.0f, 10.0f)
@@ -38,6 +40,20 @@ void CEnemyBallbomb::OnCollision(CCollider2D* self, LPCOLLISIONEVENT coEvent)
 {
 	if (dynamic_cast<CBrick*>(coEvent->object) && this->ground == false) {
 		this->ground = true;
+	}
+	else if (dynamic_cast<CSophia*>(coEvent->object)) {
+		LPGAMEOBJECT thisObj = (CGameObject*)this;
+		coEvent->object->TakeDamage(thisObj);
+		this->TakeDamage(coEvent->object);
+
+		STriggerTag tag = STriggerTag(coEvent->object);
+		coEvent->object->AddTriggerTag(this);
+		this->AddTriggerTag(coEvent->object);
+	}
+	else if (dynamic_cast<CSophiaBullet*>(coEvent->object)) {
+		this->TakeDamage(coEvent->object);
+		CSophiaBullet* bullet = (CSophiaBullet*)coEvent->object;
+		this->hp = 0;
 	}
 }
 

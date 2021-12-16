@@ -33,6 +33,7 @@
     <ClCompile Include="EnemyInterrupt.cpp" />
     <ClCompile Include="EnemyNeoWorm.cpp" />
     <ClCompile Include="Gate.cpp" />
+    <ClCompile Include="ItemHealth.cpp" />
     <ClCompile Include="JasonDirectionState.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="EnemyBallot.cpp" />
@@ -78,6 +79,7 @@
     <ClInclude Include="EnemyInterrupt.h" />
     <ClInclude Include="EnemyNeoWorm.h" />
     <ClInclude Include="Gate.h" />
+    <ClInclude Include="ItemHealth.h" />
     <ClInclude Include="JasonDirectionState.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="EnemyBallot.h" />

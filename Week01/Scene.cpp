@@ -49,6 +49,27 @@ void CScene::__ParseSection_MAP__(std::string line)
 	this->map = CSprites::GetInstance()->Get(sprMapId);
 }
 
+void CScene::__ParseSection_FOREMAP__(std::string line)
+{
+	std::vector<std::string> tokens = SplitLine(line);
+	if (tokens.size() < 3)
+		return;
+
+	std::string foreMapPath = tokens[0].c_str();
+	float foreMapWidth = atoi(tokens[1].c_str()) * TILESET_WIDTH;
+	float foreMapHeight = atoi(tokens[2].c_str()) * TILESET_HEIGHT;
+
+	std::string texForeMapId = foreMapPath;
+	std::string sprForeMapId = foreMapPath;
+
+	// add to textures, sprites
+	CTextures::GetInstance()->Add(texForeMapId, ToWSTR(foreMapPath).c_str(), D3DCOLOR_XRGB(0, 0, 0));
+	LPDIRECT3DTEXTURE9 texForeMap = CTextures::GetInstance()->Get(texForeMapId);
+	CSprites::GetInstance()->Add(sprForeMapId, 0, 0, foreMapWidth, foreMapHeight, texForeMap);
+
+	this->foreMap = CSprites::GetInstance()->Get(sprForeMapId);
+}
+
 void CScene::__ParseSection_PLATFORMS__(std::string line)
 {
 	std::vector<std::string> tokens = SplitLine(line);
@@ -163,6 +184,10 @@ void CScene::LoadScene()
 			section = SceneSection::SCENE_SECTION_MAP;
 			continue;
 		}
+		if (line == "[FOREMAP]") {
+			section = SceneSection::SCENE_SECTION_FOREMAP;
+			continue;
+		}
 		if (line == "[PLATFORMS]") {
 			section = SceneSection::SCENE_SECTION_PLATFORMS;
 			continue;
@@ -186,6 +211,9 @@ void CScene::LoadScene()
 			break;
 		case SceneSection::SCENE_SECTION_MAP:
 			this->__ParseSection_MAP__(line);
+			break;
+		case SceneSection::SCENE_SECTION_FOREMAP:
+			this->__ParseSection_FOREMAP__(line);
 			break;
 		case SceneSection::SCENE_SECTION_PLATFORMS:
 			this->__ParseSection_PLATFORMS__(line);

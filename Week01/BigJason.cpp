@@ -236,7 +236,6 @@ void CBigJason::Shooting()
 
 	newBullet->SetPosition(this->position);
 	game->NewGameObject(newBullet);
-	DebugOut(L"add bullet in world\n");
 }
 
 void CBigJason::OnCollisionWithEnemy(LPCOLLISIONEVENT coEvent)

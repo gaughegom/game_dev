@@ -97,6 +97,8 @@ sprEBallcarry02	60	653	18	15	1
 sprEBallcarry03	42	650	16	18	1
 # - BOOM -
 sprBallbomb	258	12	10	10	2
+# - ITEM -
+sprItemHealth	105	109	16	16	2
 # ani_id		sprite1_id	time1	sprite2_id	time2	...
 [ANIMATIONS]
 # - JASON -

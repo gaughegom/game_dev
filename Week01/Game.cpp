@@ -194,6 +194,7 @@ void CGame::PlayScene()
 
 	SRect sceneBoundary = this->scenes.at(this->currentScene)->GetMapBoundary();
 	this->map = this->scenes.at(this->currentScene)->GetMapSrite();
+	this->foreMap = this->scenes.at(this->currentScene)->GetForeMapSprite();
 	this->mapWidth = sceneBoundary.right;
 	this->mapHeight = sceneBoundary.top;
 
@@ -324,7 +325,7 @@ void CGame::RenderGame()
 		// Clear back buffer with a color
 		d3ddv->ColorFill(bb, NULL, BACKGROUND_COLOR);
 
-		spriteHandler->Begin(D3DXSPRITE_ALPHABLEND | D3DXSPRITE_SORT_DEPTH_BACKTOFRONT);
+		spriteHandler->Begin(D3DXSPRITE_ALPHABLEND | D3DXSPRITE_SORT_DEPTH_FRONTTOBACK);
 
 		this->map->Draw(Vector2D(this->mapWidth / 2, this->mapHeight / 2), 1, DRAW_COLOR_DEFAULT);
 		for (auto object : renderedObjects) {
@@ -336,7 +337,7 @@ void CGame::RenderGame()
 		}
 
 		// render collider
-		for (auto object : renderedObjects) {
+		/*for (auto object : renderedObjects) {
 			if (!object->IsActive()) {
 				continue;
 			}
@@ -344,6 +345,10 @@ void CGame::RenderGame()
 			for (auto co : object->GetColliders()) {
 				co->RenderBoundingBox();
 			}
+		}*/
+
+		if (this->foreMap != nullptr) {
+			this->foreMap->Draw(Vector2D(this->mapWidth / 2, this->mapHeight / 2), 1, DRAW_COLOR_DEFAULT, BACKGROUND_LAYER_0);
 		}
 
 		spriteHandler->End();

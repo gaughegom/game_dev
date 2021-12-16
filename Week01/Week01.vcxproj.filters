@@ -137,6 +137,9 @@
     <Filter Include="Game\Game objects\Enemies\Ballcarry">
       <UniqueIdentifier>{d480c70f-a15b-4b21-9a40-c9b1c214b9f6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Game\Game objects\Items">
+      <UniqueIdentifier>{0e2217ce-13a8-4ea2-8553-d19090feca3f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -268,6 +271,9 @@
     <ClCompile Include="EnemyGX-680S.cpp">
       <Filter>Game\Game objects\Enemies\GX-680S</Filter>
     </ClCompile>
+    <ClCompile Include="ItemHealth.cpp">
+      <Filter>Game\Game objects\Items</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Textures.h">
@@ -398,6 +404,9 @@
     </ClInclude>
     <ClInclude Include="EnemyGX-680S.h">
       <Filter>Game\Game objects\Enemies\GX-680S</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemHealth.h">
+      <Filter>Game\Game objects\Items</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

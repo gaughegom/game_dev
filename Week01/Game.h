@@ -27,7 +27,8 @@ enum class SceneSection : int {
 	SCENE_SECTION_CHARACTERS = 7,
 	SCENE_SECTION_PLAYERS = 8,
 	SCENE_SECTION_GATES = 9,
-	LOAD_SCENE = 10
+	SCENE_SECTION_FOREMAP = 10,
+	LOAD_SCENE = 11
 };
 
 class CGame {
@@ -45,7 +46,7 @@ class CGame {
 	LPKEYEVENTHANDLER keyHandler;
 
 	std::unordered_map<int, LPSCENE> scenes;
-	int currentScene = 3;	// default scene 0
+	int currentScene = 0;	// default scene 0
 
 
 	float camWidth = 0;
@@ -54,6 +55,7 @@ class CGame {
 	float mapHeight = 0;
 
 	LPSPRITE map;
+	LPSPRITE foreMap;
 	bool reset = false;
 
 public:
