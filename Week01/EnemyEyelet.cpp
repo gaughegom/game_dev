@@ -46,8 +46,7 @@ void CEnemyEyelet::OnTrigger(CCollider2D* self, LPCOLLISIONEVENT coEvent)
 	LPGAMEOBJECT player = CPlayer::GetInstance()->GetPlayer();
 	if ((dynamic_cast<CSophia*>(coEvent->object) || dynamic_cast<CJason*>(coEvent->object)) 
 		&& player == coEvent->object) {
-		LPGAMEOBJECT thisObject = dynamic_cast<LPGAMEOBJECT>(this);
-		coEvent->object->TakeDamage(thisObject);
-		this->TakeDamage(coEvent->object);
+		coEvent->object->TakeDamage(this->damage);
+		this->TakeDamage(coEvent->object->GetDamage());
 	}
 }

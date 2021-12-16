@@ -93,7 +93,7 @@ public:
 	bool IsActive() { return this->active; }
 
 	// hp
-	void TakeDamage(LPGAMEOBJECT& object);
+	void TakeDamage(float damage);
 	void SetHp(float hp) { this->hp = hp; }
 	float GetHp() { return this->hp; }
 	bool IsLive() { return this->hp > 0; }

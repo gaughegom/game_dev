@@ -83,8 +83,7 @@ void CSophiaBullet::OnCollision(CCollider2D* self, LPCOLLISIONEVENT coEvent)
 		|| dynamic_cast<CEnemyEyelet*>(coEvent->object)
 		|| dynamic_cast<CEnemyStuka*>(coEvent->object)
 		|| dynamic_cast<CEnemyBallot*>(coEvent->object)) {
-		LPGAMEOBJECT thisObj = (LPGAMEOBJECT)this;
-		coEvent->object->TakeDamage(thisObj);
+		coEvent->object->TakeDamage(this->damage);
 		this->OnDelete();
 	}
 }

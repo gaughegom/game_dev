@@ -242,7 +242,7 @@ void CBigJason::OnCollisionWithEnemy(LPCOLLISIONEVENT coEvent)
 {
 	if (dynamic_cast<CEnemyGX680*>(coEvent->object)
 		|| dynamic_cast<CEnemyGX680S*>(coEvent->object)) {
-		this->TakeDamage(coEvent->object);
+		this->TakeDamage(coEvent->object->GetDamage());
 
 		STriggerTag tag = STriggerTag(coEvent->object);
 		this->AddTriggerTag(coEvent->object);

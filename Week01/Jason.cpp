@@ -141,7 +141,7 @@ void CJason::OnCollisionWithEnemy(LPCOLLISIONEVENT coEvent)
 	// TODO: make enemy go throw player, player take damage
 
 	if (isSuffered) {
-		this->TakeDamage(coEvent->object);
+		this->TakeDamage(coEvent->object->GetDamage());
 		STriggerTag tag = STriggerTag(coEvent->object);
 		this->AddTriggerTag(coEvent->object);
 		coEvent->object->AddTriggerTag(this);

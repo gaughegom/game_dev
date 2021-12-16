@@ -59,9 +59,8 @@ void CEnemyInterrupt::Render()
 void CEnemyInterrupt::OnCollision(CCollider2D* self, LPCOLLISIONEVENT coEvent)
 {
 	if (dynamic_cast<CSophia*>(coEvent->object)) {
-		LPGAMEOBJECT thisObj = (LPGAMEOBJECT)this;
-		coEvent->object->TakeDamage(thisObj);
-		this->TakeDamage(coEvent->object);
+		coEvent->object->TakeDamage(this->damage);
+		this->TakeDamage(coEvent->object->GetDamage());
 
 		STriggerTag tag = STriggerTag(coEvent->object);
 		coEvent->object->AddTriggerTag(this);

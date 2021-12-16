@@ -59,9 +59,9 @@ void CGameObject::AddAnimation(std::string key, std::string animationId)
 	this->animations.insert(std::make_pair(key, ani));
 }
 
-void CGameObject::TakeDamage(LPGAMEOBJECT& object)
+void CGameObject::TakeDamage(float damage)
 {
-	this->hp -= object->GetDamage();
+	this->hp -= damage;
 	this->SetSuffering(true);
 
 	if (this->hp <= 0 && (dynamic_cast<CEnemyEyelet*>(this) || dynamic_cast<CEnemyStuka*>(this))) {

@@ -52,6 +52,9 @@ private:
 	SophiaDirectState directState;
 	SophiaActionState actionState;
 
+	// TODO: only test
+	float prevHp;
+
 	void InitParts();
 public:
 	// state

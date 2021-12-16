@@ -77,8 +77,7 @@ void CBigJasonBullet::OnCollision(CCollider2D* self, LPCOLLISIONEVENT coEvent)
 	}
 	else if (dynamic_cast<CEnemyGX680*>(coEvent->object)
 		|| dynamic_cast<CEnemyGX680S*>(coEvent->object)) {
-		LPGAMEOBJECT thisObj = (LPGAMEOBJECT)this;
-		coEvent->object->TakeDamage(thisObj);
+		coEvent->object->TakeDamage(this->damage);
 		this->hp = 0;
 	}
 }

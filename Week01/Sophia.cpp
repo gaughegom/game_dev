@@ -35,8 +35,10 @@ void CSophia::InitParts()
 
 void CSophia::Update(DWORD dt)
 {
-
-	DebugOut(L"sophia hp: %f\n", this->hp);
+	if (this->prevHp != this->hp) {
+		DebugOut(L"sophia hp: %f\n", this->hp);
+		this->prevHp = this->hp;
+	}
 
 	if (this->colliders.at(0)->IsDynamic() == true) {
 		InGravityAffect(this, dt);
@@ -221,7 +223,7 @@ void CSophia::OnCollisionWithEnemy(LPCOLLISIONEVENT coEvent)
 
 	// TODO: add trigger in enemy
 	if (isSuffered) {
-		this->TakeDamage(coEvent->object);
+		this->TakeDamage(coEvent->object->GetDamage());
 
 		STriggerTag tag = STriggerTag(coEvent->object);
 		coEvent->object->AddTriggerTag(this);
