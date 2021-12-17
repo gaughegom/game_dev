@@ -6,12 +6,12 @@
 #include "EnemyStuka.h"
 #include "EnemyBallot.h"
 
-#define V_BULLET_BOXSIZE_HORIZON	Vector2D(22, 6)
-#define	V_BULLET_BOXSIZE_VERTICAL	Vector2D(6, 22)
+#define V_BULLET_BOXSIZE_HORIZON		Vector2D(22, 6)
+#define	V_BULLET_BOXSIZE_VERTICAL		Vector2D(6, 22)
 
-#define SPRITE_DEFAULT_ID		"df"
-#define SPRITE_DESTROY_ID		"destroy"
-#define ANIMATION_DESTROY_ID	"destroy"
+constexpr auto SPRITE_DEFAULT_ID = "df";
+constexpr auto SPRITE_DESTROY_ID = "destroy";
+constexpr auto ANIMATION_DESTROY_ID	= "destroy";
 
 CSophiaBullet::CSophiaBullet(int direct)
 {

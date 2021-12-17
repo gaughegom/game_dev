@@ -2,13 +2,13 @@
 #include "Player.h"
 #include "EnemyBallbomb.h"
 
-#define SPRITE_STAY_ID				"stay"
-#define SPRITE_ATTACK_ID			"attack"
-#define ANIMATION_MOVE_ID			"move"
-
 #define V_BOXSIZE					Vector2D(18.0f, 18.0f)
-#define DETACTED_PLAYER_DISTANCE	80.0f
-#define MAX_BOMB_CARRY				7
+
+constexpr auto SPRITE_STAY_ID = "stay";
+constexpr auto SPRITE_ATTACK_ID = "attack";
+constexpr auto ANIMATION_MOVE_ID = "move";
+constexpr auto DETACTED_PLAYER_DISTANCE = 80.0f;
+constexpr auto MAX_BOMB_CARRY = 7;
 
 CEnemyBallcarry::CEnemyBallcarry()
 {

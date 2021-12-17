@@ -1,10 +1,10 @@
 #include "SophiaCabin.h"
 
-#define SPR_SOPHIA_CABIN_00		"cabin00"
-#define SPR_SOPHIA_CABIN_45		"cabin45"
-#define SPR_SOPHIA_CABIN_90		"cabin90"
-#define SPR_SOPHIA_CABIN_IN		"cabinIn"
-#define SPR_SOPHIA_CABIN_OUT	"cabinOut"
+constexpr auto SPR_SOPHIA_CABIN_00 = "cabin00";
+constexpr auto SPR_SOPHIA_CABIN_45 = "cabin45";
+constexpr auto SPR_SOPHIA_CABIN_90 = "cabin90";
+constexpr auto SPR_SOPHIA_CABIN_IN = "cabinIn";
+constexpr auto SPR_SOPHIA_CABIN_OUT = "cabinOut";
 
 CSophiaCabin::CSophiaCabin(CSophia* target)
 {

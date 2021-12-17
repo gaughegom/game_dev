@@ -1,9 +1,10 @@
 #include "EnemyBallot.h"
 #include "Player.h"
 
-#define	V_BALLOT_BOXSIZE			Vector2D(18, 18)
-#define ANIMATION_DEFAULT_ID	"default"
-#define SPR_IDLE_ID				"idle"
+#define	V_BOXSIZE			Vector2D(18, 18)
+
+constexpr auto ANIMATION_DEFAULT_ID = "default";
+constexpr auto SPR_IDLE_ID = "idle";
 
 CEnemyBallot::CEnemyBallot()
 {
@@ -16,7 +17,7 @@ CEnemyBallot::CEnemyBallot()
 
 	// collider
 	this->colliders.clear();
-	auto collider = new CCollider2D(this, true, false, VectorZero(), V_BALLOT_BOXSIZE);
+	auto collider = new CCollider2D(this, true, false, VectorZero(), V_BOXSIZE);
 	this->colliders.push_back(collider);
 	this->SetColliders(this->colliders);
 }

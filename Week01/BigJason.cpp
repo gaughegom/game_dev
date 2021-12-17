@@ -8,12 +8,12 @@
 #define BOXSIZE_HORIZON				Vector2D(24.0f, 32.0f)
 #define BOXSIZE_VERTICAL			Vector2D(20.0f, 32.0f)
 
-#define ANIMATION_WALK_HORIZON_ID	"walk-horizon"
-#define ANIMATION_WALK_UP_ID		"walk-up"
-#define ANIMATION_WALK_DOWN_ID		"walk-down"
-#define SPRITE_STAY_HORIZON_ID		"stay-horizon"
-#define SPRITE_STAY_UP_ID			"stay-up"
-#define SPRITE_STAY_DOWN_ID			"stay-down"
+constexpr auto ANIMATION_WALK_HORIZON_ID	= "walk-horizon";
+constexpr auto ANIMATION_WALK_UP_ID			= "walk-up";
+constexpr auto ANIMATION_WALK_DOWN_ID		= "walk-down";
+constexpr auto SPRITE_STAY_HORIZON_ID		= "stay-horizon";
+constexpr auto SPRITE_STAY_UP_ID			= "stay-up";
+constexpr auto SPRITE_STAY_DOWN_ID			= "stay-down";
 
 CBigJason::CBigJason()
 {

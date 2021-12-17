@@ -3,9 +3,11 @@
 #include "Sophia.h"
 #include "SophiaBullet.h"
 
-#define SPRITE_DEFAULT_ID	"df"
 #define V_BOXSIZE			Vector2D(10.0f, 10.0f)
-#define LIFE_TIME			1600
+
+constexpr auto SPRITE_DEFAULT_ID = "df";
+constexpr auto LIFE_TIME = 1600;
+
 
 CEnemyBallbomb::CEnemyBallbomb()
 {

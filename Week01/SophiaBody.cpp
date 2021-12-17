@@ -4,7 +4,7 @@
 #define V_POSITION_TILE45	Vector2D(0.0f, 6.0f)
 #define V_POSITION_UP90		Vector2D(0.0f, 7.0f)
 
-#define SPR_SOPHIA_BODY_ID	"df"
+constexpr auto SPR_SOPHIA_BODY_ID = "df";
 
 CSophiaBody::CSophiaBody(CSophia* target)
 {

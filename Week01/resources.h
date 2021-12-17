@@ -15,64 +15,62 @@
 
 #pragma region Windows
 
-#define WINDOW_CLASS_NAME			L"Blaster master"
-#define WINDOW_TITLE				L"Blaster master"
-#define WINDOW_SCREEN_WIDTH			244
-#define WINDOW_SCREEN_HEIGHT		200
-#define MAX_FRAME_RATE				60
+constexpr auto WINDOW_CLASS_NAME			= L"Blaster master";
+constexpr auto WINDOW_TITLE					= L"Blaster master";
+constexpr auto WINDOW_SCREEN_WIDTH			= 244;
+constexpr auto WINDOW_SCREEN_HEIGHT			= 200;
+constexpr auto MAX_FRAME_RATE				= 60;
 
-#define BACKGROUND_COLOR			D3DCOLOR_XRGB(0, 0, 0)
-#define	BACKGROUND_LAYER_0			0
-#define	BACKGROUND_LAYER_1			1
-#define BACKGROUND_LAYER_2			2
-#define BACKGROUND_LAYER_3			3
-#define BACKGROUND_LAYER_4			4
+#define BACKGROUND_COLOR					D3DCOLOR_XRGB(0, 0, 0)
+constexpr auto BACKGROUND_LAYER_0			= 0;
+constexpr auto BACKGROUND_LAYER_1			= 1;
+constexpr auto BACKGROUND_LAYER_2			= 2;
+constexpr auto BACKGROUND_LAYER_3			= 3;
+constexpr auto BACKGROUND_LAYER_4			= 4;
 
 #pragma endregion
 
 #pragma region File path
 
-#define GAME_RESOURCE_PATH			L"database\\game.txt"
-#define SCENE2_PATH					L"database\\scene2.txt"
+constexpr auto GAME_RESOURCE_PATH			= L"database\\game.txt";
+constexpr auto SCENE2_PATH					= L"database\\scene2.txt";
 
 #pragma endregion
 
 #pragma region Textures
 
-#define SOPHIA_JASON_TEXTURE_PATH	L"textures//player.png"
-#define TEXTURE_TRANS_COLOR			D3DCOLOR_XRGB(41, 255, 4)
+#define TEXTURE_TRANS_COLOR					D3DCOLOR_XRGB(41, 255, 4)
 
 #pragma endregion
 
 #pragma region Player
 
-#define PLAYER_MOVING_SPEED			0.1f
-#define PLAYER_JUMP_FORCE			0.29f
-#define GAME_GRAVITY				0.0007f
+constexpr auto PLAYER_MOVING_SPEED			= 0.1f;
+constexpr auto PLAYER_JUMP_FORCE			= 0.29f;
+constexpr auto GAME_GRAVITY					= 0.0007f;
 
-#define SOPHIA_BASICBULLET_VELOCITY				0.2f
-
-#define	TIME_SUFFERING_AFFECT		300
+constexpr auto SOPHIA_BASICBULLET_VELOCITY	= 0.2f;
+constexpr auto TIME_SUFFERING_AFFECT		= 300;
 
 #pragma endregion
 
 #pragma region Keyboard
 
-#define DIRECTINPUT_VERSION			0x0800
-#define KEYBOARD_BUFFER_SIZE		1024
+#define DIRECTINPUT_VERSION					0x0800
+constexpr auto KEYBOARD_BUFFER_SIZE			= 1024;
 #pragma endregion
 
 #pragma region Tileset
 
-#define TILESET_WIDTH		16
-#define TILESET_HEIGHT		16
+constexpr auto TILESET_WIDTH				= 16;
+constexpr auto TILESET_HEIGHT				= 16;
 
 #pragma endregion
 
-#define PI			atan(1)*4
-#define ENEMY_VELOCITY_NORMAL		0.06f
-#define ENEMY_ACTIVE_DISTANCE		130
+#define PI									atan(1)*4
+constexpr auto ENEMY_VELOCITY_NORMAL		= 0.06f;
+constexpr auto ENEMY_ACTIVE_DISTANCE		= 130;
 
-#define	DRAW_COLOR_DEFAULT		D3DCOLOR_ARGB(255, 255, 255, 255)
+#define	DRAW_COLOR_DEFAULT					D3DCOLOR_ARGB(255, 255, 255, 255)
 
 #endif // !_RESOURCES_H

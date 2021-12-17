@@ -4,8 +4,8 @@
 #include "Jason.h"
 #include "Sophia.h"
 
-#define MARGIN_COLLISION		0.2f
-#define ALPHA_DRAW_COLLIDER		0
+constexpr auto MARGIN_COLLISION = 0.2f;
+constexpr auto ALPHA_DRAW_COLLIDER = 40;
 
 CCollider2D::CCollider2D()
 {

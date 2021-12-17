@@ -71,9 +71,6 @@
     <Filter Include="Framework\Util">
       <UniqueIdentifier>{b48ec041-8e0d-4b7b-9ad1-1bd84e4704ae}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Game\Game objects\Brick">
-      <UniqueIdentifier>{9d2825ae-a7b0-4e5c-9c57-86e7ebc6a25c}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Framework\Collision">
       <UniqueIdentifier>{a01183fa-2caa-4e06-a435-2ef9e489d45b}</UniqueIdentifier>
     </Filter>
@@ -139,6 +136,15 @@
     </Filter>
     <Filter Include="Game\Game objects\Items">
       <UniqueIdentifier>{0e2217ce-13a8-4ea2-8553-d19090feca3f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Game objects\Platform">
+      <UniqueIdentifier>{9d2825ae-a7b0-4e5c-9c57-86e7ebc6a25c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Game objects\Effect">
+      <UniqueIdentifier>{9e1eaccf-1319-4628-b029-636950f5b27d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Game objects\Effect\Small destroy">
+      <UniqueIdentifier>{1a5af209-b918-4054-b13f-736931e6faba}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -227,7 +233,7 @@
       <Filter>Framework\Util</Filter>
     </ClCompile>
     <ClCompile Include="Brick.cpp">
-      <Filter>Game\Game objects\Brick</Filter>
+      <Filter>Game\Game objects\Platform</Filter>
     </ClCompile>
     <ClCompile Include="Collider2D.cpp">
       <Filter>Framework\Collision</Filter>
@@ -273,6 +279,9 @@
     </ClCompile>
     <ClCompile Include="ItemHealth.cpp">
       <Filter>Game\Game objects\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="SmallDestroyEffect.cpp">
+      <Filter>Game\Game objects\Effect\Small destroy</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -358,7 +367,7 @@
       <Filter>Framework\Util</Filter>
     </ClInclude>
     <ClInclude Include="Brick.h">
-      <Filter>Game\Game objects\Brick</Filter>
+      <Filter>Game\Game objects\Platform</Filter>
     </ClInclude>
     <ClInclude Include="resources.h">
       <Filter>Source Files</Filter>
@@ -407,6 +416,9 @@
     </ClInclude>
     <ClInclude Include="ItemHealth.h">
       <Filter>Game\Game objects\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="SmallDestroyEffect.h">
+      <Filter>Game\Game objects\Effect\Small destroy</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

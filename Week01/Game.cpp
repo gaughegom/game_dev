@@ -18,7 +18,7 @@
 #include "EnemyBallot.h"
 #include "SophiaBullet.h"
 
-#define MAX_SCENE_LINE	2048
+constexpr auto MAX_SCENE_LINE		= 2048;
 
 CSophia* sophia;
 CJason* jason;
@@ -299,10 +299,11 @@ void CGame::UpdateGame(DWORD dt)
 	renderedObjects.clear();
 	quadtree->Retrieve(renderedObjects, g_camera->GetBoundingBox());
 
-	for (auto object : worldObjects) {
+	for (int i = 0; i < worldObjects.size(); i++) {
 		if (reset)
 			return;
 
+		LPGAMEOBJECT object = worldObjects.at(i);
 		if (object->IsActive() == true) {
 			object->CleanTriggerTag();
 			object->PhysicalUpdate(&worldObjects);
@@ -328,24 +329,24 @@ void CGame::RenderGame()
 		spriteHandler->Begin(D3DXSPRITE_ALPHABLEND | D3DXSPRITE_SORT_DEPTH_FRONTTOBACK);
 
 		this->map->Draw(Vector2D(this->mapWidth / 2, this->mapHeight / 2), 1, DRAW_COLOR_DEFAULT);
-		for (auto object : renderedObjects) {
-			if (!object->IsActive()) {
+		for (int i = 0; i < renderedObjects.size(); i++) {
+			if (!renderedObjects.at(i)->IsActive()) {
 				continue;
 			}
 
-			object->Render();
+			renderedObjects.at(i)->Render();
 		}
 
 		// render collider
-		/*for (auto object : renderedObjects) {
-			if (!object->IsActive()) {
+		for (int i = 0; i < renderedObjects.size(); i++) {
+			if (!renderedObjects.at(i)->IsActive()) {
 				continue;
 			}
 
-			for (auto co : object->GetColliders()) {
+			for (auto co : renderedObjects.at(i)->GetColliders()) {
 				co->RenderBoundingBox();
 			}
-		}*/
+		}
 
 		if (this->foreMap != nullptr) {
 			this->foreMap->Draw(Vector2D(this->mapWidth / 2, this->mapHeight / 2), 1, DRAW_COLOR_DEFAULT, BACKGROUND_LAYER_0);

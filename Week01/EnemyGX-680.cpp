@@ -1,11 +1,11 @@
 #include "EnemyGX-680.h"
 #include "Player.h"
 
-#define ANIMATION_DEFAULT_ID		"df"
 #define V_BOXSIZE					Vector2D(18.0f, 17.0f)
-#define DETECTED_DISTANCE_PLAYER	80
 
-#define OWN_VELOCITY				0.02f
+constexpr auto DETECTED_DISTANCE_PLAYER = 80;
+constexpr auto ANIMATION_DEFAULT_ID = "df";
+constexpr auto OWN_VELOCITY = 0.02f;
 
 CEnemyGX680::CEnemyGX680()
 {

@@ -4,12 +4,11 @@
 #include "EnemyGX-680.h"
 #include "EnemyGX-680S.h"
 
-#define V_BOXSIZE_HORIZON			Vector2D(8.0f, 6.0f)
-#define V_BOXSIZE_VERTICAL			Vector2D(6.0f, 6.0f)
+#define V_BOXSIZE_HORIZON					Vector2D(8.0f, 6.0f)
+#define V_BOXSIZE_VERTICAL					Vector2D(6.0f, 6.0f)
 
-#define BIGJASON_BULLET_VELOCITY	0.2f
-
-#define SPRITE_DEFAULT_ID			"df"
+constexpr auto BIGJASON_BULLET_VELOCITY	= 0.2f;
+constexpr auto SPRITE_DEFAULT_ID = "df";
 
 CBigJasonBullet::CBigJasonBullet(BigJasonBulletDirection state)
 {

@@ -1,8 +1,8 @@
 #include "SophiaGun.h"
 
-#define SPR_GUN_00	"gun00"
-#define SPR_GUN_45	"gun45"
-#define SPR_GUN_90	"gun90"
+constexpr auto SPR_GUN_00 = "gun00";
+constexpr auto SPR_GUN_45 = "gun45";
+constexpr auto SPR_GUN_90 = "gun90";
 
 CSophiaGun::CSophiaGun()
 {

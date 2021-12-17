@@ -3,18 +3,17 @@
 #include "EnemyNeoWorm.h"
 
 #define V_BOXSIZE			Vector2D(22.0f, 18.0f)
-#define ANIMATION_ID		"df"
-#define SPRITE_ID			"df"
 
-#define MAX_NEOWORM			2
-#define DELAY_NEOWORM		700
-
-#define ACTIVE_DISTANCE_X	10
+constexpr auto ANIMATION_DEFAULT_ID = "df";
+constexpr auto SPRITE_DEFAULT_ID = "df";
+constexpr auto MAX_NEOWORM = 2;
+constexpr auto DELAY_NEOWORM = 700;
+constexpr auto ACTIVE_DISTANCE_X = 10;
 
 CEnemyInterrupt::CEnemyInterrupt()
 {
-	this->AddAnimation(ANIMATION_ID, "aniEInterrupt");
-	this->AddSprite(SPRITE_ID, "sprEInterrupt00");
+	this->AddAnimation(ANIMATION_DEFAULT_ID, "aniEInterrupt");
+	this->AddSprite(SPRITE_DEFAULT_ID, "sprEInterrupt00");
 
 	this->hp = 30;
 	this->damage = 10;	// TODO: adjust damage later
@@ -49,10 +48,10 @@ void CEnemyInterrupt::Render()
 	LPGAMEOBJECT player = CPlayer::GetInstance()->GetPlayer();
 
 	if (abs(this->position.x - player->GetPosition().x) <= ACTIVE_DISTANCE_X && this->position.y > player->GetPosition().y) {
-		this->animations.at(ANIMATION_ID)->Render(this->position, this->nx, color);
+		this->animations.at(ANIMATION_DEFAULT_ID)->Render(this->position, this->nx, color);
 	}
 	else {
-		this->sprites.at(SPRITE_ID)->Draw(this->position, this->nx, color);
+		this->sprites.at(SPRITE_DEFAULT_ID)->Draw(this->position, this->nx, color);
 	}
 }
 

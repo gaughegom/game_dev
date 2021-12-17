@@ -1,8 +1,8 @@
 #include "EnemyEyelet.h"
 #include "Sophia.h"
 
-#define ANIMATION_DEFAULT_ID	"df"
-#define DETACTED_PLAYER_DISTANCE	160.0f
+constexpr auto ANIMATION_DEFAULT_ID = "df";
+constexpr auto DETACTED_PLAYER_DISTANCE = 160.0f;
 
 CEnemyEyelet::CEnemyEyelet()
 {

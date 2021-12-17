@@ -34,9 +34,10 @@ protected:
 	bool ground;
 	bool active = true;
 	bool invicible = false;
-	bool suffering = false;
+	bool effected = false;
 
-	DWORD sufferingDuration;
+	DWORD effectDuration;
+	DWORD initTime = GetTickCount64();
 	
 	std::vector<STriggerTag> triggerTags;
 
@@ -110,9 +111,9 @@ public:
 	void AddTriggerTag(STriggerTag tag) { this->triggerTags.push_back(tag); }
 	std::vector<STriggerTag> GetTriggerTag() { return this->triggerTags; }
 
-	// suffering
-	void SetSuffering(bool value) { this->suffering = value; this->sufferingDuration = 1; }
-	bool IsSuffering() { return this->suffering; }
+	// effected
+	void SetInEffect(bool value) { this->effected = value; this->effectDuration = 1; }
+	bool IsEffected() { return this->effected; }
 
 	void ScheduleActiveByDistance(float activeDistance);
 	D3DCOLOR GetRenderColor();

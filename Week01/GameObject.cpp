@@ -3,6 +3,7 @@
 #include "SophiaBullet.h"
 #include "EnemyStuka.h"
 #include "ItemHealth.h"
+#include "EnemyInterrupt.h"
 
 
 CGameObject::CGameObject()
@@ -62,9 +63,12 @@ void CGameObject::AddAnimation(std::string key, std::string animationId)
 void CGameObject::TakeDamage(float damage)
 {
 	this->hp -= damage;
-	this->SetSuffering(true);
+	this->SetInEffect(true);
 
-	if (this->hp <= 0 && (dynamic_cast<CEnemyEyelet*>(this) || dynamic_cast<CEnemyStuka*>(this))) {
+	if (this->hp <= 0 
+		&& (dynamic_cast<CEnemyEyelet*>(this) 
+		|| dynamic_cast<CEnemyStuka*>(this)
+		|| dynamic_cast<CEnemyInterrupt*>(this))) {
 		LPGAMEOBJECT item = nullptr;
 		item = new CItemHealth;
 		item->SetPosition(this->position);
@@ -88,18 +92,18 @@ void CGameObject::ScheduleActiveByDistance(float activeDistance)
 
 D3DCOLOR CGameObject::GetRenderColor()
 {
-	if (this->suffering == false || this->sufferingDuration == 0) {
-		this->suffering = false;
-		this->sufferingDuration = 0;
+	if (this->effected == false || this->effectDuration == 0) {
+		this->effected = false;
+		this->effectDuration = 0;
 		return DRAW_COLOR_DEFAULT;
 	}
 	else {
-		this->sufferingDuration += 1; // TODO: make the same duration of triggerTag
-		if (this->sufferingDuration > 10) {
-			this->sufferingDuration = 0;
+		this->effectDuration += 1; // TODO: make the same duration of triggerTag
+		if (this->effectDuration > 10) {
+			this->effectDuration = 0;
 			return DRAW_COLOR_DEFAULT;
 		}
-		if (this->sufferingDuration % 2 == 0) {
+		if (this->effectDuration % 2 == 0) {
 			return DRAW_COLOR_DEFAULT;
 		}
 		else {

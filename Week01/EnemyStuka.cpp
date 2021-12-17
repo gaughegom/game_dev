@@ -1,8 +1,8 @@
 #include "EnemyStuka.h"
 #include "Player.h"
 
-#define ANIMATION_DEFAULT_ID	"df"
-#define DETACTED_PLAYER_DISTANCE	130.0f
+constexpr auto ANIMATION_DEFAULT_ID = "df";
+constexpr auto DETACTED_PLAYER_DISTANCE = 130.0f;
 
 CEnemyStuka::CEnemyStuka()
 {

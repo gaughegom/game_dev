@@ -5,7 +5,6 @@
 #include "GameObject.h"
 #include "Sophia.h"
 
-#define ANIMATION_SOPHIA_WHEEL_DEFAULT_ID				"default"
 
 #define V_LEFT_POSITION_IDLE		Vector2D(-8.0f, 0.0f)
 #define V_LEFT_POSITION_TILE45		Vector2D(8.0f, 0.0f)
@@ -14,6 +13,7 @@
 #define V_RIGHT_POSITION_TILE45		Vector2D(-5.0f, 0.0f)
 #define V_RIGHT_POSITION_UP90		Vector2D(5.0f, 0.0f)
 
+constexpr auto ANIMATION_SOPHIA_WHEEL_DEFAULT_ID = "default";
 
 class CSophia;
 enum class SophiaDirectState;
