@@ -18,8 +18,6 @@
 #include "EnemyBallot.h"
 #include "SophiaBullet.h"
 
-constexpr auto MAX_SCENE_LINE		= 2048;
-
 CSophia* sophia;
 CJason* jason;
 CBigJason* bigJason;
@@ -349,7 +347,7 @@ void CGame::RenderGame()
 		}
 
 		if (this->foreMap != nullptr) {
-			this->foreMap->Draw(Vector2D(this->mapWidth / 2, this->mapHeight / 2), 1, DRAW_COLOR_DEFAULT, BACKGROUND_LAYER_0);
+			this->foreMap->Draw(Vector2D(this->mapWidth / 2, this->mapHeight / 2), 1, DRAW_COLOR_DEFAULT, DrawLayer02);
 		}
 
 		spriteHandler->End();
@@ -432,7 +430,7 @@ CGame* CGame::GetInstance()
 
 void CGame::LoadResource()
 {
-	LPCWSTR resourcePath = GAME_RESOURCE_PATH;
+	LPCWSTR resourcePath = GameDatabasePath;
 	DebugOut(L"[INFO] Start loading game resouce %s\n", resourcePath);
 
 	// start game g_camera

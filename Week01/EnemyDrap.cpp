@@ -1,10 +1,10 @@
 #include "EnemyDrap.h"
 
-#define ANIMATION_DEFAULT_ID	"df"
+#define AnimationDefaultId	"df"
 
 CEnemyDrap::CEnemyDrap()
 {
-	this->AddAnimation(ANIMATION_DEFAULT_ID, "aniEDrap"); // 200: drap animation id
+	this->AddAnimation(AnimationDefaultId, "aniEDrap"); // 200: drap animation id
 }
 
 void CEnemyDrap::Update(DWORD dt)
@@ -17,7 +17,7 @@ void CEnemyDrap::Render()
 	// get id of state
 
 	// render
-	auto animation = this->animations.at(ANIMATION_DEFAULT_ID);
+	auto animation = this->animations.at(AnimationDefaultId);
 	animation->SetWait(false);
 	animation->Render(this->position, 1, DRAW_COLOR_DEFAULT);
 }

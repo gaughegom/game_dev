@@ -4,12 +4,12 @@
 #define V_POSITION_TILE45	Vector2D(0.0f, 6.0f)
 #define V_POSITION_UP90		Vector2D(0.0f, 7.0f)
 
-constexpr auto SPR_SOPHIA_BODY_ID = "df";
+constexpr auto SpriteBodyId = "df";
 
 CSophiaBody::CSophiaBody(CSophia* target)
 {
 	this->self = target;
-	this->AddSprite(SPR_SOPHIA_BODY_ID, "sprSBody00");
+	this->AddSprite(SpriteBodyId, "sprSBody00");
 }
 
 void CSophiaBody::Update(DWORD dt)
@@ -19,7 +19,7 @@ void CSophiaBody::Update(DWORD dt)
 void CSophiaBody::Render()
 {
 	D3DCOLOR color = self->GetSophiaPartRenderColor();
-	auto sprite = this->sprites.at(SPR_SOPHIA_BODY_ID);
+	auto sprite = this->sprites.at(SpriteBodyId);
 
 	// handle animation action state
 	this->HandleAnimationActionState(this->self->GetActionState());

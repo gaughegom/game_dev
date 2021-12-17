@@ -22,18 +22,17 @@ constexpr auto WINDOW_SCREEN_HEIGHT			= 200;
 constexpr auto MAX_FRAME_RATE				= 60;
 
 #define BACKGROUND_COLOR					D3DCOLOR_XRGB(0, 0, 0)
-constexpr auto BACKGROUND_LAYER_0			= 0;
-constexpr auto BACKGROUND_LAYER_1			= 1;
-constexpr auto BACKGROUND_LAYER_2			= 2;
-constexpr auto BACKGROUND_LAYER_3			= 3;
-constexpr auto BACKGROUND_LAYER_4			= 4;
+constexpr auto DrawLayer00			= 0;
+constexpr auto DrawLayer01			= 1;
+constexpr auto DrawLayer02			= 2;
+constexpr auto DrawLayer03			= 3;
+constexpr auto DrawLayer04			= 4;
 
 #pragma endregion
 
 #pragma region File path
 
-constexpr auto GAME_RESOURCE_PATH			= L"database\\game.txt";
-constexpr auto SCENE2_PATH					= L"database\\scene2.txt";
+constexpr auto GameDatabasePath			= L"database\\game.txt";
 
 #pragma endregion
 
@@ -45,12 +44,12 @@ constexpr auto SCENE2_PATH					= L"database\\scene2.txt";
 
 #pragma region Player
 
-constexpr auto PLAYER_MOVING_SPEED			= 0.1f;
-constexpr auto PLAYER_JUMP_FORCE			= 0.29f;
-constexpr auto GAME_GRAVITY					= 0.0007f;
+constexpr auto PlayerMovingSpeed			= 0.1f;
+constexpr auto PlayerJumpForce			= 0.29f;
+constexpr auto WorldGravity				= 0.0007f;
 
-constexpr auto SOPHIA_BASICBULLET_VELOCITY	= 0.2f;
-constexpr auto TIME_SUFFERING_AFFECT		= 300;
+constexpr auto TimeInDameEffect	= 300;
+constexpr auto EnemyNormalVelocity		= 0.06f;
 
 #pragma endregion
 
@@ -62,14 +61,12 @@ constexpr auto KEYBOARD_BUFFER_SIZE			= 1024;
 
 #pragma region Tileset
 
-constexpr auto TILESET_WIDTH				= 16;
-constexpr auto TILESET_HEIGHT				= 16;
+constexpr auto TilesetWidth				= 16;
+constexpr auto TilesetHeight				= 16;
 
 #pragma endregion
 
 #define PI									atan(1)*4
-constexpr auto ENEMY_VELOCITY_NORMAL		= 0.06f;
-constexpr auto ENEMY_ACTIVE_DISTANCE		= 130;
 
 #define	DRAW_COLOR_DEFAULT					D3DCOLOR_ARGB(255, 255, 255, 255)
 

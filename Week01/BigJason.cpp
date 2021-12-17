@@ -8,26 +8,26 @@
 #define BOXSIZE_HORIZON				Vector2D(24.0f, 32.0f)
 #define BOXSIZE_VERTICAL			Vector2D(20.0f, 32.0f)
 
-constexpr auto ANIMATION_WALK_HORIZON_ID	= "walk-horizon";
-constexpr auto ANIMATION_WALK_UP_ID			= "walk-up";
-constexpr auto ANIMATION_WALK_DOWN_ID		= "walk-down";
-constexpr auto SPRITE_STAY_HORIZON_ID		= "stay-horizon";
-constexpr auto SPRITE_STAY_UP_ID			= "stay-up";
-constexpr auto SPRITE_STAY_DOWN_ID			= "stay-down";
+constexpr auto AnimationHorizontalWalkId	= "walk-horizon";
+constexpr auto AnimationUpWalkId			= "walk-up";
+constexpr auto AnimationDownWalkId			= "walk-down";
+constexpr auto SpriteHorizontalStayId		= "stay-horizon";
+constexpr auto SpriteUpStayId				= "stay-up";
+constexpr auto SpriteDownStayId				= "stay-down";
 
 CBigJason::CBigJason()
 {
 	// init aniamtion, sprite
-	this->AddAnimation(ANIMATION_WALK_HORIZON_ID, "aniBJHorizon");
-	this->AddAnimation(ANIMATION_WALK_UP_ID, "aniBJUpward");
-	this->AddAnimation(ANIMATION_WALK_DOWN_ID, "aniBJDownward");
-	this->AddSprite(SPRITE_STAY_HORIZON_ID, "sprBJHorizon01");
-	this->AddSprite(SPRITE_STAY_UP_ID, "sprBJUpward01");
-	this->AddSprite(SPRITE_STAY_DOWN_ID, "sprBJDownward01");
+	this->AddAnimation(AnimationHorizontalWalkId, "aniBJHorizon");
+	this->AddAnimation(AnimationUpWalkId, "aniBJUpward");
+	this->AddAnimation(AnimationDownWalkId, "aniBJDownward");
+	this->AddSprite(SpriteHorizontalStayId, "sprBJHorizon01");
+	this->AddSprite(SpriteUpStayId, "sprBJUpward01");
+	this->AddSprite(SpriteDownStayId, "sprBJDownward01");
 
 	// velocity
 	this->directState = BigJasonDirectState::STAY;
-	this->currentSpriteState = SPRITE_STAY_DOWN_ID;
+	this->currentSpriteState = SpriteDownStayId;
 	this->velocity = VectorZero();
 	this->hp = 100;
 	this->damage = 0;
@@ -119,20 +119,20 @@ std::string CBigJason::MappingStateOfAnimation()
 	switch (this->directState)
 	{
 	case BigJasonDirectState::LEFTWALK:
-		this->currentSpriteState = SPRITE_STAY_HORIZON_ID;
-		return ANIMATION_WALK_HORIZON_ID;
+		this->currentSpriteState = SpriteHorizontalStayId;
+		return AnimationHorizontalWalkId;
 
 	case BigJasonDirectState::RIGHTWALK:
-		this->currentSpriteState = SPRITE_STAY_HORIZON_ID;
-		return ANIMATION_WALK_HORIZON_ID;
+		this->currentSpriteState = SpriteHorizontalStayId;
+		return AnimationHorizontalWalkId;
 
 	case BigJasonDirectState::UPWALK:
-		this->currentSpriteState = SPRITE_STAY_UP_ID;
-		return ANIMATION_WALK_UP_ID;
+		this->currentSpriteState = SpriteUpStayId;
+		return AnimationUpWalkId;
 
 	case BigJasonDirectState::DOWNWALK:
-		this->currentSpriteState = SPRITE_STAY_DOWN_ID;
-		return ANIMATION_WALK_DOWN_ID;
+		this->currentSpriteState = SpriteDownStayId;
+		return AnimationDownWalkId;
 	default:
 		break;
 	}
@@ -148,22 +148,22 @@ void CBigJason::SubcribeDirectState(BigJasonDirectState newState)
 		break;
 	case BigJasonDirectState::RIGHTWALK:
 		this->directState = BigJasonDirectState::RIGHTWALK;
-		this->velocity = Vector2D(PLAYER_MOVING_SPEED, 0);
+		this->velocity = Vector2D(PlayerMovingSpeed, 0);
 		this->nx = 1;
 		break;
 	case BigJasonDirectState::LEFTWALK:
 		this->directState = BigJasonDirectState::LEFTWALK;
-		this->velocity = Vector2D(-PLAYER_MOVING_SPEED, 0);
+		this->velocity = Vector2D(-PlayerMovingSpeed, 0);
 		this->nx = -1;
 		break;
 	case BigJasonDirectState::UPWALK:
 		this->directState = BigJasonDirectState::UPWALK;
-		this->velocity = Vector2D(0, PLAYER_MOVING_SPEED);
+		this->velocity = Vector2D(0, PlayerMovingSpeed);
 		this->nx = 1;
 		break;
 	case BigJasonDirectState::DOWNWALK:
 		this->directState = BigJasonDirectState::DOWNWALK;
-		this->velocity = Vector2D(0, -PLAYER_MOVING_SPEED);
+		this->velocity = Vector2D(0, -PlayerMovingSpeed);
 		this->nx = 1;
 		break;
 	default:
@@ -210,7 +210,7 @@ void CBigJason::Shooting()
 		break;
 
 	case BigJasonDirectState::STAY:
-		if (this->currentSpriteState == SPRITE_STAY_HORIZON_ID) {
+		if (this->currentSpriteState == SpriteHorizontalStayId) {
 			switch (this->nx)
 			{
 			case 1:
@@ -223,10 +223,10 @@ void CBigJason::Shooting()
 				break;
 			}
 		}
-		else if (this->currentSpriteState == SPRITE_STAY_UP_ID) {
+		else if (this->currentSpriteState == SpriteUpStayId) {
 			newBullet = new CBigJasonBullet(BigJasonBulletDirection::UP);
 		}
-		else if (this->currentSpriteState == SPRITE_STAY_DOWN_ID) {
+		else if (this->currentSpriteState == SpriteDownStayId) {
 			newBullet = new CBigJasonBullet(BigJasonBulletDirection::DOWN);
 		}
 

@@ -4,8 +4,6 @@
 
 #include "GameObject.h"
 
-#define BRICK_WIDTH		16.0f
-
 class CBrick : public CGameObject {
 public:
 	CBrick(); // WARM: not used anymore

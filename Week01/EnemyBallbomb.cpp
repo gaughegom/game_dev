@@ -5,13 +5,13 @@
 
 #define V_BOXSIZE			Vector2D(10.0f, 10.0f)
 
-constexpr auto SPRITE_DEFAULT_ID = "df";
-constexpr auto LIFE_TIME = 1600;
+constexpr auto SpriteDefaultId = "df";
+constexpr auto LifeTime = 1600;
 
 
 CEnemyBallbomb::CEnemyBallbomb()
 {
-	this->AddSprite(SPRITE_DEFAULT_ID, "sprBallbomb");
+	this->AddSprite(SpriteDefaultId, "sprBallbomb");
 	
 	this->damage = 5;
 	this->hp = 10;
@@ -27,7 +27,7 @@ void CEnemyBallbomb::Update(DWORD dt)
 	InGravityAffect(this, dt);
 
 	// check lifetime
-	if (GetTickCount64() - this->bornTime > LIFE_TIME) {
+	if (GetTickCount64() - this->bornTime > LifeTime) {
 		this->hp = 0;
 	}
 }
@@ -35,7 +35,7 @@ void CEnemyBallbomb::Update(DWORD dt)
 void CEnemyBallbomb::Render()
 {
 	D3DCOLOR color = this->GetRenderColor();
-	this->sprites.at(SPRITE_DEFAULT_ID)->Draw(this->position, this->nx, color);
+	this->sprites.at(SpriteDefaultId)->Draw(this->position, this->nx, color);
 }
 
 void CEnemyBallbomb::OnCollision(CCollider2D* self, LPCOLLISIONEVENT coEvent)

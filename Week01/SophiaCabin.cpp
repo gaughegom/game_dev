@@ -1,19 +1,19 @@
 #include "SophiaCabin.h"
 
-constexpr auto SPR_SOPHIA_CABIN_00 = "cabin00";
-constexpr auto SPR_SOPHIA_CABIN_45 = "cabin45";
-constexpr auto SPR_SOPHIA_CABIN_90 = "cabin90";
-constexpr auto SPR_SOPHIA_CABIN_IN = "cabinIn";
-constexpr auto SPR_SOPHIA_CABIN_OUT = "cabinOut";
+constexpr auto SpriteCabin00Id = "cabin00";
+constexpr auto SpriteCabin45Id = "cabin45";
+constexpr auto SpriteCabin90Id = "cabin90";
+constexpr auto SpriteCabinInId = "cabinIn";
+constexpr auto SpriteCabinOutId = "cabinOut";
 
 CSophiaCabin::CSophiaCabin(CSophia* target)
 {
 	this->self = target;
-	this->AddSprite(SPR_SOPHIA_CABIN_00, "sprSCabin00");
-	this->AddSprite(SPR_SOPHIA_CABIN_45, "sprSCabin45");
-	this->AddSprite(SPR_SOPHIA_CABIN_90, "sprSCabin90");
-	this->AddSprite(SPR_SOPHIA_CABIN_IN, "sprSCabinIn");
-	this->AddSprite(SPR_SOPHIA_CABIN_OUT, "sprSCabinOut");
+	this->AddSprite(SpriteCabin00Id, "sprSCabin00");
+	this->AddSprite(SpriteCabin45Id, "sprSCabin45");
+	this->AddSprite(SpriteCabin90Id, "sprSCabin90");
+	this->AddSprite(SpriteCabinInId, "sprSCabinIn");
+	this->AddSprite(SpriteCabinOutId, "sprSCabinOut");
 }
 
 void CSophiaCabin::Update(DWORD dt)
@@ -40,25 +40,25 @@ std::string CSophiaCabin::MappingCabinSpriteState(SophiaActionState actionState)
 	{
 	case SophiaActionState::Idle:
 		this->SetPosition(Vector2D(-3.5f * this->self->GetNx(), 9.0f));
-		return SPR_SOPHIA_CABIN_00; // cabin_00
+		return SpriteCabin00Id; // cabin_00
 
 	case SophiaActionState::Tile45:
 		this->SetPosition(Vector2D(-3.5f * this->self->GetNx(), 13.0f));
-		return SPR_SOPHIA_CABIN_45; // cabin_45
+		return SpriteCabin45Id; // cabin_45
 
 	case SophiaActionState::Up90:
 		this->SetPosition(Vector2D(-3.5f * this->self->GetNx(), 14.0f));
-		return SPR_SOPHIA_CABIN_45;
+		return SpriteCabin45Id;
 
 	case SophiaActionState::OpenIn:
 		this->SetPosition(Vector2D(-3.5f * this->self->GetNx(), 9.0f));
-		return SPR_SOPHIA_CABIN_IN;
+		return SpriteCabinInId;
 
 	case SophiaActionState::OpenOut:
 		this->SetPosition(Vector2D(-3.5f * this->self->GetNx(), 9.0f));
-		return SPR_SOPHIA_CABIN_OUT;
+		return SpriteCabinOutId;
 
 	default:
-		return SPR_SOPHIA_CABIN_00;
+		return SpriteCabin00Id;
 	}
 }

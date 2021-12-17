@@ -28,7 +28,7 @@ void CGameObject::SetY(float y)
 	this->position.y = y;
 }
 
-void CGameObject::SetNx(float newNX)
+void CGameObject::SetNx(int newNX)
 {
 	this->nx = newNX;
 }
@@ -76,7 +76,7 @@ void CGameObject::TakeDamage(float damage)
 	}
 }
 
-void CGameObject::ScheduleActiveByDistance(float activeDistance)
+void CGameObject::ActiveByRadiusDistance(float activeDistance)
 {
 	if (this->active == false) {
 		Vector2D playerPosition = CPlayer::GetInstance()->GetPlayer()->GetPosition();

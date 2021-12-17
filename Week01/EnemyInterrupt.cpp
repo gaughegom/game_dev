@@ -4,16 +4,16 @@
 
 #define V_BOXSIZE			Vector2D(22.0f, 18.0f)
 
-constexpr auto ANIMATION_DEFAULT_ID = "df";
-constexpr auto SPRITE_DEFAULT_ID = "df";
-constexpr auto MAX_NEOWORM = 2;
-constexpr auto DELAY_NEOWORM = 700;
-constexpr auto ACTIVE_DISTANCE_X = 10;
+constexpr auto AnimationDefaultId = "df";
+constexpr auto SpriteDefaultId = "df";
+constexpr auto MaxNeoworms = 2;
+constexpr auto DelayNeoworm = 700;
+constexpr auto DetectedPlayerXAxis = 10;
 
 CEnemyInterrupt::CEnemyInterrupt()
 {
-	this->AddAnimation(ANIMATION_DEFAULT_ID, "aniEInterrupt");
-	this->AddSprite(SPRITE_DEFAULT_ID, "sprEInterrupt00");
+	this->AddAnimation(AnimationDefaultId, "aniEInterrupt");
+	this->AddSprite(SpriteDefaultId, "sprEInterrupt00");
 
 	this->hp = 30;
 	this->damage = 10;	// TODO: adjust damage later
@@ -28,10 +28,10 @@ CEnemyInterrupt::CEnemyInterrupt()
 void CEnemyInterrupt::Update(DWORD dt)
 {
 	LPGAMEOBJECT player = CPlayer::GetInstance()->GetPlayer();
-	if (abs(this->position.x - player->GetPosition().x) <= ACTIVE_DISTANCE_X 
+	if (abs(this->position.x - player->GetPosition().x) <= DetectedPlayerXAxis 
 		&& this->position.y > player->GetPosition().y
-		&& (GetTickCount64() - this->prevTimeNeoworm) > DELAY_NEOWORM
-		&& this->existNeoworm < MAX_NEOWORM) {
+		&& (GetTickCount64() - this->prevTimeNeoworm) > DelayNeoworm
+		&& this->existNeoworm < MaxNeoworms) {
 		LPGAMEOBJECT neoworm = new CEnemyNeoWorm();
 		neoworm->SetNx(RandomDirect());
 		neoworm->SetPosition(this->position);
@@ -47,11 +47,11 @@ void CEnemyInterrupt::Render()
 	D3DCOLOR color = this->GetRenderColor();
 	LPGAMEOBJECT player = CPlayer::GetInstance()->GetPlayer();
 
-	if (abs(this->position.x - player->GetPosition().x) <= ACTIVE_DISTANCE_X && this->position.y > player->GetPosition().y) {
-		this->animations.at(ANIMATION_DEFAULT_ID)->Render(this->position, this->nx, color);
+	if (abs(this->position.x - player->GetPosition().x) <= DetectedPlayerXAxis && this->position.y > player->GetPosition().y) {
+		this->animations.at(AnimationDefaultId)->Render(this->position, this->nx, color);
 	}
 	else {
-		this->sprites.at(SPRITE_DEFAULT_ID)->Draw(this->position, this->nx, color);
+		this->sprites.at(SpriteDefaultId)->Draw(this->position, this->nx, color);
 	}
 }
 

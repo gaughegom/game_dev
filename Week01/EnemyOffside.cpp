@@ -1,10 +1,10 @@
 #include "EnemyOffside.h"
 
-#define ANIMATION_DEFAULT_ID	"df"
+#define AnimationDefaultId	"df"
 
 CEnemyOffside::CEnemyOffside()
 {
-	this->AddAnimation(ANIMATION_DEFAULT_ID, "aniEOffside"); // 240: offside animation id
+	this->AddAnimation(AnimationDefaultId, "aniEOffside"); // 240: offside animation id
 }
 
 void CEnemyOffside::Update(DWORD dt)
@@ -14,5 +14,5 @@ void CEnemyOffside::Update(DWORD dt)
 
 void CEnemyOffside::Render()
 {
-	animations.at(ANIMATION_DEFAULT_ID)->Render(this->position, 1, DRAW_COLOR_DEFAULT);
+	animations.at(AnimationDefaultId)->Render(this->position, 1, DRAW_COLOR_DEFAULT);
 }

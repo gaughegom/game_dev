@@ -18,7 +18,7 @@ class CSprite
 public:
 	CSprite(std::string id, int left, int top, int width, int height, LPDIRECT3DTEXTURE9 tex);
 
-	void Draw(Vector2D position, int nx, D3DCOLOR color, int layer = BACKGROUND_LAYER_1);
+	void Draw(Vector2D position, int nx, D3DCOLOR color, int layer = DrawLayer01);
 };
 typedef CSprite* LPSPRITE;
 

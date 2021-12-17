@@ -1,8 +1,8 @@
 #include "SophiaGun.h"
 
-constexpr auto SPR_GUN_00 = "gun00";
-constexpr auto SPR_GUN_45 = "gun45";
-constexpr auto SPR_GUN_90 = "gun90";
+constexpr auto SpriteGun00Id = "gun00";
+constexpr auto SpriteGun45Id = "gun45";
+constexpr auto SpriteGun90Id = "gun90";
 
 CSophiaGun::CSophiaGun()
 {
@@ -11,9 +11,9 @@ CSophiaGun::CSophiaGun()
 CSophiaGun::CSophiaGun(CSophia* target)
 {
 	this->self = target;
-	this->AddSprite(SPR_GUN_00, "sprSGun00");
-	this->AddSprite(SPR_GUN_45, "sprSGun45");
-	this->AddSprite(SPR_GUN_90, "sprSGun90");
+	this->AddSprite(SpriteGun00Id, "sprSGun00");
+	this->AddSprite(SpriteGun45Id, "sprSGun45");
+	this->AddSprite(SpriteGun90Id, "sprSGun90");
 }
 
 void CSophiaGun::Update(DWORD dt)
@@ -37,15 +37,15 @@ std::string CSophiaGun::MappingGunSpriteState(SophiaActionState actionState)
 	{
 	case SophiaActionState::Idle:
 		this->SetPosition(Vector2D(8.0f * this->self->GetNx(), 9.0f));
-		return SPR_GUN_00; // gun_00
+		return SpriteGun00Id; // gun_00
 		break;
 	case SophiaActionState::Tile45:
 		this->SetPosition(Vector2D(8.0f * this->self->GetNx(), 21.0f));
-		return SPR_GUN_45; // gun_45
+		return SpriteGun45Id; // gun_45
 		break;
 	case SophiaActionState::Up90:
 		this->SetPosition(Vector2D(3.0f * this->self->GetNx(), 24.0f));
-		return SPR_GUN_90; // gun_90
+		return SpriteGun90Id; // gun_90
 		break;
 	default:
 		break;

@@ -5,7 +5,7 @@ void InGravityAffect(CGameObject* self, DWORD dt)
 {
 	if (self->GetColliders().at(0)->IsDynamic()) {
 		Vector2D velocity = self->GetVelocity();
-		velocity.y += -GAME_GRAVITY * dt;
+		velocity.y += -WorldGravity * dt;
 		self->SetVelocity(velocity);
 	}
 }

@@ -13,7 +13,7 @@
 #include "Player.h"
 #include "Gate.h"
 
-#define MAX_FILE_LINE		2048
+constexpr auto MaxFileLine = 2048;
 
 #pragma region Parse section
 
@@ -25,8 +25,8 @@ void CScene::__ParseSection_MAP__(std::string line)
 
 	//  fetch from file
 	std::string sceneMapPath = tokens[0].c_str();
-	float sceneWidth = atoi(tokens[1].c_str()) * TILESET_WIDTH;
-	float sceneHeight = atoi(tokens[2].c_str()) * TILESET_HEIGHT;
+	float sceneWidth = atoi(tokens[1].c_str()) * TilesetWidth;
+	float sceneHeight = atoi(tokens[2].c_str()) * TilesetHeight;
 	std::string sceneMapType = tokens[3].c_str();
 
 	// set mapBoundary
@@ -56,8 +56,8 @@ void CScene::__ParseSection_FOREMAP__(std::string line)
 		return;
 
 	std::string foreMapPath = tokens[0].c_str();
-	float foreMapWidth = atoi(tokens[1].c_str()) * TILESET_WIDTH;
-	float foreMapHeight = atoi(tokens[2].c_str()) * TILESET_HEIGHT;
+	float foreMapWidth = atoi(tokens[1].c_str()) * TilesetWidth;
+	float foreMapHeight = atoi(tokens[2].c_str()) * TilesetHeight;
 
 	std::string texForeMapId = foreMapPath;
 	std::string sprForeMapId = foreMapPath;
@@ -76,10 +76,10 @@ void CScene::__ParseSection_PLATFORMS__(std::string line)
 	if (tokens.size() < 4)
 		return;
 
-	float x = atoi(tokens[0].c_str()) * TILESET_WIDTH;
-	float y = (atoi(tokens[1].c_str()) + 1) * TILESET_HEIGHT;
-	float width = atoi(tokens[2].c_str()) * TILESET_WIDTH;
-	float height = atoi(tokens[3].c_str()) * TILESET_HEIGHT;
+	float x = atoi(tokens[0].c_str()) * TilesetWidth;
+	float y = (atoi(tokens[1].c_str()) + 1) * TilesetHeight;
+	float width = atoi(tokens[2].c_str()) * TilesetWidth;
+	float height = atoi(tokens[3].c_str()) * TilesetHeight;
 	LPGAMEOBJECT platformObject = new CBrick(Vector2D(width, height));
 	platformObject->SetPosition(Vector2D(x + width / 2, this->mapBoundary.top - y + height / 2));
 	this->sceneObjects.push_back(platformObject);
@@ -139,10 +139,10 @@ void CScene::__ParseSection_GATES__(std::string line)
 		return;
 
 	std::string way = tokens[0].c_str();
-	float x = atoi(tokens[1].c_str()) * TILESET_WIDTH;
-	float y = (atoi(tokens[2].c_str()) + 1) * TILESET_HEIGHT;
-	float width = atoi(tokens[3].c_str()) * TILESET_WIDTH;
-	float height = atoi(tokens[4].c_str()) * TILESET_HEIGHT;
+	float x = atoi(tokens[1].c_str()) * TilesetWidth;
+	float y = (atoi(tokens[2].c_str()) + 1) * TilesetHeight;
+	float width = atoi(tokens[3].c_str()) * TilesetWidth;
+	float height = atoi(tokens[4].c_str()) * TilesetHeight;
 	int nextScene = atoi(tokens[5].c_str());
 
 	CGate* gate = new CGate(Vector2D(width, height), nextScene);
@@ -172,9 +172,9 @@ void CScene::LoadScene()
 	fs.open(this->filePath);
 
 	SceneSection section = SceneSection::SCENE_SECTION_UNKNOW;
-	char str[MAX_FILE_LINE];
+	char str[MaxFileLine];
 
-	while (fs.getline(str, MAX_FILE_LINE))
+	while (fs.getline(str, MaxFileLine))
 	{
 		std::string line(str);
 

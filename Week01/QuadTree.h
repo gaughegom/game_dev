@@ -8,8 +8,8 @@
 #include "GameObject.h"
 #include "Transform.h"
 
-constexpr auto MAX_NODE_ENTITES = 10;
-constexpr auto MAX_NODE_LEVEL = 5;
+constexpr auto MaxNodeEntities = 10;
+constexpr auto MaxNodeLevel = 5;
 
 class CQuadTree {
 private:

@@ -1,12 +1,12 @@
 #include "EnemyStuka.h"
 #include "Player.h"
 
-constexpr auto ANIMATION_DEFAULT_ID = "df";
-constexpr auto DETACTED_PLAYER_DISTANCE = 130.0f;
+constexpr auto AnimationDefaultId = "df";
+constexpr auto DetectedPlayerRadius = 130.0f;
 
 CEnemyStuka::CEnemyStuka()
 {
-	this->AddAnimation(ANIMATION_DEFAULT_ID, "aniEStuka");
+	this->AddAnimation(AnimationDefaultId, "aniEStuka");
 	this->hp = 10;
 	this->damage = 10;
 
@@ -22,17 +22,17 @@ CEnemyStuka::CEnemyStuka()
 
 void CEnemyStuka::Update(DWORD dt)
 {
-	this->ScheduleActiveByDistance(DETACTED_PLAYER_DISTANCE);
+	this->ActiveByRadiusDistance(DetectedPlayerRadius);
 
 	if (this->active) {
-		this->velocity.x = this->nx * ENEMY_VELOCITY_NORMAL;
+		this->velocity.x = this->nx * EnemyNormalVelocity;
 		InHorizontalMove(this, dt);
 	}
 }
 
 void CEnemyStuka::Render()
 {
-	animations.at(ANIMATION_DEFAULT_ID)->Render(this->position, 1, DRAW_COLOR_DEFAULT);
+	animations.at(AnimationDefaultId)->Render(this->position, 1, DRAW_COLOR_DEFAULT);
 }
 
 void CEnemyStuka::OnCollision(CCollider2D* self, LPCOLLISIONEVENT coEvent)

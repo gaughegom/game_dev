@@ -3,13 +3,13 @@
 
 #define	V_BOXSIZE			Vector2D(18, 18)
 
-constexpr auto ANIMATION_DEFAULT_ID = "default";
-constexpr auto SPR_IDLE_ID = "idle";
+constexpr auto AnimationDefaultId = "default";
+constexpr auto SpriteIdleId = "idle";
 
 CEnemyBallot::CEnemyBallot()
 {
-	this->AddAnimation(ANIMATION_DEFAULT_ID, "aniEBallot");		// animation
-	this->AddSprite(SPR_IDLE_ID, "sprEBallot00");		// for idle state
+	this->AddAnimation(AnimationDefaultId, "aniEBallot");		// animation
+	this->AddSprite(SpriteIdleId, "sprEBallot00");		// for idle state
 
 	// hp, damage
 	this->hp = 20;
@@ -31,10 +31,10 @@ void CEnemyBallot::Render()
 	auto color = this->GetRenderColor();
 	auto player = CPlayer::GetInstance()->GetPlayer();
 	if (abs(this->position.x - player->GetPosition().x) < 60) {
-		this->animations.at(ANIMATION_DEFAULT_ID)->Render(this->position, this->nx, color);
+		this->animations.at(AnimationDefaultId)->Render(this->position, this->nx, color);
 	}
 	else {
-		this->sprites.at(SPR_IDLE_ID)->Draw(this->position, this->nx, color);
+		this->sprites.at(SpriteIdleId)->Draw(this->position, this->nx, color);
 	}
 }
 

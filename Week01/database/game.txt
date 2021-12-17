@@ -113,7 +113,7 @@ aniBJDownward	sprBJDownward00	100	sprBJDownward01	100	sprBJDownward02	100
 aniSLeftWheel	sprSWheel00	100	sprSWheel01	100	sprSWheel02	100	sprSWheel03	100
 aniSRightWheel	sprSWheel03	100	sprSWheel00	100	sprSWheel01	100	sprSWheel02	100
 # destroyed collision
-aniSmallDestroy	sprDestroy02	600	sprDestroy01	600	sprDestroy00	600
+aniSmallDestroy	sprDestroy02	100	sprDestroy01	100
 # - DRAP -
 aniEDrap	sprEDrap00	150	sprEDrap01	150	sprEDrap02	150	sprEDrap03	150
 # - STUKA -

@@ -1,12 +1,12 @@
 #include "EnemyEyelet.h"
 #include "Sophia.h"
 
-constexpr auto ANIMATION_DEFAULT_ID = "df";
-constexpr auto DETACTED_PLAYER_DISTANCE = 160.0f;
+constexpr auto AnimationDefaultId = "df";
+constexpr auto DetectedPlayerRadius = 160.0f;
 
 CEnemyEyelet::CEnemyEyelet()
 {
-	this->AddAnimation(ANIMATION_DEFAULT_ID, "aniEEyelet");
+	this->AddAnimation(AnimationDefaultId, "aniEEyelet");
 
 	this->hp = 10;
 	this->damage = 10;
@@ -22,10 +22,10 @@ CEnemyEyelet::CEnemyEyelet()
 
 void CEnemyEyelet::Update(DWORD dt)
 {
-	this->ScheduleActiveByDistance(DETACTED_PLAYER_DISTANCE);
+	this->ActiveByRadiusDistance(DetectedPlayerRadius);
 
 	if (this->active) {
-		this->velocity.x = this->nx * ENEMY_VELOCITY_NORMAL;
+		this->velocity.x = this->nx * EnemyNormalVelocity;
 		InSinWaveXAsix(this, dt, 1.0f);
 	}
 }
@@ -33,7 +33,7 @@ void CEnemyEyelet::Update(DWORD dt)
 void CEnemyEyelet::Render()
 {
 	auto color = this->GetRenderColor();
-	animations.at(ANIMATION_DEFAULT_ID)->Render(this->position, this->nx, color);
+	animations.at(AnimationDefaultId)->Render(this->position, this->nx, color);
 }
 
 void CEnemyEyelet::OnCollision(CCollider2D* self, LPCOLLISIONEVENT coEvent)

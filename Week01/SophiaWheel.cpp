@@ -12,7 +12,7 @@ void CSophiaWheel::Update(DWORD dt)
 void CSophiaWheel::Render()
 {
 	D3DCOLOR color = self->GetSophiaPartRenderColor();
-	auto animation = this->animations.at(ANIMATION_SOPHIA_WHEEL_DEFAULT_ID);
+	auto animation = this->animations.at(AnimationWheelId);
 
 	this->HandleAnimationDirectState();
 	this->HandleAnimationActionState();
@@ -72,20 +72,20 @@ void CSophiaWheel::HandleAnimationActionState()
 
 void CSophiaWheel::NotMove()
 {
-	this->animations.at(ANIMATION_SOPHIA_WHEEL_DEFAULT_ID)->SetWait(true);
-	this->animations.at(ANIMATION_SOPHIA_WHEEL_DEFAULT_ID)->SetReverse(false);
+	this->animations.at(AnimationWheelId)->SetWait(true);
+	this->animations.at(AnimationWheelId)->SetReverse(false);
 }
 
 void CSophiaWheel::RightMove()
 {
-	this->animations.at(ANIMATION_SOPHIA_WHEEL_DEFAULT_ID)->SetWait(false);
-	this->animations.at(ANIMATION_SOPHIA_WHEEL_DEFAULT_ID)->SetReverse(true);
+	this->animations.at(AnimationWheelId)->SetWait(false);
+	this->animations.at(AnimationWheelId)->SetReverse(true);
 }
 
 void CSophiaWheel::LeftMove()
 {
-	this->animations.at(ANIMATION_SOPHIA_WHEEL_DEFAULT_ID)->SetWait(false);
-	this->animations.at(ANIMATION_SOPHIA_WHEEL_DEFAULT_ID)->SetReverse(true);
+	this->animations.at(AnimationWheelId)->SetWait(false);
+	this->animations.at(AnimationWheelId)->SetReverse(true);
 }
 
 #pragma endregion

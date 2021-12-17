@@ -3,13 +3,13 @@
 
 #define V_BOXSIZE			Vector2D(16.0f, 16.0f)
 
-constexpr auto SPRITE_DEFAULT_ID = "df";
-constexpr auto EFFECT_TIME		= 1800;
-constexpr auto LIFE_TIME		= 2500;
+constexpr auto SpriteDefaultId = "df";
+constexpr auto EffectTime		= 1000;
+constexpr auto LifeTime		= 2700;
 
 CItemHealth::CItemHealth()
 {
-	this->AddSprite(SPRITE_DEFAULT_ID, "sprItemHealth");
+	this->AddSprite(SpriteDefaultId, "sprItemHealth");
 	
 	this->hp = 1;
 	this->damage = 0;
@@ -23,10 +23,10 @@ CItemHealth::CItemHealth()
 void CItemHealth::Update(DWORD dt)
 {
 	DWORD now = GetTickCount64();
-	if (now - this->initTime <= LIFE_TIME && now - this->initTime >= EFFECT_TIME) {
-		this->effected = true;
+	if (this->effected == false && now - this->initTime > LifeTime - EffectTime) {
+		this->SetInEffect(true);
 	}
-	else if (now - this->initTime > LIFE_TIME) {
+	else if (now - this->initTime > LifeTime) {
 		this->hp = 0;
 	}
 }
@@ -34,7 +34,7 @@ void CItemHealth::Update(DWORD dt)
 void CItemHealth::Render()
 {
 	D3DCOLOR color = this->GetRenderColor();
-	this->sprites.at(SPRITE_DEFAULT_ID)->Draw(this->position, this->nx, color);
+	this->sprites.at(SpriteDefaultId)->Draw(this->position, this->nx, color);
 }
 
 void CItemHealth::OnCollision(CCollider2D* self, LPCOLLISIONEVENT coEvent)

@@ -4,8 +4,8 @@
 #include "Jason.h"
 #include "Sophia.h"
 
-constexpr auto MARGIN_COLLISION = 0.2f;
-constexpr auto ALPHA_DRAW_COLLIDER = 40;
+constexpr auto MarginPushCollision = 0.2f;
+constexpr auto AlphaColliderColor = 40;
 
 CCollider2D::CCollider2D()
 {
@@ -273,7 +273,7 @@ void CCollider2D::PhysicalUpdate(std::vector<LPGAMEOBJECT>* coObjects)
 			{
 				if (this->trigger == false)
 				{
-					selfPosition.y += this->coEventY->t * this->dy + this->coEventY->ny * MARGIN_COLLISION;
+					selfPosition.y += this->coEventY->t * this->dy + this->coEventY->ny * MarginPushCollision;
 
 					selfVelocity.y = 0;
 					this->object->SetVelocity(selfVelocity);
@@ -309,7 +309,7 @@ void CCollider2D::PhysicalUpdate(std::vector<LPGAMEOBJECT>* coObjects)
 				if (colX_other != nullptr)
 				{
 					if (this->trigger == false) {
-						selfPosition.x += colX_other->t * this->dx + colX_other->nx * MARGIN_COLLISION;
+						selfPosition.x += colX_other->t * this->dx + colX_other->nx * MarginPushCollision;
 					}
 
 					selfVelocity.x = 0;
@@ -332,7 +332,7 @@ void CCollider2D::PhysicalUpdate(std::vector<LPGAMEOBJECT>* coObjects)
 			{
 				if (this->trigger == false)
 				{
-					selfPosition.x += this->coEventX->t * this->dx + this->coEventX->nx * MARGIN_COLLISION;
+					selfPosition.x += this->coEventX->t * this->dx + this->coEventX->nx * MarginPushCollision;
 
 					selfVelocity.x = 0;
 					this->object->SetVelocity(selfVelocity);
@@ -368,7 +368,7 @@ void CCollider2D::PhysicalUpdate(std::vector<LPGAMEOBJECT>* coObjects)
 				if (colY_other != nullptr)
 				{
 					if (this->trigger == false) {
-						selfPosition.y += colY_other->t * this->dy + colY_other->ny * MARGIN_COLLISION;
+						selfPosition.y += colY_other->t * this->dy + colY_other->ny * MarginPushCollision;
 					}
 
 					selfVelocity.x = 0;
@@ -393,7 +393,7 @@ void CCollider2D::PhysicalUpdate(std::vector<LPGAMEOBJECT>* coObjects)
 			{
 				if (this->trigger == false)
 				{
-					selfPosition.x += this->coEventX->t * this->dx + this->coEventX->nx * MARGIN_COLLISION;
+					selfPosition.x += this->coEventX->t * this->dx + this->coEventX->nx * MarginPushCollision;
 					selfPosition.y += this->dy;
 
 					selfVelocity.x = 0;
@@ -413,7 +413,7 @@ void CCollider2D::PhysicalUpdate(std::vector<LPGAMEOBJECT>* coObjects)
 					if (this->trigger == false)
 					{
 						selfPosition.x += this->dx;
-						selfPosition.y += this->coEventY->t * this->dy + this->coEventY->ny * MARGIN_COLLISION;
+						selfPosition.y += this->coEventY->t * this->dy + this->coEventY->ny * MarginPushCollision;
 
 						selfVelocity.y = 0;
 						this->object->SetVelocity(selfVelocity);
@@ -483,19 +483,19 @@ void CCollider2D::PhysicalOverlapHandler(std::vector<LPGAMEOBJECT>* coObjects)
 
 		if (bbSelf.left < bbOther.right && bbSelf.left > bbOther.left)
 		{
-			deltaX += bbOther.right - bbSelf.left + MARGIN_COLLISION;
+			deltaX += bbOther.right - bbSelf.left + MarginPushCollision;
 		}
 		if (bbSelf.right > bbOther.left && bbSelf.right < bbOther.right)
 		{
-			deltaX += -1 * (bbSelf.right - bbOther.left + MARGIN_COLLISION);
+			deltaX += -1 * (bbSelf.right - bbOther.left + MarginPushCollision);
 		}
 		if (bbSelf.bottom < bbOther.top && bbSelf.bottom > bbOther.bottom)
 		{
-			deltaY += bbOther.top - bbSelf.bottom + MARGIN_COLLISION;
+			deltaY += bbOther.top - bbSelf.bottom + MarginPushCollision;
 		}
 		if (bbSelf.top > bbOther.bottom && bbSelf.top < bbOther.top)
 		{
-			deltaY += -1 * (bbSelf.top - bbOther.bottom + MARGIN_COLLISION);
+			deltaY += -1 * (bbSelf.top - bbOther.bottom + MarginPushCollision);
 		}
 		if (deltaX != 0 && deltaY != 0)
 		{
@@ -535,6 +535,6 @@ void CCollider2D::RenderBoundingBox()
 	rect.right = this->boxSize.x;
 	rect.bottom = this->boxSize.y;
 
-	D3DCOLOR color = D3DCOLOR_ARGB(ALPHA_DRAW_COLLIDER, 255, 255, 255);
-	CGame::GetInstance()->Draw(positionCollider, -1, bbox, rect.left, rect.top, rect.right, rect.bottom, color, BACKGROUND_LAYER_1);
+	D3DCOLOR color = D3DCOLOR_ARGB(AlphaColliderColor, 255, 255, 255);
+	CGame::GetInstance()->Draw(positionCollider, -1, bbox, rect.left, rect.top, rect.right, rect.bottom, color, DrawLayer02);
 }

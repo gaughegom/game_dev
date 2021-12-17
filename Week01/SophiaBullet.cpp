@@ -5,13 +5,13 @@
 #include "EnemyInterrupt.h"
 #include "EnemyStuka.h"
 #include "EnemyBallot.h"
+#include "SmallDestroyEffect.h"
 
-#define V_BULLET_BOXSIZE_HORIZON		Vector2D(22, 6)
-#define	V_BULLET_BOXSIZE_VERTICAL		Vector2D(6, 22)
+#define V_BULLET_HORIZONAL_BOXSIZE		Vector2D(22, 6)
+#define	V_BULLET_VERTICAL_BOXSIZE		Vector2D(6, 22)
 
-constexpr auto SPRITE_DEFAULT_ID = "df";
-constexpr auto SPRITE_DESTROY_ID = "destroy";
-constexpr auto ANIMATION_DESTROY_ID	= "destroy";
+constexpr auto SpriteDefaultId = "df";
+constexpr auto BulletSpeed = 0.2f;
 
 CSophiaBullet::CSophiaBullet(int direct)
 {
@@ -24,24 +24,22 @@ CSophiaBullet::CSophiaBullet(int direct)
 	collider->SetOffset(VectorZero());
 	
 	// boxsize, velocity, sprite
-	this->AddAnimation(ANIMATION_DESTROY_ID, "aniSmallDestroy");
 	CSprites* sprites = CSprites::GetInstance();
-	this->AddSprite(SPRITE_DESTROY_ID, "sprDestroy02");
 	if (direct == 0) {
-		collider->SetBoxSize(V_BULLET_BOXSIZE_VERTICAL);
-		this->velocity = Vector2D(0, SOPHIA_BASICBULLET_VELOCITY);
-		this->AddSprite(SPRITE_DEFAULT_ID, "sprSBullet01");
+		collider->SetBoxSize(V_BULLET_VERTICAL_BOXSIZE);
+		this->velocity = Vector2D(0, BulletSpeed);
+		this->AddSprite(SpriteDefaultId, "sprSBullet01");
 		this->nx = 1;
 	}
 	else {
-		collider->SetBoxSize(V_BULLET_BOXSIZE_HORIZON);
-		this->AddSprite(SPRITE_DEFAULT_ID, "sprSBullet00");
+		collider->SetBoxSize(V_BULLET_HORIZONAL_BOXSIZE);
+		this->AddSprite(SpriteDefaultId, "sprSBullet00");
 		if (direct == 1) {
-			this->velocity = Vector2D(SOPHIA_BASICBULLET_VELOCITY, 0);
+			this->velocity = Vector2D(BulletSpeed, 0);
 			this->nx = -1;
 		}
 		else if (direct == -1) {
-			this->velocity = Vector2D(-SOPHIA_BASICBULLET_VELOCITY, 0);
+			this->velocity = Vector2D(-BulletSpeed, 0);
 			this->nx = 1;
 		}
 	}
@@ -63,27 +61,44 @@ void CSophiaBullet::Update(DWORD dt)
 	if (!camera->GetBoundingBox().Contain(this->colliders.at(0)->GetBoundingBox())) {
 		this->OnDelete();
 	}
+
+	// effect destroy
+	if (this->IsLive() == false) {
+		LPGAMEOBJECT destroyEffect = nullptr;
+		destroyEffect = new CSmallDestroyEffect;
+
+		Vector2D boxSize = this->colliders.at(0)->GetBoxSize();
+		if (boxSize.x > boxSize.y) {
+			destroyEffect->SetPosition(this->position + Vector2D(-this->nx * boxSize.x / 2, 0));
+		}
+		else {
+			destroyEffect->SetPosition(this->position + Vector2D(0, boxSize.y / 2));
+		}
+
+		CGame::GetInstance()->NewGameObject(destroyEffect);
+	}
 }
 
 void CSophiaBullet::Render()
 {
-	LPSPRITE sprite = this->sprites.at(SPRITE_DEFAULT_ID);
+	LPSPRITE sprite = this->sprites.at(SpriteDefaultId);
 	sprite->Draw(this->position, this->nx, DRAW_COLOR_DEFAULT);
 }
 
 void CSophiaBullet::OnCollision(CCollider2D* self, LPCOLLISIONEVENT coEvent)
 {
-	if (dynamic_cast<CSophia*>(coEvent->object)
-		|| dynamic_cast<CBrick*>(coEvent->object)
-		|| dynamic_cast<CSophiaBullet*>(coEvent->object)) {
+	LPGAMEOBJECT other = coEvent->object;
+	if (dynamic_cast<CSophia*>(other)
+		|| dynamic_cast<CBrick*>(other)
+		|| dynamic_cast<CSophiaBullet*>(other)) {
 		this->OnDelete();
 	}
-	else if (dynamic_cast<CEnemyBallcarry*>(coEvent->object)
-		|| dynamic_cast<CEnemyInterrupt*>(coEvent->object)
-		|| dynamic_cast<CEnemyEyelet*>(coEvent->object)
-		|| dynamic_cast<CEnemyStuka*>(coEvent->object)
-		|| dynamic_cast<CEnemyBallot*>(coEvent->object)) {
-		coEvent->object->TakeDamage(this->damage);
+	else if (dynamic_cast<CEnemyBallcarry*>(other)
+		|| dynamic_cast<CEnemyInterrupt*>(other)
+		|| dynamic_cast<CEnemyEyelet*>(other)
+		|| dynamic_cast<CEnemyStuka*>(other)
+		|| dynamic_cast<CEnemyBallot*>(other)) {
+		other->TakeDamage(this->damage);
 		this->OnDelete();
 	}
 }
@@ -99,8 +114,4 @@ void CSophiaBullet::OnDelete()
 	if (controller->GetSelectId() == PlayerCharacterId::SOPHIA) {
 		controller->GetSophia()->DecreaseBullet();	// decrease bullet of sophia
 	}
-}
-
-CSophiaBullet::~CSophiaBullet()
-{
 }

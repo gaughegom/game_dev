@@ -16,7 +16,7 @@
 #define SOPHIA_BOX_TILE45			Vector2D(23.0f, 29.0f)
 #define SOPHIA_BOX_UP90				Vector2D(24.0f, 32.0f)
 
-constexpr auto SOPHIA_MAX_BULLETS = 3;
+constexpr auto SophiaMaxBullets = 3;
 
 class CSophiaCabin;
 class CSophiaWheel;

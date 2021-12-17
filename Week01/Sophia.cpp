@@ -29,8 +29,8 @@ void CSophia::InitParts()
 	this->body = new CSophiaBody(this);
 	this->cabin = new CSophiaCabin(this);
 	this->gun = new CSophiaGun(this);
-	this->leftWheel->AddAnimation(ANIMATION_SOPHIA_WHEEL_DEFAULT_ID, "aniSLeftWheel"); // 0: left wheel
-	this->rightWheel->AddAnimation(ANIMATION_SOPHIA_WHEEL_DEFAULT_ID, "aniSRightWheel"); // 1: right wheel
+	this->leftWheel->AddAnimation(AnimationWheelId, "aniSLeftWheel"); // 0: left wheel
+	this->rightWheel->AddAnimation(AnimationWheelId, "aniSRightWheel"); // 1: right wheel
 }
 
 void CSophia::Update(DWORD dt)
@@ -93,7 +93,7 @@ void CSophia::ListenKeyEvent()
 	// listen key W for jumping
 	if (input->OnKeyDown(JUMP_KEYCODE) && this->velocity.y < 0) {
 		this->ground = false;
-		this->velocity.y = PLAYER_JUMP_FORCE;
+		this->velocity.y = PlayerJumpForce;
 	}
 
 	// listen key switch playerControll
@@ -105,7 +105,7 @@ void CSophia::ListenKeyEvent()
 
 	// listen key shooting
 	if (input->IsKeyDown(SHOTTING_KEYCODE)) {
-		if (GetTickCount64() - this->prevBulletTime >= this->delayBullet && this->bullets < SOPHIA_MAX_BULLETS) {
+		if (GetTickCount64() - this->prevBulletTime >= this->delayBullet && this->bullets < SophiaMaxBullets) {
 			int direct;
 			if (this->actionState == SophiaActionState::Idle) {
 				direct = this->nx;
@@ -167,12 +167,12 @@ void CSophia::SubcribeDirectState(SophiaDirectState directState)
 		break;
 
 	case SophiaDirectState::LeftMove:
-		this->velocity.x = -PLAYER_MOVING_SPEED;
+		this->velocity.x = -PlayerMovingSpeed;
 		this->nx = -1;
 
 		break;
 	case SophiaDirectState::RightMove:
-		this->velocity.x = PLAYER_MOVING_SPEED;
+		this->velocity.x = PlayerMovingSpeed;
 		this->nx = 1;
 
 		break;
@@ -200,9 +200,13 @@ void CSophia::OnCollision(CCollider2D* self, LPCOLLISIONEVENT coEvent)
 	}
 	else if (dynamic_cast<CItemHealth*>(coEvent->object)) {
 		CItemHealth* item = (CItemHealth*)coEvent->object;
-		LPGAMEOBJECT thisObj = (LPGAMEOBJECT)this;
 		this->hp += item->GetRecoverHealth();
 		item->SetUsed();
+
+		// reset hp
+		if (this->hp > 100) {
+			this->hp = 100;
+		}
 	}
 	else {
 		this->OnCollisionWithEnemy(coEvent);

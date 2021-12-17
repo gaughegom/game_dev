@@ -57,7 +57,7 @@ public:
 	Vector2D GetPosition();
 	void SetX(float newX);
 	void SetY(float newY);
-	void SetNx(float newNX);
+	void SetNx(int newNX);
 	float GetX();
 	float GetY();
 	int GetNx();
@@ -115,7 +115,7 @@ public:
 	void SetInEffect(bool value) { this->effected = value; this->effectDuration = 1; }
 	bool IsEffected() { return this->effected; }
 
-	void ScheduleActiveByDistance(float activeDistance);
+	void ActiveByRadiusDistance(float activeDistance);
 	D3DCOLOR GetRenderColor();
 
 	// virtual

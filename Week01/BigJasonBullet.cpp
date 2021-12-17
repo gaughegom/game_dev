@@ -4,11 +4,11 @@
 #include "EnemyGX-680.h"
 #include "EnemyGX-680S.h"
 
-#define V_BOXSIZE_HORIZON					Vector2D(8.0f, 6.0f)
-#define V_BOXSIZE_VERTICAL					Vector2D(6.0f, 6.0f)
+#define V_BOXSIZE_HORIZON			Vector2D(8.0f, 6.0f)
+#define V_BOXSIZE_VERTICAL			Vector2D(6.0f, 6.0f)
 
-constexpr auto BIGJASON_BULLET_VELOCITY	= 0.2f;
-constexpr auto SPRITE_DEFAULT_ID = "df";
+constexpr auto BulletSpeed		= 0.2f;
+constexpr auto SpriteDefaultId	= "df";
 
 CBigJasonBullet::CBigJasonBullet(BigJasonBulletDirection state)
 {
@@ -20,29 +20,29 @@ CBigJasonBullet::CBigJasonBullet(BigJasonBulletDirection state)
 	switch (this->directState)
 	{
 	case BigJasonBulletDirection::LEFT:
-		this->AddSprite(SPRITE_DEFAULT_ID, "sprBJBullet00");
-		this->velocity.x = -BIGJASON_BULLET_VELOCITY;
+		this->AddSprite(SpriteDefaultId, "sprBJBullet00");
+		this->velocity.x = -BulletSpeed;
 		this->nx = -1;
 		collider->SetBoxSize(V_BOXSIZE_HORIZON);
 		break;
 
 	case BigJasonBulletDirection::RIGHT:
-		this->AddSprite(SPRITE_DEFAULT_ID, "sprBJBullet00");
-		this->velocity.x = BIGJASON_BULLET_VELOCITY;
+		this->AddSprite(SpriteDefaultId, "sprBJBullet00");
+		this->velocity.x = BulletSpeed;
 		this->nx = 1;
 		collider->SetBoxSize(V_BOXSIZE_HORIZON);
 		break;
 
 	case BigJasonBulletDirection::UP:
-		this->AddSprite(SPRITE_DEFAULT_ID, "sprBJBullet01");
-		this->velocity.y = BIGJASON_BULLET_VELOCITY;
+		this->AddSprite(SpriteDefaultId, "sprBJBullet01");
+		this->velocity.y = BulletSpeed;
 		this->nx = 1;
 		collider->SetBoxSize(V_BOXSIZE_VERTICAL);
 		break;
 
 	case BigJasonBulletDirection::DOWN:
-		this->AddSprite(SPRITE_DEFAULT_ID, "sprBJBullet01");
-		this->velocity.y = -BIGJASON_BULLET_VELOCITY;
+		this->AddSprite(SpriteDefaultId, "sprBJBullet01");
+		this->velocity.y = -BulletSpeed;
 		this->nx = -1;
 		collider->SetBoxSize(V_BOXSIZE_VERTICAL);
 		break;
@@ -65,7 +65,7 @@ void CBigJasonBullet::Update(DWORD dt)
 void CBigJasonBullet::Render()
 {
 	D3DCOLOR color = this->GetRenderColor();
-	this->sprites.at(SPRITE_DEFAULT_ID)->Draw(this->position, this->nx, color);
+	this->sprites.at(SpriteDefaultId)->Draw(this->position, this->nx, color);
 }
 
 void CBigJasonBullet::OnCollision(CCollider2D* self, LPCOLLISIONEVENT coEvent)

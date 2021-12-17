@@ -5,12 +5,12 @@
 
 #define V_BOXSIZE		Vector2D(18.0f, 10.0f)
 
-constexpr auto ANIMATION_DEFAULT_ID = "df";
-constexpr auto LIFETIME = 1500;
+constexpr auto AnimationDefaultId = "df";
+constexpr auto LifeTime = 1500;
 
 CEnemyNeoWorm::CEnemyNeoWorm()
 {
-	this->AddAnimation(ANIMATION_DEFAULT_ID, "aniENeoworm");
+	this->AddAnimation(AnimationDefaultId, "aniENeoworm");
 	
 	this->damage = 5;
 	this->hp = 10;
@@ -28,7 +28,7 @@ void CEnemyNeoWorm::Update(DWORD dt)
 	if (this->ground == true) {
 		this->velocity.x = this->nx * 0.05f;
 	}
-	if (GetTickCount64() - this->bornTime > LIFETIME) {
+	if (GetTickCount64() - this->bornTime > LifeTime) {
 		this->hp = 0;
 	}
 }
@@ -36,7 +36,7 @@ void CEnemyNeoWorm::Update(DWORD dt)
 void CEnemyNeoWorm::Render()
 {
 	D3DCOLOR color = this->GetRenderColor();
-	this->animations.at(ANIMATION_DEFAULT_ID)->Render(this->position, -this->nx, color);
+	this->animations.at(AnimationDefaultId)->Render(this->position, -this->nx, color);
 }
 
 void CEnemyNeoWorm::OnCollision(CCollider2D* self, LPCOLLISIONEVENT coEvent)

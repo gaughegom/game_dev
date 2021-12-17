@@ -14,7 +14,7 @@ CQuadTree::CQuadTree(const int level, SRect rect) : level(level), nodes{ nullptr
 	
 	this->rect = rect;
 
-	this->entities.reserve(MAX_NODE_ENTITES);
+	this->entities.reserve(MaxNodeEntities);
 }
 
 bool CQuadTree::HasChildren()
@@ -51,7 +51,7 @@ void CQuadTree::Insert(LPGAMEOBJECT entity)
 	entity->AddSelfNodeQt(this);
 	entity->SetSelfIndexInNodeQt(this->entities.size() - 1);
 
-	if (this->entities.size() > MAX_NODE_ENTITES && this->level < MAX_NODE_LEVEL) {
+	if (this->entities.size() > MaxNodeEntities && this->level < MaxNodeLevel) {
 		if (!this->HasChildren()) {
 			this->SplitArea();
 		}
