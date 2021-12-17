@@ -23,17 +23,33 @@ void CCamera::SetSize(Vector2D size)
 void CCamera::Update()
 {
 	Vector2D targetPosition = target->GetPosition();
-	this->position.x = (int)(targetPosition.x - this->size.x / 2);
-	this->position.y = (int)(targetPosition.y + this->size.y / 2);
+	Vector2D vpPlayer = this->TranslateWorldToScreen(targetPosition);
 
-	if (this->position.x <= this->boundary.left)
-		this->position.x = this->boundary.left;
-	if (this->position.y >= this->boundary.top)
-		this->position.y = this->boundary.top;
-	if (this->position.x + this->size.x >= this->boundary.right)
-		this->position.x = this->boundary.right - this->size.x;
-	if (this->position.y - this->size.y <= this->boundary.bottom)
-		this->position.y = this->boundary.bottom + size.y;
+	if (this->position == VectorInfinity()) {
+		this->position.x = (int)(targetPosition.x - (this->size.x / 2));
+		this->position.y = (int)(targetPosition.y + (this->size.y / 2));
+	}
+	else {
+		if (vpPlayer.x <= this->staticBoundary.left)
+			this->position.x = (int)(targetPosition.x - this->staticBoundary.left);
+		if (vpPlayer.x >= this->staticBoundary.right)
+			this->position.x = (int)(targetPosition.x - this->staticBoundary.right);
+		if (vpPlayer.y <= this->staticBoundary.top)
+			this->position.y = (int)(targetPosition.y + this->staticBoundary.top);
+		if (vpPlayer.y >= this->staticBoundary.bottom)
+			this->position.y = (int)(targetPosition.y + this->staticBoundary.bottom);
+	}
+
+	if (boundless == false) {
+		if (this->position.x <= this->boundary.left)
+			this->position.x = this->boundary.left;
+		if (this->position.y >= this->boundary.top)
+			this->position.y = this->boundary.top;
+		if (this->position.x + this->size.x >= this->boundary.right)
+			this->position.x = this->boundary.right - this->size.x;
+		if (this->position.y - this->size.y <= this->boundary.bottom)
+			this->position.y = this->boundary.bottom + this->size.y;
+	}
 }
 
 Vector2D CCamera::GetPosition()
@@ -43,13 +59,15 @@ Vector2D CCamera::GetPosition()
 
 SRect CCamera::GetBoundingBox()
 {
-	SRect rect;
-	rect.left = this->position.x;
-	rect.top = this->position.y;
-	rect.right = this->position.x + this->size.x;
-	rect.bottom = this->position.y - this->size.y;
+	Vector2D nextPosition = this->position + target->GetVelocity() * CGame::GetDeltaTime();
 
-	return rect;
+	SRect boundingRect;
+	boundingRect.left = min(position.x, nextPosition.x);
+	boundingRect.top = max(position.y, nextPosition.y);
+	boundingRect.right = max(position.x + size.x, nextPosition.x + size.x);
+	boundingRect.bottom = min(position.y - size.y, nextPosition.y - size.y);
+
+	return boundingRect;
 }
 
 void CCamera::SetBoundary(SRect boundary)
@@ -74,13 +92,12 @@ Vector2D CCamera::TranslateWorldToScreen(Vector2D pos)
 	D3DXMATRIX mat;
 	D3DXMatrixIdentity(&mat);
 
-	// Translate
 	D3DXMATRIX translate;
 	D3DXMatrixTranslation(&translate, (pos.x - position.x), (-pos.y + position.y), 0.0f);
 
 	mat *= translate;
 
-	return Vector2D(mat._41, mat._42);
+	return Vector2D((int)mat._41, (int)mat._42);
 }
 
 CCamera* CCamera::GetInstance()

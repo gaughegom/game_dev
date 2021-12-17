@@ -17,8 +17,8 @@
 
 constexpr auto WINDOW_CLASS_NAME			= L"Blaster master";
 constexpr auto WINDOW_TITLE					= L"Blaster master";
-constexpr auto WINDOW_SCREEN_WIDTH			= 244;
-constexpr auto WINDOW_SCREEN_HEIGHT			= 200;
+constexpr auto WINDOW_SCREEN_WIDTH			= 256;
+constexpr auto WINDOW_SCREEN_HEIGHT			= 224;
 constexpr auto MAX_FRAME_RATE				= 60;
 
 #define BACKGROUND_COLOR					D3DCOLOR_XRGB(0, 0, 0)

@@ -101,7 +101,7 @@ void CGame::InitDirectX(HWND hWnd)
 		&d3dpp,
 		&d3ddv);
 
-	if (d3ddv == NULL)
+	if (d3ddv == nullptr)
 	{
 		OutputDebugString(L"[ERROR] CreateDevice failed\n");
 		return;
@@ -319,10 +319,11 @@ void CGame::RenderGame()
 	LPDIRECT3DSURFACE9 bb = CGame::GetInstance()->GetBackbuffer();
 	LPD3DXSPRITE spriteHandler = CGame::GetInstance()->GetSpriteHandler();
 
-	if (d3ddv->BeginScene())
+	HRESULT hr = d3ddv->BeginScene();
+	if (hr == D3D_OK)
 	{
 		// Clear back buffer with a color
-		d3ddv->ColorFill(bb, NULL, BACKGROUND_COLOR);
+		d3ddv->ColorFill(bb, nullptr, BACKGROUND_COLOR);
 
 		spriteHandler->Begin(D3DXSPRITE_ALPHABLEND | D3DXSPRITE_SORT_DEPTH_FRONTTOBACK);
 
@@ -355,7 +356,7 @@ void CGame::RenderGame()
 	}
 
 	// Display back buffer content to the screen
-	d3ddv->Present(NULL, NULL, NULL, NULL);
+	d3ddv->Present(nullptr, nullptr, nullptr, nullptr);
 }
 
 void CGame::RunGame()
@@ -367,7 +368,7 @@ void CGame::RunGame()
 
 	while (!done)
 	{
-		if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
+		if (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
 		{
 			if (msg.message == WM_QUIT) done = 1;
 
@@ -420,7 +421,7 @@ CGame::~CGame()
 
 CGame* CGame::GetInstance()
 {
-	if (__instance == NULL) __instance = new CGame();
+	if (__instance == nullptr) __instance = new CGame();
 	return __instance;
 }
 

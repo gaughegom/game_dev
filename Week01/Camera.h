@@ -15,6 +15,9 @@ protected:
 	Vector2D size;
 	CGameObject* target;
 	SRect boundary;
+	SRect staticBoundary = SRect(104, 120, 152, 150);
+
+	bool boundless = false;
 
 public:
 	CCamera();
@@ -27,6 +30,7 @@ public:
 	Vector2D GetPosition();
 	SRect GetBoundingBox();
 	void SetBoundary(SRect boundary);
+	void SetBoundless(bool value) { this->boundless = value; }
 
 	// target
 	void SetTarget(CGameObject* target);

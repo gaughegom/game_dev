@@ -50,17 +50,17 @@ CSophiaBullet::CSophiaBullet(int direct)
 void CSophiaBullet::Update(DWORD dt)
 {
 	// delete when out of distance
-	/*auto sophia = CPlayer::GetInstance()->GetSophia();
-	Vector2D sophiaPos = sophia->GetPosition();
-	float distance = PositionsDistance(this->position, sophiaPos);
+	auto player = CPlayer::GetInstance()->GetSophia();
+	Vector2D playerPos = player->GetPosition();
+	float distance = PositionsDistance(this->position, playerPos);
 	if (distance > 300) {
 		this->OnDelete();
-	}*/
+	}
 	// delete when out of g_camera
-	auto camera = CCamera::GetInstance();
+	/*auto camera = CCamera::GetInstance();
 	if (!camera->GetBoundingBox().Contain(this->colliders.at(0)->GetBoundingBox())) {
 		this->OnDelete();
-	}
+	}*/
 
 	// effect destroy
 	if (this->IsLive() == false) {
@@ -69,10 +69,10 @@ void CSophiaBullet::Update(DWORD dt)
 
 		Vector2D boxSize = this->colliders.at(0)->GetBoxSize();
 		if (boxSize.x > boxSize.y) {
-			destroyEffect->SetPosition(this->position + Vector2D(-this->nx * boxSize.x / 2, 0));
+			destroyEffect->SetPosition(this->position + Vector2D(-this->nx * boxSize.x / 4, 0));
 		}
 		else {
-			destroyEffect->SetPosition(this->position + Vector2D(0, boxSize.y / 2));
+			destroyEffect->SetPosition(this->position + Vector2D(0, boxSize.y / 4));
 		}
 
 		CGame::GetInstance()->NewGameObject(destroyEffect);
