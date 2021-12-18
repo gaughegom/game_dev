@@ -1,5 +1,6 @@
 #include "EnemyGX-680.h"
 #include "Player.h"
+#include "BigDestroyEffect.h"
 
 #define V_BOXSIZE					Vector2D(18.0f, 17.0f)
 
@@ -24,6 +25,11 @@ CEnemyGX680::CEnemyGX680()
 
 void CEnemyGX680::Update(DWORD dt)
 {
+	if (!this->IsLive()) {
+		CGame::GetInstance()->InitiateAndPushToQueue<CBigDestroyEffect>(this->position);
+		return;
+	}
+
 	LPGAMEOBJECT player = CPlayer::GetInstance()->GetPlayer();
 	// detected player
 	if (PositionsDistance(this->position, player->GetPosition()) < DetectedPlayerRadius) {

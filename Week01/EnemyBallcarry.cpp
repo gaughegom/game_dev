@@ -1,6 +1,7 @@
 #include "EnemyBallcarry.h"
 #include "Player.h"
 #include "EnemyBallbomb.h"
+#include "BigDestroyEffect.h"
 
 #define V_BOXSIZE					Vector2D(18.0f, 18.0f)
 
@@ -28,6 +29,11 @@ CEnemyBallcarry::CEnemyBallcarry()
 
 void CEnemyBallcarry::Update(DWORD dt)
 {
+	if (!this->IsLive()) {
+		CGame::GetInstance()->InitiateAndPushToQueue<CBigDestroyEffect>(this->position);
+		return;
+	}
+
 	// gravity
 	InGravityAffect(this, dt);
 
@@ -40,13 +46,10 @@ void CEnemyBallcarry::Update(DWORD dt)
 
 		// droping bomb
 		for (int i = 0; i < MaxBombCarry; i++) {
-			CEnemyBallbomb* bomb = new CEnemyBallbomb();
 			int sign = (rand() % 2 == 0) ? 1 : -1;
 			float bombVx = Random(5, 12) * 0.001f * sign;
-			bomb->SetVelocity(Vector2D(bombVx, 0));
-			bomb->SetPosition(this->position);
-			LPGAMEOBJECT bombObj = (LPGAMEOBJECT)bomb;
-			CGame::GetInstance()->NewGameObject(bombObj);
+			float bombVy = Random(12, 15) * 0.01f;
+			CGame::GetInstance()->InitiateAndPushToQueue<CEnemyBallbomb>(this->position, Vector2D(bombVx, bombVy));
 		}
 	}
 	else if (this->activeAttack && (GetTickCount64() - this->timeAttack > 300)) {

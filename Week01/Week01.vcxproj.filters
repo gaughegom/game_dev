@@ -146,6 +146,9 @@
     <Filter Include="Game\Game objects\Effect\Small destroy">
       <UniqueIdentifier>{1a5af209-b918-4054-b13f-736931e6faba}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Game\Game objects\Effect\Big destroy">
+      <UniqueIdentifier>{61bbfff9-ca98-47f6-b3dc-adf78c045cbd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -283,6 +286,9 @@
     <ClCompile Include="SmallDestroyEffect.cpp">
       <Filter>Game\Game objects\Effect\Small destroy</Filter>
     </ClCompile>
+    <ClCompile Include="BigDestroyEffect.cpp">
+      <Filter>Game\Game objects\Effect\Big destroy</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Textures.h">
@@ -419,6 +425,9 @@
     </ClInclude>
     <ClInclude Include="SmallDestroyEffect.h">
       <Filter>Game\Game objects\Effect\Small destroy</Filter>
+    </ClInclude>
+    <ClInclude Include="BigDestroyEffect.h">
+      <Filter>Game\Game objects\Effect\Big destroy</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -30,14 +30,14 @@ void CCamera::Update()
 		this->position.y = (int)(targetPosition.y + (this->size.y / 2));
 	}
 	else {
-		if (vpPlayer.x <= this->staticBoundary.left)
-			this->position.x = (int)(targetPosition.x - this->staticBoundary.left);
-		if (vpPlayer.x >= this->staticBoundary.right)
-			this->position.x = (int)(targetPosition.x - this->staticBoundary.right);
-		if (vpPlayer.y <= this->staticBoundary.top)
-			this->position.y = (int)(targetPosition.y + this->staticBoundary.top);
-		if (vpPlayer.y >= this->staticBoundary.bottom)
-			this->position.y = (int)(targetPosition.y + this->staticBoundary.bottom);
+		if (vpPlayer.x <= this->freezeBoundary.left)
+			this->position.x = (int)(targetPosition.x - this->freezeBoundary.left);
+		if (vpPlayer.x >= this->freezeBoundary.right)
+			this->position.x = (int)(targetPosition.x - this->freezeBoundary.right);
+		if (vpPlayer.y <= this->freezeBoundary.top)
+			this->position.y = (int)(targetPosition.y + this->freezeBoundary.top);
+		if (vpPlayer.y >= this->freezeBoundary.bottom)
+			this->position.y = (int)(targetPosition.y + this->freezeBoundary.bottom);
 	}
 
 	if (boundless == false) {

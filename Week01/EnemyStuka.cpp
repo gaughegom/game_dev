@@ -1,5 +1,6 @@
 #include "EnemyStuka.h"
 #include "Player.h"
+#include "BigDestroyEffect.h"
 
 constexpr auto AnimationDefaultId = "df";
 constexpr auto DetectedPlayerRadius = 130.0f;
@@ -22,6 +23,11 @@ CEnemyStuka::CEnemyStuka()
 
 void CEnemyStuka::Update(DWORD dt)
 {
+	if (!this->IsLive()) {
+		CGame::GetInstance()->InitiateAndPushToQueue<CBigDestroyEffect>(this->position);
+		return;
+	}
+
 	this->ActiveByRadiusDistance(DetectedPlayerRadius);
 
 	if (this->active) {
@@ -32,7 +38,7 @@ void CEnemyStuka::Update(DWORD dt)
 
 void CEnemyStuka::Render()
 {
-	animations.at(AnimationDefaultId)->Render(this->position, 1, DRAW_COLOR_DEFAULT);
+	animations.at(AnimationDefaultId)->Render(this->position, 1, DrawArgbColorDefault());
 }
 
 void CEnemyStuka::OnCollision(CCollider2D* self, LPCOLLISIONEVENT coEvent)

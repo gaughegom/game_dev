@@ -3,6 +3,8 @@
 #define _GAME_H
 
 #include <fstream>
+#include <queue>
+#include <iostream>
 #include "resources.h"
 #include "Scene.h"
 
@@ -48,6 +50,7 @@ class CGame {
 	std::unordered_map<int, LPSCENE> scenes;
 	int currentScene = 0;	// default scene 0
 
+	std::queue<LPGAMEOBJECT> queueObjects;
 
 	float camWidth = 0;
 	float camHeight = 0;
@@ -57,6 +60,9 @@ class CGame {
 	LPSPRITE map;
 	LPSPRITE foreMap;
 	bool reset = false;
+
+	// private method
+	void AddGameObjectToWorld(LPGAMEOBJECT& newObject);
 
 public:
 	void InitDirectX(HWND hWnd);
@@ -78,7 +84,8 @@ public:
 	void __LoadSceneResource__(std::string line);
 
 	// game object
-	void NewGameObject(LPGAMEOBJECT& newObject);
+	template<typename T> 
+	inline T* InitiateAndPushToQueue(Vector2D position, Vector2D velocity = VectorZero(), int nx = 1);
 	void CleanGameObject();
 	std::vector<LPGAMEOBJECT> GetRenderedObjects();
 
@@ -86,6 +93,9 @@ public:
 	void PlayScene();
 	void SwitchScene(int id);
 	void MappingPlayerScene();
+
+	void PushToQueueObject(LPGAMEOBJECT object) { this->queueObjects.push(object); }
+	std::queue<LPGAMEOBJECT> GetQueueObject() { return this->queueObjects; }
 
 	// device
 	LPDIRECT3DDEVICE9 GetDirect3dDevice() { return this->d3ddv; }
@@ -100,3 +110,14 @@ public:
 };
 
 #endif // !_GAME_H
+
+template<typename T>
+inline T* CGame::InitiateAndPushToQueue(Vector2D position, Vector2D velocity, int nx)
+{
+	LPGAMEOBJECT newObject = new T;
+	newObject->SetPosition(position);
+	newObject->SetVelocity(velocity);
+	newObject->SetNx(nx);
+	this->PushToQueueObject(newObject);
+	return (T*)newObject;
+}

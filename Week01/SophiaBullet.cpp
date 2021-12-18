@@ -56,11 +56,6 @@ void CSophiaBullet::Update(DWORD dt)
 	if (distance > 300) {
 		this->OnDelete();
 	}
-	// delete when out of g_camera
-	/*auto camera = CCamera::GetInstance();
-	if (!camera->GetBoundingBox().Contain(this->colliders.at(0)->GetBoundingBox())) {
-		this->OnDelete();
-	}*/
 
 	// effect destroy
 	if (this->IsLive() == false) {
@@ -75,14 +70,14 @@ void CSophiaBullet::Update(DWORD dt)
 			destroyEffect->SetPosition(this->position + Vector2D(0, boxSize.y / 4));
 		}
 
-		CGame::GetInstance()->NewGameObject(destroyEffect);
+		CGame::GetInstance()->PushToQueueObject(destroyEffect);
 	}
 }
 
 void CSophiaBullet::Render()
 {
 	LPSPRITE sprite = this->sprites.at(SpriteDefaultId);
-	sprite->Draw(this->position, this->nx, DRAW_COLOR_DEFAULT);
+	sprite->Draw(this->position, this->nx, DrawArgbColorDefault());
 }
 
 void CSophiaBullet::OnCollision(CCollider2D* self, LPCOLLISIONEVENT coEvent)

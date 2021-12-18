@@ -23,7 +23,7 @@ void InSinWaveXAsix(CGameObject* self, DWORD dt, float amplitude)
 	if (self->duration > 360)
 		self->duration = 0;	//reset omega
 	Vector2D position = self->GetPosition();
-	position.y += amplitude * sin(self->duration * PI / 180);
+	position.y += amplitude * sin(self->duration * Pi() / 180);
 	self->SetPosition(position);
 }
 
@@ -33,7 +33,7 @@ void InSinWaveYAsix(CGameObject* self, DWORD dt, float amplitude)
 	if (self->duration > 360)
 		self->duration = 0;	//reset omega
 	Vector2D position = self->GetPosition();
-	position.x += amplitude * sin(self->duration * PI / 180);
+	position.x += amplitude * sin(self->duration * Pi() / 180);
 	self->SetPosition(position);
 }
 

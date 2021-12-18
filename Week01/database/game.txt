@@ -52,6 +52,7 @@ sprSBullet01	117	20	6	22	0
 sprDestroy00	140	101	7	8	0
 sprDestroy01	149	97	16	13	0
 sprDestroy02	166	97	16	16	0
+sprDestroy03	183	93	24	24	0
 # - ENEMIES -
 # - DRAP -
 sprEDrap00	128	274	18	18	1
@@ -114,6 +115,7 @@ aniSLeftWheel	sprSWheel00	100	sprSWheel01	100	sprSWheel02	100	sprSWheel03	100
 aniSRightWheel	sprSWheel03	100	sprSWheel00	100	sprSWheel01	100	sprSWheel02	100
 # destroyed collision
 aniSmallDestroy	sprDestroy02	100	sprDestroy01	100
+aniBigDestroy	sprDestroy03	100	sprDestroy02	100	sprDestroy01	100
 # - DRAP -
 aniEDrap	sprEDrap00	150	sprEDrap01	150	sprEDrap02	150	sprEDrap03	150
 # - STUKA -

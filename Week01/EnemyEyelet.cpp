@@ -1,5 +1,6 @@
 #include "EnemyEyelet.h"
 #include "Sophia.h"
+#include "BigDestroyEffect.h"
 
 constexpr auto AnimationDefaultId = "df";
 constexpr auto DetectedPlayerRadius = 160.0f;
@@ -22,6 +23,11 @@ CEnemyEyelet::CEnemyEyelet()
 
 void CEnemyEyelet::Update(DWORD dt)
 {
+	if (!this->IsLive()) {
+		CGame::GetInstance()->InitiateAndPushToQueue<CBigDestroyEffect>(this->position);
+		return;
+	}
+
 	this->ActiveByRadiusDistance(DetectedPlayerRadius);
 
 	if (this->active) {

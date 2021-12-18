@@ -72,7 +72,7 @@ void CGameObject::TakeDamage(float damage)
 		LPGAMEOBJECT item = nullptr;
 		item = new CItemHealth;
 		item->SetPosition(this->position);
-		CGame::GetInstance()->NewGameObject(item);
+		CGame::GetInstance()->PushToQueueObject(item);
 	}
 }
 
@@ -95,16 +95,16 @@ D3DCOLOR CGameObject::GetRenderColor()
 	if (this->effected == false || this->effectDuration == 0) {
 		this->effected = false;
 		this->effectDuration = 0;
-		return DRAW_COLOR_DEFAULT;
+		return DrawArgbColorDefault();
 	}
 	else {
 		this->effectDuration += 1; // TODO: make the same duration of triggerTag
 		if (this->effectDuration > 10) {
 			this->effectDuration = 0;
-			return DRAW_COLOR_DEFAULT;
+			return DrawArgbColorDefault();
 		}
 		if (this->effectDuration % 2 == 0) {
-			return DRAW_COLOR_DEFAULT;
+			return DrawArgbColorDefault();
 		}
 		else {
 			return D3DCOLOR_ARGB(255, 125, 125, 125);

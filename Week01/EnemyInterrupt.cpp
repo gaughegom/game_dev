@@ -1,6 +1,7 @@
 #include "EnemyInterrupt.h"
 #include "Player.h"
 #include "EnemyNeoWorm.h"
+#include "BigDestroyEffect.h"
 
 #define V_BOXSIZE			Vector2D(22.0f, 18.0f)
 
@@ -27,16 +28,18 @@ CEnemyInterrupt::CEnemyInterrupt()
 
 void CEnemyInterrupt::Update(DWORD dt)
 {
+	if (this->IsLive() == false) {
+		CGame::GetInstance()->InitiateAndPushToQueue<CBigDestroyEffect>(this->position);
+		return;
+	}
+
 	LPGAMEOBJECT player = CPlayer::GetInstance()->GetPlayer();
 	if (abs(this->position.x - player->GetPosition().x) <= DetectedPlayerXAxis 
 		&& this->position.y > player->GetPosition().y
 		&& (GetTickCount64() - this->prevTimeNeoworm) > DelayNeoworm
 		&& this->existNeoworm < MaxNeoworms) {
-		LPGAMEOBJECT neoworm = new CEnemyNeoWorm();
-		neoworm->SetNx(RandomDirect());
-		neoworm->SetPosition(this->position);
-		CGame::GetInstance()->NewGameObject(neoworm);
-
+		// born Neoworm
+		CGame::GetInstance()->InitiateAndPushToQueue<CEnemyNeoWorm>(this->position);
 		this->prevTimeNeoworm = GetTickCount64();
 		this->existNeoworm++;
 	}

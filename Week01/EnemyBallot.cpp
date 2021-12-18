@@ -1,5 +1,6 @@
 #include "EnemyBallot.h"
 #include "Player.h"
+#include "BigDestroyEffect.h"
 
 #define	V_BOXSIZE			Vector2D(18, 18)
 
@@ -24,6 +25,10 @@ CEnemyBallot::CEnemyBallot()
 
 void CEnemyBallot::Update(DWORD dt)
 {
+	if (!this->IsLive()) {
+		CGame::GetInstance()->InitiateAndPushToQueue<CBigDestroyEffect>(this->position);
+		return;
+	}
 }
 
 void CEnemyBallot::Render()

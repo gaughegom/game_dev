@@ -22,6 +22,7 @@
     <ClCompile Include="Animation.cpp" />
     <ClCompile Include="AnimationFrame.cpp" />
     <ClCompile Include="Animations.cpp" />
+    <ClCompile Include="BigDestroyEffect.cpp" />
     <ClCompile Include="BigJason.cpp" />
     <ClCompile Include="BigJasonBullet.cpp" />
     <ClCompile Include="Brick.cpp" />
@@ -69,6 +70,7 @@
     <ClInclude Include="Animation.h" />
     <ClInclude Include="AnimationFrame.h" />
     <ClInclude Include="Animations.h" />
+    <ClInclude Include="BigDestroyEffect.h" />
     <ClInclude Include="BigJason.h" />
     <ClInclude Include="BigJasonBullet.h" />
     <ClInclude Include="Brick.h" />

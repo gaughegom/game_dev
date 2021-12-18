@@ -14,5 +14,5 @@ void CEnemyOffside::Update(DWORD dt)
 
 void CEnemyOffside::Render()
 {
-	animations.at(AnimationDefaultId)->Render(this->position, 1, DRAW_COLOR_DEFAULT);
+	animations.at(AnimationDefaultId)->Render(this->position, 1, DrawArgbColorDefault());
 }

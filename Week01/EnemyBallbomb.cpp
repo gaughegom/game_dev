@@ -2,6 +2,7 @@
 #include "Brick.h"
 #include "Sophia.h"
 #include "SophiaBullet.h"
+#include "BigDestroyEffect.h"
 
 #define V_BOXSIZE			Vector2D(10.0f, 10.0f)
 
@@ -25,6 +26,11 @@ CEnemyBallbomb::CEnemyBallbomb()
 void CEnemyBallbomb::Update(DWORD dt)
 {
 	InGravityAffect(this, dt);
+
+	if (!this->IsLive()) {
+		CGame::GetInstance()->InitiateAndPushToQueue<CBigDestroyEffect>(this->position);
+		return;
+	}
 
 	// check lifetime
 	if (GetTickCount64() - this->bornTime > LifeTime) {

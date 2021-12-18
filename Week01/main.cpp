@@ -28,7 +28,7 @@ HWND CreateGameWindow(HINSTANCE hInstance, int nCmdShow, int ScreenWidth, int Sc
 	wc.hCursor = LoadCursor(NULL, IDC_ARROW);
 	wc.hbrBackground = (HBRUSH)GetStockObject(WHITE_BRUSH);
 	wc.lpszMenuName = NULL;
-	wc.lpszClassName = WINDOW_CLASS_NAME;
+	wc.lpszClassName = WindowAppClassName;
 	wc.hIconSm = NULL;
 
 	RegisterClassEx(&wc);
@@ -37,8 +37,8 @@ HWND CreateGameWindow(HINSTANCE hInstance, int nCmdShow, int ScreenWidth, int Sc
 
 	HWND hWnd =
 		CreateWindow(
-			WINDOW_CLASS_NAME,
-			WINDOW_TITLE,
+			WindowAppClassName,
+			WindowAppTitle,
 			WS_OVERLAPPEDWINDOW, // WS_EX_TOPMOST | WS_VISIBLE | WS_POPUP,
 			CW_USEDEFAULT,
 			CW_USEDEFAULT,
@@ -64,13 +64,13 @@ HWND CreateGameWindow(HINSTANCE hInstance, int nCmdShow, int ScreenWidth, int Sc
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
-	HWND hWnd = CreateGameWindow(hInstance, nCmdShow, WINDOW_SCREEN_WIDTH, WINDOW_SCREEN_HEIGHT);
+	HWND hWnd = CreateGameWindow(hInstance, nCmdShow, MyWindowScreenWidth, MyWindowScreenHeight);
 
 	CGame* game = new CGame();
 	game = CGame::GetInstance();
 	game->InitGame(hWnd);
 
-	SetWindowPos(hWnd, 0, 0, 0, WINDOW_SCREEN_WIDTH * 2, WINDOW_SCREEN_HEIGHT * 2, SWP_NOMOVE | SWP_NOOWNERZORDER | SWP_NOZORDER);
+	SetWindowPos(hWnd, 0, 0, 0, MyWindowScreenWidth * 2, MyWindowScreenHeight * 2, SWP_NOMOVE | SWP_NOOWNERZORDER | SWP_NOZORDER);
 
 	game->RunGame();
 

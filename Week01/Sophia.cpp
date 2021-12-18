@@ -29,8 +29,26 @@ void CSophia::InitParts()
 	this->body = new CSophiaBody(this);
 	this->cabin = new CSophiaCabin(this);
 	this->gun = new CSophiaGun(this);
-	this->leftWheel->AddAnimation(AnimationWheelId, "aniSLeftWheel"); // 0: left wheel
-	this->rightWheel->AddAnimation(AnimationWheelId, "aniSRightWheel"); // 1: right wheel
+	this->leftWheel->AddAnimation(AnimationWheelId, "aniSLeftWheel");
+	this->rightWheel->AddAnimation(AnimationWheelId, "aniSRightWheel");
+}
+
+void CSophia::Shooting()
+{
+	int direct;
+	if (this->actionState == SophiaActionState::Idle) {
+		direct = this->nx;
+	}
+	else {
+		direct = 0;
+	}
+
+	LPGAMEOBJECT bullet = new CSophiaBullet(direct);
+	Vector2D bulletPosition = Vector2D(this->position.x, this->position.y + this->cabin->GetPosition().y);
+	bullet->SetPosition(bulletPosition);
+	CGame::GetInstance()->PushToQueueObject(bullet);
+	this->bullets++;
+	this->prevBulletTime = GetTickCount64();
 }
 
 void CSophia::Update(DWORD dt)
@@ -106,19 +124,7 @@ void CSophia::ListenKeyEvent()
 	// listen key shooting
 	if (input->IsKeyDown(SHOTTING_KEYCODE)) {
 		if (GetTickCount64() - this->prevBulletTime >= this->delayBullet && this->bullets < SophiaMaxBullets) {
-			int direct;
-			if (this->actionState == SophiaActionState::Idle) {
-				direct = this->nx;
-			}
-			else {
-				direct = 0;
-			}
-			LPGAMEOBJECT bullet = new CSophiaBullet(direct);
-			Vector2D bulletPosition = Vector2D(this->position.x, this->position.y + this->cabin->GetPosition().y);
-			bullet->SetPosition(bulletPosition);
-			CGame::GetInstance()->NewGameObject(bullet);
-			this->bullets++;
-			this->prevBulletTime = GetTickCount64();
+			this->Shooting();
 		}
 	}
 
@@ -195,7 +201,6 @@ void CSophia::OnCollision(CCollider2D* self, LPCOLLISIONEVENT coEvent)
 	}
 	else if (dynamic_cast<CGate*>(coEvent->object)) {
 		CGate* coGate = (CGate*)coEvent->object;
-		DebugOut(L"next to another scene %d\n", coGate->GetNextScene());
 		CGame::GetInstance()->SwitchScene(coGate->GetNextScene());
 	}
 	else if (dynamic_cast<CItemHealth*>(coEvent->object)) {

@@ -17,6 +17,10 @@ private:
 	BigJasonDirectState directState;
 	std::string currentSpriteState;
 
+	// TODO: debug only
+	float prevHp;
+
+	void Shooting();
 public:
 	CBigJason();
 
@@ -28,7 +32,6 @@ public:
 	void SubcribeDirectState(BigJasonDirectState newState);
 	std::string MappingStateOfAnimation();
 
-	void Shooting();
 	void OnCollisionWithEnemy(LPCOLLISIONEVENT coEvent);
 
 	void OnCollision(CCollider2D* self, LPCOLLISIONEVENT coEvent);

@@ -47,7 +47,7 @@ private:
 	CSophiaCabin* cabin;
 	CSophiaGun* gun;
 
-	D3DCOLOR renderColor = DRAW_COLOR_DEFAULT;
+	D3DCOLOR renderColor = DrawArgbColorDefault();
 
 	SophiaDirectState directState;
 	SophiaActionState actionState;
@@ -56,6 +56,7 @@ private:
 	float prevHp;
 
 	void InitParts();
+	void Shooting();
 public:
 	// state
 	DWORD stateTime;

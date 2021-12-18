@@ -202,7 +202,7 @@ void CGame::PlayScene()
 	// loading sceneObject to worldObjects
 	std::vector<LPGAMEOBJECT> sceneObjects = this->scenes.at(this->currentScene)->GetSceneObjects();
 	for (auto& object : sceneObjects) {
-		this->NewGameObject(object);
+		this->AddGameObjectToWorld(object);
 	}
 
 	// select player
@@ -240,16 +240,16 @@ void CGame::MappingPlayerScene()
 	if (this->scenes.at(this->currentScene)->GetMapType() == SceneMapType::OUTDOOR) {
 		if (dynamic_cast<CSophia*>(CPlayer::GetInstance()->GetPlayer())) {
 			if (sophiaExist == false) {
-				this->NewGameObject(playerSophia);
+				this->AddGameObjectToWorld(playerSophia);
 			}
 
 			if (jasonExist == false) {
-				this->NewGameObject(playerJason);
+				this->AddGameObjectToWorld(playerJason);
 			}
 		}
 		else if (dynamic_cast<CJason*>(CPlayer::GetInstance()->GetPlayer())) {
 			if (jasonExist == false) {
-				this->NewGameObject(playerJason);
+				this->AddGameObjectToWorld(playerJason);
 			}
 		}
 
@@ -264,7 +264,7 @@ void CGame::MappingPlayerScene()
 	}
 	else if (this->scenes.at(this->currentScene)->GetMapType() == SceneMapType::INDOOR) {
 		if (bigJasonExist == false) {
-			this->NewGameObject(playerBigJason);
+			this->AddGameObjectToWorld(playerBigJason);
 		}
 
 		if (player == playerJason || player == playerSophia) {
@@ -276,6 +276,7 @@ void CGame::MappingPlayerScene()
 
 void CGame::SwitchScene(int id)
 {
+	DebugOut(L"[INFO] Switch scene: %d -> %d\n", this->currentScene, id);
 	int prevScene = this->currentScene;
 	std::vector<LPGAMEOBJECT> preWorldObject = worldObjects;
 	this->reset = true;
@@ -292,24 +293,29 @@ void CGame::SwitchScene(int id)
 
 void CGame::UpdateGame(DWORD dt)
 {
+	// reduce queue
+	while (!this->queueObjects.empty()) {
+		this->AddGameObjectToWorld(this->queueObjects.front());
+		this->queueObjects.pop();
+	}
+
 	g_camera->Update();
 	quadtree->Update(worldObjects);
 	renderedObjects.clear();
 	quadtree->Retrieve(renderedObjects, g_camera->GetBoundingBox());
 
-	for (int i = 0; i < worldObjects.size(); i++) {
+	for (auto& obj : worldObjects) {
 		if (reset)
 			return;
 
-		LPGAMEOBJECT object = worldObjects.at(i);
-		if (object->IsActive() == true) {
-			object->CleanTriggerTag();
-			object->PhysicalUpdate(&worldObjects);
+		if (obj->IsActive() == true) {
+			obj->CleanTriggerTag();
+			obj->PhysicalUpdate(&worldObjects);
 		}
 	}
 
-	for (int i = 0; i < worldObjects.size(); i++) {
-		worldObjects.at(i)->Update(dt);
+	for (auto& obj : worldObjects) {
+		obj->Update(dt);
 	}
 }
 
@@ -323,11 +329,11 @@ void CGame::RenderGame()
 	if (hr == D3D_OK)
 	{
 		// Clear back buffer with a color
-		d3ddv->ColorFill(bb, nullptr, BACKGROUND_COLOR);
+		d3ddv->ColorFill(bb, nullptr, DrawBackgroundColor());
 
 		spriteHandler->Begin(D3DXSPRITE_ALPHABLEND | D3DXSPRITE_SORT_DEPTH_FRONTTOBACK);
 
-		this->map->Draw(Vector2D(this->mapWidth / 2, this->mapHeight / 2), 1, DRAW_COLOR_DEFAULT);
+		this->map->Draw(Vector2D(this->mapWidth / 2, this->mapHeight / 2), 1, DrawArgbColorDefault());
 		for (int i = 0; i < renderedObjects.size(); i++) {
 			if (!renderedObjects.at(i)->IsActive()) {
 				continue;
@@ -348,7 +354,7 @@ void CGame::RenderGame()
 		}
 
 		if (this->foreMap != nullptr) {
-			this->foreMap->Draw(Vector2D(this->mapWidth / 2, this->mapHeight / 2), 1, DRAW_COLOR_DEFAULT, DrawLayer02);
+			this->foreMap->Draw(Vector2D(this->mapWidth / 2, this->mapHeight / 2), 1, DrawArgbColorDefault(), DrawLayer00);
 		}
 
 		spriteHandler->End();
@@ -364,7 +370,7 @@ void CGame::RunGame()
 	MSG msg;
 	int done = 0;
 	DWORD frameStart = GetTickCount64();
-	DWORD tickPerFrame = 1000 / MAX_FRAME_RATE;
+	DWORD tickPerFrame = 1000 / FrameRatePerSecond;
 
 	while (!done)
 	{
@@ -613,7 +619,7 @@ void CGame::__ParseSection_CHARACTERS__(std::string line)
 	player->SetNx(nx);
 }
 
-void CGame::NewGameObject(LPGAMEOBJECT& newObject)
+void CGame::AddGameObjectToWorld(LPGAMEOBJECT& newObject)
 {
 	worldObjects.push_back(newObject);
 	quadtree->Insert(newObject);

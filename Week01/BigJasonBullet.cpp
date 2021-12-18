@@ -3,6 +3,7 @@
 #include "Brick.h"
 #include "EnemyGX-680.h"
 #include "EnemyGX-680S.h"
+#include "SmallDestroyEffect.h"
 
 #define V_BOXSIZE_HORIZON			Vector2D(8.0f, 6.0f)
 #define V_BOXSIZE_VERTICAL			Vector2D(6.0f, 6.0f)
@@ -56,6 +57,11 @@ CBigJasonBullet::CBigJasonBullet(BigJasonBulletDirection state)
 
 void CBigJasonBullet::Update(DWORD dt)
 {
+	if (!this->IsLive()) {
+		CGame::GetInstance()->InitiateAndPushToQueue<CSmallDestroyEffect>(this->position);
+		return;
+	}
+
 	auto camera = CCamera::GetInstance();
 	if (!camera->GetBoundingBox().Contain(this->colliders.at(0)->GetBoundingBox())) {
 		this->hp = 0;

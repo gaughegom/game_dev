@@ -15,7 +15,7 @@ protected:
 	Vector2D size;
 	CGameObject* target;
 	SRect boundary;
-	SRect staticBoundary = SRect(104, 120, 152, 150);
+	SRect freezeBoundary = SRect(104, 120, 152, 150);
 
 	bool boundless = false;
 

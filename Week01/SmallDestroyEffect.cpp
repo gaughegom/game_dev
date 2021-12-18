@@ -30,5 +30,5 @@ void CSmallDestroyEffect::Update(DWORD dt)
 void CSmallDestroyEffect::Render()
 {
 	// render animation
-	this->animations.at(AnimationDefaultId)->Render(this->position, this->nx, DRAW_COLOR_DEFAULT);
+	this->animations.at(AnimationDefaultId)->Render(this->position, this->nx, DrawArgbColorDefault());
 }

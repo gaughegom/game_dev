@@ -5,8 +5,8 @@
 #include "EnemyGX-680.h"
 #include "EnemyGX-680S.h"
 
-#define BOXSIZE_HORIZON				Vector2D(24.0f, 32.0f)
-#define BOXSIZE_VERTICAL			Vector2D(20.0f, 32.0f)
+#define BOXSIZE_HORIZON				Vector2D(22.0f, 30.0f)
+#define BOXSIZE_VERTICAL			Vector2D(18.0f, 30.0f)
 
 constexpr auto AnimationHorizontalWalkId	= "walk-horizon";
 constexpr auto AnimationUpWalkId			= "walk-up";
@@ -41,10 +41,65 @@ CBigJason::CBigJason()
 	this->SetColliders(this->colliders);
 }
 
+void CBigJason::Shooting()
+{
+	CGame* game = CGame::GetInstance();
+	LPGAMEOBJECT newBullet = nullptr;
+	switch (this->directState)
+	{
+	case BigJasonDirectState::LEFTWALK:
+		newBullet = new CBigJasonBullet(BigJasonBulletDirection::LEFT);
+		break;
+
+	case BigJasonDirectState::RIGHTWALK:
+		newBullet = new CBigJasonBullet(BigJasonBulletDirection::RIGHT);
+		break;
+
+	case BigJasonDirectState::UPWALK:
+		newBullet = new CBigJasonBullet(BigJasonBulletDirection::UP);
+		break;
+
+	case BigJasonDirectState::DOWNWALK:
+		newBullet = new CBigJasonBullet(BigJasonBulletDirection::DOWN);
+		break;
+
+	case BigJasonDirectState::STAY:
+		if (this->currentSpriteState == SpriteHorizontalStayId) {
+			switch (this->nx)
+			{
+			case 1:
+				newBullet = new CBigJasonBullet(BigJasonBulletDirection::RIGHT);
+				break;
+			case -1:
+				newBullet = new CBigJasonBullet(BigJasonBulletDirection::LEFT);
+				break;
+			default:
+				break;
+			}
+		}
+		else if (this->currentSpriteState == SpriteUpStayId) {
+			newBullet = new CBigJasonBullet(BigJasonBulletDirection::UP);
+		}
+		else if (this->currentSpriteState == SpriteDownStayId) {
+			newBullet = new CBigJasonBullet(BigJasonBulletDirection::DOWN);
+		}
+
+	default:
+		break;
+	}
+
+	newBullet->SetPosition(this->position);
+	game->PushToQueueObject(newBullet);
+}
+
+
 void CBigJason::Update(DWORD dt)
 {
 	// TODO: update collider
-	DebugOut(L"big jason hp: %f\n", this->hp);
+	if (this->prevHp != this->hp) {
+		DebugOut(L"big jason hp: %f\n", this->hp);
+		this->prevHp = this->hp;
+	}
 
 	if (CPlayer::GetInstance()->GetSelectId() == PlayerCharacterId::BIGJASON) {
 		this->ListenKeyEvent();
@@ -185,57 +240,6 @@ void CBigJason::OnCollision(CCollider2D* self, LPCOLLISIONEVENT coEvent)
 
 void CBigJason::OnTrigger(CCollider2D* self, LPCOLLISIONEVENT coEvent)
 {
-}
-
-void CBigJason::Shooting()
-{
-	CGame* game = CGame::GetInstance();
-	LPGAMEOBJECT newBullet = nullptr;
-	switch (this->directState)
-	{
-	case BigJasonDirectState::LEFTWALK:
-		newBullet = new CBigJasonBullet(BigJasonBulletDirection::LEFT);
-		break;
-
-	case BigJasonDirectState::RIGHTWALK:
-		newBullet = new CBigJasonBullet(BigJasonBulletDirection::RIGHT);
-		break;
-
-	case BigJasonDirectState::UPWALK:
-		newBullet = new CBigJasonBullet(BigJasonBulletDirection::UP);
-		break;
-
-	case BigJasonDirectState::DOWNWALK:
-		newBullet = new CBigJasonBullet(BigJasonBulletDirection::DOWN);
-		break;
-
-	case BigJasonDirectState::STAY:
-		if (this->currentSpriteState == SpriteHorizontalStayId) {
-			switch (this->nx)
-			{
-			case 1:
-				newBullet = new CBigJasonBullet(BigJasonBulletDirection::RIGHT);
-				break;
-			case -1:
-				newBullet = new CBigJasonBullet(BigJasonBulletDirection::LEFT);
-				break;
-			default:
-				break;
-			}
-		}
-		else if (this->currentSpriteState == SpriteUpStayId) {
-			newBullet = new CBigJasonBullet(BigJasonBulletDirection::UP);
-		}
-		else if (this->currentSpriteState == SpriteDownStayId) {
-			newBullet = new CBigJasonBullet(BigJasonBulletDirection::DOWN);
-		}
-
-	default:
-		break;
-	}
-
-	newBullet->SetPosition(this->position);
-	game->NewGameObject(newBullet);
 }
 
 void CBigJason::OnCollisionWithEnemy(LPCOLLISIONEVENT coEvent)
