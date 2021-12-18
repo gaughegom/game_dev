@@ -28,10 +28,8 @@ CEnemyInterrupt::CEnemyInterrupt()
 
 void CEnemyInterrupt::Update(DWORD dt)
 {
-	if (this->IsLive() == false) {
-		CGame::GetInstance()->InitiateAndPushToQueue<CBigDestroyEffect>(this->position);
+	if (!this->InLifeCycle())
 		return;
-	}
 
 	LPGAMEOBJECT player = CPlayer::GetInstance()->GetPlayer();
 	if (abs(this->position.x - player->GetPosition().x) <= DetectedPlayerXAxis 

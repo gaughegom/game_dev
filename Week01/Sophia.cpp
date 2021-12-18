@@ -194,7 +194,6 @@ void CSophia::SetActionState(SophiaActionState actionState)
 void CSophia::OnCollision(CCollider2D* self, LPCOLLISIONEVENT coEvent)
 {
 	if (dynamic_cast<CBrick*>(coEvent->object)) {
-
 		if (!this->ground && coEvent->ny == 1) {
 			this->ground = true;
 		}
@@ -203,18 +202,11 @@ void CSophia::OnCollision(CCollider2D* self, LPCOLLISIONEVENT coEvent)
 		CGate* coGate = (CGate*)coEvent->object;
 		CGame::GetInstance()->SwitchScene(coGate->GetNextScene());
 	}
-	else if (dynamic_cast<CItemHealth*>(coEvent->object)) {
-		CItemHealth* item = (CItemHealth*)coEvent->object;
-		this->hp += item->GetRecoverHealth();
-		item->SetUsed();
-
-		// reset hp
-		if (this->hp > 100) {
-			this->hp = 100;
-		}
+	else if (dynamic_cast<CItemBase*>(coEvent->object)) {
+		this->OnCollisionWithItem((CItemBase*)(coEvent->object));
 	}
 	else {
-		this->OnCollisionWithEnemy(coEvent);
+		this->OnCollisionWithEnemy(coEvent->object);
 	}
 }
 
@@ -223,7 +215,7 @@ void CSophia::OnTrigger(CCollider2D* self, LPCOLLISIONEVENT coEvent)
 
 }
 
-void CSophia::OnCollisionWithEnemy(LPCOLLISIONEVENT coEvent)
+void CSophia::OnCollisionWithEnemy(LPGAMEOBJECT const& other)
 {
 	bool isSuffered = false;
 	// TODO: check collision with enemy not trigger
@@ -232,11 +224,25 @@ void CSophia::OnCollisionWithEnemy(LPCOLLISIONEVENT coEvent)
 
 	// TODO: add trigger in enemy
 	if (isSuffered) {
-		this->TakeDamage(coEvent->object->GetDamage());
+		this->TakeDamage(other->GetDamage());
 
-		STriggerTag tag = STriggerTag(coEvent->object);
-		coEvent->object->AddTriggerTag(this);
-		this->AddTriggerTag(coEvent->object);
+		STriggerTag tag = STriggerTag(other);
+		other->AddTriggerTag(this);
+		this->AddTriggerTag(other);
+	}
+}
+
+void CSophia::OnCollisionWithItem(CItemBase* const& other)
+{
+	if (dynamic_cast<CItemHealth*>(other)) {
+		CItemHealth* item = (CItemHealth*)other;
+		this->hp += item->GetRecoverHealth();
+	}
+
+	other->OnUse();
+	// reset hp
+	if (this->hp > 100) {
+		this->hp = 100;
 	}
 }
 

@@ -3,7 +3,6 @@
 #include "SophiaBullet.h"
 #include "EnemyStuka.h"
 #include "ItemHealth.h"
-#include "EnemyInterrupt.h"
 
 
 CGameObject::CGameObject()
@@ -67,8 +66,7 @@ void CGameObject::TakeDamage(float damage)
 
 	if (this->hp <= 0 
 		&& (dynamic_cast<CEnemyEyelet*>(this) 
-		|| dynamic_cast<CEnemyStuka*>(this)
-		|| dynamic_cast<CEnemyInterrupt*>(this))) {
+		|| dynamic_cast<CEnemyStuka*>(this))) {
 		LPGAMEOBJECT item = nullptr;
 		item = new CItemHealth;
 		item->SetPosition(this->position);

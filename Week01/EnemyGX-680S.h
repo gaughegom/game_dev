@@ -2,9 +2,9 @@
 #ifndef _ENEMY_GX680S_H
 #define _ENEMY_GX680S_H
 
-#include "GameObject.h"
+#include "EnemyBase.h"
 
-class CEnemyGX680S : public CGameObject {
+class CEnemyGX680S : public CEnemyBase {
 private:
 
 public:

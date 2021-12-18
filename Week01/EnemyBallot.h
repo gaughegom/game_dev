@@ -2,9 +2,9 @@
 #ifndef _ENEMY_BALLOT_H
 #define _ENEMY_BALLOT_H
 
-#include "GameObject.h"
+#include "EnemyBase.h"
 
-class CEnemyBallot : public CGameObject {
+class CEnemyBallot : public CEnemyBase {
 private:
 
 public:

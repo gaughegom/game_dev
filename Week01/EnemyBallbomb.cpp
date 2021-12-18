@@ -7,7 +7,7 @@
 #define V_BOXSIZE			Vector2D(10.0f, 10.0f)
 
 constexpr auto SpriteDefaultId = "df";
-constexpr auto LifeTime = 1600;
+constexpr auto LifeTime = 2000;
 
 
 CEnemyBallbomb::CEnemyBallbomb()
@@ -60,6 +60,11 @@ void CEnemyBallbomb::OnCollision(CCollider2D* self, LPCOLLISIONEVENT coEvent)
 	else if (dynamic_cast<CSophiaBullet*>(coEvent->object)) {
 		this->TakeDamage(coEvent->object->GetDamage());
 		this->hp = 0;
+	}
+	else if (dynamic_cast<CEnemyBallbomb*>(coEvent->object)) {
+		STriggerTag tag = STriggerTag(coEvent->object);
+		coEvent->object->AddTriggerTag(this);
+		this->AddTriggerTag(coEvent->object);
 	}
 }
 

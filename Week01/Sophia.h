@@ -10,6 +10,7 @@
 #include "SophiaCabin.h"
 #include "SophiaGun.h"
 #include "Brick.h"
+#include "ItemBase.h"
 
 #define	SOPHIA_BOX_IDLE				Vector2D(24.0f, 17.0f)
 #define SOPHIA_OFFSET_IDLE			Vector2D(0.0f, 4.5f)
@@ -22,6 +23,7 @@ class CSophiaCabin;
 class CSophiaWheel;
 class CSophiaBody;
 class CSophiaGun;
+
 
 enum class SophiaDirectState : int
 {
@@ -82,7 +84,8 @@ public:
 	void OnCollision(CCollider2D* self, LPCOLLISIONEVENT coEvent);
 	void OnTrigger(CCollider2D* self, LPCOLLISIONEVENT coEvent);
 
-	void OnCollisionWithEnemy(LPCOLLISIONEVENT coEvent);
+	void OnCollisionWithEnemy(LPGAMEOBJECT const& other);
+	void OnCollisionWithItem(CItemBase* const& other);
 
 	SophiaDirectState GetDirectState() { return this->directState; }
 	SophiaActionState GetActionState() { return this->actionState; }

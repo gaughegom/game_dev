@@ -30,10 +30,12 @@
     <ClCompile Include="Collider2D.cpp" />
     <ClCompile Include="EnemyBallbomb.cpp" />
     <ClCompile Include="EnemyBallcarry.cpp" />
+    <ClCompile Include="EnemyBase.cpp" />
     <ClCompile Include="EnemyGX-680S.cpp" />
     <ClCompile Include="EnemyInterrupt.cpp" />
     <ClCompile Include="EnemyNeoWorm.cpp" />
     <ClCompile Include="Gate.cpp" />
+    <ClCompile Include="ItemBase.cpp" />
     <ClCompile Include="ItemHealth.cpp" />
     <ClCompile Include="JasonDirectionState.cpp" />
     <ClCompile Include="Player.cpp" />
@@ -78,10 +80,12 @@
     <ClInclude Include="Collider2D.h" />
     <ClInclude Include="EnemyBallbomb.h" />
     <ClInclude Include="EnemyBallcarry.h" />
+    <ClInclude Include="EnemyBase.h" />
     <ClInclude Include="EnemyGX-680S.h" />
     <ClInclude Include="EnemyInterrupt.h" />
     <ClInclude Include="EnemyNeoWorm.h" />
     <ClInclude Include="Gate.h" />
+    <ClInclude Include="ItemBase.h" />
     <ClInclude Include="ItemHealth.h" />
     <ClInclude Include="JasonDirectionState.h" />
     <ClInclude Include="Player.h" />

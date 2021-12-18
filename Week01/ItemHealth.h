@@ -2,9 +2,9 @@
 #ifndef _ITEM_HEALTH_H
 #define _ITEM_HEALTH_H
 
-#include "GameObject.h"
+#include "ItemBase.h"
 
-class CItemHealth : public CGameObject {
+class CItemHealth : public CItemBase {
 private:
 	float recoverHeath = 10;
 
@@ -17,8 +17,9 @@ public:
 	void OnCollision(CCollider2D* self, LPCOLLISIONEVENT coEvent);
 	void OnTrigger(CCollider2D* self, LPCOLLISIONEVENT coEvent);
 
+	void OnUse() { CItemBase::OnUse(); }
+
 	float GetRecoverHealth() { return this->recoverHeath; }
-	void SetUsed() { this->hp = 0; }
 };
 
 #endif // !_ITEM_HEALTH_H

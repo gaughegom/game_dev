@@ -2,9 +2,9 @@
 #ifndef _ENEMY_BALLCARRY_H
 #define _ENEMY_BALLCARRY_H
 
-#include "GameObject.h"
+#include "EnemyBase.h"
 
-class CEnemyBallcarry : public CGameObject {
+class CEnemyBallcarry : public CEnemyBase {
 private:
 	bool activeAttack = false;
 	DWORD timeAttack;

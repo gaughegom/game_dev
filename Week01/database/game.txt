@@ -142,7 +142,7 @@ jason	1	1260	432	8	12
 bJason	1	112	1760	20	32
 [SCENES]
 #id	path
-0	database\scene1.txt
-1	database\scene2.txt
-2	database\scene3.txt
-3	database\scene4.txt
+0	database\scene0.txt
+1	database\scene1.txt
+2	database\scene2.txt
+3	database\scene3.txt

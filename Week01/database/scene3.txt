@@ -1,28 +1,44 @@
 [MAP]
 # path	 width	height	type
-maps\sectionC.png	16	14	outdoor
+maps\section3.png	16	114	indoor
+[FOREMAP]
+maps\section3Fore.png	16	114
 [PLATFORMS]
 # x	y	col-number	row-number
 # brick	(16,16) calc follow tilemap
-0	9	6	1
-5	11	1	3
-5	11	3	1
-7	13	1	3
-7	13	4	1
-10	13	1	3
-10	11	5	1
-14	11	1	8
-12	4	3	1
-12	4	1	3
-5	2	8	1
-5	4	1	3
-3	4	3	1
-3	6	1	3
-0	6	4	1
+0	113	2	114
+14	113	2	114
+2	1	12	2
+6	17	8	4
+2	25	8	4
+6	33	8	4
+2	49	4	4
+10	49	4	4
+2	65	8	4
+6	81	8	4
+2	97	8	4
+6	105	8	4
+2	113	4	5
+9	113	4	5
 [OBJECTS]
 #name	nx	x	y	width	height
+gx680s	1	48	288	18	17
+gx680	1	192	368	18	17
+gx680s	1	48	496	18	17
+gx680	1	192	576	18	17
+gx680s	1	64	704	18	17
+gx680	1	192	832	18	17
+gx680s	1	80	960	18	17
+gx680	1	160	1216	18	17
+gx680s	1	48	1120	18	17
+gx680s	1	48	1440	18	17
+gx680s	1	96	1472	18	17
+gx680s	1	144	1408	18	17
+gx680	1	192	1440	18	17
+gx680	1	160	1488	18	17
+gx680s	1	48	1632	18	17
+gx680s	1	64	1728	18	17
 # - Enemy -
 [GATES]
 #way	x	y	col	row	next
-in	0	8	3	2	1
-out	13	10	1	2	3
+in	7	4	1	1	2

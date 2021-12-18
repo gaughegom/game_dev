@@ -2,9 +2,9 @@
 #ifndef _ENEMY_INTERRUPT_H
 #define _ENEMY_INTERRUPT_H
 
-#include "GameObject.h"
+#include "EnemyBase.h"
 
-class CEnemyInterrupt : public CGameObject {
+class CEnemyInterrupt : public CEnemyBase {
 private:
 	int existNeoworm = 0;
 	DWORD prevTimeNeoworm;

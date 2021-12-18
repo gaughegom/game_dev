@@ -2,9 +2,9 @@
 #ifndef _ENEMY_BALLBOMB_H
 #define _ENEMY_BALLBOMB_H
 
-#include "GameObject.h"
+#include "EnemyBase.h"
 
-class CEnemyBallbomb : public CGameObject {
+class CEnemyBallbomb : public CEnemyBase {
 private:
 	DWORD bornTime = GetTickCount64();
 

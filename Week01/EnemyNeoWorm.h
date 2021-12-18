@@ -2,10 +2,9 @@
 #ifndef _ENEMY_NEO_WORM_H
 #define _ENEMY_NEO_WORM_H
 
-#include "GameObject.h"
+#include "EnemyBase.h"
 
-class CEnemyNeoWorm : public CGameObject
-{
+class CEnemyNeoWorm : public CEnemyBase {
 private:
 	DWORD bornTime = GetTickCount64();
 

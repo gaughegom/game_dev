@@ -149,6 +149,15 @@
     <Filter Include="Game\Game objects\Effect\Big destroy">
       <UniqueIdentifier>{61bbfff9-ca98-47f6-b3dc-adf78c045cbd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Game\Game objects\Items\Base">
+      <UniqueIdentifier>{846740c7-28df-4331-a77f-06960d035da8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Game objects\Items\Health">
+      <UniqueIdentifier>{0eea5b93-e2c8-4d1c-9712-c7b5314b364e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Game objects\Enemies\Base">
+      <UniqueIdentifier>{8a83077c-e509-4dde-966a-a193e53b76e6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -280,14 +289,20 @@
     <ClCompile Include="EnemyGX-680S.cpp">
       <Filter>Game\Game objects\Enemies\GX-680S</Filter>
     </ClCompile>
-    <ClCompile Include="ItemHealth.cpp">
-      <Filter>Game\Game objects\Items</Filter>
-    </ClCompile>
     <ClCompile Include="SmallDestroyEffect.cpp">
       <Filter>Game\Game objects\Effect\Small destroy</Filter>
     </ClCompile>
     <ClCompile Include="BigDestroyEffect.cpp">
       <Filter>Game\Game objects\Effect\Big destroy</Filter>
+    </ClCompile>
+    <ClCompile Include="ItemHealth.cpp">
+      <Filter>Game\Game objects\Items\Health</Filter>
+    </ClCompile>
+    <ClCompile Include="ItemBase.cpp">
+      <Filter>Game\Game objects\Items\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyBase.cpp">
+      <Filter>Game\Game objects\Enemies\Base</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -420,14 +435,20 @@
     <ClInclude Include="EnemyGX-680S.h">
       <Filter>Game\Game objects\Enemies\GX-680S</Filter>
     </ClInclude>
-    <ClInclude Include="ItemHealth.h">
-      <Filter>Game\Game objects\Items</Filter>
-    </ClInclude>
     <ClInclude Include="SmallDestroyEffect.h">
       <Filter>Game\Game objects\Effect\Small destroy</Filter>
     </ClInclude>
     <ClInclude Include="BigDestroyEffect.h">
       <Filter>Game\Game objects\Effect\Big destroy</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemHealth.h">
+      <Filter>Game\Game objects\Items\Health</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemBase.h">
+      <Filter>Game\Game objects\Items\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyBase.h">
+      <Filter>Game\Game objects\Enemies\Base</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

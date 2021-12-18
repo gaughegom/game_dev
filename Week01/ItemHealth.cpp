@@ -4,8 +4,8 @@
 #define V_BOXSIZE			Vector2D(16.0f, 16.0f)
 
 constexpr auto SpriteDefaultId = "df";
-constexpr auto EffectTime		= 1000;
-constexpr auto LifeTime		= 2700;
+constexpr auto EffectTime = 800;
+constexpr auto LifeTime	= 4000;
 
 CItemHealth::CItemHealth()
 {
