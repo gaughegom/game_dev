@@ -184,21 +184,21 @@ void CGame::RenderGame()
 		spriteHandler->Begin(D3DXSPRITE_ALPHABLEND | D3DXSPRITE_SORT_DEPTH_FRONTTOBACK);
 
 		this->map->Draw(Vector2D(this->mapWidth / 2, this->mapHeight / 2), 1, DrawArgbColorDefault());
-		for (int i = 0; i < this->renderedObjects.size(); i++) {
-			if (!this->renderedObjects.at(i)->IsActive()) {
+		for (LPGAMEOBJECT& object : this->renderedObjects) {
+			if (!object->IsActive()) {
 				continue;
 			}
 
-			this->renderedObjects.at(i)->Render();
+			object->Render();
 		}
 
 		// render collider
-		for (int i = 0; i < this->renderedObjects.size(); i++) {
-			if (!this->renderedObjects.at(i)->IsActive()) {
+		for (LPGAMEOBJECT& object : this->renderedObjects) {
+			if (!object->IsActive()) {
 				continue;
 			}
 
-			for (auto co : this->renderedObjects.at(i)->GetColliders()) {
+			for (auto co : object->GetColliders()) {
 				co->RenderBoundingBox();
 			}
 		}

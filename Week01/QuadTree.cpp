@@ -1,18 +1,21 @@
 #include "QuadTree.h"
 
-CQuadTree::CQuadTree(const int level, SRect rect) : level(level), nodes{ nullptr, nullptr, nullptr, nullptr }
+CQuadTree::CQuadTree(const int level, SRect rect)
 {
 	float w = rect.right - rect.left;
 	float h = rect.top - rect.right;
-	auto diff = abs(w - h);
+	float diff = abs(w - h);
 	if (w < h) {
 		rect.right += diff;
 	}
 	else {
 		h += diff;
 	}
-	
+
+	this->level = level;
 	this->rect = rect;
+	this->EmptyNodes();
+
 
 	this->entities.reserve(MaxNodeEntities);
 }
@@ -82,14 +85,14 @@ void CQuadTree::Insert(LPGAMEOBJECT entity)
 void CQuadTree::SplitArea()
 {
 	// get origin xy
-	auto ox = this->rect.left;
-	auto oy = this->rect.bottom;
+	float ox = this->rect.left;
+	float oy = this->rect.bottom;
 	// get width, height of area
-	auto areaWidth = this->rect.right - this->rect.left;
-	auto areaHeight = this->rect.top - this->rect.bottom;
+	float areaWidth = this->rect.right - this->rect.left;
+	float areaHeight = this->rect.top - this->rect.bottom;
 
-	auto halfWidth = areaWidth / 2;
-	auto halfHeight = areaHeight / 2;
+	float halfWidth = areaWidth / 2;
+	float halfHeight = areaHeight / 2;
 
 	// 0: left bot, 1: left top, 2: right top, 3: right bot
 	SRect area_lb = SRect(ox, oy + halfHeight, ox + halfWidth, oy);
@@ -130,8 +133,7 @@ void CQuadTree::Retrieve(std::vector<LPGAMEOBJECT>& container, const SRect& targ
 
 void CQuadTree::Update(std::vector<LPGAMEOBJECT>& updateEntities)
 {
-	for (int i = 0; i < updateEntities.size(); i++) {
-		auto entity = updateEntities.at(i);
+	for (LPGAMEOBJECT& entity : updateEntities) {
 		entity->SetRendering(false);
 
 		if (entity->IsLive() == false) continue;
@@ -140,11 +142,12 @@ void CQuadTree::Update(std::vector<LPGAMEOBJECT>& updateEntities)
 		for (auto colliders : entity->GetColliders()) {
 			if (colliders->IsDynamic() == true) {
 
-				auto entityNodes = entity->GetSelfNodesQt();
+				std::vector<CQuadTree*> entityNodes = entity->GetSelfNodesQt();
 
 				for (auto entityNode : entityNodes) {
 					if (!entityNode->rect.Overlap(entity->GetColliders().at(0)->GetBoundingBox())) {
-						entityNode->entities.erase(std::remove(entityNode->entities.begin(), entityNode->entities.end(), entity), entityNode->entities.end());
+						entityNode->entities.erase(
+							std::remove(entityNode->entities.begin(), entityNode->entities.end(), entity), entityNode->entities.end());
 						entity->ClearSelfNodesQt();
 						Insert(entity);
 					}
@@ -155,7 +158,7 @@ void CQuadTree::Update(std::vector<LPGAMEOBJECT>& updateEntities)
 }
 
 void CQuadTree::RemoveEntityFromLeafNodes(LPGAMEOBJECT entity) {
-	auto entityNodes = entity->GetSelfNodesQt();
+	std::vector<CQuadTree*> entityNodes = entity->GetSelfNodesQt();
 
 	for (auto entityNode : entityNodes) {
 		entityNode->entities.erase(std::remove(entityNode->entities.begin(), entityNode->entities.end(), entity), entityNode->entities.end());
@@ -163,12 +166,16 @@ void CQuadTree::RemoveEntityFromLeafNodes(LPGAMEOBJECT entity) {
 	entity->ClearSelfNodesQt();
 }
 
-CQuadTree::~CQuadTree()
-{
-	this->entities.clear();
-	this->entities.shrink_to_fit();
+void CQuadTree::EmptyNodes() {
 	this->nodes[0] = nullptr;
 	this->nodes[1] = nullptr;
 	this->nodes[2] = nullptr;
 	this->nodes[3] = nullptr;
+}
+
+CQuadTree::~CQuadTree()
+{
+	this->entities.clear();
+	this->entities.shrink_to_fit();
+	this->EmptyNodes();
 }

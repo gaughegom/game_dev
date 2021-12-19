@@ -42,3 +42,4 @@ gx680s	1	64	1728	18	17
 [GATES]
 #way	x	y	col	row	next
 in	7	4	1	1	2
+out	7	113	2	6	4

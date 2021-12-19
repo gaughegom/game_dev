@@ -5,8 +5,8 @@
 #include "EnemyGX-680.h"
 #include "EnemyGX-680S.h"
 
-#define BOXSIZE_HORIZON				Vector2D(22.0f, 30.0f)
-#define BOXSIZE_VERTICAL			Vector2D(18.0f, 30.0f)
+#define BOXSIZE_HORIZON				Vector2D(21.0f, 8.0f)
+#define BOXSIZE_VERTICAL			Vector2D(17.0f, 8.0f)
 
 constexpr auto AnimationHorizontalWalkId	= "walk-horizon";
 constexpr auto AnimationUpWalkId			= "walk-up";
@@ -36,7 +36,7 @@ CBigJason::CBigJason()
 	this->colliders.clear();
 	CCollider2D* collider = new CCollider2D(
 		this, true, false, 
-		VectorZero(), BOXSIZE_VERTICAL);
+		Vector2D(0, -12.0f), BOXSIZE_VERTICAL);
 	this->colliders.push_back(collider);
 	this->SetColliders(this->colliders);
 }
@@ -44,23 +44,28 @@ CBigJason::CBigJason()
 void CBigJason::Shooting()
 {
 	CGame* game = CGame::GetInstance();
-	LPGAMEOBJECT newBullet = nullptr;
+	LPGAMEOBJECT bullet = nullptr;
+	Vector2D bulletPosition;
 	switch (this->directState)
 	{
 	case BigJasonDirectState::LEFTWALK:
-		newBullet = new CBigJasonBullet(BigJasonBulletDirection::LEFT);
+		bullet = new CBigJasonBullet(BigJasonBulletDirection::LEFT);
+		bulletPosition = Vector2D(this->position.x - 12.0f, this->position.y);
 		break;
 
 	case BigJasonDirectState::RIGHTWALK:
-		newBullet = new CBigJasonBullet(BigJasonBulletDirection::RIGHT);
+		bullet = new CBigJasonBullet(BigJasonBulletDirection::RIGHT);
+		bulletPosition = Vector2D(this->position.x + 12.0f, this->position.y);
 		break;
 
 	case BigJasonDirectState::UPWALK:
-		newBullet = new CBigJasonBullet(BigJasonBulletDirection::UP);
+		bullet = new CBigJasonBullet(BigJasonBulletDirection::UP);
+		bulletPosition = this->position;
 		break;
 
 	case BigJasonDirectState::DOWNWALK:
-		newBullet = new CBigJasonBullet(BigJasonBulletDirection::DOWN);
+		bullet = new CBigJasonBullet(BigJasonBulletDirection::DOWN);
+		bulletPosition = Vector2D(this->position.x, this->position.y - 16.0f);
 		break;
 
 	case BigJasonDirectState::STAY:
@@ -68,28 +73,34 @@ void CBigJason::Shooting()
 			switch (this->nx)
 			{
 			case 1:
-				newBullet = new CBigJasonBullet(BigJasonBulletDirection::RIGHT);
+				bullet = new CBigJasonBullet(BigJasonBulletDirection::RIGHT);
+				bulletPosition = Vector2D(this->position.x + 12.0f, this->position.y);
 				break;
+
 			case -1:
-				newBullet = new CBigJasonBullet(BigJasonBulletDirection::LEFT);
+				bullet = new CBigJasonBullet(BigJasonBulletDirection::LEFT);
+				bulletPosition = Vector2D(this->position.x - 12.0f, this->position.y);
 				break;
+
 			default:
 				break;
 			}
 		}
 		else if (this->currentSpriteState == SpriteUpStayId) {
-			newBullet = new CBigJasonBullet(BigJasonBulletDirection::UP);
+			bullet = new CBigJasonBullet(BigJasonBulletDirection::UP);
+			bulletPosition = this->position;
 		}
 		else if (this->currentSpriteState == SpriteDownStayId) {
-			newBullet = new CBigJasonBullet(BigJasonBulletDirection::DOWN);
+			bullet = new CBigJasonBullet(BigJasonBulletDirection::DOWN);
+			bulletPosition = Vector2D(this->position.x, this->position.y - 16.0f);
 		}
 
 	default:
 		break;
 	}
 
-	newBullet->SetPosition(this->position);
-	game->PushToQueueObject(newBullet);
+	bullet->SetPosition(bulletPosition);
+	game->PushToQueueObject(bullet);
 }
 
 

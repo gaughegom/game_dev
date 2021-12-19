@@ -5,7 +5,7 @@
 #include "Sophia.h"
 
 constexpr auto MarginPushCollision = 0.2f;
-constexpr auto AlphaColliderColor = 40;
+constexpr auto AlphaColliderColor = 70;
 
 CCollider2D::CCollider2D()
 {
@@ -528,7 +528,7 @@ SRect CCollider2D::GetBoundingBox()
 void CCollider2D::RenderBoundingBox()
 {
 	Vector2D positionCollider = this->object->GetPosition() + this->offset;
-	LPDIRECT3DTEXTURE9 bbox = CTextures::GetInstance()->Get("bbox"); // texId 20: bbox for render collider
+	LPDIRECT3DTEXTURE9 bbox = CTextures::GetInstance()->Get("bbox");
 	SRect rect;
 	rect.left = 0;
 	rect.top = 0;
@@ -536,5 +536,5 @@ void CCollider2D::RenderBoundingBox()
 	rect.bottom = this->boxSize.y;
 
 	D3DCOLOR color = D3DCOLOR_ARGB(AlphaColliderColor, 255, 255, 255);
-	CGame::GetInstance()->Draw(positionCollider, -1, bbox, rect.left, rect.top, rect.right, rect.bottom, color, DrawLayer02);
+	CGame::GetInstance()->Draw(positionCollider, -1, bbox, rect.left, rect.top, rect.right, rect.bottom, color, DrawLayer01);
 }

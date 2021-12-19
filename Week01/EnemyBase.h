@@ -16,7 +16,6 @@ public:
 
 	virtual void OnCollision(CCollider2D* self, LPCOLLISIONEVENT coEvent);
 	virtual void OnTrigger(CCollider2D* self, LPCOLLISIONEVENT coEvent);
-	virtual bool HandleLifeCycle();
 };
 
 #endif // !_ENEMY_BASE_H

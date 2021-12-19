@@ -30,6 +30,7 @@ public:
 	void Update(std::vector<LPGAMEOBJECT>& updateEntities);
 	
 	void RemoveEntityFromLeafNodes(LPGAMEOBJECT entity);
+	void EmptyNodes();
 
 	SRect GetBoundingBox() { return this->rect; }
 
