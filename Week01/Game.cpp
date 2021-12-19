@@ -1,22 +1,20 @@
 #include "Game.h"
+
 #include "Animations.h"
 #include "Camera.h"
 #include "KeyHandler.h"
 #include "QuadTree.h"
 #include "Textures.h"
 
-#include "Sophia.h"
-#include "Jason.h"
 #include "BigJason.h"
+#include "Jason.h"
+#include "Sophia.h"
 #include "SophiaBullet.h"
 
 CSophia* sophia;
 CJason* jason;
 CBigJason* bigJason;
 CQuadTree* quadtree;
-
-std::vector<CGameObject*> worldObjects;
-std::vector<CGameObject*> renderedObjects;
 
 CCamera* g_camera = CCamera::GetInstance();
 CTextures* g_textures = CTextures::GetInstance();
@@ -30,9 +28,11 @@ DWORD CGame::dt = 0;
 
 void CGame::AddGameObjectToWorld(LPGAMEOBJECT& newObject)
 {
-	worldObjects.push_back(newObject);
+	this->worldObjects.push_back(newObject);
 	quadtree->Insert(newObject);
 }
+
+// DirectX
 
 void CGame::InitDirectX(HWND hWnd)
 {
@@ -86,7 +86,6 @@ void CGame::InitDirectX(HWND hWnd)
 */
 void CGame::Draw(Vector2D position, int nx, LPDIRECT3DTEXTURE9 texture, int left, int top, int right, int bottom, D3DCOLOR color, int layer)
 {
-	// TODO: Make z index of object
 	Vector2D cameraPos = g_camera->GetPosition();
 
 	Vector3D p(0, 0, 0);
@@ -117,6 +116,8 @@ void CGame::Draw(Vector2D position, int nx, LPDIRECT3DTEXTURE9 texture, int left
 	spriteHandler->Draw(texture, &r, &center, &p, color);
 }
 
+// Game loop
+
 void CGame::InitGame(HWND hWnd)
 {
 	this->InitDirectX(hWnd);
@@ -132,7 +133,7 @@ void CGame::InitGame(HWND hWnd)
 	this->PlayScene();
 
 	#pragma region Start keyboard
-	
+
 	this->keyHandler = new CKeyHandler();
 	g_inputHandler->SetHandleWindow(this->hWnd);
 	g_inputHandler->SetKeyHandler(keyHandler);
@@ -143,28 +144,28 @@ void CGame::InitGame(HWND hWnd)
 
 void CGame::UpdateGame(DWORD dt)
 {
-	// reduce queue
+	// pop from queue
 	while (!this->queueObjects.empty()) {
 		this->AddGameObjectToWorld(this->queueObjects.front());
 		this->queueObjects.pop();
 	}
 
 	g_camera->Update();
-	quadtree->Update(worldObjects);
-	renderedObjects.clear();
-	quadtree->Retrieve(renderedObjects, g_camera->GetBoundingBox());
+	quadtree->Update(this->worldObjects);
+	this->renderedObjects.clear();
+	quadtree->Retrieve(this->renderedObjects, g_camera->GetBoundingBox());
 
-	for (auto& obj : worldObjects) {
+	for (auto& obj : this->worldObjects) {
 		if (reset)
 			return;
 
 		if (obj->IsActive() == true) {
 			obj->CleanTriggerTag();
-			obj->PhysicalUpdate(&worldObjects);
+			obj->PhysicalUpdate(&this->worldObjects);
 		}
 	}
 
-	for (auto& obj : worldObjects) {
+	for (auto& obj : this->worldObjects) {
 		obj->Update(dt);
 	}
 }
@@ -183,21 +184,21 @@ void CGame::RenderGame()
 		spriteHandler->Begin(D3DXSPRITE_ALPHABLEND | D3DXSPRITE_SORT_DEPTH_FRONTTOBACK);
 
 		this->map->Draw(Vector2D(this->mapWidth / 2, this->mapHeight / 2), 1, DrawArgbColorDefault());
-		for (int i = 0; i < renderedObjects.size(); i++) {
-			if (!renderedObjects.at(i)->IsActive()) {
+		for (int i = 0; i < this->renderedObjects.size(); i++) {
+			if (!this->renderedObjects.at(i)->IsActive()) {
 				continue;
 			}
 
-			renderedObjects.at(i)->Render();
+			this->renderedObjects.at(i)->Render();
 		}
 
 		// render collider
-		for (int i = 0; i < renderedObjects.size(); i++) {
-			if (!renderedObjects.at(i)->IsActive()) {
+		for (int i = 0; i < this->renderedObjects.size(); i++) {
+			if (!this->renderedObjects.at(i)->IsActive()) {
 				continue;
 			}
 
-			for (auto co : renderedObjects.at(i)->GetColliders()) {
+			for (auto co : this->renderedObjects.at(i)->GetColliders()) {
 				co->RenderBoundingBox();
 			}
 		}
@@ -254,6 +255,8 @@ void CGame::RunGame()
 			Sleep(tickPerFrame - this->dt);
 	}
 }
+
+// Load Resources
 
 void CGame::LoadResource()
 {
@@ -439,15 +442,12 @@ void CGame::__ParseSection_CHARACTERS__(std::string line)
 	player->SetNx(nx);
 }
 
-std::vector<LPGAMEOBJECT> CGame::GetRenderedObjects()
-{
-	return renderedObjects;
-}
+// GameObject
 
 void CGame::CleanGameObject()
 {
-	for (int i = 0; i < worldObjects.size(); i++) {
-		auto object = worldObjects.at(i);
+	for (int i = 0; i < this->worldObjects.size(); i++) {
+		auto object = this->worldObjects.at(i);
 
 		bool removed = false;
 		if (object->IsLive() == false) {
@@ -464,17 +464,19 @@ void CGame::CleanGameObject()
 				CSophiaBullet* bullet = (CSophiaBullet*)object;
 				bullet->OnDelete();
 			}
-			worldObjects.erase(std::next(worldObjects.begin() + i - 1));
+			this->worldObjects.erase(std::next(this->worldObjects.begin() + i - 1));
 			quadtree->RemoveEntityFromLeafNodes(object);
 			continue;
 		}
 	}
 }
 
+// Scene
+
 void CGame::PlayScene()
 {
-	worldObjects.clear();
-	renderedObjects.clear();
+	this->worldObjects.clear();
+	this->renderedObjects.clear();
 	DebugOut(L"[INFO] playing scene %d\n", this->currentScene);
 
 	if (g_player->GetPlayer() == nullptr) {
@@ -504,7 +506,7 @@ void CGame::SwitchScene(int id)
 {
 	DebugOut(L"[INFO] Switch scene: %d -> %d\n", this->currentScene, id);
 	int prevScene = this->currentScene;
-	std::vector<LPGAMEOBJECT> preWorldObject = worldObjects;
+	std::vector<LPGAMEOBJECT> preWorldObject = this->worldObjects;
 	this->reset = true;
 	this->currentScene = id;
 
@@ -529,16 +531,16 @@ void CGame::MappingPlayerScene()
 	bool bigJasonExist = false;
 
 	// check player already in worldObjects
-	for (int i = worldObjects.size() - 1; i > worldObjects.size() - 3; i--) {
-		if (worldObjects.at(i) == playerSophia) {
+	for (int i = this->worldObjects.size() - 1; i > this->worldObjects.size() - 3; i--) {
+		if (this->worldObjects.at(i) == playerSophia) {
 			sophiaExist = true;
 			continue;
 		}
-		else if (worldObjects.at(i) == playerJason) {
+		else if (this->worldObjects.at(i) == playerJason) {
 			jasonExist = true;
 			continue;
 		}
-		else if (worldObjects.at(i) == playerBigJason) {
+		else if (this->worldObjects.at(i) == playerBigJason) {
 			bigJasonExist = true;
 			continue;
 		}
@@ -579,7 +581,6 @@ void CGame::MappingPlayerScene()
 			g_player->SelectPlayer(playerBigJason);
 		}
 	}
-
 }
 
 CGame* CGame::GetInstance()
@@ -590,19 +591,8 @@ CGame* CGame::GetInstance()
 
 CGame::~CGame()
 {
-	if (spriteHandler != NULL) {
-		this->spriteHandler->Release();
-	}
-
-	if (backBuffer != NULL) {
-		this->backBuffer->Release();
-	}
-
-	if (d3ddv != NULL) {
-		this->d3ddv->Release();
-	}
-
-	if (d3d != NULL) {
-		this->d3d->Release();
-	}
+	if (this->spriteHandler != nullptr) { this->spriteHandler->Release(); }
+	if (this->backBuffer != nullptr) { this->backBuffer->Release(); }
+	if (this->d3ddv != nullptr) { this->d3ddv->Release(); }
+	if (this->d3d != nullptr) { this->d3d->Release(); }
 }

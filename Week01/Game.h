@@ -34,6 +34,7 @@ enum class SceneSection : int {
 };
 
 class CGame {
+private:
 	static CGame* __instance;
 	static DWORD dt;
 
@@ -50,6 +51,7 @@ class CGame {
 	std::unordered_map<int, LPSCENE> scenes;
 	int currentScene = 0;	// default scene 0
 
+	std::vector<LPGAMEOBJECT> worldObjects, renderedObjects;
 	std::queue<LPGAMEOBJECT> queueObjects;
 
 	float camWidth = 0;
@@ -65,24 +67,18 @@ class CGame {
 	void AddGameObjectToWorld(LPGAMEOBJECT& newObject);
 
 public:
-	/*
-		DirectX
-	*/
+	// directX
 	void InitDirectX(HWND hWnd);
 	void Draw(Vector2D position, int nx, LPDIRECT3DTEXTURE9 texture, int left, int top, int right, int bottom, D3DCOLOR color, int layer);
 
-	/*
-		Main game loop
-	*/
+	// main game loop
 	void InitGame(HWND hWnd);
 	void UpdateGame(DWORD dt);
 	void RenderGame();
 	void RunGame();
 
 
-	/*
-		Resources from database
-	*/
+	// resource from database
 	void LoadResource();
 	void __LoadSceneResource__(std::string line);
 	void __ParseSection_TEXTURES__(std::string line);
@@ -90,26 +86,20 @@ public:
 	void __ParseSection_ANIMATIONS__(std::string line);
 	void __ParseSection_CHARACTERS__(std::string line);
 
-	/*
-		Game object in scene
-	*/
+	// queue gameObject
 	void PushToQueueObject(LPGAMEOBJECT object) { this->queueObjects.push(object); }
-	template<typename T> 
+	template<typename T>
 	inline T* InitiateAndPushToQueue(Vector2D position, Vector2D velocity = VectorZero(), int nx = 1);
-	std::vector<LPGAMEOBJECT> GetRenderedObjects();
+	std::vector<LPGAMEOBJECT> GetRenderedObjects() { return this->renderedObjects; }
 	std::queue<LPGAMEOBJECT> GetQueueObject() { return this->queueObjects; }
 	void CleanGameObject();
 
-	/*
-		Scene
-	*/
+	// scene
 	void PlayScene();
 	void SwitchScene(int id);
 	void MappingPlayerScene();
 
-	/*
-		Device
-	*/
+	// device
 	LPDIRECT3DDEVICE9 GetDirect3dDevice() { return this->d3ddv; }
 	LPDIRECT3DSURFACE9 GetBackbuffer() { return backBuffer; }
 	LPD3DXSPRITE GetSpriteHandler() { return this->spriteHandler; }
@@ -118,6 +108,7 @@ public:
 
 	static CGame* GetInstance();
 	static DWORD GetDeltaTime() { return dt; }
+
 	~CGame();
 };
 

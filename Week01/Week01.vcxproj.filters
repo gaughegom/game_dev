@@ -226,9 +226,6 @@
     <ClCompile Include="EnemyOffside.cpp">
       <Filter>Game\Game objects\Enemies\Offside</Filter>
     </ClCompile>
-    <ClCompile Include="Game.cpp">
-      <Filter>Game\Base</Filter>
-    </ClCompile>
     <ClCompile Include="SophiaWheel.cpp">
       <Filter>Game\Game objects\Player\Sophia\Parts\Wheel</Filter>
     </ClCompile>
@@ -313,6 +310,9 @@
     <ClCompile Include="KeyHandler.cpp">
       <Filter>Framework\Keyboard Handler</Filter>
     </ClCompile>
+    <ClCompile Include="Game.cpp">
+      <Filter>Game\Base</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Textures.h">
@@ -374,9 +374,6 @@
     </ClInclude>
     <ClInclude Include="EnemyOffside.h">
       <Filter>Game\Game objects\Enemies\Offside</Filter>
-    </ClInclude>
-    <ClInclude Include="Game.h">
-      <Filter>Game\Base</Filter>
     </ClInclude>
     <ClInclude Include="SophiaWheel.h">
       <Filter>Game\Game objects\Player\Sophia\Parts\Wheel</Filter>
@@ -464,6 +461,9 @@
     </ClInclude>
     <ClInclude Include="KeyHandler.h">
       <Filter>Framework\Keyboard Handler</Filter>
+    </ClInclude>
+    <ClInclude Include="Game.h">
+      <Filter>Game\Base</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
