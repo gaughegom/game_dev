@@ -193,43 +193,36 @@ void CSophia::SetActionState(SophiaActionState actionState)
 
 void CSophia::OnCollision(CCollider2D* self, LPCOLLISIONEVENT coEvent)
 {
-	if (dynamic_cast<CBrick*>(coEvent->object)) {
+	LPGAMEOBJECT other = coEvent->object;
+	if (dynamic_cast<CBrick*>(other)) {
 		if (!this->ground && coEvent->ny == 1) {
 			this->ground = true;
 		}
 	}
-	else if (dynamic_cast<CGate*>(coEvent->object)) {
-		CGate* coGate = (CGate*)coEvent->object;
-		CGame::GetInstance()->SwitchScene(coGate->GetNextScene());
+	else if (dynamic_cast<CGate*>(other)) {
+		CGate* gate = (CGate*)other;
+		CGame::GetInstance()->SwitchScene(gate->GetNextScene());
 	}
-	else if (dynamic_cast<CItemBase*>(coEvent->object)) {
-		this->OnCollisionWithItem((CItemBase*)(coEvent->object));
+	else if (dynamic_cast<CItemBase*>(other)) {
+		this->OnCollisionWithItem((CItemBase*)(other));
 	}
-	else {
-		this->OnCollisionWithEnemy(coEvent->object);
+	else if (dynamic_cast<CEnemyBase*>(other)) {
+		this->OnCollisionWithEnemy(other);
 	}
 }
 
 void CSophia::OnTrigger(CCollider2D* self, LPCOLLISIONEVENT coEvent)
 {
-
 }
 
 void CSophia::OnCollisionWithEnemy(LPGAMEOBJECT const& other)
 {
-	bool isSuffered = false;
-	// TODO: check collision with enemy not trigger
+	other->TakeDamage(this->damage);
+	this->TakeDamage(other->GetDamage());
 
-	// TODO: add more enemies later
-
-	// TODO: add trigger in enemy
-	if (isSuffered) {
-		this->TakeDamage(other->GetDamage());
-
-		STriggerTag tag = STriggerTag(other);
-		other->AddTriggerTag(this);
-		this->AddTriggerTag(other);
-	}
+	STriggerTag tag = STriggerTag(other);
+	other->AddTriggerTag(this);
+	this->AddTriggerTag(other);
 }
 
 void CSophia::OnCollisionWithItem(CItemBase* const& other)

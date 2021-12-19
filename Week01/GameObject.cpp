@@ -125,6 +125,10 @@ void CGameObject::OnTrigger(CCollider2D* selfCollider, LPCOLLISIONEVENT collsion
 {
 }
 
+void CGameObject::OnOverlapped(CCollider2D* self, LPCOLLISIONEVENT coEvent)
+{
+}
+
 void CGameObject::CleanTriggerTag()
 {
 	this->triggerTags.erase(

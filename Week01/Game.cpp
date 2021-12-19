@@ -1,32 +1,24 @@
 #include "Game.h"
 #include "Animations.h"
 #include "Camera.h"
-#include "KeyEventHandler.h"
-#include "InputHandler.h"
+#include "KeyHandler.h"
 #include "QuadTree.h"
 #include "Textures.h"
 
 #include "Sophia.h"
 #include "Jason.h"
 #include "BigJason.h"
-#include "Brick.h"
-#include "EnemyDrap.h"
-#include "EnemyEyelet.h"
-#include "EnemyGX-680.h"
-#include "EnemyOffside.h"
-#include "EnemyStuka.h"
-#include "EnemyBallot.h"
 #include "SophiaBullet.h"
 
 CSophia* sophia;
 CJason* jason;
 CBigJason* bigJason;
-CCamera* g_camera = CCamera::GetInstance();
 CQuadTree* quadtree;
 
 std::vector<CGameObject*> worldObjects;
 std::vector<CGameObject*> renderedObjects;
 
+CCamera* g_camera = CCamera::GetInstance();
 CTextures* g_textures = CTextures::GetInstance();
 CSprites* g_sprites = CSprites::GetInstance();
 CAnimations* g_animations = CAnimations::GetInstance();
@@ -36,38 +28,11 @@ CPlayer* g_player = CPlayer::GetInstance();
 CGame* CGame::__instance = nullptr;
 DWORD CGame::dt = 0;
 
-#pragma region Keyboard
-
-class CKeyHander : public CKeyEventHandler
+void CGame::AddGameObjectToWorld(LPGAMEOBJECT& newObject)
 {
-	virtual void KeyState(BYTE* states);
-	virtual void OnKeyDown(int KeyCode);
-	virtual void OnKeyUp(int KeyCode);
-	virtual void IsKeyDown(int keyCode);
-};
-
-void CKeyHander::OnKeyDown(int keyCode)
-{
-	
+	worldObjects.push_back(newObject);
+	quadtree->Insert(newObject);
 }
-
-void CKeyHander::IsKeyDown(int keyCode) {
-
-}
-
-void CKeyHander::OnKeyUp(int keyCode)
-{
-}
-
-void CKeyHander::KeyState(BYTE* states)
-{
-	// switch selected object by key
-	// empty
-}
-
-#pragma endregion
-
-#pragma region DirectX
 
 void CGame::InitDirectX(HWND hWnd)
 {
@@ -152,10 +117,6 @@ void CGame::Draw(Vector2D position, int nx, LPDIRECT3DTEXTURE9 texture, int left
 	spriteHandler->Draw(texture, &r, &center, &p, color);
 }
 
-#pragma endregion
-
-#pragma region Game process
-
 void CGame::InitGame(HWND hWnd)
 {
 	this->InitDirectX(hWnd);
@@ -172,123 +133,12 @@ void CGame::InitGame(HWND hWnd)
 
 	#pragma region Start keyboard
 	
-	this->keyHandler = new CKeyHander();
+	this->keyHandler = new CKeyHandler();
 	g_inputHandler->SetHandleWindow(this->hWnd);
 	g_inputHandler->SetKeyHandler(keyHandler);
 	g_inputHandler->InitKeyboard();
 
 	#pragma endregion
-}
-
-void CGame::PlayScene()
-{
-	worldObjects.clear();
-	renderedObjects.clear();
-	DebugOut(L"[INFO] playing scene %d\n", this->currentScene);
-
-	if (g_player->GetPlayer() == nullptr) {
-		g_player->SelectPlayer(g_player->GetSophia());
-	}
-
-	SRect sceneBoundary = this->scenes.at(this->currentScene)->GetMapBoundary();
-	this->map = this->scenes.at(this->currentScene)->GetMapSrite();
-	this->foreMap = this->scenes.at(this->currentScene)->GetForeMapSprite();
-	this->mapWidth = sceneBoundary.right;
-	this->mapHeight = sceneBoundary.top;
-
-	g_camera->SetBoundary(sceneBoundary);
-	quadtree = new CQuadTree(0, sceneBoundary);
-
-	// loading sceneObject to worldObjects
-	std::vector<LPGAMEOBJECT> sceneObjects = this->scenes.at(this->currentScene)->GetSceneObjects();
-	for (auto& object : sceneObjects) {
-		this->AddGameObjectToWorld(object);
-	}
-
-	// select player
-	this->MappingPlayerScene();
-}
-
-void CGame::MappingPlayerScene()
-{
-	// TODO: check scene when add BigJason
-	LPGAMEOBJECT player = g_player->GetPlayer();
-	LPGAMEOBJECT playerSophia = g_player->GetSophia();
-	LPGAMEOBJECT playerJason = g_player->GetJason();
-	LPGAMEOBJECT playerBigJason = g_player->GetBigJason();
-	bool sophiaExist = false;
-	bool jasonExist = false;
-	bool bigJasonExist = false;
-
-	// check player already in worldObjects
-	for (int i = worldObjects.size() - 1; i > worldObjects.size() - 3; i--) {
-		if (worldObjects.at(i) == playerSophia) {
-			sophiaExist = true;
-			continue;
-		}
-		else if (worldObjects.at(i) == playerJason) {
-			jasonExist = true;
-			continue;
-		}
-		else if (worldObjects.at(i) == playerBigJason) {
-			bigJasonExist = true;
-			continue;
-		}
-	}
-
-	// add player to worldObjects
-	if (this->scenes.at(this->currentScene)->GetMapType() == SceneMapType::OUTDOOR) {
-		if (dynamic_cast<CSophia*>(CPlayer::GetInstance()->GetPlayer())) {
-			if (sophiaExist == false) {
-				this->AddGameObjectToWorld(playerSophia);
-			}
-
-			if (jasonExist == false) {
-				this->AddGameObjectToWorld(playerJason);
-			}
-		}
-		else if (dynamic_cast<CJason*>(CPlayer::GetInstance()->GetPlayer())) {
-			if (jasonExist == false) {
-				this->AddGameObjectToWorld(playerJason);
-			}
-		}
-
-		if (player == playerBigJason) {
-			if (playerJason->IsActive()) {
-				g_player->SelectPlayer(playerJason);
-			}
-			else {
-				g_player->SelectPlayer(playerSophia);
-			}
-		}
-	}
-	else if (this->scenes.at(this->currentScene)->GetMapType() == SceneMapType::INDOOR) {
-		if (bigJasonExist == false) {
-			this->AddGameObjectToWorld(playerBigJason);
-		}
-
-		if (player == playerJason || player == playerSophia) {
-			g_player->SelectPlayer(playerBigJason);
-		}
-	}
-
-}
-
-void CGame::SwitchScene(int id)
-{
-	DebugOut(L"[INFO] Switch scene: %d -> %d\n", this->currentScene, id);
-	int prevScene = this->currentScene;
-	std::vector<LPGAMEOBJECT> preWorldObject = worldObjects;
-	this->reset = true;
-	this->currentScene = id;
-
-	this->PlayScene();
-
-	auto player = g_player->GetPlayer();
-	Vector2D playerPosition = this->scenes.at(this->currentScene)->GetPositionOfGate(prevScene) - Vector2D(0, 16);
-	player->SetPosition(playerPosition);
-
-	this->scenes.at(prevScene)->SetSceneObjects(preWorldObject);
 }
 
 void CGame::UpdateGame(DWORD dt)
@@ -325,8 +175,7 @@ void CGame::RenderGame()
 	LPDIRECT3DSURFACE9 bb = CGame::GetInstance()->GetBackbuffer();
 	LPD3DXSPRITE spriteHandler = CGame::GetInstance()->GetSpriteHandler();
 
-	HRESULT hr = d3ddv->BeginScene();
-	if (hr == D3D_OK)
+	if (d3ddv->BeginScene() == D3D_OK)
 	{
 		// Clear back buffer with a color
 		d3ddv->ColorFill(bb, nullptr, DrawBackgroundColor());
@@ -405,35 +254,6 @@ void CGame::RunGame()
 			Sleep(tickPerFrame - this->dt);
 	}
 }
-
-CGame::~CGame()
-{
-	if (spriteHandler != NULL) {
-		this->spriteHandler->Release();
-	}
-
-	if (backBuffer != NULL) {
-		this->backBuffer->Release();
-	}
-
-	if (d3ddv != NULL) {
-		this->d3ddv->Release();
-	}
-
-	if (d3d != NULL) {
-		this->d3d->Release();
-	}
-}
-
-CGame* CGame::GetInstance()
-{
-	if (__instance == nullptr) __instance = new CGame();
-	return __instance;
-}
-
-#pragma endregion
-
-#pragma region Load Resources
 
 void CGame::LoadResource()
 {
@@ -619,12 +439,6 @@ void CGame::__ParseSection_CHARACTERS__(std::string line)
 	player->SetNx(nx);
 }
 
-void CGame::AddGameObjectToWorld(LPGAMEOBJECT& newObject)
-{
-	worldObjects.push_back(newObject);
-	quadtree->Insert(newObject);
-}
-
 std::vector<LPGAMEOBJECT> CGame::GetRenderedObjects()
 {
 	return renderedObjects;
@@ -657,4 +471,138 @@ void CGame::CleanGameObject()
 	}
 }
 
-#pragma endregion
+void CGame::PlayScene()
+{
+	worldObjects.clear();
+	renderedObjects.clear();
+	DebugOut(L"[INFO] playing scene %d\n", this->currentScene);
+
+	if (g_player->GetPlayer() == nullptr) {
+		g_player->SelectPlayer(g_player->GetSophia());
+	}
+
+	SRect sceneBoundary = this->scenes.at(this->currentScene)->GetMapBoundary();
+	this->map = this->scenes.at(this->currentScene)->GetMapSrite();
+	this->foreMap = this->scenes.at(this->currentScene)->GetForeMapSprite();
+	this->mapWidth = sceneBoundary.right;
+	this->mapHeight = sceneBoundary.top;
+
+	g_camera->SetBoundary(sceneBoundary);
+	quadtree = new CQuadTree(0, sceneBoundary);
+
+	// loading sceneObject to worldObjects
+	std::vector<LPGAMEOBJECT> sceneObjects = this->scenes.at(this->currentScene)->GetSceneObjects();
+	for (auto& object : sceneObjects) {
+		this->AddGameObjectToWorld(object);
+	}
+
+	// select player
+	this->MappingPlayerScene();
+}
+
+void CGame::SwitchScene(int id)
+{
+	DebugOut(L"[INFO] Switch scene: %d -> %d\n", this->currentScene, id);
+	int prevScene = this->currentScene;
+	std::vector<LPGAMEOBJECT> preWorldObject = worldObjects;
+	this->reset = true;
+	this->currentScene = id;
+
+	this->PlayScene();
+
+	auto player = g_player->GetPlayer();
+	Vector2D playerPosition = this->scenes.at(this->currentScene)->GetPositionOfGate(prevScene) - Vector2D(0, 16);
+	player->SetPosition(playerPosition);
+
+	this->scenes.at(prevScene)->SetSceneObjects(preWorldObject);
+}
+
+void CGame::MappingPlayerScene()
+{
+	// TODO: check scene when add BigJason
+	LPGAMEOBJECT player = g_player->GetPlayer();
+	LPGAMEOBJECT playerSophia = g_player->GetSophia();
+	LPGAMEOBJECT playerJason = g_player->GetJason();
+	LPGAMEOBJECT playerBigJason = g_player->GetBigJason();
+	bool sophiaExist = false;
+	bool jasonExist = false;
+	bool bigJasonExist = false;
+
+	// check player already in worldObjects
+	for (int i = worldObjects.size() - 1; i > worldObjects.size() - 3; i--) {
+		if (worldObjects.at(i) == playerSophia) {
+			sophiaExist = true;
+			continue;
+		}
+		else if (worldObjects.at(i) == playerJason) {
+			jasonExist = true;
+			continue;
+		}
+		else if (worldObjects.at(i) == playerBigJason) {
+			bigJasonExist = true;
+			continue;
+		}
+	}
+
+	// add player to worldObjects
+	if (this->scenes.at(this->currentScene)->GetMapType() == SceneMapType::OUTDOOR) {
+		if (dynamic_cast<CSophia*>(CPlayer::GetInstance()->GetPlayer())) {
+			if (sophiaExist == false) {
+				this->AddGameObjectToWorld(playerSophia);
+			}
+
+			if (jasonExist == false) {
+				this->AddGameObjectToWorld(playerJason);
+			}
+		}
+		else if (dynamic_cast<CJason*>(CPlayer::GetInstance()->GetPlayer())) {
+			if (jasonExist == false) {
+				this->AddGameObjectToWorld(playerJason);
+			}
+		}
+
+		if (player == playerBigJason) {
+			if (playerJason->IsActive()) {
+				g_player->SelectPlayer(playerJason);
+			}
+			else {
+				g_player->SelectPlayer(playerSophia);
+			}
+		}
+	}
+	else if (this->scenes.at(this->currentScene)->GetMapType() == SceneMapType::INDOOR) {
+		if (bigJasonExist == false) {
+			this->AddGameObjectToWorld(playerBigJason);
+		}
+
+		if (player == playerJason || player == playerSophia) {
+			g_player->SelectPlayer(playerBigJason);
+		}
+	}
+
+}
+
+CGame* CGame::GetInstance()
+{
+	if (__instance == nullptr) __instance = new CGame();
+	return __instance;
+}
+
+CGame::~CGame()
+{
+	if (spriteHandler != NULL) {
+		this->spriteHandler->Release();
+	}
+
+	if (backBuffer != NULL) {
+		this->backBuffer->Release();
+	}
+
+	if (d3ddv != NULL) {
+		this->d3ddv->Release();
+	}
+
+	if (d3d != NULL) {
+		this->d3d->Release();
+	}
+}

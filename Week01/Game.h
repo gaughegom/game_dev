@@ -61,43 +61,55 @@ class CGame {
 	LPSPRITE foreMap;
 	bool reset = false;
 
-	// private method
+
 	void AddGameObjectToWorld(LPGAMEOBJECT& newObject);
 
 public:
+	/*
+		DirectX
+	*/
 	void InitDirectX(HWND hWnd);
 	void Draw(Vector2D position, int nx, LPDIRECT3DTEXTURE9 texture, int left, int top, int right, int bottom, D3DCOLOR color, int layer);
 
-	// main game loop
+	/*
+		Main game loop
+	*/
 	void InitGame(HWND hWnd);
 	void UpdateGame(DWORD dt);
 	void RenderGame();
 	void RunGame();
 
 
-	// resources
+	/*
+		Resources from database
+	*/
 	void LoadResource();
+	void __LoadSceneResource__(std::string line);
 	void __ParseSection_TEXTURES__(std::string line);
 	void __ParseSection_SPRITES__(std::string line);
 	void __ParseSection_ANIMATIONS__(std::string line);
 	void __ParseSection_CHARACTERS__(std::string line);
-	void __LoadSceneResource__(std::string line);
 
-	// game object
+	/*
+		Game object in scene
+	*/
+	void PushToQueueObject(LPGAMEOBJECT object) { this->queueObjects.push(object); }
 	template<typename T> 
 	inline T* InitiateAndPushToQueue(Vector2D position, Vector2D velocity = VectorZero(), int nx = 1);
-	void CleanGameObject();
 	std::vector<LPGAMEOBJECT> GetRenderedObjects();
+	std::queue<LPGAMEOBJECT> GetQueueObject() { return this->queueObjects; }
+	void CleanGameObject();
 
-	// scene
+	/*
+		Scene
+	*/
 	void PlayScene();
 	void SwitchScene(int id);
 	void MappingPlayerScene();
 
-	void PushToQueueObject(LPGAMEOBJECT object) { this->queueObjects.push(object); }
-	std::queue<LPGAMEOBJECT> GetQueueObject() { return this->queueObjects; }
-
-	// device
+	/*
+		Device
+	*/
 	LPDIRECT3DDEVICE9 GetDirect3dDevice() { return this->d3ddv; }
 	LPDIRECT3DSURFACE9 GetBackbuffer() { return backBuffer; }
 	LPD3DXSPRITE GetSpriteHandler() { return this->spriteHandler; }
@@ -111,6 +123,10 @@ public:
 
 #endif // !_GAME_H
 
+/*
+	Create a GameObject class and push to scene queue (position, velocity, nx)
+	WARM: NOT USE FOR ANY BULLET TEMPORARILY
+*/
 template<typename T>
 inline T* CGame::InitiateAndPushToQueue(Vector2D position, Vector2D velocity, int nx)
 {

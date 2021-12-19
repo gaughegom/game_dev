@@ -3,7 +3,7 @@
 #define V_BOXSIZE		Vector2D(4.0f, 4.0f)
 
 constexpr auto AnimationDefaultId = "df";
-constexpr auto LifeTime = 300;
+constexpr auto LifeTime = 400;
 
 CBigDestroyEffect::CBigDestroyEffect()
 {

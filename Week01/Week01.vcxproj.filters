@@ -310,6 +310,9 @@
     <ClCompile Include="CharacterBase.cpp">
       <Filter>Game\Game objects\Player\Base</Filter>
     </ClCompile>
+    <ClCompile Include="KeyHandler.cpp">
+      <Filter>Framework\Keyboard Handler</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Textures.h">
@@ -458,6 +461,9 @@
     </ClInclude>
     <ClInclude Include="CharacterBase.h">
       <Filter>Game\Game objects\Player\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="KeyHandler.h">
+      <Filter>Framework\Keyboard Handler</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

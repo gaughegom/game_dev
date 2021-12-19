@@ -46,25 +46,14 @@ void CEnemyBallbomb::Render()
 
 void CEnemyBallbomb::OnCollision(CCollider2D* self, LPCOLLISIONEVENT coEvent)
 {
-	if (dynamic_cast<CBrick*>(coEvent->object) && this->ground == false) {
+	LPGAMEOBJECT other = coEvent->object;
+	if (dynamic_cast<CBrick*>(other) && this->ground == false) {
 		this->ground = true;
 	}
-	else if (dynamic_cast<CSophia*>(coEvent->object)) {
-		coEvent->object->TakeDamage(this->damage);
-		this->TakeDamage(coEvent->object->GetDamage());
-
-		STriggerTag tag = STriggerTag(coEvent->object);
-		coEvent->object->AddTriggerTag(this);
-		this->AddTriggerTag(coEvent->object);
-	}
-	else if (dynamic_cast<CSophiaBullet*>(coEvent->object)) {
-		this->TakeDamage(coEvent->object->GetDamage());
-		this->hp = 0;
-	}
-	else if (dynamic_cast<CEnemyBallbomb*>(coEvent->object)) {
-		STriggerTag tag = STriggerTag(coEvent->object);
-		coEvent->object->AddTriggerTag(this);
-		this->AddTriggerTag(coEvent->object);
+	else if (dynamic_cast<CEnemyBallbomb*>(other)) {
+		STriggerTag tag = STriggerTag(other);
+		other->AddTriggerTag(this);
+		this->AddTriggerTag(other);
 	}
 }
 

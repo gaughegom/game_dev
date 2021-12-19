@@ -47,8 +47,4 @@ void CEnemyStuka::OnCollision(CCollider2D* self, LPCOLLISIONEVENT coEvent)
 
 void CEnemyStuka::OnTrigger(CCollider2D* self, LPCOLLISIONEVENT coEvent)
 {
-	if (dynamic_cast<CSophia*>(coEvent->object)) {
-		coEvent->object->TakeDamage(this->damage);
-		this->TakeDamage(coEvent->object->GetDamage());
-	}
 }

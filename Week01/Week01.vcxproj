@@ -39,6 +39,7 @@
     <ClCompile Include="ItemBase.cpp" />
     <ClCompile Include="ItemHealth.cpp" />
     <ClCompile Include="JasonDirectionState.cpp" />
+    <ClCompile Include="KeyHandler.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="EnemyBallot.cpp" />
     <ClCompile Include="EnemyDrap.cpp" />
@@ -90,6 +91,7 @@
     <ClInclude Include="ItemBase.h" />
     <ClInclude Include="ItemHealth.h" />
     <ClInclude Include="JasonDirectionState.h" />
+    <ClInclude Include="KeyHandler.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="EnemyBallot.h" />
     <ClInclude Include="EnemyDrap.h" />

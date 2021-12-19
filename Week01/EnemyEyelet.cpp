@@ -1,6 +1,7 @@
 #include "EnemyEyelet.h"
-#include "Sophia.h"
+#include "CharacterBase.h"
 #include "BigDestroyEffect.h"
+#include "Player.h"
 
 constexpr auto AnimationDefaultId = "df";
 constexpr auto DetectedPlayerRadius = 160.0f;
@@ -44,15 +45,8 @@ void CEnemyEyelet::Render()
 
 void CEnemyEyelet::OnCollision(CCollider2D* self, LPCOLLISIONEVENT coEvent)
 {
-	
 }
 
 void CEnemyEyelet::OnTrigger(CCollider2D* self, LPCOLLISIONEVENT coEvent)
 {
-	LPGAMEOBJECT player = CPlayer::GetInstance()->GetPlayer();
-	if ((dynamic_cast<CSophia*>(coEvent->object) || dynamic_cast<CJason*>(coEvent->object)) 
-		&& player == coEvent->object) {
-		coEvent->object->TakeDamage(this->damage);
-		this->TakeDamage(coEvent->object->GetDamage());
-	}
 }
