@@ -1,22 +1,22 @@
 #pragma once
-#ifndef _ENEMY_BASE_H
-#define _ENEMY_BASE_H
+#ifndef _CHARACTER_BASE_H
+#define _CHARACTER_BASE_H
 
 #include "GameObject.h"
 
-class CEnemyBase : public CGameObject {
+class CCharaterBase : public CGameObject {
 private:
 protected:
+	float prevHp;
 
 public:
-	CEnemyBase();
+	CCharaterBase();
 
 	virtual void Update(DWORD dt);
 	virtual void Render();
 
 	virtual void OnCollision(CCollider2D* self, LPCOLLISIONEVENT coEvent);
 	virtual void OnTrigger(CCollider2D* self, LPCOLLISIONEVENT coEvent);
-	virtual bool HandleLifeCycle();
 };
 
-#endif // !_ENEMY_BASE_H
+#endif // !_CHARACTER_BASE_H

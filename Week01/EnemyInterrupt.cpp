@@ -28,7 +28,7 @@ CEnemyInterrupt::CEnemyInterrupt()
 
 void CEnemyInterrupt::Update(DWORD dt)
 {
-	if (!this->InLifeCycle())
+	if (!this->HandleLifeCycle())
 		return;
 
 	LPGAMEOBJECT player = CPlayer::GetInstance()->GetPlayer();

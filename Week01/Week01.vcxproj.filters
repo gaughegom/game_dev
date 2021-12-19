@@ -158,6 +158,9 @@
     <Filter Include="Game\Game objects\Enemies\Base">
       <UniqueIdentifier>{8a83077c-e509-4dde-966a-a193e53b76e6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Game\Game objects\Player\Base">
+      <UniqueIdentifier>{372e8463-4897-4b94-bda0-25014224353e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -304,6 +307,9 @@
     <ClCompile Include="EnemyBase.cpp">
       <Filter>Game\Game objects\Enemies\Base</Filter>
     </ClCompile>
+    <ClCompile Include="CharacterBase.cpp">
+      <Filter>Game\Game objects\Player\Base</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Textures.h">
@@ -449,6 +455,9 @@
     </ClInclude>
     <ClInclude Include="EnemyBase.h">
       <Filter>Game\Game objects\Enemies\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="CharacterBase.h">
+      <Filter>Game\Game objects\Player\Base</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

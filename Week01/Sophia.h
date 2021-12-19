@@ -2,7 +2,7 @@
 #ifndef _GAMEPLAYER_H
 #define _GAMEPLAYER_H
 
-#include "GameObject.h"
+#include "CharacterBase.h"
 #include "Player.h"
 #include "InputHandler.h"
 #include "SophiaWheel.h"
@@ -40,7 +40,7 @@ enum class SophiaActionState : int {
 	OpenOut = 4
 };
 
-class CSophia : public CGameObject
+class CSophia : public CCharaterBase
 {
 private:
 	CSophiaWheel* leftWheel;
@@ -53,9 +53,6 @@ private:
 
 	SophiaDirectState directState;
 	SophiaActionState actionState;
-
-	// TODO: only test
-	float prevHp;
 
 	void InitParts();
 	void Shooting();

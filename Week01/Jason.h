@@ -3,7 +3,7 @@
 #define _JASON_H
 
 #include "Player.h"
-#include "GameObject.h"
+#include "CharacterBase.h"
 #include "Camera.h"
 #include "EnemyEyelet.h"
 #include "JasonDirectionState.h"
@@ -25,7 +25,7 @@ enum class JasonDirectState : int {
 	JUMP = 2
 };
 
-class CJason : public CGameObject{
+class CJason : public CCharaterBase {
 private:
 	CJasonDirectionState* directState;
 

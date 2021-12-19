@@ -2,7 +2,7 @@
 #ifndef _BIG_JASON_H
 #define _BIG_JASON_H
 
-#include "GameObject.h"
+#include "CharacterBase.h"
 
 enum class BigJasonDirectState : int {
 	STAY = 0,
@@ -12,13 +12,10 @@ enum class BigJasonDirectState : int {
 	DOWNWALK = -2
 };
 
-class CBigJason : public CGameObject {
+class CBigJason : public CCharaterBase {
 private:
 	BigJasonDirectState directState;
 	std::string currentSpriteState;
-
-	// TODO: debug only
-	float prevHp;
 
 	void Shooting();
 public:
