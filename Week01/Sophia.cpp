@@ -1,12 +1,12 @@
 #include "Sophia.h"
 #include "Camera.h"
-#include "Jason.h"
-#include "SophiaBullet.h"
 #include "EnemyStuka.h"
-#include "Gate.h"
 #include "EnemyInterrupt.h"
 #include "EnemyNeoWorm.h"
+#include "Gate.h"
 #include "ItemHealth.h"
+#include "Jason.h"
+#include "SophiaBullet.h"
 
 CSophia::CSophia()
 {
