@@ -26,7 +26,7 @@ CPlayer* g_player = CPlayer::GetInstance();
 CGame* CGame::__instance = nullptr;
 DWORD CGame::dt = 0;
 
-void CGame::AddGameObjectToWorld(LPGAMEOBJECT& newObject)
+void CGame::AddGameObjectToWorld(LPGAMEOBJECT const& newObject)
 {
 	this->worldObjects.push_back(newObject);
 	quadtree->Insert(newObject);
@@ -155,18 +155,18 @@ void CGame::UpdateGame(DWORD dt)
 	this->renderedObjects.clear();
 	quadtree->Retrieve(this->renderedObjects, g_camera->GetBoundingBox());
 
-	for (auto& obj : this->worldObjects) {
+	for (auto& object : this->worldObjects) {
 		if (reset)
 			return;
 
-		if (obj->IsActive() == true) {
-			obj->CleanTriggerTag();
-			obj->PhysicalUpdate(&this->worldObjects);
+		if (object->IsActive() == true) {
+			object->CleanTriggerTag();
+			object->PhysicalUpdate(&this->worldObjects);
 		}
 	}
 
-	for (auto& obj : this->worldObjects) {
-		obj->Update(dt);
+	for (auto& object : this->worldObjects) {
+		object->Update(dt);
 	}
 }
 
@@ -446,29 +446,28 @@ void CGame::__ParseSection_CHARACTERS__(std::string line)
 
 void CGame::CleanGameObject()
 {
-	for (int i = 0; i < this->worldObjects.size(); i++) {
-		auto object = this->worldObjects.at(i);
-
-		bool removed = false;
-		if (object->IsLive() == false) {
-			removed = true; // remove when hp lower than 0
-		}
-		else if (!quadtree->GetBoundingBox().Contain(object->GetPosition())) {
-			if (dynamic_cast<CJason*>(object) || dynamic_cast<CSophia*>(object))
-				continue;	// skip if this is player
-			removed = true; // remove when out of quadtree
-		}
-
-		if (removed) {
-			if (dynamic_cast<CSophiaBullet*>(object)) {
-				CSophiaBullet* bullet = (CSophiaBullet*)object;
-				bullet->OnDelete();
+	this->worldObjects.erase(std::remove_if(this->worldObjects.begin(), this->worldObjects.end(),
+		[](LPGAMEOBJECT& obj) {
+			bool removable = false;
+			if (obj->IsLive() == false) {
+				removable = true; // remove when hp lower than 0
 			}
-			this->worldObjects.erase(std::next(this->worldObjects.begin() + i - 1));
-			quadtree->RemoveEntityFromLeafNodes(object);
-			continue;
-		}
-	}
+			else if (!quadtree->GetBoundingBox().Contain(obj->GetPosition())) {
+				if (dynamic_cast<CJason*>(obj) || dynamic_cast<CSophia*>(obj))
+					removable = false;
+				else
+					removable = true; // remove when out of quadtree
+			}
+
+			if (removable) {
+				if (dynamic_cast<CSophiaBullet*>(obj)) {
+					CSophiaBullet* bullet = (CSophiaBullet*)obj;
+					bullet->OnDelete();
+				}
+				quadtree->RemoveEntityFromLeafNodes(obj);
+			}
+			return removable;
+		}), this->worldObjects.end());
 }
 
 // Scene

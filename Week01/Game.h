@@ -64,7 +64,7 @@ private:
 	bool reset = false;
 
 
-	void AddGameObjectToWorld(LPGAMEOBJECT& newObject);
+	void AddGameObjectToWorld(LPGAMEOBJECT const& newObject);
 
 public:
 	// directX
@@ -87,7 +87,7 @@ public:
 	void __ParseSection_CHARACTERS__(std::string line);
 
 	// queue gameObject
-	void PushToQueueObject(LPGAMEOBJECT object) { this->queueObjects.push(object); }
+	void PushToQueueObject(LPGAMEOBJECT const& object) { this->queueObjects.push(object); }
 	template<typename T>
 	inline T* InitiateAndPushToQueue(Vector2D position, Vector2D velocity = VectorZero(), int nx = 1);
 	std::vector<LPGAMEOBJECT> GetRenderedObjects() { return this->renderedObjects; }

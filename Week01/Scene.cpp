@@ -24,7 +24,7 @@ void CScene::__ParseSection_MAP__(std::string line)
 		return;
 
 	//  fetch from file
-	std::string sceneMapPath = tokens[0].c_str();
+	std::string sceneMapPath = tokens[0];
 	float sceneWidth = atoi(tokens[1].c_str()) * TilesetWidth;
 	float sceneHeight = atoi(tokens[2].c_str()) * TilesetHeight;
 	std::string sceneMapType = tokens[3].c_str();
@@ -55,7 +55,7 @@ void CScene::__ParseSection_FOREMAP__(std::string line)
 	if (tokens.size() < 3)
 		return;
 
-	std::string foreMapPath = tokens[0].c_str();
+	std::string foreMapPath = tokens[0];
 	float foreMapWidth = atoi(tokens[1].c_str()) * TilesetWidth;
 	float foreMapHeight = atoi(tokens[2].c_str()) * TilesetHeight;
 
@@ -92,7 +92,7 @@ void CScene::__ParseSection_OBJECTS__(std::string line)
 		return;
 
 	LPGAMEOBJECT object = nullptr;
-	std::string type = tokens[0].c_str();
+	std::string type = tokens[0];
 
 	if (type == "eyelet") object = new CEnemyEyelet;
 	else if (type == "ballot") object = new CEnemyBallot;
@@ -123,7 +123,7 @@ void CScene::__ParseSection_PLAYERS__(std::string line)
 	if (tokens.size() < 1)
 		return;
 	
-	std::string name = tokens[0].c_str();
+	std::string name = tokens[0];
 	if (name == "sophia") {
 		this->sceneObjects.push_back(CPlayer::GetInstance()->GetSophia());
 	}
@@ -138,7 +138,7 @@ void CScene::__ParseSection_GATES__(std::string line)
 	if (tokens.size() < 5)
 		return;
 
-	std::string way = tokens[0].c_str();
+	std::string way = tokens[0];
 	float x = atoi(tokens[1].c_str()) * TilesetWidth;
 	float y = (atoi(tokens[2].c_str()) + 1) * TilesetHeight;
 	float width = atoi(tokens[3].c_str()) * TilesetWidth;

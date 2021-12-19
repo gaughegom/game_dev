@@ -25,17 +25,17 @@ CEnemyBallbomb::CEnemyBallbomb()
 
 void CEnemyBallbomb::Update(DWORD dt)
 {
-	InGravityAffect(this, dt);
+	// check lifetime
+	if (GetTickCount64() - this->bornTime > LifeTime) {
+		this->hp = 0;
+	}
 
 	if (!this->IsLive()) {
 		CGame::GetInstance()->InitiateAndPushToQueue<CBigDestroyEffect>(this->position);
 		return;
 	}
 
-	// check lifetime
-	if (GetTickCount64() - this->bornTime > LifeTime) {
-		this->hp = 0;
-	}
+	InGravityAffect(this, dt);
 }
 
 void CEnemyBallbomb::Render()
