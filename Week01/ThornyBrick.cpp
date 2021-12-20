@@ -32,16 +32,8 @@ void CThornyBrick::Render()
 
 void CThornyBrick::OnCollision(CCollider2D* self, LPCOLLISIONEVENT coEvent)
 {
-	LPGAMEOBJECT other = coEvent->object;
-	if (dynamic_cast<CBigJason*>(other)) {
-		DebugOut(L"thorny brick on collision sophia\n");
-	}
 }
 
 void CThornyBrick::OnTrigger(CCollider2D* self, LPCOLLISIONEVENT coEvent)
 {
-	LPGAMEOBJECT other = coEvent->object;
-	if (dynamic_cast<CBigJason*>(other)) {
-		DebugOut(L"thorny brick on trigger sophia\n");
-	}
 }

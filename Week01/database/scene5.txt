@@ -1,0 +1,35 @@
+[MAP]
+# path	 width	height	type
+maps\section5.png	16	38	indoor
+[FOREMAP]
+maps\section5Fore.png	16	38
+[PLATFORMS]
+# x	y	col-number	row-number	name
+0	37	2	18	brick
+14	27	2	18	brick
+2	37	5	4	brick
+9	37	5	4	brick
+2	5	5	6	brick
+9	5	5	6	brick
+4	27	2	2	thorny
+8	27	2	2	thorny
+12	27	2	2	thorny
+2	23	2	2	thorny
+6	23	2	2	thorny
+10	23	2	2	thorny
+4	19	2	2	thorny
+8	19	2	2	thorny
+12	19	2	2	thorny
+2	15	2	2	thorny
+6	15	2	2	thorny
+10	15	2	2	thorny
+2	11	10	2	thorny
+2	9	6	2	thorny
+2	7	4	2	thorny
+[OBJECTS]
+#name	nx	x	y	width	height
+# - Enemy -
+[GATES]
+#way	x	y	col	row	next
+in	7	37	2	4	4
+out	7	4	2	5	6
