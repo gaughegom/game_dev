@@ -60,12 +60,12 @@ void CBigJason::Shooting()
 
 	case BigJasonDirectState::UPWALK:
 		bullet = new CBigJasonBullet(BigJasonBulletDirection::UP);
-		bulletPosition = this->position;
+		bulletPosition = Vector2D(this->position.x, this->position.y - 12.0f);
 		break;
 
 	case BigJasonDirectState::DOWNWALK:
 		bullet = new CBigJasonBullet(BigJasonBulletDirection::DOWN);
-		bulletPosition = Vector2D(this->position.x, this->position.y - 16.0f);
+		bulletPosition = Vector2D(this->position.x + 4.0f, this->position.y - 12.0f);
 		break;
 
 	case BigJasonDirectState::STAY:
@@ -88,11 +88,11 @@ void CBigJason::Shooting()
 		}
 		else if (this->currentSpriteState == SpriteUpStayId) {
 			bullet = new CBigJasonBullet(BigJasonBulletDirection::UP);
-			bulletPosition = this->position;
+			bulletPosition = Vector2D(this->position.x, this->position.y - 12.0f);
 		}
 		else if (this->currentSpriteState == SpriteDownStayId) {
 			bullet = new CBigJasonBullet(BigJasonBulletDirection::DOWN);
-			bulletPosition = Vector2D(this->position.x, this->position.y - 16.0f);
+			bulletPosition = Vector2D(this->position.x + 4.0f, this->position.y - 12.0f);
 		}
 
 	default:
