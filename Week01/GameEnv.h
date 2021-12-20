@@ -10,8 +10,8 @@ class CGameObject;
 
 void InGravityAffect(CGameObject* self, DWORD dt);
 void InHorizontalMove(CGameObject* self, DWORD dt);
-void InSinWaveXAsix(CGameObject* self, DWORD dt, float amplitude);
-void InSinWaveYAsix(CGameObject* self, DWORD dt, float amplitude);
+void InSinWaveXAsix(CGameObject* self, DWORD dt, float frequecy, float amplitude);
+void InSinWaveYAsix(CGameObject* self, DWORD dt, float frequecy, float amplitude);
 
 int RandomDirect();
 int Random(int begin, int end);

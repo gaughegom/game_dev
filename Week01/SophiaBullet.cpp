@@ -8,7 +8,7 @@
 #define	V_BULLET_VERTICAL_BOXSIZE		Vector2D(6, 22)
 
 constexpr auto SpriteDefaultId = "df";
-constexpr auto BulletSpeed = 0.2f;
+constexpr auto Speed = 0.2f;
 
 CSophiaBullet::CSophiaBullet(int direct)
 {
@@ -24,7 +24,7 @@ CSophiaBullet::CSophiaBullet(int direct)
 	CSprites* sprites = CSprites::GetInstance();
 	if (direct == 0) {
 		collider->SetBoxSize(V_BULLET_VERTICAL_BOXSIZE);
-		this->velocity = Vector2D(0, BulletSpeed);
+		this->velocity = Vector2D(0, Speed);
 		this->AddSprite(SpriteDefaultId, "sprSBullet01");
 		this->nx = 1;
 	}
@@ -32,11 +32,11 @@ CSophiaBullet::CSophiaBullet(int direct)
 		collider->SetBoxSize(V_BULLET_HORIZONAL_BOXSIZE);
 		this->AddSprite(SpriteDefaultId, "sprSBullet00");
 		if (direct == 1) {
-			this->velocity = Vector2D(BulletSpeed, 0);
+			this->velocity = Vector2D(Speed, 0);
 			this->nx = -1;
 		}
 		else if (direct == -1) {
-			this->velocity = Vector2D(-BulletSpeed, 0);
+			this->velocity = Vector2D(-Speed, 0);
 			this->nx = 1;
 		}
 	}
@@ -89,10 +89,6 @@ void CSophiaBullet::OnCollision(CCollider2D* self, LPCOLLISIONEVENT coEvent)
 		other->TakeDamage(this->damage);
 		this->OnDelete();
 	}
-}
-
-void CSophiaBullet::OnTrigger(CCollider2D* self, LPCOLLISIONEVENT coEvent)
-{
 }
 
 void CSophiaBullet::OnDelete()

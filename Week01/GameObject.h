@@ -48,7 +48,7 @@ protected:
 	std::unordered_map<std::string, LPANIMATION> animations;
 
 public:
-	float duration;
+	float angular;
 
 	CGameObject();
 

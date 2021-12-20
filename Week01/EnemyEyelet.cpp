@@ -33,7 +33,7 @@ void CEnemyEyelet::Update(DWORD dt)
 
 	if (this->active) {
 		this->velocity.x = (float)this->nx * EnemyNormalVelocity;
-		InSinWaveXAsix(this, dt, 1.0f);
+		InSinWaveXAsix(this, dt, 0.2f, 1.0f);
 	}
 }
 

@@ -240,6 +240,7 @@ void CCollider2D::PhysicalUpdate(std::vector<LPGAMEOBJECT>* coObjects)
 		return;
 	}
 
+	this->PhysicalOverlapHandler(coObjects);
 
 	// get delta time
 	auto deltaTime = CGame::GetDeltaTime();
@@ -447,7 +448,6 @@ void CCollider2D::PhysicalUpdate(std::vector<LPGAMEOBJECT>* coObjects)
 		}
 	}
 
-	this->PhysicalOverlapHandler(coObjects);
 
 	for (UINT i = 0; i < this->coEvents.size(); i++) {
 		delete this->coEvents.at(i);

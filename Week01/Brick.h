@@ -9,8 +9,10 @@ public:
 	CBrick(); // WARM: not used anymore
 	CBrick(Vector2D boundingBox);
 
-	void Update(DWORD dt);
-	void Render();
+	void Update(DWORD dt) override;
+	void Render() override;
+
+	void OnCollision(CCollider2D* self, LPCOLLISIONEVENT coEvent) override;
 };
 
 #endif // !_BRICK_H

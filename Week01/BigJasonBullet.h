@@ -2,7 +2,7 @@
 #ifndef _BIG_JASON_BULLET_H
 #define _BIG_JASON_BULLET_H
 
-#include "GameObject.h"
+#include "BulletBase.h"
 
 enum class BigJasonBulletDirection : int {
 	LEFT	= 0,
@@ -11,20 +11,20 @@ enum class BigJasonBulletDirection : int {
 	DOWN	= 3,
 };
 
-class CBigJasonBullet : public CGameObject {
+class CBigJasonBullet : public CBulletBase {
 private:
 	BigJasonBulletDirection directState;
+	bool inSinWave = false;
 
 public:
 	CBigJasonBullet(BigJasonBulletDirection state);
 
-	void Update(DWORD dt);
-	void Render();
+	void Update(DWORD dt) override;
+	void Render() override;
 
 	void SetDirectState(BigJasonBulletDirection directState) { this->directState = directState; }
 
-	void OnCollision(CCollider2D* self, LPCOLLISIONEVENT coEvent);
-	void OnTrigger(CCollider2D* self, LPCOLLISIONEVENT coEvent);
+	void OnCollision(CCollider2D* self, LPCOLLISIONEVENT coEvent) override;
 };
 
 #endif // !_BIG_JASON_BULLET_H

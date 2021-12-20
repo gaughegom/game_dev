@@ -26,6 +26,7 @@
     <ClCompile Include="BigJason.cpp" />
     <ClCompile Include="BigJasonBullet.cpp" />
     <ClCompile Include="Brick.cpp" />
+    <ClCompile Include="BulletBase.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="CharacterBase.cpp" />
     <ClCompile Include="Collider2D.cpp" />
@@ -80,6 +81,7 @@
     <ClInclude Include="BigJason.h" />
     <ClInclude Include="BigJasonBullet.h" />
     <ClInclude Include="Brick.h" />
+    <ClInclude Include="BulletBase.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="CharacterBase.h" />
     <ClInclude Include="Collider2D.h" />

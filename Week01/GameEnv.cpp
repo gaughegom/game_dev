@@ -17,23 +17,23 @@ void InHorizontalMove(CGameObject* self, DWORD dt)
 	self->SetPosition(position);
 }
 
-void InSinWaveXAsix(CGameObject* self, DWORD dt, float amplitude)
+void InSinWaveXAsix(CGameObject* self, DWORD dt, float frequecy, float amplitude)
 {
-	self->duration += 0.2f * dt;
-	if (self->duration > 360)
-		self->duration = 0;	//reset omega
+	self->angular += frequecy * dt;
+	if (self->angular > 360)
+		self->angular = 0;	//reset omega
 	Vector2D position = self->GetPosition();
-	position.y += amplitude * sin(self->duration * Pi() / 180);
+	position.y += amplitude * sin(self->angular * Pi() / 180);
 	self->SetPosition(position);
 }
 
-void InSinWaveYAsix(CGameObject* self, DWORD dt, float amplitude)
+void InSinWaveYAsix(CGameObject* self, DWORD dt, float frequecy, float amplitude)
 {
-	self->duration += 0.2f * dt;
-	if (self->duration > 360)
-		self->duration = 0;	//reset omega
+	self->angular += frequecy * dt;
+	if (self->angular > 360)
+		self->angular = 0;	//reset omega
 	Vector2D position = self->GetPosition();
-	position.x += amplitude * sin(self->duration * Pi() / 180);
+	position.x += amplitude * sin(self->angular * Pi() / 180);
 	self->SetPosition(position);
 }
 

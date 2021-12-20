@@ -1,5 +1,5 @@
 #include "Brick.h"
-
+#include "BulletBase.h"
 
 CBrick::CBrick(Vector2D boundingBox)
 {
@@ -14,4 +14,12 @@ void CBrick::Update(DWORD dt)
 
 void CBrick::Render()
 {
+}
+
+void CBrick::OnCollision(CCollider2D* self, LPCOLLISIONEVENT coEvent)
+{
+	LPGAMEOBJECT other = coEvent->object;
+	if (dynamic_cast<CBulletBase*>(other)) {
+		other->SetHp(0);
+	}
 }

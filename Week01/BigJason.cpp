@@ -14,6 +14,7 @@ constexpr auto AnimationDownWalkId			= "walk-down";
 constexpr auto SpriteHorizontalStayId		= "stay-horizon";
 constexpr auto SpriteUpStayId				= "stay-up";
 constexpr auto SpriteDownStayId				= "stay-down";
+constexpr auto DelayShootingTime = 220;
 
 CBigJason::CBigJason()
 {
@@ -101,6 +102,7 @@ void CBigJason::Shooting()
 
 	bullet->SetPosition(bulletPosition);
 	game->PushToQueueObject(bullet);
+	this->prevShootingTime = GetTickCount64();
 }
 
 void CBigJason::Update(DWORD dt)
@@ -138,24 +140,32 @@ void CBigJason::ListenKeyEvent()
 {
 	auto input = CInputHandler::GetInstance();
 
+	bool staying = true;
 	// map direct state
 	if (input->IsKeyDown(DIK_RIGHT)) {
 		this->SubcribeDirectState(BigJasonDirectState::RIGHTWALK);
+		staying = false;
 	}
 	else if (input->IsKeyDown(DIK_LEFT)) {
 		this->SubcribeDirectState(BigJasonDirectState::LEFTWALK);
+		staying = false;
 	}
-	else if (input->IsKeyDown(DIK_UP)) {
+
+	if (input->IsKeyDown(DIK_UP)) {
 		this->SubcribeDirectState(BigJasonDirectState::UPWALK);
+		staying = false;
 	}
 	else if (input->IsKeyDown(DIK_DOWN)) {
 		this->SubcribeDirectState(BigJasonDirectState::DOWNWALK);
+		staying = false;
 	}
-	else {
+	
+	if (staying) {
 		this->SubcribeDirectState(BigJasonDirectState::STAY);
 	}
 
-	if (input->OnKeyDown(SHOTTING_KEYCODE)) {
+	if (input->IsKeyDown(SHOTTING_KEYCODE)
+		&& GetTickCount64() - this->prevShootingTime > DelayShootingTime) {
 		this->Shooting();
 	}
 }

@@ -170,6 +170,15 @@
     <Filter Include="Game\Game objects\Platform\Wall">
       <UniqueIdentifier>{3a1a50e9-7f25-4855-9001-37ee59330d34}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Game\Game objects\Bullet\Base">
+      <UniqueIdentifier>{7fa78137-600f-422b-a131-f6142d1f1edd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Game objects\Bullet\BigJason Bullet">
+      <UniqueIdentifier>{776a84c3-f59c-4499-9082-d57cb17cc313}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Game objects\Bullet\Sophia bullet">
+      <UniqueIdentifier>{af0c1b8d-6858-4184-a12b-f14fa0ac8024}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -256,9 +265,6 @@
     <ClCompile Include="Collider2D.cpp">
       <Filter>Framework\Collision</Filter>
     </ClCompile>
-    <ClCompile Include="SophiaBullet.cpp">
-      <Filter>Game\Game objects\Bullet</Filter>
-    </ClCompile>
     <ClCompile Include="EnemyBallot.cpp">
       <Filter>Game\Game objects\Enemies\Ballot</Filter>
     </ClCompile>
@@ -288,9 +294,6 @@
     </ClCompile>
     <ClCompile Include="EnemyBallbomb.cpp">
       <Filter>Game\Game objects\Enemies\Ballcarry</Filter>
-    </ClCompile>
-    <ClCompile Include="BigJasonBullet.cpp">
-      <Filter>Game\Game objects\Bullet</Filter>
     </ClCompile>
     <ClCompile Include="EnemyGX-680S.cpp">
       <Filter>Game\Game objects\Enemies\GX-680S</Filter>
@@ -327,6 +330,15 @@
     </ClCompile>
     <ClCompile Include="Mortar.cpp">
       <Filter>Game\Game objects\Platform\Wall</Filter>
+    </ClCompile>
+    <ClCompile Include="BigJasonBullet.cpp">
+      <Filter>Game\Game objects\Bullet\BigJason Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="SophiaBullet.cpp">
+      <Filter>Game\Game objects\Bullet\Sophia bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="BulletBase.cpp">
+      <Filter>Game\Game objects\Bullet\Base</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -414,9 +426,6 @@
     <ClInclude Include="Collider2D.h">
       <Filter>Framework\Collision</Filter>
     </ClInclude>
-    <ClInclude Include="SophiaBullet.h">
-      <Filter>Game\Game objects\Bullet</Filter>
-    </ClInclude>
     <ClInclude Include="EnemyBallot.h">
       <Filter>Game\Game objects\Enemies\Ballot</Filter>
     </ClInclude>
@@ -446,9 +455,6 @@
     </ClInclude>
     <ClInclude Include="EnemyBallbomb.h">
       <Filter>Game\Game objects\Enemies\Ballcarry</Filter>
-    </ClInclude>
-    <ClInclude Include="BigJasonBullet.h">
-      <Filter>Game\Game objects\Bullet</Filter>
     </ClInclude>
     <ClInclude Include="EnemyGX-680S.h">
       <Filter>Game\Game objects\Enemies\GX-680S</Filter>
@@ -485,6 +491,15 @@
     </ClInclude>
     <ClInclude Include="Mortar.h">
       <Filter>Game\Game objects\Platform\Wall</Filter>
+    </ClInclude>
+    <ClInclude Include="BigJasonBullet.h">
+      <Filter>Game\Game objects\Bullet\BigJason Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="SophiaBullet.h">
+      <Filter>Game\Game objects\Bullet\Sophia bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="BulletBase.h">
+      <Filter>Game\Game objects\Bullet\Base</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

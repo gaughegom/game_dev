@@ -96,7 +96,7 @@ D3DCOLOR CGameObject::GetRenderColor()
 		return DrawArgbColorDefault();
 	}
 	else {
-		this->effectDuration += 1; // TODO: make the same duration of triggerTag
+		this->effectDuration += 1; // TODO: make the same angular of triggerTag
 		if (this->effectDuration > 10) {
 			this->effectDuration = 0;
 			return DrawArgbColorDefault();

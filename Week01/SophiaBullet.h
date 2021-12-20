@@ -2,17 +2,16 @@
 #ifndef _SOPHIA_BASIC_BULLET_H
 #define _SOPHIA_BASIC_BULLET_H
 
-#include "GameObject.h"	
+#include "BulletBase.h"
 
-class CSophiaBullet : public CGameObject {
+class CSophiaBullet : public CBulletBase {
 
 public:
 	CSophiaBullet(int direct); // 0: vertical, -1: left, 1: right
 
-	void Update(DWORD dt);
-	void Render();
-	void OnCollision(CCollider2D* self, LPCOLLISIONEVENT coEvent);
-	void OnTrigger(CCollider2D* self, LPCOLLISIONEVENT coEvent);
+	void Update(DWORD dt) override;
+	void Render() override;
+	void OnCollision(CCollider2D* self, LPCOLLISIONEVENT coEvent) override;
 
 	void OnDelete();
 };

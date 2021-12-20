@@ -9,8 +9,11 @@
 #define V_BOXSIZE_HORIZON			Vector2D(8.0f, 6.0f)
 #define V_BOXSIZE_VERTICAL			Vector2D(6.0f, 6.0f)
 
-constexpr auto BulletSpeed		= 0.2f;
+constexpr auto Speed		= 0.4f;
 constexpr auto SpriteDefaultId	= "df";
+constexpr auto DurationInit = 15;
+constexpr auto Amplitude = 14.0f;
+constexpr auto Frequecy = 5.0f;
 
 CBigJasonBullet::CBigJasonBullet(BigJasonBulletDirection state)
 {
@@ -23,28 +26,28 @@ CBigJasonBullet::CBigJasonBullet(BigJasonBulletDirection state)
 	{
 	case BigJasonBulletDirection::LEFT:
 		this->AddSprite(SpriteDefaultId, "sprBJBullet00");
-		this->velocity.x = -BulletSpeed;
+		this->velocity.x = -Speed;
 		this->nx = -1;
 		collider->SetBoxSize(V_BOXSIZE_HORIZON);
 		break;
 
 	case BigJasonBulletDirection::RIGHT:
 		this->AddSprite(SpriteDefaultId, "sprBJBullet00");
-		this->velocity.x = BulletSpeed;
+		this->velocity.x = Speed;
 		this->nx = 1;
 		collider->SetBoxSize(V_BOXSIZE_HORIZON);
 		break;
 
 	case BigJasonBulletDirection::UP:
 		this->AddSprite(SpriteDefaultId, "sprBJBullet01");
-		this->velocity.y = BulletSpeed;
+		this->velocity.y = Speed;
 		this->nx = 1;
 		collider->SetBoxSize(V_BOXSIZE_VERTICAL);
 		break;
 
 	case BigJasonBulletDirection::DOWN:
 		this->AddSprite(SpriteDefaultId, "sprBJBullet01");
-		this->velocity.y = -BulletSpeed;
+		this->velocity.y = -Speed;
 		this->nx = -1;
 		collider->SetBoxSize(V_BOXSIZE_VERTICAL);
 		break;
@@ -54,6 +57,9 @@ CBigJasonBullet::CBigJasonBullet(BigJasonBulletDirection state)
 	}
 	this->colliders.push_back(collider);
 	this->SetColliders(this->colliders);
+
+	//
+	this->angular = Random(0, 360);
 }
 
 void CBigJasonBullet::Update(DWORD dt)
@@ -62,6 +68,22 @@ void CBigJasonBullet::Update(DWORD dt)
 		CGame::GetInstance()->InitiateAndPushToQueue<CSmallDestroyEffect>(this->position);
 		return;
 	}
+
+	if (inSinWave == false) {
+		if (GetTickCount64() - this->initTime > DurationInit) {
+			this->inSinWave = true;
+		}
+	}
+	else {
+		// move pattern in sin wave
+		if (this->velocity.x != 0) {
+			InSinWaveXAsix(this, dt, 5.0f, 14.0f);
+		}
+		else if (this->velocity.y != 0) {
+			InSinWaveYAsix(this, dt, 5.0f, 14.0f);
+		}
+	}
+
 
 	auto camera = CCamera::GetInstance();
 	if (!camera->GetBoundingBox().Contain(this->colliders.at(0)->GetBoundingBox())) {
@@ -92,6 +114,3 @@ void CBigJasonBullet::OnCollision(CCollider2D* self, LPCOLLISIONEVENT coEvent)
 	}
 }
 
-void CBigJasonBullet::OnTrigger(CCollider2D* self, LPCOLLISIONEVENT coEvent)
-{
-}

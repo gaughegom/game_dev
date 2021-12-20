@@ -18,16 +18,20 @@ class CBigJason : public CCharaterBase {
 private:
 	BigJasonDirectState directState;
 	std::string currentSpriteState;
+	DWORD prevShootingTime;
 
 	void Shooting();
+
 public:
 	CBigJason();
 
 	void Update(DWORD dt);
 	void Render();
 
+
 	void UpdateColliders();
 	void ListenKeyEvent();
+
 	void SubcribeDirectState(BigJasonDirectState newState);
 	std::string MappingStateOfAnimation();
 
