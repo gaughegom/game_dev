@@ -3,6 +3,7 @@
 0	textures\player.png	41	255	4
 1	textures\enemies.png	41	255	4
 2	textures\items.png	0	0	0
+3	textures\indoor.png	0	0	0
 # id	left	top	width	height	texture_id
 [SPRITES]
 # - SMALL JASON -	// 50 -> 100
@@ -100,6 +101,8 @@ sprEBallcarry03	42	650	16	18	1
 sprBallbomb	258	12	10	10	2
 # - ITEM -
 sprItemHealth	105	109	16	16	2
+# - Mortar -
+sprMortar	153	255	16	16	3
 # ani_id		sprite1_id	time1	sprite2_id	time2	...
 [ANIMATIONS]
 # - JASON -

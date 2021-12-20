@@ -4,6 +4,7 @@
 #include "EnemyGX-680.h"
 #include "EnemyGX-680S.h"
 #include "SmallDestroyEffect.h"
+#include "Mortar.h"
 
 #define V_BOXSIZE_HORIZON			Vector2D(8.0f, 6.0f)
 #define V_BOXSIZE_VERTICAL			Vector2D(6.0f, 6.0f)
@@ -71,18 +72,22 @@ void CBigJasonBullet::Update(DWORD dt)
 void CBigJasonBullet::Render()
 {
 	D3DCOLOR color = this->GetRenderColor();
-	this->sprites.at(SpriteDefaultId)->Draw(this->position, this->nx, color);
+	this->sprites.at(SpriteDefaultId)->Draw(this->position, this->nx, color, DrawLayer01);
 }
 
 void CBigJasonBullet::OnCollision(CCollider2D* self, LPCOLLISIONEVENT coEvent)
 {
-	if (dynamic_cast<CBrick*>(coEvent->object)
-		|| dynamic_cast<CBigJasonBullet*>(coEvent->object)) {
+	LPGAMEOBJECT other = coEvent->object;
+	if (dynamic_cast<CBrick*>(other)
+		|| dynamic_cast<CBigJasonBullet*>(other)) {
 		this->hp = 0;
 	}
-	else if (dynamic_cast<CEnemyGX680*>(coEvent->object)
-		|| dynamic_cast<CEnemyGX680S*>(coEvent->object)) {
-		coEvent->object->TakeDamage(this->damage);
+	else if (dynamic_cast<CEnemyBase*>(other)) {
+		other->TakeDamage(this->damage);
+		this->hp = 0;
+	}
+	else if (dynamic_cast<CMortar*>(other)) {
+		other->TakeDamage(this->damage);
 		this->hp = 0;
 	}
 }

@@ -167,6 +167,9 @@
     <Filter Include="Game\Game objects\Platform\Thorny brick">
       <UniqueIdentifier>{8a618bf9-d00d-4527-8679-c04f176cb8e4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Game\Game objects\Platform\Wall">
+      <UniqueIdentifier>{3a1a50e9-7f25-4855-9001-37ee59330d34}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -322,6 +325,9 @@
     <ClCompile Include="ThornyBrick.cpp">
       <Filter>Game\Game objects\Platform\Thorny brick</Filter>
     </ClCompile>
+    <ClCompile Include="Mortar.cpp">
+      <Filter>Game\Game objects\Platform\Wall</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Textures.h">
@@ -476,6 +482,9 @@
     </ClInclude>
     <ClInclude Include="ThornyBrick.h">
       <Filter>Game\Game objects\Platform\Thorny brick</Filter>
+    </ClInclude>
+    <ClInclude Include="Mortar.h">
+      <Filter>Game\Game objects\Platform\Wall</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

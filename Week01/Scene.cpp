@@ -13,6 +13,7 @@
 #include "EnemyStuka.h"
 #include "Player.h"
 #include "Gate.h"
+#include "Mortar.h"
 
 constexpr auto MaxFileLine = 2048;
 
@@ -86,6 +87,7 @@ void CScene::__ParseSection_PLATFORMS__(std::string line)
 	LPGAMEOBJECT platformObject = nullptr;
 	if (type == "brick") platformObject = new CBrick(Vector2D(width, height));
 	else if (type == "thorny") platformObject = new CThornyBrick(Vector2D(width, height));
+	else if (type == "mortar") platformObject = new CMortar(Vector2D(width, height));
 	else {
 		DebugOut(L"[WARN] undefined platform object %s\n", type);
 		return;

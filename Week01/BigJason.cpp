@@ -50,12 +50,12 @@ void CBigJason::Shooting()
 	{
 	case BigJasonDirectState::LEFTWALK:
 		bullet = new CBigJasonBullet(BigJasonBulletDirection::LEFT);
-		bulletPosition = Vector2D(this->position.x - 12.0f, this->position.y);
+		bulletPosition = Vector2D(this->position.x, this->position.y - 1.0f);
 		break;
 
 	case BigJasonDirectState::RIGHTWALK:
 		bullet = new CBigJasonBullet(BigJasonBulletDirection::RIGHT);
-		bulletPosition = Vector2D(this->position.x + 12.0f, this->position.y);
+		bulletPosition = Vector2D(this->position.x, this->position.y - 1.0f);
 		break;
 
 	case BigJasonDirectState::UPWALK:
@@ -74,12 +74,12 @@ void CBigJason::Shooting()
 			{
 			case 1:
 				bullet = new CBigJasonBullet(BigJasonBulletDirection::RIGHT);
-				bulletPosition = Vector2D(this->position.x + 12.0f, this->position.y);
+				bulletPosition = Vector2D(this->position.x, this->position.y - 1.0f);
 				break;
 
 			case -1:
 				bullet = new CBigJasonBullet(BigJasonBulletDirection::LEFT);
-				bulletPosition = Vector2D(this->position.x - 12.0f, this->position.y);
+				bulletPosition = Vector2D(this->position.x, this->position.y - 1.0f);
 				break;
 
 			default:
@@ -126,11 +126,11 @@ void CBigJason::Render()
 	auto color = this->GetRenderColor();
 
 	if (this->directState == BigJasonDirectState::STAY) {
-		this->sprites.at(this->currentSpriteState)->Draw(this->position, -this->nx, color);
+		this->sprites.at(this->currentSpriteState)->Draw(this->position, -this->nx, color, DrawLayer02);
 	}
 	else {
 		std::string aniKey = this->MappingStateOfAnimation();
-		this->animations.at(aniKey)->Render(this->position, -this->nx, color);
+		this->animations.at(aniKey)->Render(this->position, -this->nx, color, DrawLayer02);
 	}
 }
 

@@ -70,6 +70,7 @@
     <ClCompile Include="Transform.cpp" />
     <ClCompile Include="TriggerTag.cpp" />
     <ClCompile Include="Util.cpp" />
+    <ClCompile Include="Mortar.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h" />
@@ -123,6 +124,7 @@
     <ClInclude Include="Transform.h" />
     <ClInclude Include="TriggerTag.h" />
     <ClInclude Include="Util.h" />
+    <ClInclude Include="Mortar.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

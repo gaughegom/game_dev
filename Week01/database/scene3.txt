@@ -32,6 +32,16 @@ maps\section3Fore.png	16	114
 4	71	6	2	thorny
 6	73	2	6	thorny
 12	71	2	2	thorny
+9	8	1	1	mortar
+10	8	1	1	mortar
+11	8	1	1	mortar
+12	8	1	1	mortar
+13	8	1	1	mortar
+9	9	1	1	mortar
+10	9	1	1	mortar
+11	9	1	1	mortar
+12	9	1	1	mortar
+13	9	1	1	mortar
 [OBJECTS]
 #name	nx	x	y	width	height
 gx680s	1	48	288	18	17
