@@ -4,15 +4,15 @@ maps\section4.png	32	18	indoor
 [FOREMAP]
 maps\section4Fore.png	16	114
 [PLATFORMS]
-# x	y	col-number	row-number
-# brick	(16,16) calc follow tilemap
-0	17	2	18
-0	17	32	2
-2	5	5	6
-9	5	14	6
-14	13	4	8
-30	17	2	18
-25	5	5	6
+# x	y	col-number	row-number	name
+# brick	(16,16) calc follow tilemap	
+0	17	2	18	brick
+0	17	32	2	brick
+2	5	5	6	brick
+9	5	14	6	brick
+14	13	4	8	brick
+30	17	2	18	brick
+25	5	5	6	brick
 [OBJECTS]
 #name	nx	x	y	width	height
 

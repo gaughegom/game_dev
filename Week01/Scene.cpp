@@ -3,6 +3,7 @@
 #include "Sprites.h"
 
 #include "Brick.h"
+#include "ThornyBrick.h"
 #include "EnemyBallot.h"
 #include "EnemyBallcarry.h"
 #include "EnemyEyelet.h"
@@ -80,7 +81,17 @@ void CScene::__ParseSection_PLATFORMS__(std::string line)
 	float y = (atoi(tokens[1].c_str()) + 1) * TilesetHeight;
 	float width = atoi(tokens[2].c_str()) * TilesetWidth;
 	float height = atoi(tokens[3].c_str()) * TilesetHeight;
-	LPGAMEOBJECT platformObject = new CBrick(Vector2D(width, height));
+	std::string type = tokens[4];
+
+	LPGAMEOBJECT platformObject = nullptr;
+	if (type == "brick") platformObject = new CBrick(Vector2D(width, height));
+	else if (type == "thorny") platformObject = new CThornyBrick(Vector2D(width, height));
+	else {
+		DebugOut(L"[WARN] undefined platform object %s\n", type);
+		return;
+	}
+
+
 	platformObject->SetPosition(Vector2D(x + width / 2, this->mapBoundary.top - y + height / 2));
 	this->sceneObjects.push_back(platformObject);
 }

@@ -2,8 +2,8 @@
 #include "Player.h"
 #include "Gate.h"
 #include "BigJasonBullet.h"
-#include "EnemyGX-680.h"
-#include "EnemyGX-680S.h"
+#include "ItemHealth.h"
+#include "ThornyBrick.h"
 
 #define BOXSIZE_HORIZON				Vector2D(21.0f, 8.0f)
 #define BOXSIZE_VERTICAL			Vector2D(17.0f, 8.0f)
@@ -103,10 +103,11 @@ void CBigJason::Shooting()
 	game->PushToQueueObject(bullet);
 }
 
-
 void CBigJason::Update(DWORD dt)
 {
 	// TODO: update collider
+
+	// TODO: Debug only
 	if (this->prevHp != this->hp) {
 		DebugOut(L"big jason hp: %f\n", this->hp);
 		this->prevHp = this->hp;
@@ -239,13 +240,24 @@ void CBigJason::SubcribeDirectState(BigJasonDirectState newState)
 
 void CBigJason::OnCollision(CCollider2D* self, LPCOLLISIONEVENT coEvent)
 {
-	if (dynamic_cast<CGate*>(coEvent->object)) {
-		CGate* coGate = (CGate*)coEvent->object;
-		DebugOut(L"next to another scene %d\n", coGate->GetNextScene());
-		CGame::GetInstance()->SwitchScene(coGate->GetNextScene());
+	LPGAMEOBJECT other = coEvent->object;
+	if (dynamic_cast<CBrick*>(other)) {
+		if (!this->ground && coEvent->ny == 1) {
+			this->ground = true;
+		}
 	}
-	else {
-		this->OnCollisionWithEnemy(coEvent);
+	else if (dynamic_cast<CGate*>(other)) {
+		CGate* gate = (CGate*)other;
+		CGame::GetInstance()->SwitchScene(gate->GetNextScene());
+	}
+	else if (dynamic_cast<CItemBase*>(other)) {
+		this->OnCollisionWithItem((CItemBase*)(other));
+	}
+	else if (dynamic_cast<CEnemyBase*>(other)) {
+		this->OnCollisionWithEnemy((CEnemyBase*)other);
+	} 
+	else if (dynamic_cast<CThornyBrick*>(other) && !this->IsInThorny()) {
+		this->SetInThorny(true);
 	}
 }
 
@@ -253,14 +265,26 @@ void CBigJason::OnTrigger(CCollider2D* self, LPCOLLISIONEVENT coEvent)
 {
 }
 
-void CBigJason::OnCollisionWithEnemy(LPCOLLISIONEVENT coEvent)
+void CBigJason::OnCollisionWithEnemy(CEnemyBase* const& other)
 {
-	if (dynamic_cast<CEnemyGX680*>(coEvent->object)
-		|| dynamic_cast<CEnemyGX680S*>(coEvent->object)) {
-		this->TakeDamage(coEvent->object->GetDamage());
+	other->TakeDamage(this->damage);
+	this->TakeDamage(other->GetDamage());
 
-		STriggerTag tag = STriggerTag(coEvent->object);
-		this->AddTriggerTag(coEvent->object);
-		coEvent->object->AddTriggerTag(this);
+	STriggerTag tag = STriggerTag(other);
+	other->AddTriggerTag(this);
+	this->AddTriggerTag(other);
+}
+
+void CBigJason::OnCollisionWithItem(CItemBase* const& other) 
+{
+	if (dynamic_cast<CItemHealth*>(other)) {
+		CItemHealth* item = (CItemHealth*)other;
+		this->hp += item->GetRecoverHealth();
+	}
+
+	other->OnUse();
+	// reset hp
+	if (this->hp > 100) {
+		this->hp = 100;
 	}
 }

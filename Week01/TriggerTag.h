@@ -11,12 +11,12 @@ struct STriggerTag {
 	LPGAMEOBJECT target;
 
 	// default
-	STriggerTag(LPGAMEOBJECT target) {
+	STriggerTag(const LPGAMEOBJECT& target) {
 		this->start = GetTickCount64();
 		this->target = target;
 	}
 
-	STriggerTag(DWORD start, LPGAMEOBJECT target) {
+	STriggerTag(const DWORD& start, const LPGAMEOBJECT& target) {
 		this->start = start;
 		this->target = target;
 	}

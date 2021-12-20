@@ -14,7 +14,7 @@
 
 struct STriggerTag;
 struct SCollisionEvent;
-typedef SCollisionEvent* LPCOLLISIONEVENT;
+using LPCOLLISIONEVENT = SCollisionEvent*;
 class CQuadTree;
 class CCollider2D;
 class CGameObject
@@ -52,98 +52,72 @@ public:
 
 	CGameObject();
 
-	/*
-		Position	
-	*/
+	// position
 	void SetPosition(Vector2D position) { this->position = position; }
-	Vector2D GetPosition();
+	Vector2D GetPosition() const;
 	void SetX(float newX);
 	void SetY(float newY);
 	void SetNx(int newNX);
-	float GetX();
-	float GetY();
-	int GetNx();
+	float GetX() const;
+	float GetY() const;
+	int GetNx() const;
 
-	/*
-		Velocity
-	*/
+	// velocity
 	void SetVelocity(Vector2D velocity) { this->velocity = velocity; }
-	Vector2D GetVelocity() { return this->velocity; }
+	Vector2D GetVelocity() const { return this->velocity; }
 
-	/*
-		Sprites of object
-	*/
+	// sprite
 	void AddSprite(std::string key, std::string spriteId);
-	std::unordered_map<std::string, LPSPRITE> GetSprites() { return this->sprites; }
+	std::unordered_map<std::string, LPSPRITE> GetSprites() const { return this->sprites; }
 
-	/*
-		Animations of object
-	*/
+	// animation
 	void AddAnimation(std::string key, std::string animationId);
 	std::unordered_map<std::string, LPANIMATION> GetAnimations() { return this->animations; }
 
-	/*
-		QuadtreeNode address of object
-	*/
+	// quadtree
 	void AddSelfNodeQt(CQuadTree* node) { this->selfNodes.push_back(node); }
 	void ClearSelfNodesQt() { this->selfNodes.clear(); }
 	std::vector<CQuadTree*> GetSelfNodesQt() { return this->selfNodes; }
 	void SetSelfIndexInNodeQt(int index) { this->selfIndexInNode = index; }
-	int GetSelfIndexInNodeQt() { return this->selfIndexInNode; }
+	int GetSelfIndexInNodeQt() const { return this->selfIndexInNode; }
 
-	/*
-		Collider
-	*/
-	void SetColliders(std::vector<CCollider2D*> colliders) { this->colliders = colliders; }
-	std::vector<CCollider2D*> GetColliders() { return this->colliders; }
+	// collider
+	void SetColliders(const std::vector<CCollider2D*>& colliders) { this->colliders = colliders; }
+	std::vector<CCollider2D*> GetColliders() const { return this->colliders; }
 	
-	/*
-		Rendering status
-	*/
+	// rendering status
 	void SetRendering(bool value) { this->rendering = value; }
-	bool IsRendering() { return this->rendering; }
+	bool IsRendering() const { return this->rendering; }
 
-	/*
-		Active status
-	*/
+	// active status
 	void SetActive(bool value) { this->active = value; }
-	bool IsActive() { return this->active; }
+	bool IsActive() const { return this->active; }
 
-	/*
-		Hero point
-	*/
-	void TakeDamage(float damage);
-	void SetHp(float hp) { this->hp = hp; }
-	float GetHp() { return this->hp; }
-	bool IsLive() { return this->hp > 0; }
+	// hero point
+	void TakeDamage(const float& damage);
+	void SetHp(const float hp) { this->hp = hp; }
+	float GetHp() const { return this->hp; }
+	bool IsLive() const { return this->hp > 0; }
 
-	/*
-		Damage
-	*/
-	void SetDamage(float damage) { this->damage = damage; }
-	float GetDamage() { return this->damage; }
+	// damage
+	void SetDamage(const float& damage) { this->damage = damage; }
+	float GetDamage() const { return this->damage; }
 
-	/*
-		Visible status
-	*/
-	void SetInvisible(bool value) { this->invicible = true; }
-	bool IsInvisible() { return this->invicible; }
+	// visible status
+	void SetInvisible(const bool& value) { this->invicible = value; }
+	bool IsInvisible() const { return this->invicible; }
 
-	/*
-		Triggertag
-	*/
+	// trigger tag
 	void AddTriggerTag(STriggerTag tag) { this->triggerTags.push_back(tag); }
-	std::vector<STriggerTag> GetTriggerTag() { return this->triggerTags; }
+	std::vector<STriggerTag> GetTriggerTag() const { return this->triggerTags; }
 	void CleanTriggerTag();
 
-	/*
-		Effect when take damage
-	*/
-	void SetInEffect(bool value) { this->effected = value; this->effectDuration = 1; }
-	bool IsEffected() { return this->effected; }
+	// effect
+	void SetInEffect(const bool& value) { this->effected = value; this->effectDuration = 1; }
+	bool IsEffected() const { return this->effected; }
 
 
-	void ActiveByRadiusDistance(float activeDistance);
+	void ActiveByRadiusDistance(const float& activeDistance);
 	D3DCOLOR GetRenderColor();
 
 
@@ -152,11 +126,9 @@ public:
 	virtual void PhysicalUpdate(std::vector<LPGAMEOBJECT>* coObjects);
 	virtual void OnCollision(CCollider2D* self, LPCOLLISIONEVENT coEvent);
 	virtual void OnTrigger(CCollider2D* self, LPCOLLISIONEVENT coEvent);
-	virtual void OnOverlapped(CCollider2D* self, LPCOLLISIONEVENT coEvent);
-
 
 	~CGameObject();
 };
-typedef CGameObject* LPGAMEOBJECT;
+using LPGAMEOBJECT = CGameObject*;
 
 #endif // !_GAMEOBJECT_H

@@ -6,7 +6,7 @@ CPlayer::CPlayer()
 {
 }
 
-void CPlayer::AddPlayerCharacter(LPGAMEOBJECT character)
+void CPlayer::AddPlayerCharacter(const LPGAMEOBJECT& character)
 {
 	if (character == nullptr) return;
 
@@ -21,7 +21,7 @@ void CPlayer::AddPlayerCharacter(LPGAMEOBJECT character)
 	}
 }
 
-void CPlayer::SelectPlayer(LPGAMEOBJECT player)
+void CPlayer::SelectPlayer(const LPGAMEOBJECT& player)
 {
 	if (dynamic_cast<CSophia*>(player)) {
 		this->SelectSophia();

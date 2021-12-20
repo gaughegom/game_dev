@@ -161,6 +161,12 @@
     <Filter Include="Game\Game objects\Player\Base">
       <UniqueIdentifier>{372e8463-4897-4b94-bda0-25014224353e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Game\Game objects\Platform\Brick">
+      <UniqueIdentifier>{25cacf64-8ebb-479e-87c7-482c126f0614}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Game objects\Platform\Thorny brick">
+      <UniqueIdentifier>{8a618bf9-d00d-4527-8679-c04f176cb8e4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -244,9 +250,6 @@
     <ClCompile Include="Util.cpp">
       <Filter>Framework\Util</Filter>
     </ClCompile>
-    <ClCompile Include="Brick.cpp">
-      <Filter>Game\Game objects\Platform</Filter>
-    </ClCompile>
     <ClCompile Include="Collider2D.cpp">
       <Filter>Framework\Collision</Filter>
     </ClCompile>
@@ -312,6 +315,12 @@
     </ClCompile>
     <ClCompile Include="Game.cpp">
       <Filter>Game\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="Brick.cpp">
+      <Filter>Game\Game objects\Platform\Brick</Filter>
+    </ClCompile>
+    <ClCompile Include="ThornyBrick.cpp">
+      <Filter>Game\Game objects\Platform\Thorny brick</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -393,9 +402,6 @@
     <ClInclude Include="Util.h">
       <Filter>Framework\Util</Filter>
     </ClInclude>
-    <ClInclude Include="Brick.h">
-      <Filter>Game\Game objects\Platform</Filter>
-    </ClInclude>
     <ClInclude Include="resources.h">
       <Filter>Source Files</Filter>
     </ClInclude>
@@ -464,6 +470,12 @@
     </ClInclude>
     <ClInclude Include="Game.h">
       <Filter>Game\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Brick.h">
+      <Filter>Game\Game objects\Platform\Brick</Filter>
+    </ClInclude>
+    <ClInclude Include="ThornyBrick.h">
+      <Filter>Game\Game objects\Platform\Thorny brick</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

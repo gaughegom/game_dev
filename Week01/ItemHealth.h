@@ -19,7 +19,7 @@ public:
 
 	void OnUse() { CItemBase::OnUse(); }
 
-	float GetRecoverHealth() { return this->recoverHeath; }
+	float GetRecoverHealth() const { return this->recoverHeath; }
 };
 
 #endif // !_ITEM_HEALTH_H

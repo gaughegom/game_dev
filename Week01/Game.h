@@ -90,8 +90,8 @@ public:
 	void PushToQueueObject(LPGAMEOBJECT const& object) { this->queueObjects.push(object); }
 	template<typename T>
 	inline T* InitiateAndPushToQueue(Vector2D position, Vector2D velocity = VectorZero(), int nx = 1);
-	std::vector<LPGAMEOBJECT> GetRenderedObjects() { return this->renderedObjects; }
-	std::queue<LPGAMEOBJECT> GetQueueObject() { return this->queueObjects; }
+	std::vector<LPGAMEOBJECT> GetRenderedObjects() const { return this->renderedObjects; }
+	std::queue<LPGAMEOBJECT> GetQueueObject() const { return this->queueObjects; }
 	void CleanGameObject();
 
 	// scene
@@ -100,11 +100,11 @@ public:
 	void MappingPlayerScene();
 
 	// device
-	LPDIRECT3DDEVICE9 GetDirect3dDevice() { return this->d3ddv; }
-	LPDIRECT3DSURFACE9 GetBackbuffer() { return backBuffer; }
-	LPD3DXSPRITE GetSpriteHandler() { return this->spriteHandler; }
+	LPDIRECT3DDEVICE9 GetDirect3dDevice() const { return this->d3ddv; }
+	LPDIRECT3DSURFACE9 GetBackbuffer() const { return backBuffer; }
+	LPD3DXSPRITE GetSpriteHandler() const { return this->spriteHandler; }
 
-	LPKEYEVENTHANDLER GetKeyHandler() { return this->keyHandler; }
+	LPKEYEVENTHANDLER GetKeyHandler() const { return this->keyHandler; }
 
 	static CGame* GetInstance();
 	static DWORD GetDeltaTime() { return dt; }

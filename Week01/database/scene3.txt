@@ -4,22 +4,34 @@ maps\section3.png	16	114	indoor
 [FOREMAP]
 maps\section3Fore.png	16	114
 [PLATFORMS]
-# x	y	col-number	row-number
-# brick	(16,16) calc follow tilemap
-0	113	2	114
-14	113	2	114
-2	1	12	2
-6	17	8	4
-2	25	8	4
-6	33	8	4
-2	49	4	4
-10	49	4	4
-2	65	8	4
-6	81	8	4
-2	97	8	4
-6	105	8	4
-2	113	4	5
-9	113	4	5
+# x	y	col-number	row-number	name
+# brick	(16,16) calc follow tilemap	
+0	113	2	114	brick
+14	113	2	114	brick
+2	1	12	2	brick
+6	17	8	4	brick
+2	25	8	4	brick
+6	33	8	4	brick
+2	49	4	4	brick
+10	49	4	4	brick
+2	65	8	4	brick
+6	81	8	4	brick
+2	97	8	4	brick
+6	105	8	4	brick
+2	113	4	5	brick
+9	113	4	5	brick
+2	41	2	6	thorny
+4	37	4	2	thorny
+6	41	8	2	thorny
+10	39	4	4	thorny
+2	55	2	2	thorny
+6	57	2	4	thorny
+8	57	4	2	thorny
+10	55	2	4	thorny
+12	53	2	2	thorny
+4	71	6	2	thorny
+6	73	2	6	thorny
+12	71	2	2	thorny
 [OBJECTS]
 #name	nx	x	y	width	height
 gx680s	1	48	288	18	17

@@ -66,6 +66,7 @@
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="Sprites.cpp" />
     <ClCompile Include="Textures.cpp" />
+    <ClCompile Include="ThornyBrick.cpp" />
     <ClCompile Include="Transform.cpp" />
     <ClCompile Include="TriggerTag.cpp" />
     <ClCompile Include="Util.cpp" />
@@ -118,6 +119,7 @@
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="Sprites.h" />
     <ClInclude Include="Textures.h" />
+    <ClInclude Include="ThornyBrick.h" />
     <ClInclude Include="Transform.h" />
     <ClInclude Include="TriggerTag.h" />
     <ClInclude Include="Util.h" />

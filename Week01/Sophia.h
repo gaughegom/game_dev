@@ -84,11 +84,11 @@ public:
 	void OnCollisionWithEnemy(LPGAMEOBJECT const& other);
 	void OnCollisionWithItem(CItemBase* const& other);
 
-	SophiaDirectState GetDirectState() { return this->directState; }
-	SophiaActionState GetActionState() { return this->actionState; }
+	SophiaDirectState GetDirectState() const { return this->directState; }
+	SophiaActionState GetActionState() const { return this->actionState; }
 
-	CSophiaWheel* GetLeftWheel() { return this->leftWheel; }
-	CSophiaWheel* GetRightWheel() { return this->rightWheel; }
+	CSophiaWheel* GetLeftWheel() const { return this->leftWheel; }
+	CSophiaWheel* GetRightWheel() const { return this->rightWheel; }
 	
 	void DecreaseBullet();
 };

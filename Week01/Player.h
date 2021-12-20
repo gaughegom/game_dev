@@ -39,19 +39,15 @@ public:
 
 	CPlayer();
 
-	void AddPlayerCharacter(LPGAMEOBJECT character);
+	void AddPlayerCharacter(const LPGAMEOBJECT& character);
 
-	void SelectPlayer(LPGAMEOBJECT player);
-	PlayerCharacterId GetSelectId() { return this->selectedId; }
-	CGameObject* GetPlayer() { 
-		if (this->player == nullptr)
-			return nullptr;
-		return this->player;
-	}
+	void SelectPlayer(const LPGAMEOBJECT& player);
+	PlayerCharacterId GetSelectId() const { return this->selectedId; }
+	CGameObject* GetPlayer() const { return this->player ? this->player : nullptr; }
 
-	CSophia* GetSophia() { return this->sophia; }
-	CJason* GetJason() { return this->jason; }
-	CBigJason* GetBigJason() { return this->bigJason; }
+	CSophia* GetSophia() const { return this->sophia; }
+	CJason* GetJason() const { return this->jason; }
+	CBigJason* GetBigJason() const { return this->bigJason; }
 
 	static CPlayer* GetInstance();
 

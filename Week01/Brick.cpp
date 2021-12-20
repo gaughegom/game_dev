@@ -1,6 +1,5 @@
 #include "Brick.h"
 
-#define BRICK_BOX_SIZE		Vector2D(16.0f, 16.0f)
 
 CBrick::CBrick(Vector2D boundingBox)
 {

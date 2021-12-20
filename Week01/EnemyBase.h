@@ -16,6 +16,7 @@ public:
 
 	virtual void OnCollision(CCollider2D* self, LPCOLLISIONEVENT coEvent);
 	virtual void OnTrigger(CCollider2D* self, LPCOLLISIONEVENT coEvent);
+	virtual void OnOverlapped(CCollider2D* self, LPCOLLISIONEVENT coEvent);
 };
 
 #endif // !_ENEMY_BASE_H

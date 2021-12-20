@@ -11,7 +11,7 @@ struct SRect
 {
 	float left, top, right, bottom;
 	SRect();
-	SRect(float left, float top, float right, float bottom);
+	SRect(const float& left, const float& top, const float& right, const float& bottom);
 	bool Equal(const SRect& rect);
 	bool Contain(const Vector2D& point);
 	bool Contain(const SRect& rect);
@@ -28,6 +28,6 @@ Vector2D VectorZero();
 
 Vector2D NormalizeVector();
 
-float PositionsDistance(Vector2D vectorA, Vector2D vectorB);
+float PositionsDistance(const Vector2D& vectorA, const Vector2D& vectorB);
 
 #endif // !_TRANSFORM_H

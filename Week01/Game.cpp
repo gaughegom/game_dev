@@ -89,13 +89,15 @@ void CGame::Draw(Vector2D position, int nx, LPDIRECT3DTEXTURE9 texture, int left
 	Vector2D cameraPos = g_camera->GetPosition();
 
 	Vector3D p(0, 0, 0);
-	RECT r;
-	r.left = left;
-	r.top = top;
-	r.right = right;
-	r.bottom = bottom;
+	RECT r{
+		left,
+		top,
+		right,
+		bottom
+	};
+	
 
-	Vector3D center = Vector3D((right - left) / 2, (bottom - top) / 2, 0.0f);
+	Vector3D center = Vector3D((right - left) / 2, (bottom - top) / 2, 1.0f);
 
 	D3DXMATRIX matrix;
 	D3DXMatrixIdentity(&matrix);
@@ -181,7 +183,7 @@ void CGame::RenderGame()
 		// Clear back buffer with a color
 		d3ddv->ColorFill(bb, nullptr, DrawBackgroundColor());
 
-		spriteHandler->Begin(D3DXSPRITE_ALPHABLEND | D3DXSPRITE_SORT_DEPTH_FRONTTOBACK);
+		spriteHandler->Begin(D3DXSPRITE_ALPHABLEND | D3DXSPRITE_SORT_DEPTH_BACKTOFRONT);
 
 		this->map->Draw(Vector2D(this->mapWidth / 2, this->mapHeight / 2), 1, DrawArgbColorDefault());
 		for (LPGAMEOBJECT& object : this->renderedObjects) {
@@ -190,6 +192,10 @@ void CGame::RenderGame()
 			}
 
 			object->Render();
+		}
+
+		if (this->foreMap != nullptr) {
+			this->foreMap->Draw(Vector2D(this->mapWidth / 2, this->mapHeight / 2), 1, DrawArgbColorDefault(), DrawLayer02);
 		}
 
 		// render collider
@@ -203,9 +209,6 @@ void CGame::RenderGame()
 			}
 		}
 
-		if (this->foreMap != nullptr) {
-			this->foreMap->Draw(Vector2D(this->mapWidth / 2, this->mapHeight / 2), 1, DrawArgbColorDefault(), DrawLayer00);
-		}
 
 		spriteHandler->End();
 		d3ddv->EndScene();

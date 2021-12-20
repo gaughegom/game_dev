@@ -12,7 +12,7 @@ CGameObject::CGameObject()
 	this->nx = 1;
 }
 
-Vector2D CGameObject::GetPosition()
+Vector2D CGameObject::GetPosition() const
 {
 	return this->position;
 }
@@ -32,24 +32,24 @@ void CGameObject::SetNx(int newNX)
 	this->nx = newNX;
 }
 
-float CGameObject::GetX()
+float CGameObject::GetX() const
 {
 	return this->position.x;
 }
 
-float CGameObject::GetY()
+float CGameObject::GetY() const
 {
 	return this->position.y;
 }
 
-int CGameObject::GetNx()
+int CGameObject::GetNx() const
 {
 	return this->nx;
 }
 
 void CGameObject::AddSprite(std::string key, std::string spriteId)
 {
-	auto sprite = CSprites::GetInstance()->Get(spriteId);
+	LPSPRITE sprite = CSprites::GetInstance()->Get(spriteId);
 	this->sprites.insert(std::make_pair(key, sprite));
 }
 
@@ -59,7 +59,7 @@ void CGameObject::AddAnimation(std::string key, std::string animationId)
 	this->animations.insert(std::make_pair(key, ani));
 }
 
-void CGameObject::TakeDamage(float damage)
+void CGameObject::TakeDamage(const float& damage)
 {
 	this->hp -= damage;
 	this->SetInEffect(true);
@@ -74,7 +74,7 @@ void CGameObject::TakeDamage(float damage)
 	}
 }
 
-void CGameObject::ActiveByRadiusDistance(float activeDistance)
+void CGameObject::ActiveByRadiusDistance(const float& activeDistance)
 {
 	if (this->active == false) {
 		Vector2D playerPosition = CPlayer::GetInstance()->GetPlayer()->GetPosition();
@@ -122,10 +122,6 @@ void CGameObject::OnCollision(CCollider2D* selfCollider, LPCOLLISIONEVENT collis
 }
 
 void CGameObject::OnTrigger(CCollider2D* selfCollider, LPCOLLISIONEVENT collsion)
-{
-}
-
-void CGameObject::OnOverlapped(CCollider2D* self, LPCOLLISIONEVENT coEvent)
 {
 }
 

@@ -3,6 +3,8 @@
 #define _BIG_JASON_H
 
 #include "CharacterBase.h"
+#include "EnemyBase.h"
+#include "ItemBase.h"
 
 enum class BigJasonDirectState : int {
 	STAY = 0,
@@ -29,11 +31,12 @@ public:
 	void SubcribeDirectState(BigJasonDirectState newState);
 	std::string MappingStateOfAnimation();
 
-	void OnCollisionWithEnemy(LPCOLLISIONEVENT coEvent);
 
 	void OnCollision(CCollider2D* self, LPCOLLISIONEVENT coEvent);
 	void OnTrigger(CCollider2D* self, LPCOLLISIONEVENT coEvent);
 
+	void OnCollisionWithEnemy(CEnemyBase* const& other);
+	void OnCollisionWithItem(CItemBase* const& other);
 };
 
 #endif // !_BIG_JASON_H

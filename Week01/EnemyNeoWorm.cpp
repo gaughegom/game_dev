@@ -50,6 +50,14 @@ void CEnemyNeoWorm::OnCollision(CCollider2D* self, LPCOLLISIONEVENT coEvent)
 		other->AddTriggerTag(this);
 		this->AddTriggerTag(other);
 	}
+	else if (dynamic_cast<CCharaterBase*>(other)) {
+		other->TakeDamage(this->damage);
+		this->TakeDamage(other->GetDamage());
+
+		STriggerTag tag = STriggerTag(other);
+		other->AddTriggerTag(this);
+		this->AddTriggerTag(other);
+	}
 }
 
 void CEnemyNeoWorm::OnTrigger(CCollider2D* self, LPCOLLISIONEVENT coEvent)

@@ -8,7 +8,7 @@
 constexpr auto AnimationDefaultId = "df";
 constexpr auto SpriteDefaultId = "df";
 constexpr auto MaxNeoworms = 2;
-constexpr auto DelayNeoworm = 700;
+constexpr auto DelayNeoworm = 3000;
 constexpr auto DetectedPlayerXAxis = 10;
 
 CEnemyInterrupt::CEnemyInterrupt()

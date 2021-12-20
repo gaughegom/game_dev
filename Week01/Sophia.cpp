@@ -7,6 +7,8 @@
 #include "ItemHealth.h"
 #include "Jason.h"
 #include "SophiaBullet.h"
+#include "BigDestroyEffect.h"
+#include "ThornyBrick.h"
 
 CSophia::CSophia()
 {
@@ -53,6 +55,12 @@ void CSophia::Shooting()
 
 void CSophia::Update(DWORD dt)
 {
+	if (this->IsLive() == false) {
+		CGame::GetInstance()->InitiateAndPushToQueue<CBigDestroyEffect>(this->position);
+		return;
+	}
+
+	// TODO: Debug only
 	if (this->prevHp != this->hp) {
 		DebugOut(L"sophia hp: %f\n", this->hp);
 		this->prevHp = this->hp;
@@ -109,7 +117,7 @@ void CSophia::ListenKeyEvent()
 	}
 
 	// listen key W for jumping
-	if (input->OnKeyDown(JUMP_KEYCODE) && this->velocity.y < 0) {
+	if (input->OnKeyDown(JUMP_KEYCODE) && this->velocity.y < 0 && this->ground == true) {
 		this->ground = false;
 		this->velocity.y = PlayerJumpForce;
 	}
@@ -153,6 +161,7 @@ void CSophia::UpdateColliders()
 		break;
 	}
 }
+
 void CSophia::Render()
 {
 	this->renderColor = this->GetRenderColor();
@@ -162,6 +171,7 @@ void CSophia::Render()
 	this->cabin->Render();
 	this->gun->Render();
 }
+
 void CSophia::SubcribeDirectState(SophiaDirectState directState)
 {
 	switch (directState)
@@ -183,10 +193,12 @@ void CSophia::SubcribeDirectState(SophiaDirectState directState)
 	}
 	
 }
+
 void CSophia::SetActionState(SophiaActionState actionState)
 {
 	this->actionState = actionState;
 }
+
 void CSophia::OnCollision(CCollider2D* self, LPCOLLISIONEVENT coEvent)
 {
 	LPGAMEOBJECT other = coEvent->object;
@@ -206,9 +218,11 @@ void CSophia::OnCollision(CCollider2D* self, LPCOLLISIONEVENT coEvent)
 		this->OnCollisionWithEnemy(other);
 	}
 }
+
 void CSophia::OnTrigger(CCollider2D* self, LPCOLLISIONEVENT coEvent)
 {
 }
+
 void CSophia::OnCollisionWithEnemy(LPGAMEOBJECT const& other)
 {
 	other->TakeDamage(this->damage);
@@ -218,6 +232,7 @@ void CSophia::OnCollisionWithEnemy(LPGAMEOBJECT const& other)
 	other->AddTriggerTag(this);
 	this->AddTriggerTag(other);
 }
+
 void CSophia::OnCollisionWithItem(CItemBase* const& other)
 {
 	if (dynamic_cast<CItemHealth*>(other)) {
@@ -231,6 +246,7 @@ void CSophia::OnCollisionWithItem(CItemBase* const& other)
 		this->hp = 100;
 	}
 }
+
 void CSophia::DecreaseBullet()
 {
 	this->bullets--;

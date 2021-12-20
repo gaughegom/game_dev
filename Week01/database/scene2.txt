@@ -2,23 +2,23 @@
 # path	 width	height	type
 maps\section2.png	16	14	outdoor
 [PLATFORMS]
-# x	y	col-number	row-number
+# x	y	col-number	row-number	name
 # brick	(16,16) calc follow tilemap
-0	9	6	1
-5	11	1	3
-5	11	3	1
-7	13	1	3
-7	13	4	1
-10	13	1	3
-10	11	5	1
-14	11	1	8
-12	4	3	1
-12	4	1	3
-5	2	8	1
-5	4	1	3
-3	4	3	1
-3	6	1	3
-0	6	4	1
+0	9	6	1	brick
+5	11	1	3	brick
+5	11	3	1	brick
+7	13	1	3	brick
+7	13	4	1	brick
+10	13	1	3	brick
+10	11	5	1	brick
+14	11	1	8	brick
+12	4	3	1	brick
+12	4	1	3	brick
+5	2	8	1	brick
+5	4	1	3	brick
+3	4	3	1	brick
+3	6	1	3	brick
+0	6	4	1	brick
 [OBJECTS]
 #name	nx	x	y	width	height
 # - Enemy -

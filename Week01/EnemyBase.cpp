@@ -21,3 +21,7 @@ void CEnemyBase::OnCollision(CCollider2D* self, LPCOLLISIONEVENT coEvent)
 void CEnemyBase::OnTrigger(CCollider2D* self, LPCOLLISIONEVENT coEvent)
 {
 }
+
+void CEnemyBase::OnOverlapped(CCollider2D* self, LPCOLLISIONEVENT coEvent)
+{
+}

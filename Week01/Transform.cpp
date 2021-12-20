@@ -5,9 +5,9 @@ SRect::SRect()
 	this->left = this->top = this->right = this->bottom = 0;
 }
 
-SRect::SRect(float left, float top, float right, float bottom)
-	: left(left), top(top), right(right), bottom(bottom)
-{
+SRect::SRect(const float& left, const float& top, const float& right, const float& bottom)
+	: left(left), top(top), right(right), bottom(bottom) {
+
 }
 
 bool SRect::Equal(const SRect& rect)
@@ -27,8 +27,8 @@ bool SRect::Contain(const Vector2D& point)
 
 bool SRect::Contain(const SRect& rect)
 {
-	return rect.left >= this->left && rect.right <= this->right
-		&& rect.bottom >= this->bottom && rect.top <= this->top;
+	return rect.left > this->left && rect.right < this->right
+		&& rect.bottom > this->bottom && rect.top < this->top;
 }
 
 bool SRect::Overlap(const SRect& rect)
@@ -82,7 +82,7 @@ Vector2D NormalizeVector()
 	return Vector2D(1.0f, 1.0f);
 }
 
-float PositionsDistance(Vector2D vectorA, Vector2D vectorB)
+float PositionsDistance(const Vector2D& vectorA, const Vector2D& vectorB)
 {
 	float result = sqrt(pow(vectorA.x - vectorB.x, 2) + pow(vectorA.y - vectorB.y, 2));
 	return result;

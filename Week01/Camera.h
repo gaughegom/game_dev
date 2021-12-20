@@ -15,7 +15,7 @@ protected:
 	Vector2D size;
 	CGameObject* target;
 	SRect boundary;
-	SRect freezeBoundary = SRect(104, 120, 152, 150);
+	SRect freezeBoundary = SRect(104, 45, 152, 120);
 
 	bool boundless = false;
 
@@ -27,14 +27,14 @@ public:
 	void SetSize(Vector2D size);
 	void Update();
 
-	Vector2D GetPosition();
-	SRect GetBoundingBox();
-	void SetBoundary(SRect boundary);
-	void SetBoundless(bool value) { this->boundless = value; }
+	Vector2D GetPosition() const;
+	SRect GetBoundingBox() const;
+	void SetBoundary(const SRect boundary);
+	void SetBoundless(const bool& value) { this->boundless = value; }
 
 	// target
 	void SetTarget(CGameObject* target);
-	CGameObject* GetTarget();
+	CGameObject* GetTarget() const;
 
 	Vector2D TranslateWorldToScreen(Vector2D pos);
 

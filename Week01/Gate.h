@@ -14,7 +14,7 @@ public:
 	CGate(Vector2D boundingBox, int next);
 
 	void SetNextScene(int value) { this->nextScene = value; }
-	int GetNextScene() { return this->nextScene; }
+	int GetNextScene() const { return this->nextScene; }
 
 	void Update(DWORD dt);
 	void Render();

@@ -32,7 +32,7 @@ void CEnemyEyelet::Update(DWORD dt)
 	this->ActiveByRadiusDistance(DetectedPlayerRadius);
 
 	if (this->active) {
-		this->velocity.x = this->nx * EnemyNormalVelocity;
+		this->velocity.x = (float)this->nx * EnemyNormalVelocity;
 		InSinWaveXAsix(this, dt, 1.0f);
 	}
 }

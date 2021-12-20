@@ -26,38 +26,38 @@ void CCamera::Update()
 	Vector2D vpPlayer = this->TranslateWorldToScreen(targetPosition);
 
 	if (this->position == VectorInfinity()) {
-		this->position.x = (int)(targetPosition.x - (this->size.x / 2));
-		this->position.y = (int)(targetPosition.y + (this->size.y / 2));
+		this->position.x = (int)((int)targetPosition.x - (int)(this->size.x / 2));
+		this->position.y = (int)((int)targetPosition.y + (int)(this->size.y / 2));
 	}
 	else {
 		if (vpPlayer.x <= this->freezeBoundary.left)
-			this->position.x = (int)(targetPosition.x - this->freezeBoundary.left);
+			this->position.x = (int)((int)targetPosition.x - (int)this->freezeBoundary.left);
 		if (vpPlayer.x >= this->freezeBoundary.right)
-			this->position.x = (int)(targetPosition.x - this->freezeBoundary.right);
+			this->position.x = (int)((int)targetPosition.x - (int)this->freezeBoundary.right);
 		if (vpPlayer.y <= this->freezeBoundary.top)
-			this->position.y = (int)(targetPosition.y + this->freezeBoundary.top);
+			this->position.y = (int)((int)targetPosition.y + (int)this->freezeBoundary.top);
 		if (vpPlayer.y >= this->freezeBoundary.bottom)
-			this->position.y = (int)(targetPosition.y + this->freezeBoundary.bottom);
+			this->position.y = (int)((int)targetPosition.y + (int)this->freezeBoundary.bottom);
 	}
 
 	if (boundless == false) {
 		if (this->position.x <= this->boundary.left)
-			this->position.x = this->boundary.left;
+			this->position.x = (int)this->boundary.left;
 		if (this->position.y >= this->boundary.top)
-			this->position.y = this->boundary.top;
+			this->position.y = (int)this->boundary.top;
 		if (this->position.x + this->size.x >= this->boundary.right)
-			this->position.x = this->boundary.right - this->size.x;
+			this->position.x = (int)this->boundary.right - this->size.x;
 		if (this->position.y - this->size.y <= this->boundary.bottom)
-			this->position.y = this->boundary.bottom + this->size.y;
+			this->position.y = (int)this->boundary.bottom + this->size.y;
 	}
 }
 
-Vector2D CCamera::GetPosition()
+Vector2D CCamera::GetPosition() const
 {
 	return this->position;
 }
 
-SRect CCamera::GetBoundingBox()
+SRect CCamera::GetBoundingBox() const
 {
 	Vector2D nextPosition = this->position + target->GetVelocity() * CGame::GetDeltaTime();
 
@@ -70,7 +70,7 @@ SRect CCamera::GetBoundingBox()
 	return boundingRect;
 }
 
-void CCamera::SetBoundary(SRect boundary)
+void CCamera::SetBoundary(const SRect boundary)
 {
 	this->boundary = boundary;
 }
@@ -80,7 +80,7 @@ void CCamera::SetTarget(CGameObject* target)
 	this->target = target;
 }
 
-CGameObject* CCamera::GetTarget()
+CGameObject* CCamera::GetTarget() const
 {
 	return this->target;
 }
