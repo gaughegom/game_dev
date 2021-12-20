@@ -63,15 +63,6 @@ void CGameObject::TakeDamage(const float& damage)
 {
 	this->hp -= damage;
 	this->SetInEffect(true);
-
-	if (this->hp <= 0 
-		&& (dynamic_cast<CEnemyEyelet*>(this) 
-		|| dynamic_cast<CEnemyStuka*>(this))) {
-		LPGAMEOBJECT item = nullptr;
-		item = new CItemHealth;
-		item->SetPosition(this->position);
-		CGame::GetInstance()->PushToQueueObject(item);
-	}
 }
 
 void CGameObject::ActiveByRadiusDistance(const float& activeDistance)

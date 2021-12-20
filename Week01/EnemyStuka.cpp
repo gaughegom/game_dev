@@ -1,9 +1,11 @@
 #include "EnemyStuka.h"
 #include "Player.h"
 #include "BigDestroyEffect.h"
+#include "ItemPower.h"
 
 constexpr auto AnimationDefaultId = "df";
 constexpr auto DetectedPlayerRadius = 130.0f;
+constexpr auto RateDropItemPower = 0.2;
 
 CEnemyStuka::CEnemyStuka()
 {
@@ -25,6 +27,12 @@ void CEnemyStuka::Update(DWORD dt)
 {
 	if (!this->IsLive()) {
 		CGame::GetInstance()->InitiateAndPushToQueue<CBigDestroyEffect>(this->position);
+		
+		float rate = (float)Random(1, 100) / 100;
+		if (rate >= RateDropItemPower) {
+			CGame::GetInstance()->InitiateAndPushToQueue<CItemPower>(this->position);
+		}
+		
 		return;
 	}
 

@@ -2,9 +2,11 @@
 #include "CharacterBase.h"
 #include "BigDestroyEffect.h"
 #include "Player.h"
+#include "ItemHealth.h"
 
 constexpr auto AnimationDefaultId = "df";
 constexpr auto DetectedPlayerRadius = 160.0f;
+constexpr auto RateDropItemHeath = 0.6f;
 
 CEnemyEyelet::CEnemyEyelet()
 {
@@ -26,6 +28,12 @@ void CEnemyEyelet::Update(DWORD dt)
 {
 	if (!this->IsLive()) {
 		CGame::GetInstance()->InitiateAndPushToQueue<CBigDestroyEffect>(this->position);
+		
+		float rate = (float)Random(1, 100) / 100;
+		if (rate >= RateDropItemHeath) {
+			CGame::GetInstance()->InitiateAndPushToQueue<CItemHealth>(this->position);
+		}
+		
 		return;
 	}
 

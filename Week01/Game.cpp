@@ -122,6 +122,7 @@ void CGame::Draw(Vector2D position, int nx, LPDIRECT3DTEXTURE9 texture, int left
 
 void CGame::InitGame(HWND hWnd)
 {
+	srand(time(0));
 	this->InitDirectX(hWnd);
 
 	// TODO: This is only for test

@@ -1,12 +1,14 @@
 #include "EnemyGX-680.h"
 #include "Player.h"
 #include "BigDestroyEffect.h"
+#include "ItemHealth.h"
 
 #define V_BOXSIZE					Vector2D(18.0f, 17.0f)
 
 constexpr auto DetectedPlayerRadius = 80;
 constexpr auto AnimationDefaultId = "df";
 constexpr auto OwnSpeed = 0.02f;
+constexpr auto RateDropItemHealth = 0.3f;
 
 CEnemyGX680::CEnemyGX680()
 {
@@ -27,6 +29,12 @@ void CEnemyGX680::Update(DWORD dt)
 {
 	if (!this->IsLive()) {
 		CGame::GetInstance()->InitiateAndPushToQueue<CBigDestroyEffect>(this->position);
+		
+		float rate = (float)Random(1, 100) / 100;
+		if (rate >= RateDropItemHealth) {
+			CGame::GetInstance()->InitiateAndPushToQueue<CItemHealth>(this->position);
+		}
+		
 		return;
 	}
 

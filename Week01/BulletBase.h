@@ -7,12 +7,8 @@
 class CBulletBase : public CGameObject {
 private:
 protected:
-	int level = 1;	// TODO: Upgrade damage when eat item power
-
 public:
 	CBulletBase();
-
-	void UpgradeLevel(const int& value);
 
 	virtual void Update(DWORD dt);
 	virtual void Render();

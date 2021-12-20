@@ -40,6 +40,7 @@
     <ClCompile Include="Gate.cpp" />
     <ClCompile Include="ItemBase.cpp" />
     <ClCompile Include="ItemHealth.cpp" />
+    <ClCompile Include="ItemPower.cpp" />
     <ClCompile Include="JasonDirectionState.cpp" />
     <ClCompile Include="KeyHandler.cpp" />
     <ClCompile Include="Player.cpp" />
@@ -95,6 +96,7 @@
     <ClInclude Include="Gate.h" />
     <ClInclude Include="ItemBase.h" />
     <ClInclude Include="ItemHealth.h" />
+    <ClInclude Include="ItemPower.h" />
     <ClInclude Include="JasonDirectionState.h" />
     <ClInclude Include="KeyHandler.h" />
     <ClInclude Include="Player.h" />

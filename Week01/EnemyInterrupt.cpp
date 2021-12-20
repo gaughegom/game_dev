@@ -2,6 +2,7 @@
 #include "Player.h"
 #include "EnemyNeoWorm.h"
 #include "BigDestroyEffect.h"
+#include "ItemHealth.h"
 
 #define V_BOXSIZE			Vector2D(22.0f, 18.0f)
 
@@ -10,6 +11,7 @@ constexpr auto SpriteDefaultId = "df";
 constexpr auto MaxNeoworms = 2;
 constexpr auto DelayNeoworm = 3000;
 constexpr auto DetectedPlayerXAxis = 10;
+constexpr auto RateDropItem = 0.6f;
 
 CEnemyInterrupt::CEnemyInterrupt()
 {
@@ -17,7 +19,7 @@ CEnemyInterrupt::CEnemyInterrupt()
 	this->AddSprite(SpriteDefaultId, "sprEInterrupt00");
 
 	this->hp = 30;
-	this->damage = 10;	// TODO: adjust damage later
+	this->damage = 10;
 
 	//
 	this->colliders.clear();
@@ -30,6 +32,12 @@ void CEnemyInterrupt::Update(DWORD dt)
 {
 	if (!this->IsLive()) {
 		CGame::GetInstance()->InitiateAndPushToQueue<CBigDestroyEffect>(this->position);
+		
+		float rate = (float)Random(1, 100) / 100;
+		if (rate >= RateDropItem) {
+			CGame::GetInstance()->InitiateAndPushToQueue<CItemHealth>(this->position);
+		}
+
 		return;
 	}
 

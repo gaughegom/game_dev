@@ -9,14 +9,15 @@
 
 constexpr auto SpriteDefaultId = "df";
 constexpr auto Speed = 0.2f;
+constexpr auto BasicDamage = 10;
 
 CSophiaBullet::CSophiaBullet(int direct)
 {
-	this->damage = 10;
+	// damage
+	LPGAMEOBJECT sophia = CPlayer::GetInstance()->GetSophia();
+	this->damage = sophia->GetLevel() * BasicDamage + sophia->GetBonusDamage();
 
-	/*
-		collider of bullet
-	*/
+	//
 	CCollider2D* collider = new CCollider2D(this, true, false);
 	collider->SetOffset(VectorZero());
 	

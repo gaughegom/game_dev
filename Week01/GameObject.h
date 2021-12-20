@@ -27,8 +27,10 @@ protected:
 
 	int nx;
 
+	int level = 1;
 	float hp = 10; // default hp
 	float damage;
+	float bonusDamage = 0;
 
 	bool rendering = false;
 	bool ground;
@@ -99,9 +101,15 @@ public:
 	float GetHp() const { return this->hp; }
 	bool IsLive() const { return this->hp > 0; }
 
+	// level
+	void SetLevel(const int& value) { this->level = level; }
+	int GetLevel()const { return this->level; }
+
 	// damage
 	void SetDamage(const float& damage) { this->damage = damage; }
 	float GetDamage() const { return this->damage; }
+	void SetBonusDamate(const float& bonusValue) { this->bonusDamage += bonusValue; }
+	float GetBonusDamage() const { return this->bonusDamage; }
 
 	// visible status
 	void SetInvisible(const bool& value) { this->invicible = value; }

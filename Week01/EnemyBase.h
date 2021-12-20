@@ -3,11 +3,11 @@
 #define _ENEMY_BASE_H
 
 #include "GameObject.h"
+#include "ItemBase.h"
 
 class CEnemyBase : public CGameObject {
 private:
 protected:
-
 public:
 	CEnemyBase();
 

@@ -5,6 +5,7 @@
 #include "EnemyGX-680S.h"
 #include "SmallDestroyEffect.h"
 #include "Mortar.h"
+#include "Player.h"
 
 #define V_BOXSIZE_HORIZON			Vector2D(8.0f, 6.0f)
 #define V_BOXSIZE_VERTICAL			Vector2D(6.0f, 6.0f)
@@ -18,7 +19,8 @@ constexpr auto Frequecy = 5.0f;
 CBigJasonBullet::CBigJasonBullet(BigJasonBulletDirection state)
 {
 	this->directState = state;
-	this->damage = 10;
+	LPGAMEOBJECT bigJason = CPlayer::GetInstance()->GetBigJason();
+	this->damage = 10 * bigJason->GetLevel() + bigJason->GetBonusDamage();
 
 	CCollider2D* collider = new CCollider2D(this, true, false);
 	collider->SetOffset(VectorZero());

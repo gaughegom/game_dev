@@ -9,6 +9,7 @@
 #include "SophiaBullet.h"
 #include "BigDestroyEffect.h"
 #include "ThornyBrick.h"
+#include "ItemPower.h"
 
 CSophia::CSophia()
 {
@@ -239,10 +240,14 @@ void CSophia::OnCollisionWithItem(CItemBase* const& other)
 		CItemHealth* item = (CItemHealth*)other;
 		this->hp += item->GetRecoverHealth();
 	}
+	else if (dynamic_cast<CItemPower*>(other)) {
+		CItemPower* item = (CItemPower*)other;
+		this->SetBonusDamate(item->GetBonusDamage());
+	}
 
 	other->OnUse();
 	// reset hp
-	if (this->hp > 100) {
+	if (this->hp > 100 + (this->level - 1 * 50)) {
 		this->hp = 100;
 	}
 }

@@ -179,6 +179,9 @@
     <Filter Include="Game\Game objects\Bullet\Sophia bullet">
       <UniqueIdentifier>{af0c1b8d-6858-4184-a12b-f14fa0ac8024}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Game\Game objects\Items\Power">
+      <UniqueIdentifier>{c67ffbc9-f90d-4171-b640-3c4d9898c970}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -340,6 +343,9 @@
     <ClCompile Include="BulletBase.cpp">
       <Filter>Game\Game objects\Bullet\Base</Filter>
     </ClCompile>
+    <ClCompile Include="ItemPower.cpp">
+      <Filter>Game\Game objects\Items\Power</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Textures.h">
@@ -500,6 +506,9 @@
     </ClInclude>
     <ClInclude Include="BulletBase.h">
       <Filter>Game\Game objects\Bullet\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemPower.h">
+      <Filter>Game\Game objects\Items\Power</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
