@@ -297,7 +297,7 @@ void CBigJason::OnCollisionWithItem(CItemBase* const& other)
 	}
 	else if (dynamic_cast<CItemPower*>(other)) {
 		CItemPower* item = (CItemPower*)other;
-		this->SetBonusDamate(item->GetBonusDamage());
+		this->SetBonusDamage(item->GetBonusDamage());
 	}
 
 	other->OnUse();

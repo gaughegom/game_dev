@@ -35,6 +35,7 @@
     <ClCompile Include="EnemyBase.cpp" />
     <ClCompile Include="EnemyGX-680S.cpp" />
     <ClCompile Include="EnemyInterrupt.cpp" />
+    <ClCompile Include="EnemyLazerGuard.cpp" />
     <ClCompile Include="EnemyNeoWorm.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Gate.cpp" />
@@ -44,6 +45,7 @@
     <ClCompile Include="ItemPower.cpp" />
     <ClCompile Include="JasonDirectionState.cpp" />
     <ClCompile Include="KeyHandler.cpp" />
+    <ClCompile Include="LazerGuardBullet.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="EnemyBallot.cpp" />
     <ClCompile Include="EnemyDrap.cpp" />
@@ -92,6 +94,7 @@
     <ClInclude Include="EnemyBase.h" />
     <ClInclude Include="EnemyGX-680S.h" />
     <ClInclude Include="EnemyInterrupt.h" />
+    <ClInclude Include="EnemyLazerGuard.h" />
     <ClInclude Include="EnemyNeoWorm.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Gate.h" />
@@ -101,6 +104,7 @@
     <ClInclude Include="ItemPower.h" />
     <ClInclude Include="JasonDirectionState.h" />
     <ClInclude Include="KeyHandler.h" />
+    <ClInclude Include="LazerGuardBullet.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="EnemyBallot.h" />
     <ClInclude Include="EnemyDrap.h" />

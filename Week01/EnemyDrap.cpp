@@ -57,14 +57,12 @@ void CEnemyDrap::OnCollision(CCollider2D* self, LPCOLLISIONEVENT coEvent)
 		this->nx = -this->nx;
 	}
 	else if (dynamic_cast<CCharaterBase*>(other)) {
-		if (dynamic_cast<CSophia*>(other)) {
-			other->TakeDamage(this->damage);
-			this->TakeDamage(other->GetDamage());
+		other->TakeDamage(this->damage);
+		this->TakeDamage(other->GetDamage());
 
-			STriggerTag tag = STriggerTag(other);
-			other->AddTriggerTag(this);
-			this->AddTriggerTag(other);
-		}
+		STriggerTag tag = STriggerTag(other);
+		other->AddTriggerTag(this);
+		this->AddTriggerTag(other);
 	}
 	else if (dynamic_cast<CBulletBase*>(other)) {
 		this->TakeDamage(other->GetDamage());

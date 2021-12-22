@@ -12,6 +12,7 @@
 #include "EnemyGX-680S.h"
 #include "EnemyInterrupt.h"
 #include "EnemyStuka.h"
+#include "EnemyLazerGuard.h"
 #include "Player.h"
 #include "Gate.h"
 #include "Mortar.h"
@@ -116,6 +117,7 @@ void CScene::__ParseSection_OBJECTS__(std::string line)
 	else if (type == "gx680") object = new CEnemyGX680;
 	else if (type == "gx680s") object = new CEnemyGX680S;
 	else if (type == "drap") object = new CEnemyDrap;
+	else if (type == "lazerGuard") object = new CEnemyLazerGuard;
 	else {
 		DebugOut(L"[ERROR] Unknowed object type: %s\n", type); // catch undefined object
 		return;

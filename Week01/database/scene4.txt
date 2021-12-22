@@ -27,6 +27,8 @@ gx680s	1	144	208	18	18
 gx680	1	96	208	18	18
 gx680s	1	368	192	18	18
 gx680	1	448	192	18	18
+lazerGuard	-1	416	148	17	33
+lazerGuard	-1	464	112	17	33
 # - Enemy -
 [GATES]
 #way	x	y	col	row	next

@@ -46,7 +46,7 @@ void CEnemyGX680::Update(DWORD dt)
 
 	// auto move to player
 	if (this->active == true) {
-		Vector2D vDistance = player->GetPosition() - this->position;
+		Vector2D vDistance = player->GetPosition() - this->position - Vector2D(0, 12.0f);
 		if (vDistance.x != 0) vDistance.x = vDistance.x / abs(vDistance.x);
 		if (vDistance.y != 0) vDistance.y = vDistance.y / abs(vDistance.y);
 

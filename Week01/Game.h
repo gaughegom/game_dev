@@ -49,7 +49,7 @@ private:
 	LPKEYEVENTHANDLER keyHandler;
 
 	std::unordered_map<int, LPSCENE> scenes;
-	int currentScene = 3;	// default scene 0
+	int currentScene = 0;	// default scene 0
 
 	std::vector<LPGAMEOBJECT> worldObjects, renderedObjects;
 	std::queue<LPGAMEOBJECT> queueObjects;

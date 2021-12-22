@@ -30,7 +30,7 @@ void CEnemyEyelet::Update(DWORD dt)
 		CGame::GetInstance()->InitiateAndPushToQueue<CBigDestroyEffect>(this->position);
 		
 		float rate = (float)Random(1, 100) / 100;
-		if (rate >= RateDropItemHeath) {
+		if (rate <= RateDropItemHeath) {
 			CGame::GetInstance()->InitiateAndPushToQueue<CItemHealth>(this->position);
 		}
 		

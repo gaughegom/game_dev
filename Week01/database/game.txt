@@ -100,6 +100,10 @@ sprEBallcarry02	60	653	18	15	1
 sprEBallcarry03	42	650	16	18	1
 # - BOOM -
 sprBallbomb	258	12	10	10	2
+# - LAZER GUARD - 
+sprELazer00	83	717	17	18	1
+sprELazer01	101	717	17	18	1
+sprELazerBullet	5	0	16	33	2
 # - ITEM -
 sprItemHealth	105	109	16	16	2
 sprItemPower	155	109	16	16	2
@@ -140,6 +144,8 @@ aniEInterrupt	sprEInterrupt00	100	sprEInterrupt01	100
 aniENeoworm	sprENeoworm00	100	sprENeoworm01	100
 # - BALLCARRY -
 aniEBallcarry	sprEBallcarry01	200	sprEBallcarry03	200
+# - LAZER GUARD -
+aniELazer	sprELazer00	200	sprELazer01	200
 [CHARACTERS]
 #type	nx	x	y	width	height
 sophia	1	32	336	8	16

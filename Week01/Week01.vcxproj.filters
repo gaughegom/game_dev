@@ -47,9 +47,6 @@
     <Filter Include="Game\Game objects\Enemies\Eyelet">
       <UniqueIdentifier>{49b3ddb9-9149-4fba-b1a6-7f5978b0bda3}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Game\Game objects\Enemies\NeoEyelet">
-      <UniqueIdentifier>{6cc7ebf9-d1b2-488a-b7f8-b66d775a8386}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Game\Game objects\Enemies\Drap">
       <UniqueIdentifier>{54dcf7fd-5161-4238-a203-bf3f039e9944}</UniqueIdentifier>
     </Filter>
@@ -184,6 +181,9 @@
     </Filter>
     <Filter Include="Game\Game objects\Bullet\GX680S bullet">
       <UniqueIdentifier>{a6f202d7-430b-4e52-9873-c9b161a9ca35}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Game objects\Bullet\LazerGuard bullet">
+      <UniqueIdentifier>{0dfd1c3f-f774-4482-a952-bb4f68378000}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -352,6 +352,12 @@
     <ClCompile Include="GX680SBullet.cpp">
       <Filter>Game\Game objects\Bullet\GX680S bullet</Filter>
     </ClCompile>
+    <ClCompile Include="EnemyLazerGuard.cpp">
+      <Filter>Game\Game objects\Enemies\Laser Guard</Filter>
+    </ClCompile>
+    <ClCompile Include="LazerGuardBullet.cpp">
+      <Filter>Game\Game objects\Bullet\LazerGuard bullet</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Textures.h">
@@ -518,6 +524,12 @@
     </ClInclude>
     <ClInclude Include="GX680SBullet.h">
       <Filter>Game\Game objects\Bullet\GX680S bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyLazerGuard.h">
+      <Filter>Game\Game objects\Enemies\Laser Guard</Filter>
+    </ClInclude>
+    <ClInclude Include="LazerGuardBullet.h">
+      <Filter>Game\Game objects\Bullet\LazerGuard bullet</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

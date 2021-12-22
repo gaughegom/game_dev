@@ -31,7 +31,7 @@ void CEnemyStuka::Update(DWORD dt)
 		CGame::GetInstance()->InitiateAndPushToQueue<CBigDestroyEffect>(this->position);
 		
 		float rate = (float)Random(1, 100) / 100;
-		if (rate >= RateDropItemPower) {
+		if (rate <= RateDropItemPower) {
 			CGame::GetInstance()->InitiateAndPushToQueue<CItemPower>(this->position);
 		}
 		

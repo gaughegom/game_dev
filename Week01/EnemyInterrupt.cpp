@@ -34,7 +34,7 @@ void CEnemyInterrupt::Update(DWORD dt)
 		CGame::GetInstance()->InitiateAndPushToQueue<CBigDestroyEffect>(this->position);
 		
 		float rate = (float)Random(1, 100) / 100;
-		if (rate >= RateDropItem) {
+		if (rate <= RateDropItem) {
 			CGame::GetInstance()->InitiateAndPushToQueue<CItemHealth>(this->position);
 		}
 

@@ -34,7 +34,7 @@ void CEnemyGX680S::Update(DWORD dt)
 		CGame::GetInstance()->InitiateAndPushToQueue<CBigDestroyEffect>(this->position);
 		
 		float rate = (float)Random(1, 100) / 100;
-		if (rate >= RateDropItemPower) {
+		if (rate <= RateDropItemPower) {
 			CGame::GetInstance()->InitiateAndPushToQueue<CItemPower>(this->position);
 		}
 
@@ -49,7 +49,7 @@ void CEnemyGX680S::Update(DWORD dt)
 
 	// auto move to player
 	if (this->active == true) {
-		Vector2D vDistance = player->GetPosition() - this->position;
+		Vector2D vDistance = player->GetPosition() - this->position - Vector2D(0, 12.0f);
 		if (vDistance.x != 0) vDistance.x = vDistance.x / abs(vDistance.x);
 		if (vDistance.y != 0) vDistance.y = vDistance.y / abs(vDistance.y);
 

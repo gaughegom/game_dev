@@ -148,6 +148,10 @@ maps\section5Fore.png	16	38
 13	12	1	1	mortar
 [OBJECTS]
 #name	nx	x	y	width	height
+gx680s	1	176	496	17	17
+drap	1	32	436	17	17
+drap	-1	208	372	17	17
+drap	1	32	308	17	17
 # - Enemy -
 [GATES]
 #way	x	y	col	row	next

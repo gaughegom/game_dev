@@ -108,7 +108,7 @@ public:
 	// damage
 	void SetDamage(const float& damage) { this->damage = damage; }
 	float GetDamage() const { return this->damage; }
-	void SetBonusDamate(const float& bonusValue) { this->bonusDamage += bonusValue; }
+	void SetBonusDamage(const float& bonusValue) { this->bonusDamage += bonusValue; }
 	float GetBonusDamage() const { return this->bonusDamage; }
 
 	// visible status

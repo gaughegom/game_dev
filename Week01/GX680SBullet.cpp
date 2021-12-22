@@ -5,7 +5,7 @@
 #include "BigJasonBullet.h"
 
 constexpr auto SpriteDefaultId = "df";
-constexpr auto OwnSpeed = 0.05f;
+constexpr auto OwnSpeed = 0.03f;
 
 
 CGX680SBullet::CGX680SBullet()
@@ -26,7 +26,7 @@ void CGX680SBullet::Update(DWORD dt)
 		return;
 	}
 
-	Vector2D vDistance = CPlayer::GetInstance()->GetPlayer()->GetPosition() - this->position;
+	Vector2D vDistance = CPlayer::GetInstance()->GetPlayer()->GetPosition() - this->position - Vector2D(0, 12.0f);
 	if (vDistance.x != 0) vDistance.x = vDistance.x / abs(vDistance.x);
 	if (vDistance.y != 0) vDistance.y = vDistance.y / abs(vDistance.y);
 
@@ -46,16 +46,16 @@ void CGX680SBullet::OnCollision(CCollider2D* self, LPCOLLISIONEVENT coEvent)
 	if (dynamic_cast<CBrick*>(other) || dynamic_cast<CMortar*>(other)) {
 		this->hp = 0;
 	}
+	else if (dynamic_cast<CEnemyBase*>(other) || dynamic_cast<CGX680SBullet*>(other)) {
+		STriggerTag tag = STriggerTag(other);
+		other->AddTriggerTag(this);
+		this->AddTriggerTag(other);
+	}
 	else if (dynamic_cast<CCharaterBase*>(other)) {
 		other->TakeDamage(this->damage);
 		this->hp = 0;
 	}
 	else if (dynamic_cast<CBigJasonBullet*>(other)) {
 		this->hp = 0;
-	}
-	else if (dynamic_cast<CEnemyBase*>(other) || dynamic_cast<CGX680SBullet*>(other)) {
-		STriggerTag tag = STriggerTag(other);
-		other->AddTriggerTag(this);
-		this->AddTriggerTag(other);
 	}
 }
