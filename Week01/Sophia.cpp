@@ -239,6 +239,9 @@ void CSophia::OnCollisionWithItem(CItemBase* const& other)
 	if (dynamic_cast<CItemHealth*>(other)) {
 		CItemHealth* item = (CItemHealth*)other;
 		this->hp += item->GetRecoverHealth();
+		if (this->hp > 100 + ((this->level - 1) * 50)) {
+			this->hp = 100;
+		}
 	}
 	else if (dynamic_cast<CItemPower*>(other)) {
 		CItemPower* item = (CItemPower*)other;
@@ -246,10 +249,6 @@ void CSophia::OnCollisionWithItem(CItemBase* const& other)
 	}
 
 	other->OnUse();
-	// reset hp
-	if (this->hp > 100 + (this->level - 1 * 50)) {
-		this->hp = 100;
-	}
 }
 
 void CSophia::DecreaseBullet()

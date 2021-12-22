@@ -18,13 +18,15 @@ maps\section4Fore.png	32	18
 9	11	1	2	thorny
 10	11	2	6	thorny
 20	11	2	6	thorny
-22	11	1	2	thorny
-25	11	1	2	thorny
-26	11	2	6	thorny
+22	11	6	2	thorny
+26	7	2	2	thorny
 [OBJECTS]
 #name	nx	x	y	width	height
-
-gx680s	1	64	1728	18	17
+drap	-1	208	144	17	17
+gx680s	1	144	208	18	18
+gx680	1	96	208	18	18
+gx680s	1	368	192	18	18
+gx680	1	448	192	18	18
 # - Enemy -
 [GATES]
 #way	x	y	col	row	next

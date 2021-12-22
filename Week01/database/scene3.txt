@@ -44,7 +44,6 @@ maps\section3Fore.png	16	114
 13	9	1	1	mortar
 [OBJECTS]
 #name	nx	x	y	width	height
-drap	1	35	180	17	17
 gx680s	1	48	288	18	17
 gx680	1	192	368	18	17
 gx680s	1	48	496	18	17
