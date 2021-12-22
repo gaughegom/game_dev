@@ -13,8 +13,10 @@ private:
 public:
 	CEnemyDrap();
 
-	void Update(DWORD dt);
-	void Render();
+	void Update(DWORD dt) override;
+	void Render() override;
+
+	void OnCollision(CCollider2D* self, LPCOLLISIONEVENT coEvent) override;
 };
 
 #endif // !_ENEMY_DRAP_H

@@ -76,7 +76,6 @@ void CPlayer::SelectJason()
 	this->jason->SetActive(true);
 	this->jason->SetPosition(this->sophia->GetPosition());
 	this->jason->SetNx(this->sophia->GetNx());
-	this->jason->SubcribeDirectionState(JasonDirectState::JUMP);
 	this->sophia->SetActionState(SophiaActionState::Idle);
 
 	this->selectedId = PlayerCharacterId::JASON;

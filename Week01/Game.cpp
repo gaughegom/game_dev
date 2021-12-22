@@ -580,6 +580,10 @@ void CGame::MappingPlayerScene()
 				this->AddGameObjectToWorld(playerJason);
 			}
 		}
+		else {
+			this->AddGameObjectToWorld(playerSophia);
+			this->AddGameObjectToWorld(playerJason);
+		}
 
 		if (player == playerBigJason) {
 			if (playerJason->IsActive()) {
