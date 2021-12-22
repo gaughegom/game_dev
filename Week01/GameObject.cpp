@@ -70,10 +70,10 @@ void CGameObject::ActiveByRadiusDistance(const float& activeDistance)
 	if (this->active == false) {
 		Vector2D playerPosition = CPlayer::GetInstance()->GetPlayer()->GetPosition();
 		float distance = PositionsDistance(playerPosition, this->position);
-		if (this->nx == 1 && distance < activeDistance && playerPosition.x > this->position.x) {
+		if (this->nx == 1 && distance > activeDistance && playerPosition.x > this->position.x) {
 			this->active = true;
 		}
-		else if (this->nx == -1 && distance > activeDistance && playerPosition.x < this->position.x) {
+		else if (this->nx == -1 && distance < activeDistance && playerPosition.x < this->position.x) {
 			this->active = true;
 		}
 	}
@@ -88,7 +88,7 @@ D3DCOLOR CGameObject::GetRenderColor()
 	}
 	else {
 		this->effectDuration += 1; // TODO: make the same angular of triggerTag
-		if (this->effectDuration > 10) {
+		if (this->effectDuration > 18) {
 			this->effectDuration = 0;
 			return DrawArgbColorDefault();
 		}

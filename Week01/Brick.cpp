@@ -1,5 +1,6 @@
 #include "Brick.h"
 #include "BulletBase.h"
+#include "EnemyStuka.h"
 
 CBrick::CBrick(Vector2D boundingBox)
 {
@@ -22,4 +23,8 @@ void CBrick::OnCollision(CCollider2D* self, LPCOLLISIONEVENT coEvent)
 	if (dynamic_cast<CBulletBase*>(other)) {
 		other->SetHp(0);
 	}
+}
+
+void CBrick::OnTrigger(CCollider2D* self, LPCOLLISIONEVENT coEvent)
+{
 }

@@ -158,17 +158,17 @@ void CGame::UpdateGame(DWORD dt)
 	this->renderedObjects.clear();
 	quadtree->Retrieve(this->renderedObjects, g_camera->GetBoundingBox());
 
-	for (auto& object : this->worldObjects) {
+	for (LPGAMEOBJECT& object : this->renderedObjects) {
 		if (reset)
 			return;
 
 		if (object->IsActive() == true) {
 			object->CleanTriggerTag();
-			object->PhysicalUpdate(&this->worldObjects);
+			object->PhysicalUpdate(&this->renderedObjects);
 		}
 	}
 
-	for (auto& object : this->worldObjects) {
+	for (LPGAMEOBJECT& object : this->renderedObjects) {
 		object->Update(dt);
 	}
 }
@@ -200,7 +200,7 @@ void CGame::RenderGame()
 		}
 
 		// render collider
-		/*for (LPGAMEOBJECT& object : this->renderedObjects) {
+		for (LPGAMEOBJECT& object : this->renderedObjects) {
 			if (!object->IsActive()) {
 				continue;
 			}
@@ -208,7 +208,7 @@ void CGame::RenderGame()
 			for (auto co : object->GetColliders()) {
 				co->RenderBoundingBox();
 			}
-		}*/
+		}
 
 
 		spriteHandler->End();
@@ -492,7 +492,22 @@ void CGame::PlayScene()
 	this->mapWidth = sceneBoundary.right;
 	this->mapHeight = sceneBoundary.top;
 
+	SceneMapType mapType = this->scenes.at(this->currentScene)->GetMapType();
+	switch (mapType)
+	{
+	case SceneMapType::OUTDOOR:
+		// set outdoor
+		g_camera->SetFreezeBoundary(OUTDOOR_MAP_FREEZE_CAMERA);
+		break;
+
+	case SceneMapType::INDOOR:
+		g_camera->SetFreezeBoundary(INDOOR_MAP_FREEZE_CAMERA);
+		break;
+	}
 	g_camera->SetBoundary(sceneBoundary);
+
+
+
 	quadtree = new CQuadTree(0, sceneBoundary);
 
 	// loading sceneObject to worldObjects

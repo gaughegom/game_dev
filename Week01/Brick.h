@@ -13,6 +13,7 @@ public:
 	void Render() override;
 
 	void OnCollision(CCollider2D* self, LPCOLLISIONEVENT coEvent) override;
+	void OnTrigger(CCollider2D* self, LPCOLLISIONEVENT coEvent) override;
 };
 
 #endif // !_BRICK_H

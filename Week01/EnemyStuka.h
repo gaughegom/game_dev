@@ -9,6 +9,7 @@
 
 class CEnemyStuka : public CEnemyBase {
 private:
+	int stepMove = 0;
 
 public:
 	CEnemyStuka();

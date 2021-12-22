@@ -5,7 +5,7 @@
 #include "ItemHealth.h"
 
 constexpr auto AnimationDefaultId = "df";
-constexpr auto DetectedPlayerRadius = 160.0f;
+constexpr auto DetectedPlayerRadius = 70.0f;
 constexpr auto RateDropItemHeath = 0.6f;
 
 CEnemyEyelet::CEnemyEyelet()
@@ -53,6 +53,15 @@ void CEnemyEyelet::Render()
 
 void CEnemyEyelet::OnCollision(CCollider2D* self, LPCOLLISIONEVENT coEvent)
 {
+	LPGAMEOBJECT other = coEvent->object;
+	if (dynamic_cast<CSophia*>(other)) {
+		other->TakeDamage(this->damage);
+		this->TakeDamage(other->GetDamage());
+
+		STriggerTag tag = STriggerTag(other);
+		other->AddTriggerTag(this);
+		this->AddTriggerTag(other);
+	}
 }
 
 void CEnemyEyelet::OnTrigger(CCollider2D* self, LPCOLLISIONEVENT coEvent)

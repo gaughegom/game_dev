@@ -4,6 +4,7 @@
 #include "BigJasonBullet.h"
 #include "ItemHealth.h"
 #include "ThornyBrick.h"
+#include "ItemPower.h"
 
 #define BOXSIZE_HORIZON				Vector2D(21.0f, 8.0f)
 #define BOXSIZE_VERTICAL			Vector2D(17.0f, 8.0f)
@@ -290,6 +291,10 @@ void CBigJason::OnCollisionWithItem(CItemBase* const& other)
 	if (dynamic_cast<CItemHealth*>(other)) {
 		CItemHealth* item = (CItemHealth*)other;
 		this->hp += item->GetRecoverHealth();
+	}
+	else if (dynamic_cast<CItemPower*>(other)) {
+		CItemPower* item = (CItemPower*)other;
+		this->SetBonusDamate(item->GetBonusDamage());
 	}
 
 	other->OnUse();

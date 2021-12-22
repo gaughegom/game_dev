@@ -3,8 +3,10 @@
 #include "BigDestroyEffect.h"
 #include "ItemPower.h"
 
+constexpr auto Speed = 0.08f;
 constexpr auto AnimationDefaultId = "df";
 constexpr auto DetectedPlayerRadius = 130.0f;
+constexpr auto MaxStepMove = 60;
 constexpr auto RateDropItemPower = 0.2;
 
 CEnemyStuka::CEnemyStuka()
@@ -17,7 +19,7 @@ CEnemyStuka::CEnemyStuka()
 
 	//
 	this->colliders.clear();
-	auto collider = new CCollider2D(this, true, true, VectorZero(), V_STUKA_BOXSIZE);
+	auto collider = new CCollider2D(this, true, false, VectorZero(), V_STUKA_BOXSIZE);
 	this->colliders.push_back(collider);
 	this->SetColliders(this->colliders);
 
@@ -39,8 +41,14 @@ void CEnemyStuka::Update(DWORD dt)
 	this->ActiveByRadiusDistance(DetectedPlayerRadius);
 
 	if (this->active) {
-		this->velocity.x = this->nx * EnemyNormalVelocity;
-		InHorizontalMove(this, dt);
+		if (this->stepMove > MaxStepMove) {
+			this->nx = -this->nx;
+			this->stepMove = 0;
+		}
+		else {
+			this->stepMove++;
+		}
+		this->velocity.x = this->nx * Speed;
 	}
 }
 
@@ -51,6 +59,24 @@ void CEnemyStuka::Render()
 
 void CEnemyStuka::OnCollision(CCollider2D* self, LPCOLLISIONEVENT coEvent)
 {
+	LPGAMEOBJECT other = coEvent->object;
+	if (dynamic_cast<CSophia*>(other)) {
+		other->TakeDamage(this->damage);
+		this->TakeDamage(other->GetDamage());
+
+		STriggerTag tag = STriggerTag(other);
+		other->AddTriggerTag(this);
+		this->AddTriggerTag(other);
+	}
+	else if (dynamic_cast<CEnemyStuka*>(other)) {
+		STriggerTag tag = STriggerTag(other);
+		other->AddTriggerTag(this);
+		this->AddTriggerTag(other);
+	}
+	else if (dynamic_cast<CBrick*>(other)) {
+		this->nx = -this->nx;
+		this->stepMove = 0;
+	}
 }
 
 void CEnemyStuka::OnTrigger(CCollider2D* self, LPCOLLISIONEVENT coEvent)

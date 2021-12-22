@@ -61,4 +61,7 @@ constexpr float Pi() { return 3.14f; }
 constexpr D3DCOLOR DrawArgbColorDefault() { return D3DCOLOR_ARGB(255, 255, 255, 255); }
 constexpr D3DCOLOR DrawBackgroundColor() { return D3DCOLOR_XRGB(0, 0, 0); }
 
+#define OUTDOOR_MAP_FREEZE_CAMERA		SRect(104, 45, 152, 100)
+#define INDOOR_MAP_FREEZE_CAMERA		SRect(104, 100, 152, 120)
+
 #endif // !_RESOURCES_H

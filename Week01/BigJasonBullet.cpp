@@ -115,4 +115,3 @@ void CBigJasonBullet::OnCollision(CCollider2D* self, LPCOLLISIONEVENT coEvent)
 		this->hp = 0;
 	}
 }
-

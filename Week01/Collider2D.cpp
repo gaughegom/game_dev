@@ -4,7 +4,7 @@
 #include "Jason.h"
 #include "Sophia.h"
 
-constexpr auto MarginPushCollision = 0.2f;
+constexpr auto MarginPushCollision = 0.1f;
 constexpr auto AlphaColliderColor = 70;
 
 CCollider2D::CCollider2D()
