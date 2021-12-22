@@ -2,13 +2,16 @@
 #include "Player.h"
 #include "BigDestroyEffect.h"
 #include "ItemPower.h"
+#include "GX680SBullet.h"
 
 #define V_BOXSIZE					Vector2D(18.0f, 17.0f)
 
 constexpr auto AnimationDefaultId = "df";
-constexpr auto DetectedPlayerRadius = 80;
+constexpr auto DetectedPlayerRadius = 120;
+constexpr auto AttackPlayerRadius = 60;
 constexpr auto OwnSpeed = 0.02f;
 constexpr auto RateDropItemPower = 0.1f;
+constexpr auto DelayAttackTime = 2200;
 
 CEnemyGX680S::CEnemyGX680S()
 {
@@ -52,6 +55,14 @@ void CEnemyGX680S::Update(DWORD dt)
 
 		this->velocity.x = vDistance.x * OwnSpeed;
 		this->velocity.y = vDistance.y * OwnSpeed;
+
+		// attack player
+		auto now = GetTickCount64();
+		if (PositionsDistance(this->position, player->GetPosition()) < AttackPlayerRadius
+			&& now - this->prevTimeAttack > DelayAttackTime) {
+			CGame::GetInstance()->InitiateAndPushToQueue<CGX680SBullet>(this->position);
+			this->prevTimeAttack = now;
+		}
 	}
 }
 

@@ -10,6 +10,7 @@ constexpr auto SpriteAttackId = "attack";
 constexpr auto AnimationMoveId = "move";
 constexpr auto DetectedPlayerRadius = 80.0f;
 constexpr auto MaxBombCarry = 7;
+constexpr auto MaxStepMove = 10;
 
 CEnemyBallcarry::CEnemyBallcarry()
 {
@@ -55,18 +56,31 @@ void CEnemyBallcarry::Update(DWORD dt)
 	else if (this->activeAttack && (GetTickCount64() - this->timeAttack > 300)) {
 		// duration attack then move
 		this->activeMove = true;
+
+		// move reverse player
+		if (player->GetPosition().x < this->position.x) {
+			this->nx = 1;
+		}
+		else {
+			this->nx = -1;
+		}
 	}
 
 	if (this->activeMove) {
-		this->nx = RandomDirect();
-		this->velocity.x = this->nx * PlayerMovingSpeed;
+		if (this->stepMove > MaxStepMove) {
+			this->velocity.x = 0;
+		}
+		else {
+			this->velocity.x = this->nx * 0.12f;
+			this->stepMove++;
+		}
 	}
 }
 
 void CEnemyBallcarry::Render()
 {
 	D3DCOLOR color = this->GetRenderColor();
-	if (this->activeMove) {
+	if (this->activeMove && this->velocity != VectorZero()) {
 		// render move
 		this->animations.at(AnimationMoveId)->Render(this->position, this->nx, color);
 	}

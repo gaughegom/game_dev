@@ -6,6 +6,7 @@
 
 class CEnemyGX680S : public CEnemyBase {
 private:
+	DWORD prevTimeAttack;
 
 public:
 	CEnemyGX680S();

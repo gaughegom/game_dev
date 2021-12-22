@@ -8,7 +8,10 @@ class CEnemyBallcarry : public CEnemyBase {
 private:
 	bool activeAttack = false;
 	DWORD timeAttack;
+
 	bool activeMove = false;
+
+	int stepMove = 0;
 
 public:
 	CEnemyBallcarry();

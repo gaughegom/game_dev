@@ -182,6 +182,9 @@
     <Filter Include="Game\Game objects\Items\Power">
       <UniqueIdentifier>{c67ffbc9-f90d-4171-b640-3c4d9898c970}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Game\Game objects\Bullet\GX680S bullet">
+      <UniqueIdentifier>{a6f202d7-430b-4e52-9873-c9b161a9ca35}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -346,6 +349,9 @@
     <ClCompile Include="ItemPower.cpp">
       <Filter>Game\Game objects\Items\Power</Filter>
     </ClCompile>
+    <ClCompile Include="GX680SBullet.cpp">
+      <Filter>Game\Game objects\Bullet\GX680S bullet</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Textures.h">
@@ -509,6 +515,9 @@
     </ClInclude>
     <ClInclude Include="ItemPower.h">
       <Filter>Game\Game objects\Items\Power</Filter>
+    </ClInclude>
+    <ClInclude Include="GX680SBullet.h">
+      <Filter>Game\Game objects\Bullet\GX680S bullet</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

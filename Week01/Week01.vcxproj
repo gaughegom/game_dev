@@ -38,6 +38,7 @@
     <ClCompile Include="EnemyNeoWorm.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Gate.cpp" />
+    <ClCompile Include="GX680SBullet.cpp" />
     <ClCompile Include="ItemBase.cpp" />
     <ClCompile Include="ItemHealth.cpp" />
     <ClCompile Include="ItemPower.cpp" />
@@ -94,6 +95,7 @@
     <ClInclude Include="EnemyNeoWorm.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Gate.h" />
+    <ClInclude Include="GX680SBullet.h" />
     <ClInclude Include="ItemBase.h" />
     <ClInclude Include="ItemHealth.h" />
     <ClInclude Include="ItemPower.h" />
