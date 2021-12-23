@@ -44,7 +44,7 @@ void CPlayerHealthHub::Render()
 
 	int hubId = (int)CPlayer::GetInstance()->GetPlayer()->GetHp() / 10;
 
-	this->sprites.at(hubId)->Draw(camera->GetPosition() + (Vector2D(20.0f, -150.0f)), 1, DrawArgbColorDefault());
+	this->sprites.at(hubId)->Draw(camera->GetPosition() + (Vector2D(20.0f, -150.0f)), 1, DrawArgbColorDefault(), DrawLayer02);
 }
 
 CPlayerHealthHub* CPlayerHealthHub::GetInstance()

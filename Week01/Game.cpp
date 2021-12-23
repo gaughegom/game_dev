@@ -599,12 +599,15 @@ void CGame::MappingPlayerScene()
 		}
 	}
 	else if (this->scenes.at(this->currentScene)->GetMapType() == SceneMapType::INDOOR) {
-		if (bigJasonExist == false) {
-			this->AddGameObjectToWorld(playerBigJason);
-		}
-
 		if (player == playerJason || player == playerSophia) {
 			g_player->SelectPlayer(playerBigJason);
+			g_player->GetPlayer()->
+				SetPosition(this->scenes.at(this->currentScene)
+					->GetPositionOfGate(this->currentScene - 1));
+		}
+		
+		if (bigJasonExist == false) {
+			this->AddGameObjectToWorld(playerBigJason);
 		}
 	}
 }

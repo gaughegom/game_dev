@@ -1,0 +1,18 @@
+[MAP]
+# path	 width	height	type
+maps\section6.png	16	15	indoor
+[FOREMAP]
+maps\section6Fore.png	16	15
+[PLATFORMS]
+# x	y	col-number	row-number	name
+0	14	2	15	brick
+14	14	2	15	brick
+2	0	12	1	brick
+2	14	5	1	brick
+9	14	5	1	brick
+[OBJECTS]
+#name	nx	x	y	width	height
+# - Enemy -
+[GATES]
+#way	x	y	col	row	next
+in	7	14	2	3	5
