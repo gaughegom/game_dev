@@ -116,7 +116,7 @@ public:
 
 /*
 	Create a GameObject class and push to scene queue (position, velocity, nx)
-	WARM: NOT USE FOR ANY BULLET TEMPORARILY
+	WARM: NOT READY FOR PLAYER BULLET TEMPORARILY
 */
 template<typename T>
 inline T* CGame::InitiateAndPushToQueue(Vector2D position, Vector2D velocity, int nx)

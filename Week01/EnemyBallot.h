@@ -6,6 +6,9 @@
 
 class CEnemyBallot : public CEnemyBase {
 private:
+	DWORD prevAttackTime;
+	Vector2D vTarget;
+	bool isFlying = false;
 
 public:
 	CEnemyBallot();
