@@ -4,6 +4,7 @@
 1	textures\enemies.png	41	255	4
 2	textures\items.png	0	0	0
 3	textures\indoor.png	0	0	0
+4	textures\healthHub.png	0	0	0
 # id	left	top	width	height	texture_id
 [SPRITES]
 # - SMALL JASON -	// 50 -> 100
@@ -109,6 +110,16 @@ sprItemHealth	105	109	16	16	2
 sprItemPower	155	109	16	16	2
 # - Mortar -
 sprMortar	153	255	16	16	3
+# - HUB -
+sprHealthHub8	0	0	8	49	4
+sprHealthHub7	8	0	8	49	4
+sprHealthHub6	16	0	8	49	4
+sprHealthHub5	24	0	8	49	4
+sprHealthHub4	32	0	8	49	4
+sprHealthHub3	40	0	8	49	4
+sprHealthHub2	48	0	8	49	4
+sprHealthHub1	56	0	8	49	4
+sprHealthHub0	64	0	8	49	4
 # ani_id		sprite1_id	time1	sprite2_id	time2	...
 [ANIMATIONS]
 # - JASON -

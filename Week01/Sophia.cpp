@@ -16,7 +16,7 @@ CSophia::CSophia()
 	this->directState = SophiaDirectState::Stay;
 	this->actionState = SophiaActionState::Idle;
 
-	this->hp = 100;
+	this->hp = 80;
 	this->damage = 0;
 
 	InitParts();
@@ -239,8 +239,8 @@ void CSophia::OnCollisionWithItem(CItemBase* const& other)
 	if (dynamic_cast<CItemHealth*>(other)) {
 		CItemHealth* item = (CItemHealth*)other;
 		this->hp += item->GetRecoverHealth();
-		if (this->hp > 100 + ((this->level - 1) * 50)) {
-			this->hp = 100;
+		if (this->hp > 80 + ((this->level - 1) * 50)) {
+			this->hp = 80;
 		}
 	}
 	else if (dynamic_cast<CItemPower*>(other)) {

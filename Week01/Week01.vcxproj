@@ -57,6 +57,7 @@
     <ClCompile Include="InputHandler.cpp" />
     <ClCompile Include="Jason.cpp" />
     <ClCompile Include="KeyEventHandler.cpp" />
+    <ClCompile Include="PlayerHealthHub.cpp" />
     <ClCompile Include="QuadTree.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SmallDestroyEffect.cpp" />
@@ -117,6 +118,7 @@
     <ClInclude Include="InputHandler.h" />
     <ClInclude Include="Jason.h" />
     <ClInclude Include="KeyEventHandler.h" />
+    <ClInclude Include="PlayerHealthHub.h" />
     <ClInclude Include="QuadTree.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SmallDestroyEffect.h" />

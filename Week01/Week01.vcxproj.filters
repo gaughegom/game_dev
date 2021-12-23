@@ -185,6 +185,9 @@
     <Filter Include="Game\Game objects\Bullet\LazerGuard bullet">
       <UniqueIdentifier>{0dfd1c3f-f774-4482-a952-bb4f68378000}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Game\Game objects\Hub">
+      <UniqueIdentifier>{46716e43-6206-4734-823a-97b82812e5a7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -358,6 +361,9 @@
     <ClCompile Include="LazerGuardBullet.cpp">
       <Filter>Game\Game objects\Bullet\LazerGuard bullet</Filter>
     </ClCompile>
+    <ClCompile Include="PlayerHealthHub.cpp">
+      <Filter>Game\Game objects\Hub</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Textures.h">
@@ -530,6 +536,9 @@
     </ClInclude>
     <ClInclude Include="LazerGuardBullet.h">
       <Filter>Game\Game objects\Bullet\LazerGuard bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerHealthHub.h">
+      <Filter>Game\Game objects\Hub</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

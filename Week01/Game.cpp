@@ -5,6 +5,7 @@
 #include "KeyHandler.h"
 #include "QuadTree.h"
 #include "Textures.h"
+#include "PlayerHealthHub.h"
 
 #include "BigJason.h"
 #include "Jason.h"
@@ -198,6 +199,9 @@ void CGame::RenderGame()
 		if (this->foreMap != nullptr) {
 			this->foreMap->Draw(Vector2D(this->mapWidth / 2, this->mapHeight / 2), 1, DrawArgbColorDefault(), DrawLayer02);
 		}
+
+		// render hub
+		CPlayerHealthHub::GetInstance()->Render();
 
 		// render collider
 		/*for (LPGAMEOBJECT& object : this->renderedObjects) {
