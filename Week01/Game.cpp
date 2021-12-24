@@ -204,7 +204,7 @@ void CGame::RenderGame()
 		CPlayerHealthHub::GetInstance()->Render();
 
 		// render collider
-		/*for (LPGAMEOBJECT& object : this->renderedObjects) {
+		for (LPGAMEOBJECT& object : this->renderedObjects) {
 			if (!object->IsActive()) {
 				continue;
 			}
@@ -212,7 +212,7 @@ void CGame::RenderGame()
 			for (auto co : object->GetColliders()) {
 				co->RenderBoundingBox();
 			}
-		}*/
+		}
 
 
 		spriteHandler->End();

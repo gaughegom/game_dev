@@ -188,6 +188,9 @@
     <Filter Include="Game\Game objects\Hub">
       <UniqueIdentifier>{46716e43-6206-4734-823a-97b82812e5a7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Game\Game objects\Platform\Boss trigger">
+      <UniqueIdentifier>{11a303bb-f179-4c53-9ca1-8106b6234668}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -364,6 +367,9 @@
     <ClCompile Include="PlayerHealthHub.cpp">
       <Filter>Game\Game objects\Hub</Filter>
     </ClCompile>
+    <ClCompile Include="BossTrigger.cpp">
+      <Filter>Game\Game objects\Platform\Boss trigger</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Textures.h">
@@ -539,6 +545,9 @@
     </ClInclude>
     <ClInclude Include="PlayerHealthHub.h">
       <Filter>Game\Game objects\Hub</Filter>
+    </ClInclude>
+    <ClInclude Include="BossTrigger.h">
+      <Filter>Game\Game objects\Platform\Boss trigger</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

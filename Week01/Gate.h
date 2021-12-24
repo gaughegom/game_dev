@@ -7,6 +7,7 @@
 class CGate : public CGameObject {
 private:
 	int nextScene;
+	int autoDestroy = 0;
 
 public:
 	CGate();

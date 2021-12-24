@@ -12,6 +12,7 @@ maps\section6Fore.png	16	15
 9	14	5	1	brick
 [OBJECTS]
 #name	nx	x	y	width	height
+bossTrigger	1	80	96	80	80
 # - Enemy -
 [GATES]
 #way	x	y	col	row	next

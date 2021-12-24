@@ -49,7 +49,7 @@ private:
 	LPKEYEVENTHANDLER keyHandler;
 
 	std::unordered_map<int, LPSCENE> scenes;
-	int currentScene = 0;	// default scene 0
+	int currentScene = 6;	// default scene 0
 
 	std::vector<LPGAMEOBJECT> worldObjects, renderedObjects;
 	std::queue<LPGAMEOBJECT> queueObjects;
@@ -98,6 +98,7 @@ public:
 	void PlayScene();
 	void SwitchScene(int id);
 	void MappingPlayerScene();
+	int GetCurrentSceneId() { return this->currentScene; }
 
 	// device
 	LPDIRECT3DDEVICE9 GetDirect3dDevice() const { return this->d3ddv; }
