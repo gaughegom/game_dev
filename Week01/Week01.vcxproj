@@ -25,6 +25,7 @@
     <ClCompile Include="BigDestroyEffect.cpp" />
     <ClCompile Include="BigJason.cpp" />
     <ClCompile Include="BigJasonBullet.cpp" />
+    <ClCompile Include="Boss.cpp" />
     <ClCompile Include="BossTrigger.cpp" />
     <ClCompile Include="Brick.cpp" />
     <ClCompile Include="BulletBase.cpp" />
@@ -86,6 +87,7 @@
     <ClInclude Include="BigDestroyEffect.h" />
     <ClInclude Include="BigJason.h" />
     <ClInclude Include="BigJasonBullet.h" />
+    <ClInclude Include="Boss.h" />
     <ClInclude Include="BossTrigger.h" />
     <ClInclude Include="Brick.h" />
     <ClInclude Include="BulletBase.h" />

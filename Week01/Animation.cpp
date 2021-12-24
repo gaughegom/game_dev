@@ -14,7 +14,7 @@ void CAnimation::Add(std::string spriteId, DWORD time)
 	this->frames.push_back(frame);
 }
 
-void CAnimation::Render(Vector2D position, int nx, D3DCOLOR color, int layer)
+void CAnimation::Render(Vector2D position, int nx, D3DCOLOR color, int layer, float rotate)
 {
 	DWORD now = GetTickCount64();
 
@@ -60,7 +60,7 @@ void CAnimation::Render(Vector2D position, int nx, D3DCOLOR color, int layer)
 		}
 	}
 
-	this->frames[currentFrame]->GetSprite()->Draw(position, nx, color, layer);
+	this->frames[currentFrame]->GetSprite()->Draw(position, nx, color, layer, rotate);
 }
 
 void CAnimation::SetWait(bool value)

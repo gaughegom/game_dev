@@ -191,6 +191,9 @@
     <Filter Include="Game\Game objects\Platform\Boss trigger">
       <UniqueIdentifier>{11a303bb-f179-4c53-9ca1-8106b6234668}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Game\Game objects\Boss">
+      <UniqueIdentifier>{5db2c1d4-c41a-481b-ae59-0f59148c5f83}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -370,6 +373,9 @@
     <ClCompile Include="BossTrigger.cpp">
       <Filter>Game\Game objects\Platform\Boss trigger</Filter>
     </ClCompile>
+    <ClCompile Include="Boss.cpp">
+      <Filter>Game\Game objects\Boss</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Textures.h">
@@ -548,6 +554,9 @@
     </ClInclude>
     <ClInclude Include="BossTrigger.h">
       <Filter>Game\Game objects\Platform\Boss trigger</Filter>
+    </ClInclude>
+    <ClInclude Include="Boss.h">
+      <Filter>Game\Game objects\Boss</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

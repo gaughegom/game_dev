@@ -49,7 +49,7 @@ private:
 	LPKEYEVENTHANDLER keyHandler;
 
 	std::unordered_map<int, LPSCENE> scenes;
-	int currentScene = 6;	// default scene 0
+	int currentScene = 0;	// default scene 0
 
 	std::vector<LPGAMEOBJECT> worldObjects, renderedObjects;
 	std::queue<LPGAMEOBJECT> queueObjects;
@@ -69,7 +69,7 @@ private:
 public:
 	// directX
 	void InitDirectX(HWND hWnd);
-	void Draw(Vector2D position, int nx, LPDIRECT3DTEXTURE9 texture, int left, int top, int right, int bottom, D3DCOLOR color, int layer);
+	void Draw(Vector2D position, int nx, LPDIRECT3DTEXTURE9 texture, int left, int top, int right, int bottom, D3DCOLOR color, int layer, float rotate = 0.0f);
 
 	// main game loop
 	void InitGame(HWND hWnd);

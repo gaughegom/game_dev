@@ -85,7 +85,10 @@ void CGame::InitDirectX(HWND hWnd)
 /*
 	Utility function to wrap LPD3DXSPRITE::Draw
 */
-void CGame::Draw(Vector2D position, int nx, LPDIRECT3DTEXTURE9 texture, int left, int top, int right, int bottom, D3DCOLOR color, int layer)
+void CGame::Draw(Vector2D position, int nx, 
+	LPDIRECT3DTEXTURE9 texture, 
+	int left, int top, int right, int bottom, 
+	D3DCOLOR color, int layer, float rotate)
 {
 	Vector2D cameraPos = g_camera->GetPosition();
 
@@ -103,6 +106,10 @@ void CGame::Draw(Vector2D position, int nx, LPDIRECT3DTEXTURE9 texture, int left
 	D3DXMATRIX matrix;
 	D3DXMatrixIdentity(&matrix);
 
+	// rotateZ
+	D3DXMATRIX dmRotateZ;
+	D3DXMatrixRotationZ(&dmRotateZ, rotate * 3.14 / 180);
+
 	// flip X
 	D3DXMATRIX dmFlipX;
 	D3DXMatrixScaling(&dmFlipX, nx, 1.0f, 1.0f);
@@ -111,6 +118,7 @@ void CGame::Draw(Vector2D position, int nx, LPDIRECT3DTEXTURE9 texture, int left
 	D3DXMATRIX dmTranslation;
 	D3DXMatrixTranslation(&dmTranslation, (position.x - cameraPos.x), (-position.y + cameraPos.y), layer);
 
+	matrix *= dmRotateZ;
 	matrix *= dmFlipX;
 	matrix *= dmTranslation;
 
