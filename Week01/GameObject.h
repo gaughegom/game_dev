@@ -32,6 +32,8 @@ protected:
 	float damage;
 	float bonusDamage = 0;
 
+	float rotateZ = 0;
+
 	bool rendering = false;
 	bool ground;
 	bool active = true;
@@ -124,6 +126,9 @@ public:
 	void SetInEffect(const bool& value) { this->effected = value; this->effectDuration = 1; }
 	bool IsEffected() const { return this->effected; }
 
+	// ratationZ
+	void SetRotationZ(float value) { this->rotateZ = value; }
+	float GetRotationZ() { return this->rotateZ; }
 
 	void ActiveByRadiusDistance(const float& activeDistance);
 	D3DCOLOR GetRenderColor();

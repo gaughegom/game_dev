@@ -6,6 +6,9 @@
 #include "ThornyBrick.h"
 #include "ItemPower.h"
 
+#include "BigJasonFlashShootingX.h"
+#include "BigJasonFlashShootingY.h"
+
 #define BOXSIZE_HORIZON				Vector2D(21.0f, 8.0f)
 #define BOXSIZE_VERTICAL			Vector2D(17.0f, 8.0f)
 
@@ -51,50 +54,78 @@ void CBigJason::Shooting()
 	switch (this->directState)
 	{
 	case BigJasonDirectState::LEFTWALK:
-		bullet = new CBigJasonBullet(BigJasonBulletDirection::LEFT);
-		bulletPosition = Vector2D(this->position.x, this->position.y - 1.0f);
+		{
+			bullet = new CBigJasonBullet(BigJasonBulletDirection::LEFT);
+			bulletPosition = Vector2D(this->position.x, this->position.y - 1.0f);
+			CGame::GetInstance()->InitiateAndPushToQueue<CBigJasonFlashShootingX>(bulletPosition + Vector2D(this->nx * 14.0f, 0), VectorZero(), this->nx);
+		}
 		break;
 
 	case BigJasonDirectState::RIGHTWALK:
-		bullet = new CBigJasonBullet(BigJasonBulletDirection::RIGHT);
-		bulletPosition = Vector2D(this->position.x, this->position.y - 1.0f);
+		{
+			bullet = new CBigJasonBullet(BigJasonBulletDirection::RIGHT);
+			bulletPosition = Vector2D(this->position.x, this->position.y - 1.0f);
+			CGame::GetInstance()->InitiateAndPushToQueue<CBigJasonFlashShootingX>(bulletPosition + Vector2D(this->nx * 14.0f, 0), VectorZero(), this->nx);
+		}
 		break;
 
 	case BigJasonDirectState::UPWALK:
-		bullet = new CBigJasonBullet(BigJasonBulletDirection::UP);
-		bulletPosition = Vector2D(this->position.x, this->position.y - 12.0f);
+		{
+			bullet = new CBigJasonBullet(BigJasonBulletDirection::UP);
+			bulletPosition = Vector2D(this->position.x + 5.0f, this->position.y - 12.0f);
+			auto flashEffect = CGame::GetInstance()->InitiateAndPushToQueue<CBigJasonFlashShootingY>(bulletPosition + Vector2D(0.0f, 12.0f));
+			flashEffect->SetRotationZ(180);
+
+		}
 		break;
 
 	case BigJasonDirectState::DOWNWALK:
-		bullet = new CBigJasonBullet(BigJasonBulletDirection::DOWN);
-		bulletPosition = Vector2D(this->position.x + 4.0f, this->position.y - 12.0f);
+		{
+			bullet = new CBigJasonBullet(BigJasonBulletDirection::DOWN);
+			bulletPosition = Vector2D(this->position.x + 5.0f, this->position.y - 12.0f);
+			auto flashEffect = CGame::GetInstance()->InitiateAndPushToQueue<CBigJasonFlashShootingY>(bulletPosition);
+			flashEffect->SetRotationZ(0);
+		}
 		break;
 
 	case BigJasonDirectState::STAY:
-		if (this->currentSpriteState == SpriteHorizontalStayId) {
-			switch (this->nx)
-			{
-			case 1:
-				bullet = new CBigJasonBullet(BigJasonBulletDirection::RIGHT);
-				bulletPosition = Vector2D(this->position.x, this->position.y - 1.0f);
-				break;
+		{
 
-			case -1:
-				bullet = new CBigJasonBullet(BigJasonBulletDirection::LEFT);
-				bulletPosition = Vector2D(this->position.x, this->position.y - 1.0f);
-				break;
+			if (this->currentSpriteState == SpriteHorizontalStayId) {
+				switch (this->nx)
+				{
+				case 1: 
+					{
+						bullet = new CBigJasonBullet(BigJasonBulletDirection::RIGHT);
+						bulletPosition = Vector2D(this->position.x, this->position.y - 1.0f);
+						CGame::GetInstance()->InitiateAndPushToQueue<CBigJasonFlashShootingX>(bulletPosition + Vector2D(this->nx *14.0f, 0), VectorZero(), this->nx);
+					}
+					break;
 
-			default:
-				break;
+				case -1:
+					{
+						bullet = new CBigJasonBullet(BigJasonBulletDirection::LEFT);
+						bulletPosition = Vector2D(this->position.x, this->position.y - 1.0f);
+						CGame::GetInstance()->InitiateAndPushToQueue<CBigJasonFlashShootingX>(bulletPosition + Vector2D(this->nx * 14.0f, 0), VectorZero(), this->nx);
+					}
+					break;
+
+				default:
+					break;
+				}
 			}
-		}
-		else if (this->currentSpriteState == SpriteUpStayId) {
-			bullet = new CBigJasonBullet(BigJasonBulletDirection::UP);
-			bulletPosition = Vector2D(this->position.x, this->position.y - 12.0f);
-		}
-		else if (this->currentSpriteState == SpriteDownStayId) {
-			bullet = new CBigJasonBullet(BigJasonBulletDirection::DOWN);
-			bulletPosition = Vector2D(this->position.x + 4.0f, this->position.y - 12.0f);
+			else if (this->currentSpriteState == SpriteUpStayId) {
+				bullet = new CBigJasonBullet(BigJasonBulletDirection::UP);
+				bulletPosition = Vector2D(this->position.x + 5.0f, this->position.y - 12.0f);
+				auto flashEffect = CGame::GetInstance()->InitiateAndPushToQueue<CBigJasonFlashShootingY>(bulletPosition + Vector2D(0.0f, 12.0f));
+				flashEffect->SetRotationZ(180);
+			}
+			else if (this->currentSpriteState == SpriteDownStayId) {
+				bullet = new CBigJasonBullet(BigJasonBulletDirection::DOWN);
+				bulletPosition = Vector2D(this->position.x + 5.0f, this->position.y - 12.0f);
+				auto flashEffect1 = CGame::GetInstance()->InitiateAndPushToQueue<CBigJasonFlashShootingY>(bulletPosition);
+				flashEffect1->SetRotationZ(0);
+			}
 		}
 
 	default:
@@ -104,6 +135,7 @@ void CBigJason::Shooting()
 	bullet->SetPosition(bulletPosition);
 	game->PushToQueueObject(bullet);
 	this->prevShootingTime = GetTickCount64();
+
 }
 
 void CBigJason::Update(DWORD dt)

@@ -194,6 +194,9 @@
     <Filter Include="Game\Game objects\Boss">
       <UniqueIdentifier>{5db2c1d4-c41a-481b-ae59-0f59148c5f83}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Game\Game objects\Effect\FlashShooting">
+      <UniqueIdentifier>{b7449965-d897-4c93-91d1-248a089c00a5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -376,6 +379,12 @@
     <ClCompile Include="Boss.cpp">
       <Filter>Game\Game objects\Boss</Filter>
     </ClCompile>
+    <ClCompile Include="BigJasonFlashShootingX.cpp">
+      <Filter>Game\Game objects\Effect\FlashShooting</Filter>
+    </ClCompile>
+    <ClCompile Include="BigJasonFlashShootingY.cpp">
+      <Filter>Game\Game objects\Effect\FlashShooting</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Textures.h">
@@ -557,6 +566,12 @@
     </ClInclude>
     <ClInclude Include="Boss.h">
       <Filter>Game\Game objects\Boss</Filter>
+    </ClInclude>
+    <ClInclude Include="BigJasonFlashShootingX.h">
+      <Filter>Game\Game objects\Effect\FlashShooting</Filter>
+    </ClInclude>
+    <ClInclude Include="BigJasonFlashShootingY.h">
+      <Filter>Game\Game objects\Effect\FlashShooting</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

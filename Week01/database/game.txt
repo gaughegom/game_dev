@@ -27,7 +27,8 @@ sprBJDownward02	260	3	20	31	0
 # - Big Jason bullet -
 sprBJBullet00	234	107	8	6	0
 sprBJBullet01	244	106	6	8	0
-sprBJShooting	308	58	9	18	2
+sprBJShootingX	226	103	7	12	0
+sprBJShootingY	211	106	12	7	0
 # - SOPHIA -	// 0 -> 50
 # wheel part 	// 0 -> 3
 sprSWheel00	3	21	8	8	0
