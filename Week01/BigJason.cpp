@@ -333,5 +333,4 @@ void CBigJason::OnCollisionWithItem(CItemBase* const& other)
 	}
 
 	other->OnUse();
-	// reset hp
 }

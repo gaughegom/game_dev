@@ -33,8 +33,15 @@ void CAnimation::Render(Vector2D position, int nx, D3DCOLOR color, int layer, fl
 					this->currentFrame++;
 				}
 				this->lastFrameTime = now;
-				if (currentFrame == frames.size()) 
-					this->currentFrame = 0;
+				if (currentFrame == frames.size()) {
+					if (this->loop == true) {
+						this->currentFrame = 0;
+					}
+					else {
+						this->finish = true;
+						this->currentFrame--;
+					}
+				}
 			}
 
 		}
@@ -54,8 +61,15 @@ void CAnimation::Render(Vector2D position, int nx, D3DCOLOR color, int layer, fl
 					this->currentFrame--;
 				}
 				this->lastFrameTime = now;
-				if (currentFrame == -1)
-					this->currentFrame = this->frames.size() - 1;
+				if (currentFrame == -1) {
+					if (this->loop == true) {
+						this->currentFrame = this->frames.size() - 1;
+					}
+					else {
+						this->finish = true;
+						this->currentFrame++;
+					}
+				}
 			}
 		}
 	}
@@ -73,12 +87,12 @@ void CAnimation::SetReverse(bool value)
 	this->reverse = value;
 }
 
-bool CAnimation::GetWait()
+bool CAnimation::IsWait()
 {
 	return this->wait;
 }
 
-bool CAnimation::GetReverse()
+bool CAnimation::IsReverse()
 {
 	return this->reverse;
 }

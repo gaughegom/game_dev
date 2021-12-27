@@ -17,6 +17,7 @@
 #include "Gate.h"
 #include "Mortar.h"
 #include "BossTrigger.h"
+#include "Boss.h"
 
 constexpr auto MaxFileLine = 2048;
 
@@ -120,6 +121,7 @@ void CScene::__ParseSection_OBJECTS__(std::string line)
 	else if (type == "drap") object = new CEnemyDrap;
 	else if (type == "lazerGuard") object = new CEnemyLazerGuard;
 	else if (type == "bossTrigger") object = new CBossTrigger;
+	else if (type == "boss") object = new CBoss;
 	else {
 		DebugOut(L"[ERROR] Unknowed object type: %s\n", type); // catch undefined object
 		return;

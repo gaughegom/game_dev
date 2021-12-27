@@ -131,7 +131,7 @@ public:
 	float GetRotationZ() { return this->rotateZ; }
 
 	void ActiveByRadiusDistance(const float& activeDistance);
-	D3DCOLOR GetRenderColor();
+	virtual D3DCOLOR GetRenderColor();
 
 
 	virtual void Update(DWORD dt) = 0;

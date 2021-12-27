@@ -314,6 +314,10 @@ void CGame::LoadResource()
 			section = SceneSection::LOAD_SCENE;
 			continue;
 		}
+		if (line == "[SETTINGS]") {
+			section = SceneSection::SETTINGS;
+			continue;
+		}
 		if (line[0] == '[') {
 			section = SceneSection::SCENE_SECTION_UNKNOW;
 			continue;
@@ -337,6 +341,9 @@ void CGame::LoadResource()
 			break;
 		case SceneSection::LOAD_SCENE:
 			this->__LoadSceneResource__(line);
+			break;
+		case SceneSection::SETTINGS:
+			this->__ParseSection_SETTINGS__(line);
 			break;
 		default:
 			break;
@@ -456,6 +463,15 @@ void CGame::__ParseSection_CHARACTERS__(std::string line)
 	float height = atoi(tokens[5].c_str());
 	player->SetPosition(Vector2D(x, y));
 	player->SetNx(nx);
+}
+
+void CGame::__ParseSection_SETTINGS__(std::string line)
+{
+	std::vector<std::string> tokens = SplitLine(line);
+	
+	int beginScene = atoi(tokens[0].c_str());
+
+	this->currentScene = beginScene;
 }
 
 // GameObject

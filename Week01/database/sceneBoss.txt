@@ -9,8 +9,8 @@ maps\sectionBoss.png	16	14	indoor
 2	13	12	1	brick
 [OBJECTS]
 #name	nx	x	y	width	height
-
 # - Enemy -
+boss	1	80	80	34	34
 [GATES]
 #way	x	y	col	row	next
 in	7	12	2	3	6

@@ -30,7 +30,8 @@ enum class SceneSection : int {
 	SCENE_SECTION_PLAYERS = 8,
 	SCENE_SECTION_GATES = 9,
 	SCENE_SECTION_FOREMAP = 10,
-	LOAD_SCENE = 11
+	LOAD_SCENE = 11,
+	SETTINGS = 12,
 };
 
 class CGame {
@@ -49,7 +50,7 @@ private:
 	LPKEYEVENTHANDLER keyHandler;
 
 	std::unordered_map<int, LPSCENE> scenes;
-	int currentScene = 3;	// default scene 0
+	int currentScene;	// default scene 0
 
 	std::vector<LPGAMEOBJECT> worldObjects, renderedObjects;
 	std::queue<LPGAMEOBJECT> queueObjects;
@@ -85,6 +86,7 @@ public:
 	void __ParseSection_SPRITES__(std::string line);
 	void __ParseSection_ANIMATIONS__(std::string line);
 	void __ParseSection_CHARACTERS__(std::string line);
+	void __ParseSection_SETTINGS__(std::string line);
 
 	// queue gameObject
 	void PushToQueueObject(LPGAMEOBJECT const& object) { this->queueObjects.push(object); }

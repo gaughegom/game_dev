@@ -28,6 +28,8 @@
     <ClCompile Include="BigJasonFlashShootingX.cpp" />
     <ClCompile Include="BigJasonFlashShootingY.cpp" />
     <ClCompile Include="Boss.cpp" />
+    <ClCompile Include="BossSpinBullet.cpp" />
+    <ClCompile Include="BossThreeBullet.cpp" />
     <ClCompile Include="BossTrigger.cpp" />
     <ClCompile Include="Brick.cpp" />
     <ClCompile Include="BulletBase.cpp" />
@@ -92,6 +94,8 @@
     <ClInclude Include="BigJasonFlashShootingX.h" />
     <ClInclude Include="BigJasonFlashShootingY.h" />
     <ClInclude Include="Boss.h" />
+    <ClInclude Include="BossSpinBullet.h" />
+    <ClInclude Include="BossThreeBullet.h" />
     <ClInclude Include="BossTrigger.h" />
     <ClInclude Include="Brick.h" />
     <ClInclude Include="BulletBase.h" />

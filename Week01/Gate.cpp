@@ -1,4 +1,5 @@
 #include "Gate.h"
+#include "Boss.h"
 
 CGate::CGate()
 {
@@ -19,6 +20,9 @@ CGate::CGate(Vector2D boundingBox, int next) : CGate::CGate(boundingBox)
 
 void CGate::Update(DWORD dt)
 {
+	if (CGame::GetInstance()->GetCurrentSceneId() == 7 && CBoss::GetCloneBooses().size() != 0) {
+		this->hp = 0;
+	}
 }
 
 void CGate::Render()
