@@ -23,11 +23,15 @@ private:
 	EBossState prevState;
 	std::string keyDisplay; // key of animation for rendering
 
+	int index;
+
 	bool sleeping;
 	int stepMove;
 
 	DWORD prevShootingTime;
 	int shootingTimes;
+	float shootingAngle;
+	Vector2D shootingDirect;
 
 	void SetState(EBossState nextState);
 
@@ -43,6 +47,8 @@ private:
 	void CallNextClone();
 	void CallSleepingClone();
 	void InitiateNewClone();
+
+	void CalcBulletDirection();
 
 public:
 	CBoss();

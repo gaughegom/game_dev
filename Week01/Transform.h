@@ -23,11 +23,12 @@ struct SRect
 };
 
 Vector2D VectorInfinity();
-
 Vector2D VectorZero();
+Vector2D VectorBasic();
+Vector2D NormalizeVector(const Vector2D& vt);
+Vector2D RotateVector(const Vector2D& vt, float angle = 0);
 
-Vector2D NormalizeVector();
-
+float VectorLength(const Vector2D& vt);
 float PositionsDistance(const Vector2D& vectorA, const Vector2D& vectorB);
 
 #endif // !_TRANSFORM_H

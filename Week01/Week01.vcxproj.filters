@@ -388,10 +388,7 @@
     <ClCompile Include="BigJasonFlashShootingY.cpp">
       <Filter>Game\Game objects\Effect\FlashShooting</Filter>
     </ClCompile>
-    <ClCompile Include="BossSpinBullet.cpp">
-      <Filter>Game\Game objects\Bullet\Boss bullet</Filter>
-    </ClCompile>
-    <ClCompile Include="BossThreeBullet.cpp">
+    <ClCompile Include="BossMarbleBullet.cpp">
       <Filter>Game\Game objects\Bullet\Boss bullet</Filter>
     </ClCompile>
   </ItemGroup>
@@ -582,10 +579,7 @@
     <ClInclude Include="BigJasonFlashShootingY.h">
       <Filter>Game\Game objects\Effect\FlashShooting</Filter>
     </ClInclude>
-    <ClInclude Include="BossSpinBullet.h">
-      <Filter>Game\Game objects\Bullet\Boss bullet</Filter>
-    </ClInclude>
-    <ClInclude Include="BossThreeBullet.h">
+    <ClInclude Include="BossMarbleBullet.h">
       <Filter>Game\Game objects\Bullet\Boss bullet</Filter>
     </ClInclude>
   </ItemGroup>

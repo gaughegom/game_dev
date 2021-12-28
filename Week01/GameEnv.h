@@ -16,4 +16,5 @@ void InSinWaveYAsix(CGameObject* self, DWORD dt, float frequecy, float amplitude
 int RandomDirect();
 int Random(int begin, int end);
 
+
 #endif // !_GAME_ENV_H

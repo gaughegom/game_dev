@@ -77,9 +77,37 @@ Vector2D VectorZero()
 	return Vector2D(0.0f, 0.0f);
 }
 
-Vector2D NormalizeVector()
+Vector2D VectorBasic()
 {
 	return Vector2D(1.0f, 1.0f);
+}
+
+Vector2D NormalizeVector(const Vector2D& vt)
+{
+	Vector2D vtResult = VectorZero();
+	float vtLength = VectorLength(vt);
+
+	if (vtLength != 0) {
+		vtResult.x = vt.x / vtLength;
+		vtResult.y = vt.y / vtLength;
+	}
+
+	return vtResult;
+}
+
+Vector2D RotateVector(const Vector2D& vt, float angle)
+{
+	float omega = angle * 3.14 / 180;
+
+	float x = vt.x * cos(omega) - vt.y * sin(omega);
+	float y = vt.x * sin(omega) + vt.y * cos(omega);
+
+	return Vector2D(x, y);
+}
+
+float VectorLength(const Vector2D& vt)
+{
+	return sqrt(pow(vt.x, 2) + pow(vt.y, 2));
 }
 
 float PositionsDistance(const Vector2D& vectorA, const Vector2D& vectorB)
