@@ -252,6 +252,12 @@ void CSophia::OnCollisionWithEnemy(LPGAMEOBJECT const& other)
 	STriggerTag tag = STriggerTag(other);
 	other->AddTriggerTag(this);
 	this->AddTriggerTag(other);
+
+	if (dynamic_cast<CEnemyStuka*>(other)) {
+		CEnemyStuka* stuka = (CEnemyStuka*)other;
+		stuka->state = EStukaState::BACK_FLYING;
+		stuka->dwPrevAttackTime = GetTickCount64();
+	}
 }
 
 void CSophia::OnCollisionWithItem(CItemBase* const& other)

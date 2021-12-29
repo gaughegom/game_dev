@@ -5,7 +5,7 @@
 #include <dsound.h>
 #include <unordered_map>
 
-struct IWaveHeaderFile
+struct SWaveHeaderFile
 {
 	char chunkId[4];
 	unsigned long chunkSize;

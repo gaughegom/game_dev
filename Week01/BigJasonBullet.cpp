@@ -10,7 +10,7 @@
 #define V_BOXSIZE_HORIZON			Vector2D(8.0f, 6.0f)
 #define V_BOXSIZE_VERTICAL			Vector2D(6.0f, 6.0f)
 
-constexpr auto Speed		= 0.4f;
+constexpr auto OwnSpeed		= 0.4f;
 constexpr auto SpriteDefaultId	= "df";
 constexpr auto DurationInit = 15;
 constexpr auto Amplitude = 14.0f;
@@ -28,28 +28,28 @@ CBigJasonBullet::CBigJasonBullet(BigJasonBulletDirection state)
 	{
 	case BigJasonBulletDirection::LEFT:
 		this->AddSprite(SpriteDefaultId, "sprBJBullet00");
-		this->velocity.x = -Speed;
+		this->velocity.x = -OwnSpeed;
 		this->nx = -1;
 		collider->SetBoxSize(V_BOXSIZE_HORIZON);
 		break;
 
 	case BigJasonBulletDirection::RIGHT:
 		this->AddSprite(SpriteDefaultId, "sprBJBullet00");
-		this->velocity.x = Speed;
+		this->velocity.x = OwnSpeed;
 		this->nx = 1;
 		collider->SetBoxSize(V_BOXSIZE_HORIZON);
 		break;
 
 	case BigJasonBulletDirection::UP:
 		this->AddSprite(SpriteDefaultId, "sprBJBullet01");
-		this->velocity.y = Speed;
+		this->velocity.y = OwnSpeed;
 		this->nx = 1;
 		collider->SetBoxSize(V_BOXSIZE_VERTICAL);
 		break;
 
 	case BigJasonBulletDirection::DOWN:
 		this->AddSprite(SpriteDefaultId, "sprBJBullet01");
-		this->velocity.y = -Speed;
+		this->velocity.y = -OwnSpeed;
 		this->nx = -1;
 		collider->SetBoxSize(V_BOXSIZE_VERTICAL);
 		break;

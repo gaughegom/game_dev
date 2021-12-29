@@ -90,7 +90,7 @@ bool CSound::LoadWaveFile(char* fileName, std::string soundName)
 	int error;
 	FILE* ptrFile;
 	unsigned int count;
-	IWaveHeaderFile waveFileHeader;
+	SWaveHeaderFile waveFileHeader;
 	WAVEFORMATEX waveFormat{};
 	DSBUFFERDESC bufferDesc{};
 	HRESULT result;
@@ -205,7 +205,7 @@ bool CSound::LoadWaveFile(char* fileName, std::string soundName)
 	ptrTmpSoundBuffer = 0;
 
 	// Move to the beginning of the wave data which starts at the end of the data chunk header.
-	fseek(ptrFile, sizeof(IWaveHeaderFile), SEEK_SET);
+	fseek(ptrFile, sizeof(SWaveHeaderFile), SEEK_SET);
 
 	// Create a temporary buffer to hold the wave file data.
 	ptrWaveData = new unsigned char[waveFileHeader.dataSize];
