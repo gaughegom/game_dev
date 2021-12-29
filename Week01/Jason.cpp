@@ -1,6 +1,8 @@
 #include "Jason.h"
 #include "Gate.h"
 
+constexpr auto JumpForce = 0.08f;
+
 CJason::CJason()
 {	
 	this->AddAnimation(ANIMATION_JASON_STAY_ID, "aniJIdle");
@@ -73,7 +75,6 @@ void CJason::ListenKeyEvent()
 		auto playerControll = CPlayer::GetInstance();
 		if (playerControll->GetSophia()->GetColliders().at(0)->GetBoundingBox()
 			.Overlap(this->colliders.at(0)->GetBoundingBox())) {
-			//playerControll->GetSophia()->SetActionState(SophiaActionState::OpenIn);
 			playerControll->SelectPlayer(playerControll->GetSophia());
 		}
 	}
@@ -105,7 +106,7 @@ void CJason::SubcribeDirectionState(JasonDirectState directState)
 		break;
 
 	case JasonDirectState::JUMP:
-		this->SetVelocity(Vector2D(this->velocity.x, PlayerJumpForce));
+		this->SetVelocity(Vector2D(this->velocity.x, JumpForce));
 		this->directState->Jumping();
 		break;
 	}

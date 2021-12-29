@@ -43,7 +43,6 @@ sprSCabin00	39	3	16	8	0
 sprSCabin01	56	3	16	8	0
 sprSCabin45	73	3	16	16	0
 sprSCabin90	56	3	16	8	0
-#cabin in/out
 sprSCabinIn	125	3	16	16	0
 sprSCabinOut	142	3	16	16	0
 # gun part

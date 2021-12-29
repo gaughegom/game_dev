@@ -54,9 +54,16 @@ private:
 	SophiaDirectState directState;
 	SophiaActionState actionState;
 
+
 	void InitParts();
 	void Shooting();
+
+
 public:
+
+	DWORD prevInTime;
+	DWORD prevOutTime;
+	
 	// state
 	DWORD stateTime;
 	DWORD prevStateTime;

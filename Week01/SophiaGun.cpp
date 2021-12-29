@@ -47,6 +47,11 @@ std::string CSophiaGun::MappingGunSpriteState(SophiaActionState actionState)
 		this->SetPosition(Vector2D(3.0f * this->self->GetNx(), 24.0f));
 		return SpriteGun90Id; // gun_90
 		break;
+
+	case SophiaActionState::OpenIn:
+	case SophiaActionState::OpenOut:
+		this->SetPosition(Vector2D(8.0f * this->self->GetNx(), 9.0f));
+		return SpriteGun00Id; // gun_00
 	default:
 		break;
 	}

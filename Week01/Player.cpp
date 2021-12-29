@@ -52,7 +52,10 @@ void CPlayer::SelectSophia()
 	this->jason->SubcribeDirectionState(JasonDirectState::JUMP);
 	this->jason->SetActive(false);
 	this->jason->SetPosition(this->sophia->GetPosition());
-	this->sophia->SetActionState(SophiaActionState::Idle);
+
+	//this->sophia->SetActionState(SophiaActionState::Idle);
+	this->sophia->SetActionState(SophiaActionState::OpenIn);
+	this->sophia->prevInTime = GetTickCount64();
 
 	this->selectedId = PlayerCharacterId::SOPHIA;
 	this->player = this->sophia;
@@ -76,7 +79,10 @@ void CPlayer::SelectJason()
 	this->jason->SetActive(true);
 	this->jason->SetPosition(this->sophia->GetPosition());
 	this->jason->SetNx(this->sophia->GetNx());
-	this->sophia->SetActionState(SophiaActionState::Idle);
+
+	//this->sophia->SetActionState(SophiaActionState::Idle);
+	this->sophia->SetActionState(SophiaActionState::OpenOut);
+	this->sophia->prevOutTime = GetTickCount64();
 
 	this->selectedId = PlayerCharacterId::JASON;
 	this->player = this->jason;

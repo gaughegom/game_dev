@@ -11,6 +11,8 @@
 #include "ThornyBrick.h"
 #include "ItemPower.h"
 
+constexpr auto DelayTurnInOut = 200;
+
 CSophia::CSophia()
 {
 	this->directState = SophiaDirectState::Stay;
@@ -60,6 +62,19 @@ void CSophia::Update(DWORD dt)
 		CGame::GetInstance()->InitiateAndPushToQueue<CBigDestroyEffect>(this->position);
 		return;
 	}
+
+	if (this->actionState == SophiaActionState::OpenIn || this->actionState == SophiaActionState::OpenOut) {
+		if (GetTickCount64() - this->prevInTime < DelayTurnInOut) {
+			this->SetActionState(SophiaActionState::OpenIn);
+		}
+		else if (GetTickCount64() - this->prevOutTime < DelayTurnInOut) {
+			this->SetActionState(SophiaActionState::OpenOut);
+		}
+		else {
+			this->SetActionState(SophiaActionState::Idle);
+		}
+	}
+
 
 	// TODO: Debug only
 	if (this->prevHp != this->hp) {
