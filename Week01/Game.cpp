@@ -6,6 +6,7 @@
 #include "QuadTree.h"
 #include "Textures.h"
 #include "PlayerHealthHub.h"
+#include "Sound.h"
 
 #include "BigJason.h"
 #include "Jason.h"
@@ -350,6 +351,10 @@ void CGame::LoadResource()
 		}
 	}
 	fs.close();
+
+	// load sound
+	CSound::GetInstance(this->hWnd)->Init(this->hWnd);
+
 	DebugOut(L"[INFO] Load game resource done\n");
 }
 

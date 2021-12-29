@@ -200,6 +200,9 @@
     <Filter Include="Game\Game objects\Bullet\Boss bullet">
       <UniqueIdentifier>{8a7f10f8-00d3-4dd7-9d3c-7e530170a444}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Framework\Sound">
+      <UniqueIdentifier>{9c7ac9b5-6811-46b4-89eb-0600016d7fdc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -391,6 +394,9 @@
     <ClCompile Include="BossMarbleBullet.cpp">
       <Filter>Game\Game objects\Bullet\Boss bullet</Filter>
     </ClCompile>
+    <ClCompile Include="Sound.cpp">
+      <Filter>Framework\Sound</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Textures.h">
@@ -581,6 +587,9 @@
     </ClInclude>
     <ClInclude Include="BossMarbleBullet.h">
       <Filter>Game\Game objects\Bullet\Boss bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="Sound.h">
+      <Filter>Framework\Sound</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
