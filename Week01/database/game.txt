@@ -187,4 +187,4 @@ bJason	1	112	1760	20	32
 6	database\scene6.txt
 7	database\sceneBoss.txt
 [SETTINGS]
-6
+0

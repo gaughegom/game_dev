@@ -43,8 +43,7 @@ void CBossMarbleBullet::OnCollision(CCollider2D* self, LPCOLLISIONEVENT coEvent)
 	else if (dynamic_cast<CBrick*>(other)) {
 		this->SetHp(0);
 	}
-	else if (dynamic_cast<CEnemyBase*>(other)
-		|| dynamic_cast<CBulletBase*>(other)
+	else if (dynamic_cast<CBulletBase*>(other)
 		|| dynamic_cast<CBoss*>(other)) {
 		STriggerTag tag = STriggerTag(other);
 		other->AddTriggerTag(this);

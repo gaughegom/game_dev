@@ -207,6 +207,7 @@ void CBoss::CallNextClone() {
 }
 
 void CBoss::CallSleepingClone() {
+
 	if (this->__cloneBosses.size() == 0) {
 		return;
 	}
@@ -214,7 +215,7 @@ void CBoss::CallSleepingClone() {
 	int chooseIndex = -1;
 
 	int randomIndex = Random(0, this->__cloneBosses.size() - 1);
-	while (chooseIndex == -1) {
+	do {
 		int randomIndex = Random(0, this->__cloneBosses.size() - 1);
 		int i = 0;
 		for (auto map_clone : this->__cloneBosses)
@@ -227,15 +228,16 @@ void CBoss::CallSleepingClone() {
 			}
 
 			i++;
-		}
-	}
+		} 
+	} while (chooseIndex == -1);
 
 	this->__cloneBosses.at(chooseIndex)->SetState(EBossState::PREPARE_AWAKING);
 }
 
 void CBoss::InitiateNewClone() {
+
 label_again:
-	int randXAxis = Random(1, 6) * 48;
+	int randXAxis = Random(1, 6) * 32 + 16;
 	int randYAxis = Random(1, 6) * 32;
 	Vector2D randPosition = Vector2D(randXAxis, randYAxis);
 
