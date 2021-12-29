@@ -11,7 +11,7 @@
 #include "ThornyBrick.h"
 #include "ItemPower.h"
 
-constexpr auto DelayTurnInOut = 200;
+constexpr auto DelayTurnInOut = 100;
 
 CSophia::CSophia()
 {

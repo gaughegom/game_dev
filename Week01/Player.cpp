@@ -53,7 +53,6 @@ void CPlayer::SelectSophia()
 	this->jason->SetActive(false);
 	this->jason->SetPosition(this->sophia->GetPosition());
 
-	//this->sophia->SetActionState(SophiaActionState::Idle);
 	this->sophia->SetActionState(SophiaActionState::OpenIn);
 	this->sophia->prevInTime = GetTickCount64();
 
@@ -79,8 +78,8 @@ void CPlayer::SelectJason()
 	this->jason->SetActive(true);
 	this->jason->SetPosition(this->sophia->GetPosition());
 	this->jason->SetNx(this->sophia->GetNx());
+	this->jason->SubcribeDirectionState(JasonDirectState::STAY);
 
-	//this->sophia->SetActionState(SophiaActionState::Idle);
 	this->sophia->SetActionState(SophiaActionState::OpenOut);
 	this->sophia->prevOutTime = GetTickCount64();
 
