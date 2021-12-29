@@ -3,6 +3,7 @@
 #include "SophiaBullet.h"
 #include "EnemyStuka.h"
 #include "ItemHealth.h"
+#include "Sound.h"
 
 
 CGameObject::CGameObject()
@@ -63,6 +64,13 @@ void CGameObject::TakeDamage(const float& damage)
 {
 	this->hp -= damage;
 	this->SetInEffect(true);
+
+	if (dynamic_cast<CEnemyBase*>(this)) {
+		CSound::GetInstance()->PlayWaveFile("enemyTakeDamage");
+	}
+	else if (dynamic_cast<CCharaterBase*>(this)) {
+		CSound::GetInstance()->PlayWaveFile("jasonTakeDamage");
+	}
 }
 
 void CGameObject::ActiveByRadiusDistance(const float& activeDistance)

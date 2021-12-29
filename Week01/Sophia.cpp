@@ -10,6 +10,7 @@
 #include "BigDestroyEffect.h"
 #include "ThornyBrick.h"
 #include "ItemPower.h"
+#include "Sound.h"
 
 constexpr auto DelayTurnInOut = 100;
 
@@ -52,6 +53,9 @@ void CSophia::Shooting()
 	Vector2D bulletPosition = Vector2D(this->position.x, this->position.y + this->cabin->GetPosition().y);
 	bullet->SetPosition(bulletPosition);
 	CGame::GetInstance()->PushToQueueObject(bullet);
+
+	CSound::GetInstance()->PlayWaveFile("sophiaBullet");
+
 	this->bullets++;
 	this->prevBulletTime = GetTickCount64();
 }
@@ -60,6 +64,7 @@ void CSophia::Update(DWORD dt)
 {
 	if (this->IsLive() == false) {
 		CGame::GetInstance()->InitiateAndPushToQueue<CBigDestroyEffect>(this->position);
+		CSound::GetInstance()->PlayWaveFile("sophiaDie");
 		return;
 	}
 

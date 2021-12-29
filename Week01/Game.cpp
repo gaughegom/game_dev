@@ -353,7 +353,7 @@ void CGame::LoadResource()
 	fs.close();
 
 	// load sound
-	CSound::GetInstance(this->hWnd)->Init(this->hWnd);
+	CSound::GetInstance()->Init(this->hWnd);
 
 	DebugOut(L"[INFO] Load game resource done\n");
 }

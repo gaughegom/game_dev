@@ -3,6 +3,7 @@
 #define _ITEM_BASE_H
 
 #include "GameObject.h"
+#include "Sound.h"
 
 class CItemBase : public CGameObject {
 private:
@@ -16,7 +17,10 @@ public:
 	virtual void OnCollision(CCollider2D* self, LPCOLLISIONEVENT coEvent);
 	virtual void OnTrigger(CCollider2D* self, LPCOLLISIONEVENT coEvent);
 
-	virtual void OnUse() { this->hp = 0; }
+	virtual void OnUse() { 
+		this->hp = 0;
+		CSound::GetInstance()->PlayWaveFile("useItem");
+	}
 
 };
 

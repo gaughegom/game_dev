@@ -43,7 +43,7 @@ public:
 	bool Init(HWND hWnd);
 	bool PlayWaveFile(std::string soundName);
 
-	static CSound* GetInstance(HWND hWnd);
+	static CSound* GetInstance();
 };
 
 

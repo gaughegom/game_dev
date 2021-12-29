@@ -109,6 +109,8 @@ public:
 
 	LPKEYEVENTHANDLER GetKeyHandler() const { return this->keyHandler; }
 
+	HWND GetHWnd() { return this->hWnd; }
+	
 	static CGame* GetInstance();
 	static DWORD GetDeltaTime() { return dt; }
 

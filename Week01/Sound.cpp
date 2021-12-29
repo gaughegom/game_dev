@@ -1,5 +1,6 @@
 #include "Sound.h"
 #include "Util.h"
+#include "Game.h"
 
 CSound* CSound::__instance = nullptr;
 
@@ -299,10 +300,10 @@ bool CSound::PlayWaveFile(std::string soundName)
 
 }
 
-CSound* CSound::GetInstance(HWND hWnd)
+CSound* CSound::GetInstance()
 {
 	if (__instance == nullptr) {
-		__instance = new CSound(hWnd);
+		__instance = new CSound(CGame::GetInstance()->GetHWnd());
 	}
 
 	return __instance;

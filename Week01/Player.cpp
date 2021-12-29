@@ -59,6 +59,8 @@ void CPlayer::SelectSophia()
 	this->selectedId = PlayerCharacterId::SOPHIA;
 	this->player = this->sophia;
 	this->lastSwitchTime = GetTickCount64();
+
+	CSound::GetInstance()->PlayWaveFile("switchCharacter");
 }
 
 void CPlayer::SelectJason()
@@ -86,6 +88,8 @@ void CPlayer::SelectJason()
 	this->selectedId = PlayerCharacterId::JASON;
 	this->player = this->jason;
 	this->lastSwitchTime = GetTickCount64();
+
+	CSound::GetInstance()->PlayWaveFile("switchCharacter");
 }
 
 void CPlayer::SelectBigJason()

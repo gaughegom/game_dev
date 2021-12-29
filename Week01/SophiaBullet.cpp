@@ -69,6 +69,7 @@ void CSophiaBullet::Update(DWORD dt)
 		}
 
 		CGame::GetInstance()->PushToQueueObject(destroyEffect);
+		CSound::GetInstance()->PlayWaveFile("bulletDestroy");
 	}
 }
 

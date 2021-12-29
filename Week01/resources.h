@@ -56,7 +56,6 @@ constexpr auto KEYBOARD_BUFFER_SIZE	= 1024;
 constexpr auto TilesetWidth	= 16;
 constexpr auto TilesetHeight = 16;
 
-
 constexpr float Pi() { return 3.14f; }
 constexpr D3DCOLOR DrawArgbColorDefault() { return D3DCOLOR_ARGB(255, 255, 255, 255); }
 constexpr D3DCOLOR DrawBackgroundColor() { return D3DCOLOR_XRGB(0, 0, 0); }

@@ -135,7 +135,7 @@ void CBigJason::Shooting()
 	bullet->SetPosition(bulletPosition);
 	game->PushToQueueObject(bullet);
 	this->prevShootingTime = GetTickCount64();
-
+	CSound::GetInstance()->PlayWaveFile("jasonBullet");
 }
 
 void CBigJason::Update(DWORD dt)

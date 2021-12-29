@@ -68,6 +68,7 @@ void CBigJasonBullet::Update(DWORD dt)
 {
 	if (!this->IsLive()) {
 		CGame::GetInstance()->InitiateAndPushToQueue<CSmallDestroyEffect>(this->position);
+		CSound::GetInstance()->PlayWaveFile("bulletDestroy");
 		return;
 	}
 
