@@ -8,7 +8,7 @@ constexpr auto MaxCloneBosses = 15;
 constexpr auto MaxShootingTimes = 3;
 constexpr auto DelayShootingTime = 300;
 
-constexpr auto OwnBulletSpeed = 0.08;
+constexpr auto OwnBulletSpeed = 0.1;
 
 constexpr auto AnimationOpenEyeId = "openEye";
 constexpr auto AnimationIdleId = "idle";
@@ -28,7 +28,7 @@ CBoss::CBoss()
 	this->damage = 10;
 
 	// collider
-	CCollider2D* collider = new CCollider2D(this, true, false, VectorZero(), Vector2D(33.0f, 33.0f));
+	CCollider2D* collider = new CCollider2D(this, true, false, VectorZero(), Vector2D(32.0f, 32.0f));
 	this->colliders.push_back(collider);
 	this->SetColliders(this->colliders);
 
@@ -169,10 +169,10 @@ void CBoss::DirectiveAwaking()
 {
 	int randomInt = Random(1, 20);
 
-	if (randomInt <= 2) {
+	if (randomInt <= 4) {
 		this->SetState(EBossState::SHOOTING);
 	}
-	else if (randomInt <= 6) {
+	else if (randomInt <= 7) {
 		this->SetState(EBossState::MOVING_AND_SHOOTING);
 	}
 	else {

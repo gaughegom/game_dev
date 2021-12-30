@@ -3,6 +3,9 @@
 
 #include "Jason.h"
 #include "Sophia.h"
+#include "BossMarbleBullet.h"
+#include "BigJasonBullet.h"
+#include "Boss.h"
 
 constexpr auto MarginPushCollision = 0.1f;
 constexpr auto AlphaColliderColor = 70;
@@ -166,6 +169,15 @@ void CCollider2D::PredictPotentialCollision(std::vector<LPGAMEOBJECT>* coObjects
 
 		if (coObject->IsActive() == false)
 			continue;
+
+		// filter bullet
+		if ((dynamic_cast<CBossMarbleBullet*>(coObject) && dynamic_cast<CBigJasonBullet*>(this->object))
+			|| (dynamic_cast<CBossMarbleBullet*>(this->object) && dynamic_cast<CBigJasonBullet*>(coObject))
+			|| (dynamic_cast<CBoss*>(coObject) && dynamic_cast<CBossMarbleBullet*>(this->object))
+			|| (dynamic_cast<CBossMarbleBullet*>(coObject) && dynamic_cast<CBoss*>(this->object))) {
+			continue;
+		}
+
 
 		// check trigger tag
 		bool activeTrigger = false;

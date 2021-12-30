@@ -6,6 +6,7 @@
 #include "SmallDestroyEffect.h"
 #include "Mortar.h"
 #include "Player.h"
+#include "BossMarbleBullet.h"
 
 #define V_BOXSIZE_HORIZON			Vector2D(8.0f, 6.0f)
 #define V_BOXSIZE_VERTICAL			Vector2D(6.0f, 6.0f)
@@ -114,5 +115,9 @@ void CBigJasonBullet::OnCollision(CCollider2D* self, LPCOLLISIONEVENT coEvent)
 	else if (dynamic_cast<CMortar*>(other)) {
 		other->TakeDamage(this->damage);
 		this->hp = 0;
+	}
+	else if (dynamic_cast<CBossMarbleBullet*>(other)) {
+		other->AddTriggerTag(this);
+		this->AddTriggerTag(other);
 	}
 }
